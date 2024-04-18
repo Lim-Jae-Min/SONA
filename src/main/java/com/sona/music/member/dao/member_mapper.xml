@@ -4,4 +4,10 @@
 >
 <mapper namespace="com.sona.music.member.dao.memberDAO">
 
+	<select id="login" resultType="com.sona.music.member.dto.MemberDTO">
+		SELECT user_id, user_pass, user_type 
+			FROM users
+			WHERE m.id = #{param1} AND m.pw = #{param2}	
+	</select>
+
 </mapper>

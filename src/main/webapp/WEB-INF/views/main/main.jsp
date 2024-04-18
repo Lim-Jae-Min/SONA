@@ -42,7 +42,7 @@
                     <c:if test="${alarmCount == 0}">
                         <th><img src="resources/img/alarm.png" class="miniimg"></th>
                     </c:if>
-                    <th><a href="#">로그인</a></th>
+                    <th><a href="login.go">로그인</a></th>
                 </tr>
             </c:if>
         </table>

@@ -18,8 +18,7 @@ public class MemberService {
 
 	public String emailCheck(String email) {
 		
-		String email = memberDAO.emailCheck(email);
-		return email;
+		return  memberDAO.emailCheck(email);
 	}
 	
 }

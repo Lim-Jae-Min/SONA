@@ -4,4 +4,7 @@
 >
 <mapper namespace="com.sona.music.member.dao.memberDAO">
 
+	<select id="emailCheck" resultType="String">
+		SELECT USER_EMAIL FROM USERS WHERE USER_EMAIL = #{param1}
+	</select>
 </mapper>

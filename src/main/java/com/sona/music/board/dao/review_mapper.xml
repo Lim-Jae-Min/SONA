@@ -6,11 +6,11 @@
 
 	<select id="list" resultType="com.sona.music.board.dto.ReviewDTO">
 		SELECT 
-    	(SELECT COUNT(NEW_FILENAME) FROM PHOTO_BOARD p WHERE p.POST_IDX = r.REVIEW_IDX) AS img_cnt,
     	r.SCORE, 
     	r.REVIEW_TITLE, 
     	r.RATER_ID, 
    		 CONCAT(MIN(CH_DATE), ' ~ ', MAX(CH_DATE)) AS 수강기간,
+   		(SELECT COUNT(NEW_FILENAME) FROM PHOTO_BOARD p WHERE p.POST_IDX = r.REVIEW_IDX) AS img_cnt,
     	r.REVIEW_REG_DATE 
 		FROM REVIEW r 
 		JOIN CLASS_HISTORY ch ON r.CLASS_IDX = ch.CLASS_IDX
@@ -25,12 +25,12 @@
 	
 	<insert id="write"
 	useGeneratedKeys="true"
-	keyColumn = "idx"
-	keyProperty="idx"
+	keyColumn = "REVIEW_IDX"
+	keyProperty="REVIEW_IDX"
 	parameterType="com.sona.music.board.dto.ReviewDTO"
 	>
-	INSERT INTO REVIEW(SCORE,REVIEW_TITLE,REVIEW_CONTENT,)
-			VALUES(#{score},#{review_title},#{review_content})
+	INSERT INTO REVIEW(SCORE,REVIEW_TITLE,REVIEW_CONTENT)
+			VALUES(#{SCORE},#{REVIEW_TITLE},#{REVIEW_CONTENT})
 	
 	</insert>
 	

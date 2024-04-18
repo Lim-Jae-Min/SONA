@@ -40,7 +40,7 @@ public class ReviewService {
 		return result;
 	}
 	
-	public int write(MultipartFile[] photos, 
+	public int write(MultipartFile photos, 
 			Map<String, String> param) {
 		int row = -1;
 		//insert후 생성된 idx 가져오는 방법
@@ -64,12 +64,10 @@ public class ReviewService {
 	}
 
 
-	public void fileSave(int idx, MultipartFile[] photos) {
-
-		for (MultipartFile photo : photos) {
-
+	public void fileSave(int idx, MultipartFile photos) {
+		if(photos != null) {
 			//1. 업로드 할 파일명이 있는가?
-			String fileName = photo.getOriginalFilename();
+			String fileName = photos.getOriginalFilename();
 			logger.info("upload file Name : "+fileName);
 			if(!fileName.equals("")) {//파일명이 있다면 == 업로드가 있다며
 				//1. 기존 파일명에서 확장자 추출(high.gif에서gif만)
@@ -83,7 +81,7 @@ public class ReviewService {
 
 				//3. 파일 저장
 				try {
-					byte[] bytes = photo.getBytes(); //MultipartFile로 부터 바이너리 추출
+					byte[] bytes = photos.getBytes(); //MultipartFile로 부터 바이너리 추출
 					Path path = Paths.get(file_root+newFileName); //저장 경로 지정
 					Files.write(path, bytes); //저장
 					String photoCategory = "Review";
@@ -99,11 +97,6 @@ public class ReviewService {
 		}
 	}
 
-	
-	
-	
-	
-	
 }
 	
 

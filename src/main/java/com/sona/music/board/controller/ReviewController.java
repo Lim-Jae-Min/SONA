@@ -54,7 +54,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/reviewWrite", method = RequestMethod.POST)
-	public String write(MultipartFile[] photos, HttpSession session, @RequestParam Map<String,String>param) {
+	public String write(MultipartFile photos, HttpSession session, @RequestParam Map<String,String>param) {
 		
 		logger.info("params = {}", param);
 		String page = "redirect:/lessonReviewList";

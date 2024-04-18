@@ -7,8 +7,14 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
-.main {
-    font-size: 20px; 
+		.main {
+		    font-size: 20px; 
+		    #contents{
+		    font-size: 15px;
+		}
+		.main {
+		    font-size: 20px; 
+		}
 </style>
 </head>
 <body>
@@ -62,23 +68,58 @@
                 <a href="#">내가 작성한 리뷰</a>
                 <a href="#">수강 이력</a>
             </div>
-			<div id="content">
-			    <table>
-				    <tr>
-				   
-				        <td rowspan="2" style="width: 100px;"><img src="resources/img/account_box.png" style="margin-left: 30px;" id="account"></td>
-				        <td class="main" style="padding-left: 30px;">User 수강생</td>
-        				<td rowspan="2" style="width: 100px; text-align: right;"><img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart"></td>
-				        
-				    </tr>
-				    <tr>
-				        <td style="padding-left: 30px;">seajnu15</td>
-				    </tr>
-			        <tr>
-			            <td colspan="2" class="main">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 <span style="margin-left: 100px;">sewq naver.com</span></td>
-			        </tr>
-			    </table>
-			</div>
+       <div id="content">
+            <table style="width: 100%;">
+                <thead>
+                    <tr>
+                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                    </tr>
+                    <tr>
+                        &nbsp;<td rowspan="2" style="width: 70px;"><img src="../img/account_box.png" style="margin-left: 30px;"  id="account"></td>
+                        <td class="main" style="padding-right: 500px;">User 수강생<br>seajnu15</td>
+                        <td style="width: 80%; min-width: 150px; text-align: right;">
+                            <img src="../img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">44.5
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                    </tr>
+                    <tr>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">sewq naver.com</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                    </tr>
+                    <tr>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">010-2312-1212</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                    </tr>
+                    <tr>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
+                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계좌번호 
+                            <span class="contents" style="margin-left: 80px; width: 400px; display: inline-block;">국민은행 12321039123099</span>
+                        </td>                    </tr>
+                    <tr>
+                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                    </tr>
+                    <tr>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
+                            <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;잔여 포인트 
+                            <span class="contents" style="margin-left: 60px; width: 200px; display: inline-block;">55500P</span>
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <button>충전</button> &nbsp;
+                            <button>출금</button>
+                        </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
         </div>
     <div id="footer">
         <li>상호명 : SONA</li>

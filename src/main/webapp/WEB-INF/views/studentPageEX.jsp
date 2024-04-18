@@ -134,7 +134,7 @@
             <tr>
                 <td colspan="2">${loginName} 회원님</td>
                 <td>&nbsp&nbsp&nbsp</td>
-                <td id="manner">♥ ${manner}</td>
+                <td class="manner">♥ ${manner}</td>
             </tr>
         </table>
         <br/>

@@ -11,7 +11,6 @@
 </style>
 </head>
 <body>
-<body>
     <header id="usermain">
         <table id="mainmenu">
             <tr>
@@ -41,7 +40,6 @@
     </div>
 </body>
 </html>
-</body>
 <script>
 </script>
 </html>

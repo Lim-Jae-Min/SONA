@@ -23,7 +23,7 @@ public class MainController {
 		String user_id = mainService.id();
 		
 		model.addAttribute("msg", user_id);
-		return "studentPage";
+		return "member/idFind";
 	}
 	
 	

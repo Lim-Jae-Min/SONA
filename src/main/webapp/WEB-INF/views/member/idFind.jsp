@@ -81,22 +81,48 @@ input[type="email"] {
 	<%@ include file="layout/footer.jsp" %>
 </body>
 <script>
-function submitEmail(){
+/* function submitEmail(){
 	var email = $('input[name="email"]').val();
 	// ajax 를 이용한 비동기 통신
 	$.ajax({
 		type:'post', // method 방식
-		url:'findIdCheck.do', // 요청할 주소
-		data:{'email':email}, //파라메터
+		url:'findIdEmail.do', // 요청할 주소
+		data:{'email':email},
+	    dataType:'json',//파라메터
 		success:function(data){ // 통신 성공시
-	// ajax 에서 XmlHttpRequest 객체를 통해 대신 받아와서
-	// 여기에 뿌려준다.
 			console.log(data);
 				alert('이메일로 인증번호를 보냈습니다.');		
 		},
 		error:function(error){ //통신 실패시
 			console.log(error);
 		}
+	});
+} */
+
+function submitEmail() {
+	console.log('click');
+	var email = $('input[name="email"]').val();
+	//ajax를 이용한 비동기 통신 (자바스크렙트를 사용해 보안성이 좋지 못함 취약함)
+	console.log(email);
+	$.ajax({
+		type:'post', // method 방식
+		url:'findIdEmail.do', // 요청한 주소
+		data:{'email':email}, // 파라메터
+		success:function(data){ // 통신 성공했을경우
+		//ajax에서 XmlhttpRequest 객체를 통해 대신 받아와서
+		//여기에 뿌려준다
+			console.log(data.checkedEmail);
+		var chkEmail = data.checkedEmail;
+			if(data.checkedEmail ==null){
+				alert('이메일을 다시 입력해 주세요');
+				$('input[name="email"]').val('');
+			}else{
+				alert(chkEmail+'로 인증번호를 보냈습니다.');
+			}
+		}, 
+		error:function(error){ // 통신 실패 시
+			console.log(error);
+		} 
 	});
 }
 </script>

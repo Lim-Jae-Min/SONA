@@ -1,7 +1,5 @@
 package com.sona.music.member.service;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +14,9 @@ public class MemberService {
 	
 	@Autowired MemberDAO memberDAO;
 
-	public String emailCheck(String email) {
+	public String findIdEmail(String email) {
 		
-		return  memberDAO.emailCheck(email);
+		return  memberDAO.findIdEmail(email);
 	}
 	
 }

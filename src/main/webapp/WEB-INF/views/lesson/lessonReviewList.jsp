@@ -86,26 +86,26 @@ function listCall(page){
 }
 function drawList(list){
 	
-	 var content = '';
-	 for(item of list){
-	    console.log(item);
-	    content += '<tr>';
-	    content += '<td>' + item.score + '</td>';
-	    content += '<td>' + item.subject + '</td>';
-	    content += '<td>' + item.user_name + '</td>';
-	    content += '<td>' + item.study_date +'</td>';
-	    content += '<td>';
-	    var img = item.img_cnt > 0 ?'image.png' : 'no_image.png';
-	    content += '<img class="icon" src="resources/img/' + img + '"/>';
-	    content += '</td>';
-	    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
-	    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
-	    //content += '<td>' + item.reg_date + '</td>';
-	    //방법 2. Front-end : js에서 직접 변환
-	    var date = new Date(item.reg_date);
-	    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
-	    content += '<td>' + dateStr + '</td>';
-	    content += '</tr>';
+	function drawList(list){
+	     var content = '';
+	     for(item of list){
+	        console.log(item);
+	        content += '<tr>';
+	        content += '<td>' + item.SCORE + '</td>';
+	        content += '<td>' + item.REVIEW_TITLE + '</td>';
+	        content += '<td>' + item.RATER_ID + '</td>';
+	        content += '<td>' + item.STUDY_DATE +'</td>';
+	        content += '<td>';
+	        var img = item.img_cnt > 0 ?'image.png' : 'no_image.png';
+	        content += '<img class="icon" src="resources/img/' + img + '"/>';
+	        content += '</td>';
+	        var date = new Date(item.REVIEW_REG_DATE);
+	        var dateStr = date.toLocaleDateString("ko-KR");
+	        content += '<td>' + dateStr + '</td>';
+	        content += '</tr>';
+	     }
+	     $('#list').html(content);
+	}
 	 }
 	 
 	 $('#list').html(content);

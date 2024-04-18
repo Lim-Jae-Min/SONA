@@ -14,11 +14,14 @@ public class MemberService {
 	
 	@Autowired MemberDAO memberDAO;
 
+	public String findIdEmail(String email) {
+		
+		return  memberDAO.findIdEmail(email);
+	}
 
 	public MemberDTO login(String id, String pw) {
 		logger.info("여긴 서비스 ");
 		return memberDAO.login(id,pw);
 	}
-
 	
 }

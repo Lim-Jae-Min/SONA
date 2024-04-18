@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
-<mapper namespace="com.sona.music.member.dao.memberDAO">
+<mapper namespace="com.sona.music.member.dao.MemberDAO">
 
+	<select id="findIdEmail" resultType="String">
+		SELECT USER_EMAIL FROM USERS WHERE USER_EMAIL = #{param1}
+	</select>
+	
 	<select id="login" resultType="com.sona.music.member.dto.MemberDTO">
 		SELECT user_id, user_pass, user_type 
 			FROM users

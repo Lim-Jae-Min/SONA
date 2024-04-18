@@ -11,7 +11,6 @@
 </style>
 </head>
 <body>
-<body>
     <header id="usermain">
         <table id="mainmenu">
             <tr>
@@ -58,6 +57,8 @@
         <li>사업자등록번호 : 000-00-00000</li>
         <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
     </div>
+</body>
+</html>
     <div id="slide">
         <table>
             <tr>

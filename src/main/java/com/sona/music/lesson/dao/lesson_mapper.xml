@@ -4,4 +4,19 @@
 >
 <mapper namespace="com.sona.music.lesson.dao.LessonDAO">
 
+	<select id="recommendListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
+		SELECT 
+			b.idx, 
+			b.subject, 
+			b.user_name, 
+			b.bHit, 
+			b.reg_date 
+		FROM CLASS_OPEN co join PHOTO p on co.CLASS_IDX = p.BOARD_IDX and p.BOARD_IDX = 'class'
+		ORDER BY idx DESC LIMIT #{param1} OFFSET #{param2}
+	</select>
+
+	<select id="allCount" resultType="Integer">
+		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = #{param2}
+	</select>
+
 </mapper>

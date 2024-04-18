@@ -7,4 +7,11 @@
 	<select id="findIdEmail" resultType="String">
 		SELECT USER_EMAIL FROM USERS WHERE USER_EMAIL = #{param1}
 	</select>
+	
+	<select id="login" resultType="com.sona.music.member.dto.MemberDTO">
+		SELECT user_id, user_pass, user_type 
+			FROM users
+			WHERE m.id = #{param1} AND m.pw = #{param2}	
+	</select>
+
 </mapper>

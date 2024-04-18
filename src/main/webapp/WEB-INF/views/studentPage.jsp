@@ -7,6 +7,8 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
+.main {
+    font-size: 20px; 
 </style>
 </head>
 <body>
@@ -41,9 +43,23 @@
                 <a href="#">내가 작성한 리뷰</a>
                 <a href="#">수강 이력</a>
             </div>
-            <div id="content">
-                ${msg}
-            </div>
+			<div id="content">
+			    <table>
+				    <tr>
+				   
+				        <td rowspan="2" style="width: 100px;"><img src="resources/img/account_box.png" style="margin-left: 30px;" id="account"></td>
+				        <td class="main" style="padding-left: 30px;">User 수강생</td>
+        				<td rowspan="2" style="width: 100px; text-align: right;"><img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart"></td>
+				        
+				    </tr>
+				    <tr>
+				        <td style="padding-left: 30px;">seajnu15</td>
+				    </tr>
+			        <tr>
+			            <td colspan="2" class="main">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 <span style="margin-left: 100px;">sewq naver.com</span></td>
+			        </tr>
+			    </table>
+			</div>
         </div>
     <div id="footer">
         <li>상호명 : SONA</li>

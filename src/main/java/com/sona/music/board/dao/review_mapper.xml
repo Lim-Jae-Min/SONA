@@ -4,4 +4,45 @@
 >
 <mapper namespace="com.sona.music.board.dao.ReviewDAO">
 
+	<select id="list" resultType="com.sona.music.board.dto.ReviewDTO">
+		SELECT 
+    	(SELECT COUNT(NEW_FILENAME) FROM PHOTO_BOARD p WHERE p.POST_IDX = r.REVIEW_IDX) AS img_cnt,
+    	r.SCORE, 
+    	r.REVIEW_TITLE, 
+    	r.RATER_ID, 
+   		 CONCAT(MIN(CH_DATE), ' ~ ', MAX(CH_DATE)) AS 수강기간,
+    	r.REVIEW_REG_DATE 
+		FROM REVIEW r 
+		JOIN CLASS_HISTORY ch ON r.CLASS_IDX = ch.CLASS_IDX
+		GROUP BY r.REVIEW_IDX
+		ORDER BY REVIEW_IDX DESC 
+		LIMIT #{param1} OFFSET #{param2};
+	</select>
+	
+	<select id="allCount" resultType="Integer">
+		SELECT CEIL(COUNT(REVIEW_IDX)/#{param1}) AS pages FROM REVIEW
+	</select>
+	
+	<insert id="write"
+	useGeneratedKeys="true"
+	keyColumn = "idx"
+	keyProperty="idx"
+	parameterType="com.sona.music.board.dto.ReviewDTO"
+	>
+	INSERT INTO REVIEW(SCORE,REVIEW_TITLE,REVIEW_CONTENT,)
+			VALUES(#{score},#{review_title},#{review_content})
+	
+	</insert>
+	
+	<insert id="fileWrite">
+		INSERT INTO PHOTO_BOARD(ORI_FILENAME,NEW_FILENAME,POST_IDX,PHOTO_CATEGORY)
+			VALUES(#{param1},#{param2},#{param3},#{param4})
+	
+	</insert>
+	
+	
+	
+	
+	
+
 </mapper>

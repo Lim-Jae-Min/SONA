@@ -74,7 +74,7 @@
 <header id="usermain">
         <table id="mainmenu">
             <tr>
-                <th class="menu"><img src="../HTML/img/KakaoTalk_20240402_125012976.png" id="logo"></th>
+                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
                 <th class="menu"><a href="#">추천 강의</a></th>
                 <th class="menu"><a href="#">전체 강의</a></th>
                 <th class="menu"><a href="#">고객센터</a></th>

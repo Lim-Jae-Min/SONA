@@ -12,7 +12,7 @@
 </head>
 <body>
 <body>
-    <header>
+    <header id="usermain">
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>

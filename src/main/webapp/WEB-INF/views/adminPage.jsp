@@ -11,8 +11,8 @@
 </head>
 <body>
 <body>
-    <header>
-        <table id="adminmain">
+    <header id="adminmain">
+        <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
                 <th class="menu"></th>

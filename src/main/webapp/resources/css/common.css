@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
 }
-header {
+#usermain {
     background-color: #BEE6FF;
     color: #fff;
     padding: 10px;
@@ -62,6 +62,26 @@ header a {
     height: 100vh;
 }
 #sidemenu a {
+    color: black;
+    text-decoration: none;
+    display: block; /* 링크를 블록 레벨 요소로 표시하여 세로로 정렬 */
+    padding: 10px;
+}
+#adminmain {
+    background-color: gray;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+#adminside {
+    background-color: lightgray;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    width: 200px; /* 메뉴 창 너비 */
+    height: 100vh;
+}
+#adminside a {
     color: black;
     text-decoration: none;
     display: block; /* 링크를 블록 레벨 요소로 표시하여 세로로 정렬 */

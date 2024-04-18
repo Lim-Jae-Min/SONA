@@ -24,8 +24,39 @@ public class MainController {
 		model.addAttribute("loginName", "홍인표");
 		model.addAttribute("alarmCount", 2);
 		model.addAttribute("msg", user_id);
-		return "adminPage";
+		return "main/main";
 	}
 	
+	@RequestMapping(value="/recommendList.go")
+	public String recommendList(Model model) {
+		model.addAttribute("loginName", "홍인표");
+		model.addAttribute("alarmCount", 2);
+		model.addAttribute("msg", "추천 강의 게시판");
+		return "lesson/recommendLessonList";
+	}
+	
+	@RequestMapping(value="/allList.go")
+	public String allList(Model model) {
+		model.addAttribute("loginName", "홍인표");
+		model.addAttribute("alarmCount", 2);
+		model.addAttribute("msg", "전체 강의 게시판");
+		return "lesson/allLessonList";
+	}
+	
+	@RequestMapping(value="/serviceCenter.go")
+	public String serviceCenter(Model model) {
+		model.addAttribute("loginName", "홍인표");
+		model.addAttribute("alarmCount", 2);
+		model.addAttribute("msg", "고객 센터 이동");
+		return "notice/noticeList";
+	}
+	
+	@RequestMapping(value="/myPage.go")
+	public String myPage(Model model) {
+		model.addAttribute("loginName", "홍인표");
+		model.addAttribute("alarmCount", 2);
+		model.addAttribute("msg", "마이페이지 이동");
+		return "studentMyPage/studentPage";
+	}
 	
 }

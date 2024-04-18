@@ -17,7 +17,7 @@ body {
     width: 70px;
     height: 70px;
 }
-#alarm {
+.miniimg {
     width: 20px;
     height: 20px;
 }
@@ -27,10 +27,9 @@ body {
     top: 30px;
     right: 30px;
 }
-header a {
+a {
     color: black;
     text-decoration: none;
-    padding: 10px;
 }
 #mainmenu {
     display: inline;
@@ -62,8 +61,6 @@ header a {
     height: 100vh;
 }
 #sidemenu a {
-    color: black;
-    text-decoration: none;
     display: block; /* 링크를 블록 레벨 요소로 표시하여 세로로 정렬 */
     padding: 10px;
 }
@@ -86,4 +83,21 @@ header a {
     text-decoration: none;
     display: block; /* 링크를 블록 레벨 요소로 표시하여 세로로 정렬 */
     padding: 10px;
+}
+#slide {
+    height: 250px;
+    width: 300px;
+    position: absolute;
+    top: 10%;
+    right: 1%;
+    border: solid 2px black;
+    background-color: white;
+    padding: 10px;
+    display: none;
+}
+#manner{
+    color: red;
+}
+#userName {
+	cursor: pointer;
 }

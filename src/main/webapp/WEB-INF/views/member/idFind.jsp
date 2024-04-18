@@ -60,40 +60,44 @@ input[type="email"] {
 </style>
 </head>
 <body>
-    <header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu"><a href="#">추천 강의</a></th>
-                <th class="menu"><a href="#">전체 강의</a></th>
-                <th class="menu"><a href="#">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <tr>
-                <th><img src="resources/img/alarm.png" id="alarm"></th>
-                <th><a href="#">로그인</a></th>
-            </tr>
-        </table>
-    </header>
+<%@ include file="layout/header.jsp" %>
+
     <div>
         ${msg}
     </div>
     
 
-<form id="findForm" action="${contextPath }/member/findIdCheck" method="post">
+<form id="findForm" action="/member/findIdCheck" method="post">
    <div class="form-group input-group">
-    <input type="text" name="email" id="email" placeholder="이메일">
-    <button type="button" id="idFindEmailSubmit" onclick="submitEmail()">전송</button>
-</div>
-<div class="form-group input-group">
-    <input type="email" name="CertificationNumber" id="CertificationNumber" placeholder="인증번호">
-    <button type="button" id="idFindCertSubmit" onclick="submitCert()">확인</button>
-</div>
+    	<input type="text" name="email" id="email" placeholder="이메일">
+   	 	<button type="button" id="idFindEmailSubmit" onclick="submitEmail()">전송</button>
+	</div>
+	<div class="form-group input-group">
+	    <input type="email" name="CertificationNumber" id="CertificationNumber" placeholder="인증번호">
+	    <button type="button" id="idFindCertSubmit" onclick="submitCert()">확인</button>
+	</div>
     <button type="submit" id="id-find" onclick="findSubmit(); return false;">아이디 찾기</button>
 </form>
 	<%@ include file="layout/footer.jsp" %>
 </body>
 <script>
+function submitEmail(){
+	var email = $('input[name="email"]').val();
+	// ajax 를 이용한 비동기 통신
+	$.ajax({
+		type:'post', // method 방식
+		url:'findIdCheck.do', // 요청할 주소
+		data:{'email':email}, //파라메터
+		success:function(data){ // 통신 성공시
+	// ajax 에서 XmlHttpRequest 객체를 통해 대신 받아와서
+	// 여기에 뿌려준다.
+			console.log(data);
+				alert('이메일로 인증번호를 보냈습니다.');		
+		},
+		error:function(error){ //통신 실패시
+			console.log(error);
+		}
+	});
+}
 </script>
 </html>

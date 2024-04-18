@@ -2,16 +2,51 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<style>
-    
-</style>
-</head>
-<body>
-    <header id="usermain">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>메인화면</title>
+        <style>
+            /* 여기에 CSS 스타일을 추가하세요 */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            header {
+                background-color: #BEE6FF;
+                color: #fff;
+                padding: 10px;
+                text-align: center;
+            }
+            .menu {
+                width: 170px;
+            }
+            #logo {
+                width: 70px;
+                height: 70px;
+            }
+            #alarm {
+                width: 20px;
+                height: 20px;
+            }
+            #mymenu {
+                position: absolute;
+                top: 30px;
+                right: 30px;
+            }
+            header a {
+                color: black;
+                text-decoration: none;
+                padding: 10px;
+            }
+            #mainmenu {
+                display: inline;
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+            <header id="usermain">
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
@@ -46,48 +81,6 @@
             </c:if>
         </table>
     </header>
-    <div>
-        ${msg}
-    </div>
-    <div id="footer">
-        <li>상호명 : SONA</li>
-        <li>대표자 : 김○○</li>
-        <li>전화 : 02-123-4567</li>
-        <li>팩스 : 02-123-4568</li>
-        <li>사업자등록번호 : 000-00-00000</li>
-        <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
-    </div>
-</body>
+    </body>
 </html>
-    <div id="slide">
-        <table>
-            <tr>
-                <td colspan="2">${loginName} 회원님</td>
-                <td>&nbsp&nbsp&nbsp</td>
-                <td id="manner">♥ ${manner}</td>
-            </tr>
-        </table>
-        <br/>
-        <div>보유 포인트 : <span>${totalPoint}</span></div>
-        <br/>
-        <div><a href="#">내가 쓴 리뷰</a></div>
-        <br/>
-        <div><a href="#">마이페이지</a></div>
-        <br/><br/><br/>
-        <div><a href="#">로그아웃</a></div>
-    </div>
-</body>
-<script>
-
-$('#userName').click(function slide() {
-	var display = $('#slide').css('display');
-    if (display == 'none') {
-        $('#slide').css('display', 'block');
-    }
-    if (display == 'block') {
-        $('#slide').css('display', 'none');
-    }
-});
-
-</script>
 </html>

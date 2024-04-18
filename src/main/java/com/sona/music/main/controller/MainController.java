@@ -24,11 +24,8 @@ public class MainController {
 		model.addAttribute("loginName", "홍인표");
 		model.addAttribute("alarmCount", 2);
 		model.addAttribute("msg", user_id);
-<<<<<<< HEAD
+
 		return "member/idFind";
-=======
-		return "adminPage";
->>>>>>> origin/master
 	}
 	
 	

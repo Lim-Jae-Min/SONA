@@ -16,9 +16,9 @@
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu"><a href="#">추천 강의</a></th>
-                <th class="menu"><a href="#">전체 강의</a></th>
-                <th class="menu"><a href="#">고객센터</a></th>
+                <th class="menu"><a href="recommendList.go">추천 강의</a></th>
+                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
         <table id="mymenu">
@@ -63,7 +63,7 @@
             <tr>
                 <td colspan="2">${loginName} 회원님</td>
                 <td>&nbsp&nbsp&nbsp</td>
-                <td id="manner">♥ ${manner}</td>
+                <td class="manner">♥ ${manner}</td>
             </tr>
         </table>
         <br/>
@@ -71,7 +71,7 @@
         <br/>
         <div><a href="#">내가 쓴 리뷰</a></div>
         <br/>
-        <div><a href="#">마이페이지</a></div>
+        <div><a href="myPage.go">마이페이지</a></div>
         <br/><br/><br/>
         <div><a href="#">로그아웃</a></div>
     </div>

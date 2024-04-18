@@ -18,16 +18,16 @@ public class LessonController {
 	
 	@Autowired LessonService lessonService;
 	
-	@RequestMapping(value="/list.ajax")
-	@ResponseBody // response 객체로 반환
-	public Map<String, Object> recommendListCall(String page) {
-		logger.info("listCall 요청");
-		logger.info("요청 페이지 : "+page);		
-		int currPage = Integer.parseInt(page);
-		int pagePerCnt = 10;
-		Map<String, Object> map = lessonService.recommendListCall(currPage, pagePerCnt);
-		
-		return map;
-	}
+//	@RequestMapping(value="/list.ajax")
+//	@ResponseBody // response 객체로 반환
+//	public Map<String, Object> recommendListCall(String page) {
+//		logger.info("listCall 요청");
+//		logger.info("요청 페이지 : "+page);		
+//		int currPage = Integer.parseInt(page);
+//		int pagePerCnt = 10;
+//		Map<String, Object> map = lessonService.recommendListCall(currPage, pagePerCnt);
+//		
+//		return map;
+//	}
 	
 }

@@ -21,10 +21,29 @@
             </tr>
         </table>
         <table id="mymenu">
-            <tr>
-                <th><img src="resources/img/alarm.png" id="alarm"></th>
-                <th><a href="#">로그인</a></th>
-            </tr>
+            <c:if test="${loginName != null}">
+                <tr>
+                    <c:if test="${alarmCount > 0}">
+                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
+                    </c:if>
+                    <c:if test="${alarmCount == 0}">
+                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
+                    </c:if>
+                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                    <th><div id="userName">${loginName}</div></th>
+                </tr>
+            </c:if>
+            <c:if test="${loginName == null}">
+                <tr>
+                    <c:if test="${alarmCount > 0}">
+                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
+                    </c:if>
+                    <c:if test="${alarmCount == 0}">
+                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
+                    </c:if>
+                    <th><a href="#">로그인</a></th>
+                </tr>
+            </c:if>
         </table>
     </header>
     <div id="wrapper">
@@ -53,9 +72,36 @@
         <li>사업자등록번호 : 000-00-00000</li>
         <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
     </div>
-</body>
-</html>
+    <div id="slide">
+        <table>
+            <tr>
+                <td colspan="2">${loginName} 회원님</td>
+                <td>&nbsp&nbsp&nbsp</td>
+                <td id="manner">♥ ${manner}</td>
+            </tr>
+        </table>
+        <br/>
+        <div>보유 포인트 : <span>${totalPoint}</span></div>
+        <br/>
+        <div><a href="#">내가 쓴 리뷰</a></div>
+        <br/>
+        <div><a href="#">마이페이지</a></div>
+        <br/><br/><br/>
+        <div><a href="#">로그아웃</a></div>
+    </div>
 </body>
 <script>
+
+$('#userName').click(function slide() {
+	var display = $('#slide').css('display');
+    if (display == 'none') {
+        $('#slide').css('display', 'block');
+    }
+    if (display == 'block') {
+        $('#slide').css('display', 'none');
+    }
+});
+
+
 </script>
 </html>

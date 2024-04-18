@@ -21,9 +21,10 @@ public class MainController {
 		logger.info("메인화면 접속");
 		
 		String user_id = mainService.id();
-		
+		model.addAttribute("loginName", "홍인표");
+		model.addAttribute("alarmCount", 2);
 		model.addAttribute("msg", user_id);
-		return "studentPage";
+		return "adminPage";
 	}
 	
 	

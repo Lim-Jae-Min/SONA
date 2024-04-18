@@ -5,8 +5,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
+<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+    
 </style>
 </head>
 <body>
@@ -15,9 +19,9 @@
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu"><a href="#">추천 강의</a></th>
-                <th class="menu"><a href="#">전체 강의</a></th>
-                <th class="menu"><a href="#">고객센터</a></th>
+                <th class="menu"><a href="recommendList.go">추천 강의</a></th>
+                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
         <table id="mymenu">
@@ -46,24 +50,9 @@
             </c:if>
         </table>
     </header>
-    <div id="wrapper">
-            <div id="sidemenu">
-                <h3>마이페이지</h3>
-                <hr/>
-                <a href="#">마이페이지</a>
-                <a href="#">개인 정보 수정</a>
-                <a href="#">즐겨찾기 강사</a>
-                <a href="#">숨김 강사</a>
-                <a href="#">내가 작성한 Q&A</a>
-                <a href="#">포인트 내역</a>
-                <a href="#">내가 받은 리뷰</a>
-                <a href="#">내가 작성한 리뷰</a>
-                <a href="#">수강 이력</a>
-            </div>
-            <div id="content">
-                ${msg}
-            </div>
-        </div>
+    <div>
+        ${msg}
+    </div>
     <div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>
@@ -77,7 +66,7 @@
             <tr>
                 <td colspan="2">${loginName} 회원님</td>
                 <td>&nbsp&nbsp&nbsp</td>
-                <td id="manner">♥ ${manner}</td>
+                <td class="manner">♥ ${manner}</td>
             </tr>
         </table>
         <br/>
@@ -101,7 +90,6 @@ $('#userName').click(function slide() {
         $('#slide').css('display', 'none');
     }
 });
-
 
 </script>
 </html>

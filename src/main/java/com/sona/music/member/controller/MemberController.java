@@ -26,12 +26,6 @@ public class MemberController {
     @Autowired MemberService memberService;
     
     
-    @RequestMapping(value = "/idFind.go")
-    public String idFind(){
-    	
-    	return "member/idFind";
-    }
-    
     
     
     @RequestMapping(value ="/findIdEmail.do", method = RequestMethod.POST)

@@ -13,6 +13,10 @@ public class MemberDTO {
 	private String USER_TYPE;
 	private int USER_DELETE;
 	private Date USER_REG_DATE;
+	private String MANNER;
+    private int POINT;
+	
+	
 	public String getUSER_ID() {
 		return USER_ID;
 	}
@@ -66,6 +70,18 @@ public class MemberDTO {
 	}
 	public void setUSER_REG_DATE(Date uSER_REG_DATE) {
 		USER_REG_DATE = uSER_REG_DATE;
+	}
+	public String getMANNER() {
+		return MANNER;
+	}
+	public void setMANNER(String mANNER) {
+		MANNER = mANNER;
+	}
+	public int getPOINT() {
+		return POINT;
+	}
+	public void setPOINT(int pOINT) {
+		POINT = pOINT;
 	}
 
 	

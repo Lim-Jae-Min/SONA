@@ -43,4 +43,12 @@
 		FROM USERS u WHERE u.USER_ID = #{param1} AND u.USER_PASS = #{param2}	
 	</select>
 	
+	<select id="overlay" resultType="int">
+		SELECT COUNT(USER_ID) FROM USERS WHERE USER_ID = #{param1}
+   </select>
+	
+	<insert id ="join" parameterType="map">
+		INSERT INTO USERS(USER_ID,USER_NAME,USER_EMAIL,USER_PASS,USER_PHONE,USER_ACCOUNTNUMBER,USER_TYPE,USER_BANK)
+		VALUES(#{id},#{name},#{email},#{pw},#{phone},#{accountnumber},#{usertype},#{bank})
+	</insert>
 </mapper>	

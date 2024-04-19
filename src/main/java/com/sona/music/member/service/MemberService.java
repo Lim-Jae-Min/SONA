@@ -1,6 +1,10 @@
 package com.sona.music.member.service;
 
+<<<<<<< HEAD
 import java.util.List;
+=======
+import java.util.Map;
+>>>>>>> origin/master
 
 import javax.servlet.http.HttpSession;
 
@@ -53,6 +57,16 @@ public class MemberService {
 	public int changePw(String changePwNeedId, String newPassword) {
 		// TODO Auto-generated method stub
 		return memberDAO.changePw(changePwNeedId,newPassword);
+		
+		
+	public Object overlay(String id) {
+		return memberDAO.overlay(id);
+	}
+
+	public int join(Map<String, String> param) {
+		logger.info("회원가입 param 값: " + param);
+		int row = memberDAO.join(param);
+		return row;
 	}
 	
 }

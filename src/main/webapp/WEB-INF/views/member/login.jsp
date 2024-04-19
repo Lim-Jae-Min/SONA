@@ -26,7 +26,7 @@
     color:#111;
     border-bottom: px solid #000;
     text-align: center;
-    margin-right: 4px;
+    margin-right: -5px;
 }
 
 .login ul {
@@ -39,8 +39,8 @@
 }
 
 .login input[type="text"],
-.login input[type="password"],
-.login button {
+.login input[type="password"]
+{
     width: calc(80% - 20px); /* 입력란과 버튼을 가로 폭을 동일하게 설정합니다. */
     padding: 10px; /* 내부 여백 설정 */
     margin-left: 60px;
@@ -50,7 +50,9 @@
     background-color: #BEE6FF;
     border-radius: 6px;
     font-size: 100%;
-    margin-bottom: 0;
+    width: 81%;
+    height: 45px;
+    margin-left: 58px;
 }
 
 .login input[type="text"],
@@ -62,6 +64,7 @@
     display: flex;
     justify-content: center;
     margin-top: 0;
+    margin-left: 22px;
 }
 .login div ul li {position: relative; padding: 0 40px;}
 .login div ul li~li:after {content: ""; position: absolute; left: 0; top: 4px;

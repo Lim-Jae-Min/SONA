@@ -9,11 +9,11 @@ public interface LessonDAO {
 	List<LessonDTO> recommendListCall(int pagePerCnt, int start, String condition, String content);
 
 	List<LessonDTO> allListCall(int pagePerCnt, int start, String condition, String content, String loca,
-			String category, String inst);
+			String instCategory, String inst);
 
 	Object recommendListCount(int pagePerCnt, String condition, String content);
 
-	Object allListCount(int pagePerCnt, String condition, String content, String loca, String category,
+	Object allListCount(int pagePerCnt, String condition, String content, String loca, String instCategory,
 			String inst);
 
 }

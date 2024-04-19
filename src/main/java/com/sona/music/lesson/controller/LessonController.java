@@ -34,17 +34,17 @@ public class LessonController {
 	
 	@RequestMapping(value="/allList.ajax")
 	@ResponseBody // response 객체로 반환
-	public Map<String, Object> allListCall(String page, String condition, String content, String loca, String category, String inst) {
+	public Map<String, Object> allListCall(String page, String condition, String content, String loca, String instCategory, String inst) {
 		logger.info("listCall 요청");
 		logger.info("요청 페이지 : "+ page);
 		logger.info("content : " + content);
 		logger.info("condition : " + condition);
 		logger.info("loca : " + loca);
-		logger.info("category : " + category);
+		logger.info("instCategory : " + instCategory);
 		logger.info("inst : " + inst);
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 10;
-		Map<String, Object> map = lessonService.allListCall(currPage, pagePerCnt, condition, content, loca, category, inst);
+		Map<String, Object> map = lessonService.allListCall(currPage, pagePerCnt, condition, content, loca, instCategory, inst);
 		
 		return map;
 	}

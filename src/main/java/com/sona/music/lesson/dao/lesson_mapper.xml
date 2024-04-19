@@ -35,27 +35,27 @@
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
-		<if test="param4 != null || param5 != '지역 전체' || param6 != null || param7 != null">
+		<if test="param4 != '' || param5 != '지역 전체' || param6 != '' || param7 != ''">
 			WHERE
-			<if test="param4 != null">
+			<if test="param4 != ''">
 				${param3} LIKE CONCAT('%', #{param4}, '%')
-				<if test="param5 != '지역 전체' || param6 != null || param7 != null">
+				<if test="param5 != '지역 전체' || param6 != '' || param7 != ''">
 					AND
 				</if>
 			</if>
 			<if test="param5 != '지역 전체'">
 				class_location = #{param5}
-				<if test="param6 != null || param7 != null">
+				<if test="param6 != '' || param7 != ''">
 					AND
 				</if>
 			</if>
-			<if test="param6 != null">
+			<if test="param6 != ''">
 				inst_category_idx = #{param6}
-				<if test="param7 != null">
+				<if test="param7 != ''">
 					AND
 				</if>
 			</if>
-			<if test="param7 != null">
+			<if test="param7 != ''">
 				class_inst = #{param7}
 			</if>
 			
@@ -72,27 +72,27 @@
 	
 	<select id="allListCount" resultType="Integer">
 		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = '어쿠스틱 기타'
-		<if test="param3 != null || param4 != '지역 전체' || param5 != null || param6 != null">
+		<if test="param3 != '' || param4 != '지역 전체' || param5 != '' || param6 != ''">
 			AND
-			<if test="param3 != null">
+			<if test="param3 != ''">
 				${param2} LIKE CONCAT('%', #{param3}, '%')
-				<if test="param4 != '지역 전체' || param5 != null || param6 != null">
+				<if test="param4 != '지역 전체' || param5 != '' || param6 != ''">
 					AND
 				</if>
 			</if>
 			<if test="param4 != '지역 전체'">
 				class_location = #{param4}
-				<if test="param5 != null || param6 != null">
+				<if test="param5 != '' || param6 != ''">
 					AND
 				</if>
 			</if>
-			<if test="param5 != null">
+			<if test="param5 != ''">
 				inst_category_idx = #{param5}
-				<if test="param6 != null">
+				<if test="param6 != ''">
 					AND
 				</if>
 			</if>
-			<if test="param6 != null">
+			<if test="param6 != ''">
 				class_inst = #{param6}
 			</if>
 			

@@ -65,6 +65,15 @@
 	width: 120px;
 	height: 24px;
 }
+#newClass {
+	width: 100px;
+	height: 30px;
+	background-color: #0070b6;
+	color: white;
+	border: none;
+	margin-left: 80px;
+	display: block;
+}
 </style>
 </head>
 <body>
@@ -119,7 +128,7 @@
             <span id="searchbox">
             	<br/>
             	<select name="location" id="location">
-					<option value="지역전체">전체</option>
+					<option value="지역 전체">전체</option>
 					<option value="서울특별시 강남구">서울특별시 강남구</option>
 					<option value="서울특별시 강동구">서울특별시 강동구</option>
 					<option value="서울특별시 강북구">서울특별시 강북구</option>
@@ -165,11 +174,15 @@
                     <option value="class_location">지역</option>
                 </select>
                 <input type="text" id="searchContent">
-                <input type="button" value="검색">
+                <input type="button" id="search" value="검색">
             </span>
         </div>
-        <br/><br/><br/>
+        <br/>
         <table id="listTable">
+        	<tr>
+        		<td><button id="newClass" onclick="location.href='lessonOpen.go'">강의 개설</button></td>
+        	</tr>
+        	<tr class="blank"></tr>
         	<tbody id="lessonList"></tbody>
             <tr>
       			<td colspan="5">
@@ -181,6 +194,7 @@
       			</td>
       		</tr>
         </table>
+        
     </div>
     <div id="footer">
         <li>상호명 : SONA</li>
@@ -218,6 +232,11 @@ $('#userName').click(function slide() {
         $('#slide').css('display', 'none');
     }
 });
+
+if ('${user_type}' == '강사') {
+	$('#newClass').css('display', 'block');
+}
+
 
 var category1 = ['클래식 피아노', '재즈 피아노', '피아노 반주'];
 var category2 = ['어쿠스틱 기타', '일렉 기타', '베이스 기타'];
@@ -271,14 +290,14 @@ $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비�
 	listCall(showPage);
 });
 
-$('input[type="button"]').click(function (){
+$('#search').click(function (){
 	$('#pagination').twbsPagination('destroy');
 	listCall(showPage);
 });
 
 
 
-function listCall(page, condition, searchContent){
+function listCall(page){
     $.ajax({
        type:'get',
        url:'./allList.ajax',
@@ -292,6 +311,7 @@ function listCall(page, condition, searchContent){
        },
        dataType:'json',
        success:function(data){
+    	  console.log('시작');
           drawList(data.list);
           console.log(data);          
           // 플러그인 추가
@@ -310,8 +330,10 @@ function listCall(page, condition, searchContent){
         	  }
           });                    
        },
-       error:function(error){
-          console.log(error)
+       error:function(request, status, error){
+    	   console.log("code: " + request.status)
+           console.log("message: " + request.responseText)
+           console.log("error: " + error);
        }
 	});
 }

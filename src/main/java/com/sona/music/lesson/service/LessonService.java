@@ -36,19 +36,21 @@ public class LessonService {
 	}
 
 	public Map<String, Object> allListCall(int currPage, int pagePerCnt, String condition, String content,
-			String loca, String category, String inst) {
+			String loca, String instCategory, String inst) {
 		
 		int start = (currPage-1) * pagePerCnt;
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<LessonDTO> list = lessonDAO.allListCall(pagePerCnt, start, condition, content, loca, category, inst);
+		List<LessonDTO> list = lessonDAO.allListCall(pagePerCnt, start, condition, content, loca, instCategory, inst);
+		String test = list.get(0).getClass_name();
+		logger.info("test : " + test);
 		logger.info("list : {}", list);
 		logger.info("list size : "+list.size());
 		result.put("list", list);		
 		result.put("currPage", currPage);
-		result.put("totalPages", lessonDAO.allListCount(pagePerCnt, condition, content, loca, category, inst));
+		result.put("totalPages", lessonDAO.allListCount(pagePerCnt, condition, content, loca, instCategory, inst));
 		
-		return null;
+		return result;
 	}
 	
 }

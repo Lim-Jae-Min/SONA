@@ -6,10 +6,14 @@ import com.sona.music.lesson.dto.LessonDTO;
 
 public interface LessonDAO {
 
-	List<LessonDTO> recommendListCall(int pagePerCnt, int start);
+	List<LessonDTO> recommendListCall(int pagePerCnt, int start, String condition, String content);
 
-	int allCount(int pagePerCnt);
+	List<LessonDTO> allListCall(int pagePerCnt, int start, String condition, String content, String loca,
+			String instCategory, String inst);
 
-	List<LessonDTO> recommendListCallSearch(String condition, String content, int pagePerCnt, int start);
+	Object recommendListCount(int pagePerCnt, String condition, String content);
+
+	Object allListCount(int pagePerCnt, String condition, String content, String loca, String instCategory,
+			String inst);
 
 }

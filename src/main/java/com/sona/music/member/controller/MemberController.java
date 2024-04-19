@@ -26,14 +26,6 @@ public class MemberController {
     @Autowired MemberService memberService;
     
     
-    @RequestMapping(value = "/idFind.go")
-    public String idFind(){
-    	
-    	return "member/idFind";
-    }
-    
-    
-    
     @RequestMapping(value ="/findIdEmail.do", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> findIdEmail (String email, HttpSession session){
@@ -67,11 +59,16 @@ public class MemberController {
 		
 		
 		MemberDTO info = memberService.login(id, pw);
-		logger.info("loginId : "+ info.getUSER_ID().toString());
+//		logger.info("loginId : "+ info.getUSER_ID().toString());
 		
 		if(info != null) {
 			page = "/main/main";
-			session.setAttribute("logininfo", info);	
+			session.setAttribute("loginId", info.getUSER_ID());	
+			session.setAttribute("user_type", info.getUSER_TYPE());	
+			session.setAttribute("user_name", info.getUSER_NAME());
+			String test = (String) session.getAttribute("loginId");
+			
+			logger.info("test : " + test);
 		}else {
 			model.addAttribute("msg","아이디 또는 비밀번호 확인해주세요");
 		}

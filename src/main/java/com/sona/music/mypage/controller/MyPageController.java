@@ -26,7 +26,7 @@ public class MyPageController {
 		String page = "member/login";
 		String loginId = (String) session.getAttribute("loginId");
 		if (loginId != null) {
-			MyPageDTO userInfo = myPageService.getUserInfo();
+			MyPageDTO userInfo = myPageService.getUserInfo(loginId);
 			model.addAttribute("userInfo",userInfo);
 			page = "studentMyPage/studentPage";
 		}

@@ -11,6 +11,8 @@
             u.user_id,
             u.user_email,
             u.user_phone,
+            u.user_bank,
+            u.user_accountnumber,
             af.applyform_inst,
             af.applyform_location,
             af.applyform_days,

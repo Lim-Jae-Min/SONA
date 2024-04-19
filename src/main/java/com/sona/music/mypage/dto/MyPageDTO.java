@@ -9,6 +9,7 @@ public class MyPageDTO {
 	private String user_email;
 	private String user_phone;
 	private String user_accountnumber;
+	private String user_bank;
 	private String user_type;
 	private boolean user_delete;
 	private Date user_reg_date;
@@ -101,6 +102,12 @@ public class MyPageDTO {
 	}
 	public void setHave_inst(boolean have_inst) {
 		this.have_inst = have_inst;
+	}
+	public String getUser_bank() {
+		return user_bank;
+	}
+	public void setUser_bank(String user_bank) {
+		this.user_bank = user_bank;
 	}
 
 

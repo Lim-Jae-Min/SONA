@@ -15,8 +15,8 @@ public class MyPageService {
 	
 	@Autowired MyPageDAO myPageDAO;
 
-	public MyPageDTO getUserInfo() {
-		return myPageDAO.getUserInfo();
+	public MyPageDTO getUserInfo(String loginId) {
+		return myPageDAO.getUserInfo(loginId);
 	}
 
 	

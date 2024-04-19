@@ -6,6 +6,6 @@ import com.sona.music.mypage.dto.MyPageDTO;
 public interface MyPageDAO {
 
 
-	MyPageDTO getUserInfo();
+	MyPageDTO getUserInfo(String loginId);
 
 }

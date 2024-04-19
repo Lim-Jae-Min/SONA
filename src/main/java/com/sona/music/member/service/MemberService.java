@@ -1,5 +1,7 @@
 package com.sona.music.member.service;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -34,6 +36,16 @@ public class MemberService {
 		logger.info("여긴 서비스 ");
 		logger.info("id : {} | pw : {}", id, pw);
 		return memberDAO.login(id,pw);
+	}
+
+	public Object overlay(String id) {
+		return memberDAO.overlay(id);
+	}
+
+	public int join(Map<String, String> param) {
+		logger.info("회원가입 param 값: " + param);
+		int row = memberDAO.join(param);
+		return row;
 	}
 	
 }

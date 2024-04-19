@@ -52,7 +52,7 @@ public class MemberController {
 		return "member/idFind";
 	}
 	
-	
+	/*로그인*/
 	@RequestMapping(value="/login.do")
 	public String login(String id, String pw, Model model, HttpSession session) {
 		String page = "member/login";
@@ -93,25 +93,44 @@ public class MemberController {
 		return page;
 	
 	}
-	/*
+	
+	/*중복 체크*/
+	@RequestMapping(value="/overlay.do")
+	@ResponseBody
+	public Map<String, Object> overlay(String id){
+		logger.info("id = " + id);
+		Map<String , Object> map = new HashMap<String, Object>();
+		map.put("use", memberService.overlay(id));
+		
+		return map;
+	}
+	
+	
+	
+	
+	
+
 	@RequestMapping(value="/join.do")
 	public String join(Model model, @RequestParam Map<String, String> param) {
 		logger.info("회원가입 요청");
 		String msg = "회원가입에 실패하였습니다.";
-		String page = "joinForm";
+		String page = "member/joinForm";
 		
 		int row = memberService.join(param);
 		logger.info("회원가입 row 반환값: "+ row);
 		
 		if(row == 1) {
-			page = "login";
+			page = "member/login";
 			msg = "회원가입에 성공하였습니다.";
+			 // 회원 가입 후 회원타입이 수강생인 경우
+			
+			 // 회원 가입 후 회원타입이 강사인 경우
 		}
 		
 		model.addAttribute("msg",msg);		
 		return page;
 	}
-*/	
+
 	
 	
     @RequestMapping(value ="/idFindResult.go", method = RequestMethod.POST)

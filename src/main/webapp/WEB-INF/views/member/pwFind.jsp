@@ -76,18 +76,21 @@ input[type="password"] {
     <div>
         ${msg}
     </div>
-    
 
 <form id="findForm" method="post">
-   <div class="form-group input-group">
-    	<input type="text" name="email" id="email" placeholder="이메일">
-   	 	<button type="button" id="idFindEmailSubmit" onclick="submitEmail()">전송</button>
-	</div>
-	<div class="form-group input-group">
-	    <input type="password" name="CertificationNumber" id="CertificationNumber" placeholder="인증번호">
-	    <button type="button" id="idFindCertSubmit" onclick="submitCert()">확인</button>
-	</div>
-    <button type="submit" id="id-find" onclick="findSubmit()">아이디 찾기</button>
+    <div class="form-group input-group">
+        <input type="text" name="username" id="username" placeholder="아이디">
+    </div>
+    <div class="form-group input-group">
+        <input type="text" name="email" id="email" placeholder="이메일">
+        <button type="button" id="idFindEmailSubmit" onclick="submitEmail()">전송</button>
+    </div>
+    <!-- 아이디 입력란 추가 -->
+    <div class="form-group input-group">
+        <input type="password" name="CertificationNumber" id="CertificationNumber" placeholder="인증번호">
+        <button type="button" id="idFindCertSubmit" onclick="submitCert()">확인</button>
+    </div>
+    <button type="submit" id="id-find" onclick="findSubmit()">비밀번호 찾기</button>
 </form>
 	<div id = "footer">
 	<%@ include file="layout/footer.jsp" %>
@@ -115,19 +118,27 @@ var cfEmail = null;
 function submitEmail() {
 	console.log('click');
 	var email = $('input[name="email"]').val();
+	var username = $('input[name="username"]').val();
+	console.log(username);
 	//ajax를 이용한 비동기 통신 (자바스크렙트를 사용해 보안성이 좋지 못함 취약함)
 	console.log(email);
 	$.ajax({
 		type:'post', // method 방식
-		url:'findIdEmail.do', // 요청한 주소
-		data:{'email':email}, // 파라메터
+		url:'findPwEmail.do', // 요청한 주소
+		data:{'email':email,
+			   'username':username
+		}, // 파라메터
 		success:function(data){ // 통신 성공했을경우
 		//ajax에서 XmlhttpRequest 객체를 통해 대신 받아와서
 		//여기에 뿌려준다
 			console.log(data.checkedEmail);
 		var chkEmail = data.checkedEmail;
-			if(data.checkedEmail ==null){
-				alert('이메일을 다시 입력해 주세요');
+		
+			if(data.checkedId == null){
+				alert('아이디를 다시 입력해 주세요');
+			
+			}else if(data.checkedEmail ==null){
+				alert('아이디에 맞는 이메일이 아닙니다.');
 				$('input[name="email"]').val('');
 			}else{
 				alert(chkEmail+'로 인증번호를 보냈습니다.');
@@ -164,11 +175,12 @@ function submitCert() {
 }
 
 function findSubmit(){
+	
 	if(cfn==false){
 		alert("인증번호를 확인 해주세요.");
 	}else if(cfn==true){
 		var email = cfEmail;
-	$('#findForm').attr("action","idFindResult.do").submit();
+	$('#findForm').attr("action","pwFindResult.do").submit();
 	}
 	
 }

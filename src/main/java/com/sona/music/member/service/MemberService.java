@@ -1,5 +1,7 @@
 package com.sona.music.member.service;
 
+import java.util.List;
+
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -18,16 +20,8 @@ public class MemberService {
 	
 	@Autowired MemberDAO memberDAO;
 
-	public String findIdEmail(String email, HttpSession session) {
+	public String findIdEmail(String email) {
 		
-		// if로 조건붙어주기
-		 String findId = memberDAO.session(email);
-		 if(findId != null) {
-			 session.setAttribute("findId", findId);
-			 logger.info("세션 값 : " + session.getAttribute(findId));
-		 }else {
-			 logger.info("세션 값 받기 실패");
-		 }
 		
 		return  memberDAO.findIdEmail(email);
 	}
@@ -38,6 +32,31 @@ public class MemberService {
 		return memberDAO.login(id,pw);
 	}
 
+	public List<String> findId(String email) {
+
+		return memberDAO.findId(email);
+	}
+
+	public String findPw(String username, String email) {
+		// TODO Auto-generated method stub
+		return memberDAO.findPw(username,email);
+	}
+
+	public String findPwcheckId(String username) {
+		// TODO Auto-generated method stub
+		return memberDAO.findPwcheckId(username);
+	}
+
+	public String findPwEmail(String email, String username) {
+		// TODO Auto-generated method stub
+		return memberDAO.findPwEmail(email,username);
+	}
+
+	public int changePw(String changePwNeedId, String newPassword) {
+		// TODO Auto-generated method stub
+		return memberDAO.changePw(changePwNeedId,newPassword);
+	}
+		
 	public Object overlay(String id) {
 		return memberDAO.overlay(id);
 	}

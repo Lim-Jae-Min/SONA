@@ -1,5 +1,8 @@
 package com.sona.music.member.dao;
 
+
+import java.util.List;
+
 import java.util.Map;
 
 import com.sona.music.member.dto.MemberDTO;
@@ -10,7 +13,16 @@ public interface MemberDAO {
 	
 	MemberDTO login(String id, String pw);
 
-	String session(String email);
+	List<String> findId(String email);
+
+	String findPw(String username, String email);
+
+	String findPwcheckId(String username);
+	
+	String findPwEmail(String email, String username);
+
+	int changePw(String changePwNeedId, String newPassword);
+
 
 	Object overlay(String id);
 

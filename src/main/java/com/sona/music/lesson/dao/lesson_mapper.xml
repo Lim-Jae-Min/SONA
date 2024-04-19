@@ -5,18 +5,37 @@
 <mapper namespace="com.sona.music.lesson.dao.LessonDAO">
 
 	<select id="recommendListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
-		SELECT 
-			b.idx, 
-			b.subject, 
-			b.user_name, 
-			b.bHit, 
-			b.reg_date 
-		FROM CLASS_OPEN co join PHOTO p on co.CLASS_IDX = p.BOARD_IDX and p.BOARD_IDX = 'class'
-		ORDER BY idx DESC LIMIT #{param1} OFFSET #{param2}
+		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = '강의') AS new_filename
+			, co.class_idx
+			, co.class_name
+			, u.user_name
+			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+				THEN 0
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				END AS accumulate_student
+			, co.class_location
+		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
+		ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
+	</select>
+	
+	<select id="recommendListCallSearch" resultType="com.sona.music.lesson.dto.LessonDTO">
+		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = '강의') AS new_filename
+			, co.class_idx
+			, co.class_name
+			, u.user_name
+			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+				THEN 0
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				END AS accumulate_student
+			, co.class_location
+		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
+		WHERE ${param1} LIKE CONCAT('%', #{param2}, '%')
+		ORDER BY manner DESC LIMIT #{param3} OFFSET #{param4}
 	</select>
 
 	<select id="allCount" resultType="Integer">
-		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = #{param2}
+		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = '어쿠스틱 기타'
 	</select>
-
 </mapper>

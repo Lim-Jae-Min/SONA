@@ -21,7 +21,7 @@
 .highlight {
     color: #024e7d;
 }
-#lessonList {
+#listTable {
     margin: 0 auto;
 }
 #lessonList th {
@@ -35,6 +35,9 @@
 .lessonImg {
     width: 180px;
     height: 180px;
+}
+.className{
+	cursor: pointer;
 }
 #blank {
     height: 100px;
@@ -92,103 +95,19 @@
             <b class="highlight">${loginName}</b>님이 선호하는 악기 <b class="highlight">${myInst}</b> 추천 강의입니다.
             <span id="searchbox">
                 <select name="condition" id="condition">
-                    <option value="lessonName">강의명</option>
-                    <option value="teacherName">강사명</option>
-                    <option value="lessonLocation">지역</option>
+                    <option value="class_name">강의명</option>
+                    <option value="user_name">강사명</option>
+                    <option value="class_location">지역</option>
                 </select>
                 <input type="text" id="searchContent">
                 <input type="button" value="검색">
             </span>
         </div>
         <br/><br/><br/>
-        <table id="lessonList">
+        <table id="listTable">
+        	<tbody id="lessonList"></tbody>
             <tr>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-            </tr>
-            <tr>
-                <th>강의 제목 1</th>
-                <th>강의 제목 2</th>
-                <th>강의 제목 3</th>
-                <th>강의 제목 4</th>
-                <th>강의 제목 5</th>
-            </tr>
-            <tr class="smallFont">
-                <th>A 강사님</th>
-                <th>B 강사님</th>
-                <th>C 강사님</th>
-                <th>D 강사님</th>
-                <th>E 강사님</th>
-            </tr>
-            <tr class="manner smallFont">
-                <th>♥ 40.5</th>
-                <th>♥ 40.5</th>
-                <th>♥ 40.5</th>
-                <th>♥ 40.5</th>
-                <th>♥ 40.5</th>
-            </tr>
-            <tr class="smallFont">
-                <th>누적 수강생 : 00명</th>
-                <th>누적 수강생 : 00명</th>
-                <th>누적 수강생 : 00명</th>
-                <th>누적 수강생 : 00명</th>
-                <th>누적 수강생 : 00명</th>
-            </tr>
-            <tr class="smallFont">
-                <th>서울특별시 금천구</th>
-                <th>서울특별시 금천구</th>
-                <th>서울특별시 금천구</th>
-                <th>서울특별시 금천구</th>
-                <th>서울특별시 금천구</th>
-            </tr>
-            <tr id="blank"></tr>
-            <tr>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-                <th><img src="../img/basic_user.png" class="lessonImg"></th>
-            </tr>
-            <tr>
-                <th>강의 제목 1</th>
-                <th>강의 제목 2</th>
-                <th>강의 제목 3</th>
-                <th>강의 제목 4</th>
-                <th>강의 제목 5</th>
-            </tr>
-            <tr class="smallFont">
-                <th>A 강사님</th>
-                <th>B 강사님</th>
-                <th>C 강사님</th>
-                <th>D 강사님</th>
-                <th>E 강사님</th>
-            </tr>
-            <tr class="manner smallFont">
-                <th>♥ 40.5</th>
-                <th>♥ 40.5</th>
-                <th>♥ 40.5</th>
-                <th>♥ 40.5</th>
-                <th>♥ 40.5</th>
-            </tr>
-            <tr class="smallFont">
-                <th>누적 수강생 : 00명</th>
-                <th>누적 수강생 : 00명</th>
-                <th>누적 수강생 : 00명</th>
-                <th>누적 수강생 : 00명</th>
-                <th>누적 수강생 : 00명</th>
-            </tr>
-            <tr class="smallFont">
-                <th>서울특별시 금천구</th>
-                <th>서울특별시 금천구</th>
-                <th>서울특별시 금천구</th>
-                <th>서울특별시 금천구</th>
-                <th>서울특별시 금천구</th>
-            </tr>
-            <tr>
-      			<td colspan="7">
+      			<td colspan="5">
       				<div class="container">                           
             			<nav aria-label="Page navigation" style="text-align:center">
                 			<ul class="pagination" id="pagination"></ul>
@@ -196,6 +115,8 @@
         			</div>
       			</td>
       		</tr>
+        </table>
+        <table>
         </table>
     </div>
     <div id="footer">
@@ -235,17 +156,29 @@ $('#userName').click(function slide() {
     }
 });
 
+var showPage = 1;
+var condition = $('#condition').val();
+var searchContent = $('#searchContent').val();
+
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 	listCall(showPage);
 });
 
-function listCall(page){
+$('input[type="button"]').click(function (){
+	$('#pagination').twbsPagination('destroy');
+	listCall(showPage);
+});
+
+
+
+function listCall(page, condition, searchContent){
     $.ajax({
        type:'get',
-       url:'./list.ajax',
+       url:'./recommendList.ajax',
        data:{
     	   'page':page,
-    	   'cnt':$('#pagePerNum').val()
+    	   'condition':$('#condition').val(),
+    	   'content':$('#searchContent').val()
        },
        dataType:'json',
        success:function(data){
@@ -253,7 +186,7 @@ function listCall(page){
           console.log(data);          
           // 플러그인 추가
           
-          var startPage = data.currPage >data.totalPages ? data.totalPages : data.currPage;
+          var startPage = 1;
           
           $('#pagination').twbsPagination({
         	  startPage:startPage,		// 시작페이지
@@ -274,36 +207,110 @@ function listCall(page){
 }
 
 function drawList(list){
-	 var content = '';
-	 for(item of list){
-	    //console.log(item);
-	    content += '<tr>';
-	    content += '<td><input type="checkbox" name="del" value="' + item.idx +'"/></td>';
-	    content += '<td>' + item.idx + '</td>';
-	    content += '<td>';
-	    
-	    var img = item.img_cnt > 0 ?'image.png' : 'no_image.png';
-	    content += '<img class="icon" src="resources/img/' + img + '"/>';
-	 
+	var content = '';
+	
+	if (list.length < 5) {
+		content += '<tr>'
+		for (var i = 0; i < list.length; i++) {
+			content += '<th><img src="/photo/"' + list[i].new_filename + 'class="lessonImg"></th>'
+		}
+	 	content += '</tr>';
+	 	content += '<tr>';
+	 	for (var i = 0; i < list.length; i++) {
+			content += '<th><a href="del?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
+		}
+		 content += '</tr>';
+		 content += '<tr class="smallFont">';
+		 for (var i = 0; i < list.length; i++) {
+			content += '<th>' + list[i].user_name + ' 강사님</th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="manner smallFont">';
+		for (var i = 0; i < list.length; i++) {
+			content += '<th>♥ ' + list[i].manner + '</th>';
+		}
+		content += '</tr>';
+		content += '<tr class="smallFont">';
+		for (var i = 0; i < list.length; i++) {
+			content += '<th>누적 수강생 : ' + list[i].accumulate_student + ' 명</th>';
+		}
+		content += '</tr>';
+		content += '<tr class="smallFont">';
+		for (var i = 0; i < list.length; i++) {
+			content += '<th>' + list[i].class_location + '</th>';
+		}
+		content += '</tr>';
+		content += '<tr id="blank"></tr>';
+		content += '<tr id="blank"></tr>';
+		content += '<tr id="blank"></tr>';
+	}else {
+		content += '<tr>';
+		for (var i = 0; i < 5; i++) {
+			content += '<th><img src="/photo/"' + list[i].new_filename + 'class="lessonImg"></th>'
+		}
+	 	content += '</tr>';
+	 	content += '<tr>';
+	 	for (var i = 0; i < 5; i++) {
+			content += '<th><a href="del?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="smallFont">';
+	 	for (var i = 0; i < 5; i++) {
+	 		content += '<th>' + list[i].user_name + ' 강사님</th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="manner smallFont">';
+	 	for (var i = 0; i < 5; i++) {
+			content += '<th>♥ ' + list[i].manner + '</th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="smallFont">';
+	 	for (var i = 0; i < 5; i++) {
+	 		content += '<th>누적 수강생 : ' + list[i].accumulate_student + ' 명</th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="smallFont">';
+	 	for (var i = 0; i < 5; i++) {
+	 		content += '<th>' + list[i].class_location + '</th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr id="blank"></tr>';
+	 	content += '<tr>';
+	 	for (var i = 5; i < list.length; i++) {
+			content += '<th><img src="/photo/"' + list[i].new_filename + 'class="lessonImg"></th>'
+		}
+	 	content += '</tr>';
+	 	content += '<tr>';
+	 	for (var i = 5; i < list.length; i++) {
+			content += '<th><a href="del?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="smallFont">';
+	 	for (var i = 5; i < list.length; i++) {
+	 		content += '<th>' + list[i].user_name + ' 강사님</th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="manner smallFont">';
+	 	for (var i = 5; i < list.length; i++) {
+			content += '<th>♥ ' + list[i].manner + '</th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="smallFont">';
+	 	for (var i = 5; i < list.length; i++) {
+	 		content += '<th>누적 수강생 : ' + list[i].accumulate_student + ' 명</th>';
+		}
+	 	content += '</tr>';
+	 	content += '<tr class="smallFont">';
+	 	for (var i = 5; i < list.length; i++) {
+	 		content += '<th>' + list[i].class_location + '</th>';
+		}
+	 	content += '</tr>';
+		content += '<tr id="blank"></tr>';
+	}
+	
 
-	    content += '</td>';
-	    content += '<td>' + item.subject + '</td>';
-	    content += '<td>' + item.user_name + '</td>';
-	    content += '<td>' + item.bHit +'</td>';
-	    
-	    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
-	    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
-	    //content += '<td>' + item.reg_date + '</td>';
-	    //방법 2. Front-end : js에서 직접 변환
-	    var date = new Date(item.reg_date);
-	    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
-	    content += '<td>' + dateStr + '</td>';
-	    
-	    
-	    content += '</tr>';
-	 }
-	 
-	 $('#list').html(content);
+ 	$('#lessonList').html(content);
+	
 }
 
 </script>

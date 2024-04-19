@@ -16,6 +16,7 @@ body {
 #logo {
     width: 70px;
     height: 70px;
+    cursor: pointer;
 }
 .miniimg {
 	padding-left: 20px;

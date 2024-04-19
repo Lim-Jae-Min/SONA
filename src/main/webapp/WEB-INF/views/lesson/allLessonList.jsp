@@ -233,6 +233,10 @@ $('#userName').click(function slide() {
     }
 });
 
+$('#logo').click(function main(){
+	location.href = '/main';
+});
+
 if ('${user_type}' == '강사') {
 	$('#newClass').css('display', 'block');
 }

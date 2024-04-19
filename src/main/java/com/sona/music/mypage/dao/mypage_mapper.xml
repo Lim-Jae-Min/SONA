@@ -4,10 +4,21 @@
 >
 <mapper namespace="com.sona.music.mypage.dao.MyPageDAO">
 
-	<select id="getUserInfo" resultType="com.sona.music.member.dto.MemberDTO">
-  SELECT inst_name, location, day, style, have_instrument
-FROM application_forms
-WHERE user_id = #{loginId}
-</select>
+	   <select id="getUserInfo" parameterType="String" resultType="com.sona.music.mypage.dto.MyPageDTO">
+        SELECT 
+            u.user_name,
+            u.user_type,
+            u.user_id,
+            u.user_email,
+            u.user_phone,
+            af.applyform_inst,
+            af.applyform_location,
+            af.applyform_days,
+            af.applyform_style,
+            af.have_inst
+        FROM USERS u
+        LEFT JOIN APPLICATION_FORM af ON u.user_id = af.user_id
+        WHERE u.user_id = #{loginId}
+    </select>
 
 </mapper>

@@ -90,6 +90,8 @@
                         </td>
                     </tr>
                     </thead>
+                    
+                    로그인 
                 <tbody>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
@@ -155,12 +157,78 @@
             </tr>
 
             <tr>
-                <td>&nbsp;&nbsp;&nbsp;희망악기 :</td>
-                <td><input type = "radio" name = "INST_CATEGORY_NAME" value="피아노"/>피아노
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type = "radio" name = "INST_CATEGORY_NAME" value="기타"/>기타
+                <td>&nbsp;&nbsp;&nbsp;희망악기 : <select name="instCategory" id="instCategory">
+               <option value="0">악기 카테고리</option>
+               <option value="1">건반</option>
+               <option value="2">기타</option>
+               <option value="3">현악기</option>
+               <option value="4">관악기</option>
+               <option value="5">타악기</option>
+               <option value="6">그 외</option>
+            </select>
+            <select name="inst" id="inst">
+
+            </select>
+            	</td>
+              
+            </tr>
+                <br><br><br><br><br>
+            <tr>
+                <td>&nbsp;&nbsp;&nbsp;희망지역 :
+                    <select name="location" id="location" style="width: 50%;">
+                        <option value="지역 전체">전체</option>
+                        <option value="서울특별시 강남구">서울특별시 강남구</option>
+                        <option value="서울특별시 강동구">서울특별시 강동구</option>
+                        <option value="서울특별시 강북구">서울특별시 강북구</option>
+                        <option value="서울특별시 강서구">서울특별시 강서구</option>
+                        <option value="서울특별시 관악구">서울특별시 관악구</option>
+                        <option value="서울특별시 광진구">서울특별시 광진구</option>
+                        <option value="서울특별시 구로구">서울특별시 구로구</option>
+                        <option value="서울특별시 금천구">서울특별시 금천구</option>
+                        <option value="서울특별시 노원구">서울특별시 노원구</option>
+                        <option value="서울특별시 도봉구">서울특별시 도봉구</option>
+                        <option value="서울특별시 동대문구">서울특별시 동대문구</option>
+                        <option value="서울특별시 동작구">서울특별시 동작구</option>
+                        <option value="서울특별시 마포구">서울특별시 마포구</option>
+                        <option value="서울특별시 서대문구">서울특별시 서대문구</option>
+                        <option value="서울특별시 서초구">서울특별시 서초구</option>
+                        <option value="서울특별시 성동구">서울특별시 성동구</option>
+                        <option value="서울특별시 성북구">서울특별시 성북구</option>
+                        <option value="서울특별시 송파구">서울특별시 송파구</option>
+                        <option value="서울특별시 양천구">서울특별시 양천구</option>
+                        <option value="서울특별시 영등포구">서울특별시 영등포구</option>
+                        <option value="서울특별시 용산구">서울특별시 용산구</option>
+                        <option value="서울특별시 은평구">서울특별시 은평구</option>
+                        <option value="서울특별시 종로구">서울특별시 종로구</option>
+                        <option value="서울특별시 중구">서울특별시 중구</option>
+                        <option value="서울특별시 중랑구">서울특별시 중랑구</option>
+                     </select>
+                </td>               
+            </tr> 
+            
+             <tr>
+                
+                <br><br><br>
+                &nbsp;&nbsp; &nbsp;&nbsp;<td>희망요일(중복가능)</td>
+                <td class="main" colspan="2" style="width: 100%; text-align: left;">
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                <br>
+                    <button id="mondayBtn" onclick="changeColor('monday')" style="margin-left: 50px; width: 60px;">월</button>
+                    <button id="tuesdayBtn" onclick="changeColor('tuesday')" style="margin-left: 10px; width: 60px;">화</button>
+                    <button id="wednesdayBtn" onclick="changeColor('wednesday')" style="margin-left: 10px; width: 60px;">수</button>
+                    <button id="thursdayBtn" onclick="changeColor('thursday')" style="margin-left: 10px; width: 60px;">목</button>
+                    <button id="fridayBtn" onclick="changeColor('friday')" style="margin-left: 10px; width: 60px;">금</button>
+                    <button id="saturdayBtn" onclick="changeColor('saturday')" style="margin-left: 10px; width: 60px;">토</button>
+                    <button id="sundayBtn" onclick="changeColor('sunday')" style="margin-left: 10px; width: 60px;">일</button>
+
+                    <input type="hidden" id="selectedDays" name="selectedDays" value="">
+                    </div>
+                    <!-- 나머지 요일도 동일한 방식으로 추가 -->
                 </td>
-                </tr>
+            </tr>
+            
+            
+            
+            
         </div>
         </div>
     <div id="footer">
@@ -190,6 +258,50 @@
     </div>
 </body>
 <script>
+var category1 = ['클래식 피아노', '재즈 피아노', '피아노 반주'];
+var category2 = ['어쿠스틱 기타', '일렉 기타', '베이스 기타'];
+var category3 = ['바이올린', '비올라', '첼로', '콘트라베이스'];
+var category4 = ['클라리넷', '플룻', '오보에', '트럼펫', '트럼본', '색소폰'];
+var category5 = ['드럼', '카혼'];
+var category6 = ['보컬', '작곡', '미디'];
+
+$('#instCategory').change(function() {
+   console.log('값이 변경되었습니다.');
+   var selectedCategory = $('#instCategory').val();
+   var option = '';
+   option += '<option value=""></option>';
+   if (selectedCategory == 1) {
+      for (var value of category1) {
+         option += '<option value="' + value + '">' + value + '</option>';
+      }
+   }
+   if (selectedCategory == 2) {
+      for (var value of category2) {
+         option += '<option value="' + value + '">' + value + '</option>';
+      }
+   }
+   if (selectedCategory == 3) {
+      for (var value of category3) {
+         option += '<option value="' + value + '">' + value + '</option>';
+      }
+   }
+   if (selectedCategory == 4) {
+      for (var value of category4) {
+         option += '<option value="' + value + '">' + value + '</option>';
+      }
+   }
+   if (selectedCategory == 5) {
+      for (var value of category5) {
+         option += '<option value="' + value + '">' + value + '</option>';
+      }
+   }
+   if (selectedCategory == 6) {
+      for (var value of category6) {
+         option += '<option value="' + value + '">' + value + '</option>';
+      }
+   }
+   $('#inst').html(option);
+});
 
 $('#userName').click(function slide() {
 	var display = $('#slide').css('display');
@@ -200,6 +312,25 @@ $('#userName').click(function slide() {
         $('#slide').css('display', 'none');
     }
 });
+
+function changeColor(day) {
+    var btnId = day + "Btn";
+    var button = document.getElementById(btnId);
+    button.style.backgroundColor = "skyblue"; // 색 변경
+
+    // 선택한 요일 정보를 서버에 전송할 준비
+    $.ajax({
+        url: '/saveSelectedDay',
+        type: 'POST',
+        data: { selectedDay: day },
+        success: function(response) {
+            console.log('요일 정보 전송 성공');
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX request error:', error);
+        }
+    });
+}
 
 
 </script>

@@ -159,8 +159,31 @@ public class MemberController {
     	logger.info(findPwResult+"비밀번호 찾기에서 받은값");
     	if(findPwResult != null) {
     		model.addAttribute("findPwResult",findPwResult);
+    		model.addAttribute("username",username);
    		
     	}
         return "member/pwFindResult";
     }
+    @RequestMapping(value ="/changePw.go", method = RequestMethod.POST)
+    public String changePwSendId (String changePwNeedId, Model model){
+        
+    	logger.info(changePwNeedId + "비밀번호 변경으로 보내줄 아이디 값");
+    	model.addAttribute("changePwNeedId", changePwNeedId);
+
+        return "member/changePw";
+    }
+    
+    @RequestMapping(value ="/changePw.do", method = RequestMethod.POST)
+    public String changePw (String changePwNeedId, String newPassword, Model model){
+        
+    	logger.info(changePwNeedId + "찐 비밀번호 변경에서 받은 아이디");
+    	logger.info(newPassword + "찐 비밀번호 변경에서 받은 비밀번호");
+    	
+    	int row = memberService.changePw(changePwNeedId,newPassword);
+//    	model.addAttribute("changePwNeedId", changePwNeedId);
+
+        return "member/login";
+    }
+    
+    
 }

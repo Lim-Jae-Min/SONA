@@ -18,5 +18,7 @@ public interface MemberDAO {
 	
 	String findPwEmail(String email, String username);
 
+	int changePw(String changePwNeedId, String newPassword);
+
 
 }

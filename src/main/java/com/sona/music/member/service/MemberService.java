@@ -49,5 +49,10 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		return memberDAO.findPwEmail(email,username);
 	}
+
+	public int changePw(String changePwNeedId, String newPassword) {
+		// TODO Auto-generated method stub
+		return memberDAO.changePw(changePwNeedId,newPassword);
+	}
 	
 }

@@ -63,21 +63,25 @@
 <head>
 <body>
     <%@ include file="layout/header.jsp" %>
-    <div id="resultPage">
-        <div class="result-msg">비밀번호 찾기 결과</div>
-        <div class="result-id">
-				<tr>
-					<td>${findPwResult}</td>
-				</tr>
-        </div>
-        <a href="/login.do" class="btn">로그인 하기</a>
-        <a href="pwFind" class="btn">비밀번호 찾기</a>
-    </div>
+    <form id="chanePw"  action="changePw.go" method = "post">
+	    <input type="hidden" name = "changePwNeedId" value=${username}>  
+	    <div id="resultPage">
+	    <div class="result-msg">비밀번호 찾기 결과</div>
+	    <div class="result-id">
+			<tr>
+				<td>${findPwResult}</td>
+			</tr>
+	    </div>
+	    	<a href="/login.do" class="btn">로그인 하기</a>
+	    	<input  type="submit" class="btn" value="비밀번호 변경하기">
+	    </div>
+    </form>
     <div id="footer">
         <%@ include file="layout/footer.jsp" %>
     </div>
 </body>
 <script>
-
+ 	var id = "${username}" ;
+ 	console.log(id);
 </script>
 </html>

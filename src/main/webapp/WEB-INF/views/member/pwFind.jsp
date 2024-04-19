@@ -76,7 +76,6 @@ input[type="password"] {
     <div>
         ${msg}
     </div>
-    
 
 <form id="findForm" method="post">
     <div class="form-group input-group">
@@ -134,8 +133,12 @@ function submitEmail() {
 		//여기에 뿌려준다
 			console.log(data.checkedEmail);
 		var chkEmail = data.checkedEmail;
-			if(data.checkedEmail ==null){
-				alert('이메일을 다시 입력해 주세요');
+		
+			if(data.checkedId == null){
+				alert('아이디를 다시 입력해 주세요');
+			
+			}else if(data.checkedEmail ==null){
+				alert('아이디에 맞는 이메일이 아닙니다.');
 				$('input[name="email"]').val('');
 			}else{
 				alert(chkEmail+'로 인증번호를 보냈습니다.');

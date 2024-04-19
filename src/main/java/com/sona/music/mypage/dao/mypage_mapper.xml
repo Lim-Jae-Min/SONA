@@ -4,4 +4,10 @@
 >
 <mapper namespace="com.sona.music.mypage.dao.MyPageDAO">
 
+	<select id="getUserInfo" resultType="com.sona.music.member.dto.MemberDTO">
+  SELECT inst_name, location, day, style, have_instrument
+FROM application_forms
+WHERE user_id = #{loginId}
+</select>
+
 </mapper>

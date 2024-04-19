@@ -13,5 +13,9 @@ public class MyPageService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired MyPageDAO myPageDAO;
+
+	public void studentPage() {
+		myPageDAO.studentPage();
+	}
 	
 }

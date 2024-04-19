@@ -76,7 +76,7 @@
 
                     <tr>
                         &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png" style="margin-left: 30px;"  id="account"></td>
-                        <td class="main" style="padding-right: 800px;">${USERS.USER_NAME} ${USERS.USER_TYPE}<br>${USERS.USER_ID}</td>
+                        <td class="main" style="padding-right: 800px;">${USERS.user_name} ${USERS.user_type}<br>${USERS.user_id}</td>
                         <td style="width: 80%; min-width: 150px; text-align: right;">
                             <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">44.5
                         </td>
@@ -87,13 +87,13 @@
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">${USERS.USER_EMAIL}</span></td>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">${USERS.user_email}</span></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${USERS.USER_PHONE}</span></td>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${USERS.user_phone}</span></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
@@ -101,7 +101,7 @@
                     <tr>
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계좌번호 
-                            <span class="contents" style="margin-left: 80px; width: 400px; display: inline-block;">${USER_POINT.P_CAL_AMOUNT}</span>
+                            <span class="contents" style="margin-left: 80px; width: 400px; display: inline-block;">${USER_POINT.p_cal_amount}</span>
                         </td>                    </tr>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
@@ -154,13 +154,13 @@
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ희망악기 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${APPLICATIONFORM.APPLYFORM_INST}</span></td>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ희망악기 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${APPLICATIONFORM.applyform_inst}</span></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ희망지역 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${APPLICATIONFORM.APPLYFORM_LOCATION}</span></td>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ희망지역 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${APPLICATIONFORM.applyform_location}</span></td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
@@ -176,9 +176,9 @@
                     <tr>
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
 					      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					        <c:forEach items="${APPLICATIONFORM.APPLYFORM_DAYS}" var="DAYS">
+					        <c:forEach items="${APPLICATIONFORM.applyform_days}" var="days">
 					            <div style="display: inline-block; background-color: #3498DB; color: white; padding: 2px 5px; margin-right: 5px;">
-					                ${DAYS}
+					                ${days}
 					            </div>
 					        </c:forEach>
                             <!-- 나머지 요일도 동일한 방식으로 추가 -->
@@ -197,7 +197,7 @@
                     <tr>
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
 				                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				        <c:forEach items="${APPLICATIONFORM.APPLYFORM_STYLES}" var="style">
+				        <c:forEach items="${APPLICATIONFORM.applyform_styles}" var="style">
 				            <div style="display: inline-block; background-color: #3498DB; color: white; padding: 2px 5px; margin-right: 5px;">
 				                ${style}
 				            </div>
@@ -210,7 +210,7 @@
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ개인악기 유무 <span class="contents" style="margin-left: 50px; width: 200px; display: inline-block;">무</span></td>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ개인악기 유무 <span class="contents" style="margin-left: 50px; width: 200px; display: inline-block;">APPLICATIONFORM.have_inst</span></td>
                     </tr>
                 </tbody>
             </table>

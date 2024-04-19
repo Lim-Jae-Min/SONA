@@ -3,7 +3,7 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <mapper namespace="com.sona.music.lesson.dao.LessonDAO">
-
+	
 	<select id="recommendListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
 		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = '강의') AS new_filename
 			, co.class_idx
@@ -16,10 +16,14 @@
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
+		WHERE class_inst = '어쿠스틱 기타'
+		<if test="param4 != null">
+			AND ${param3} LIKE CONCAT('%', #{param4}, '%')
+		</if>
 		ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
-	<select id="recommendListCallSearch" resultType="com.sona.music.lesson.dto.LessonDTO">
+	<select id="allListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
 		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = '강의') AS new_filename
 			, co.class_idx
 			, co.class_name
@@ -31,11 +35,67 @@
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
-		WHERE ${param1} LIKE CONCAT('%', #{param2}, '%')
-		ORDER BY manner DESC LIMIT #{param3} OFFSET #{param4}
+		<if test="param4 != null || param5 != '지역 전체' || param6 != null || param7 != null">
+			WHERE
+			<if test="param4 != null">
+				${param3} LIKE CONCAT('%', #{param4}, '%')
+				<if test="param5 != '지역 전체' || param6 != null || param7 != null">
+					AND
+				</if>
+			</if>
+			<if test="param5 != '지역 전체'">
+				class_location = #{param5}
+				<if test="param6 != null || param7 != null">
+					AND
+				</if>
+			</if>
+			<if test="param6 != null">
+				inst_category_idx = #{param6}
+				<if test="param7 != null">
+					AND
+				</if>
+			</if>
+			<if test="param7 != null">
+				class_inst = #{param7}
+			</if>
+			
+		</if>
+		ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 
-	<select id="allCount" resultType="Integer">
+	<select id="recommendListCount" resultType="Integer">
 		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = '어쿠스틱 기타'
+		<if test="param3 != null">
+			AND ${param2} LIKE CONCAT('%', #{param3}, '%')
+		</if>
+	</select>
+	
+	<select id="allListCount" resultType="Integer">
+		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = '어쿠스틱 기타'
+		<if test="param3 != null || param4 != '지역 전체' || param5 != null || param6 != null">
+			AND
+			<if test="param3 != null">
+				${param2} LIKE CONCAT('%', #{param3}, '%')
+				<if test="param4 != '지역 전체' || param5 != null || param6 != null">
+					AND
+				</if>
+			</if>
+			<if test="param4 != '지역 전체'">
+				class_location = #{param4}
+				<if test="param5 != null || param6 != null">
+					AND
+				</if>
+			</if>
+			<if test="param5 != null">
+				inst_category_idx = #{param5}
+				<if test="param6 != null">
+					AND
+				</if>
+			</if>
+			<if test="param6 != null">
+				class_inst = #{param6}
+			</if>
+			
+		</if>
 	</select>
 </mapper>

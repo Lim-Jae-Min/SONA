@@ -24,23 +24,31 @@ public class LessonService {
 		
 		int start = (currPage-1) * pagePerCnt;
 		
-		logger.info("condition : " + condition);
-		logger.info("content : " + content);
-		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<LessonDTO> list = new ArrayList<LessonDTO>();
-		if (content.equals("")) {
-			list = lessonDAO.recommendListCall(pagePerCnt, start);
-		}else {
-			list = lessonDAO.recommendListCallSearch(condition, content, pagePerCnt, start);
-		}
+		List<LessonDTO> list = lessonDAO.recommendListCall(pagePerCnt, start, condition, content);
 		logger.info("list : {}", list);
 		logger.info("list size : "+list.size());
 		result.put("list", list);		
 		result.put("currPage", currPage);
-		result.put("totalPages", lessonDAO.allCount(pagePerCnt));
+		result.put("totalPages", lessonDAO.recommendListCount(pagePerCnt, condition, content));
 		
 		return result;
+	}
+
+	public Map<String, Object> allListCall(int currPage, int pagePerCnt, String condition, String content,
+			String loca, String category, String inst) {
+		
+		int start = (currPage-1) * pagePerCnt;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<LessonDTO> list = lessonDAO.allListCall(pagePerCnt, start, condition, content, loca, category, inst);
+		logger.info("list : {}", list);
+		logger.info("list size : "+list.size());
+		result.put("list", list);		
+		result.put("currPage", currPage);
+		result.put("totalPages", lessonDAO.allListCount(pagePerCnt, condition, content, loca, category, inst));
+		
+		return null;
 	}
 	
 }

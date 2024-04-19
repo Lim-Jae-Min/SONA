@@ -74,10 +74,10 @@
 <header id="usermain">
         <table id="mainmenu">
             <tr>
-                <th class="menu"><img src="../HTML/img/KakaoTalk_20240402_125012976.png" id="logo"></th>
-                <th class="menu"><a href="#">추천 강의</a></th>
-                <th class="menu"><a href="#">전체 강의</a></th>
-                <th class="menu"><a href="#">고객센터</a></th>
+                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                <th class="menu"><a href="recommendList.go">추천 강의</a></th>
+                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
      
@@ -94,7 +94,7 @@
         <div>
             <ul>
                 <li><a href="joinform.go">회원가입</a></li>
-                <li><a href="">아이디찾기</a></li>
+                <li><a href="idFind.go">아이디찾기</a></li>
                 <li><a href="">비밀번호 찾기</a></li>
             </ul>    
         </div>

@@ -44,7 +44,12 @@ public class MemberController {
 		return "member/joinform";
 	}
 	
-	
+	@RequestMapping(value="/idFind.go")
+	public String idFind(Model model) {
+		logger.info("아이디 찾기 페이지 접근");
+		
+		return "member/idFind";
+	}
 	
 	
 	@RequestMapping(value="/login.do")
@@ -54,10 +59,10 @@ public class MemberController {
 		
 		
 		MemberDTO info = memberService.login(id, pw);
-		logger.info("loginId : "+ info.getUser_id().toString());
+		logger.info("loginId : "+ info.getUSER_ID().toString());
 		
 		if(info != null) {
-			page = "redirect:/main/main";
+			page = "/main/main";
 			session.setAttribute("logininfo", info);	
 		}else {
 			model.addAttribute("msg","아이디 또는 비밀번호 확인해주세요");

@@ -14,7 +14,7 @@
     height: 720px;
     position: absolute;
     left: 50%;
-    top: 47%;
+    top: 44%;
     transform: translate(-50%,-50%);
 }
 
@@ -35,16 +35,7 @@
     margin-bottom: -10px; /* 각 입력란과 버튼 사이의 간격을 조정합니다. */
 }
 
-.join input[type="text"],
-.join input[type="password"],
-.join button, 
-.join p {
-    width: calc(80% - 20px); /* 입력란과 버튼을 가로 폭을 동일하게 설정합니다. */
-    padding: 10px; /* 내부 여백 설정 */
-    margin-left: 60px;
-    margin-bottom: 10px; /* 간격 조정 */
-    margin-top: 0;
-}
+
 .join p {
     margin-bottom: 5px;
     margin-top: 0;
@@ -53,29 +44,43 @@
     background-color: #BEE6FF;
     border-radius: 6px;
     font-size: 100%;
-    margin-top: 20px;
 }
 
-.login input[type="text"],
-.login input[type="password"]{
+
+.join input[type="text"],
+.join input[type="password"],
+.join input[type="radio"],
+.join button,
+.join p{
     margin-right: 10px;
-    margin-bottom: 0px;
+    margin-bottom: 11px;
+    width: 100%; /* 입력 필드 너비 설정 */
+    padding: 10px; /* 입력 필드 안 여백 설정 */
+    font-size: 16px; /* 폰트 크기 설정 */
+    
+    border-radius: 5px; /* 테두리 모서리 둥글게 설정 */
 }
 
-.login div ul {
+.join div ul {
     display: flex;
     justify-content: center;
     margin-top: 0;
 }
-.login div ul li {position: relative; padding: 0 40px;}
-.login div ul li~li:after {content: ""; position: absolute; left: 0; top: 4px;
+.join div ul li {position: relative; padding: 0 40px;}
+.join div ul li~li:after {content: ""; position: absolute; left: 0; top: 4px;
                          height: 14px; width: 1px; background: #111; transform: rotate(25deg);}
-.login div ul li a {font-size: 20%; color: #111;}
+.join div ul li a {font-size: 20%; color: #111;}
 
-.radio {
-    margin-left: 170px;
+.join .radio {
+    display: flex; /* 라디오 버튼을 가로로 정렬하기 위해 flexbox 사용 */
+    justify-content: center; /* 가운데 정렬 */
 }
 
+.join .radio input[type="radio"] {
+    margin-right: 5px; /* 각 라디오 버튼 사이의 간격 조정 */
+    width: 20px; /* 너비 조정 */
+    height: 20px; /* 높이 조정 */
+}
 #footer{
 	position: absolute;
     width: 100%; /* 화면 전체 너비 차지 */
@@ -88,7 +93,7 @@
 <header id="usermain">
         <table id="mainmenu">
             <tr>
-                <th class="menu"><img src="../HTML/img/KakaoTalk_20240402_125012976.png" id="logo"></th>
+                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
                 <th class="menu"><a href="#">추천 강의</a></th>
                 <th class="menu"><a href="#">전체 강의</a></th>
                 <th class="menu"><a href="#">고객센터</a></th>
@@ -118,7 +123,6 @@
 	            </li>
 	            <li><button>회원가입</button></li>
 	        </ul>
-	        
 	    </section>
 	</form>
     <div>

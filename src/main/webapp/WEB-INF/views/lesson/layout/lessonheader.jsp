@@ -88,7 +88,7 @@
         <div class="likes"><span style="color: red;">♥</span>80.5</div>
     </div>
     <div class="rounded-image">
-        <img src="teacher_photo.jpg" alt="Teacher Photo">
+        <img src="resources/img/basic_user.png" alt="Teacher Photo">
     </div>
 	</div>
  	<hr style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">

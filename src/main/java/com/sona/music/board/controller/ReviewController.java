@@ -1,6 +1,7 @@
 package com.sona.music.board.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sona.music.board.dto.ReviewDTO;
 import com.sona.music.board.service.ReviewService;
 
 @Controller
@@ -50,6 +52,15 @@ public class ReviewController {
 	@RequestMapping(value="/lessonReviewWrite")
 	public String reviewWrite(Model model) {
 		logger.info("리뷰 작성 요청");
+		
+		/*
+		 * List<ReviewDTO> classidx = reviewService.classidx();
+		 * logger.info("classidx size : "+classidx.size());
+		 * model.addAttribute("list1",classidx);
+		 * 
+		 * List<ReviewDTO> ratee = reviewService.ratee();
+		 * logger.info("ratee size : "+ratee.size()); model.addAttribute("list2",ratee);
+		 */
 		
 		return "lesson/lessonReviewWrite";
 	}

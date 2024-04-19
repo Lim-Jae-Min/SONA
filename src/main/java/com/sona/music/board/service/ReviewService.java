@@ -102,6 +102,16 @@ public class ReviewService {
 		}
 	}
 
+	public List<ReviewDTO> classidx() {
+		
+		return reviewDAO.classidx();
+	}
+
+	public List<ReviewDTO> ratee() {
+		
+		return reviewDAO.ratee();
+	}
+
 }
 	
 

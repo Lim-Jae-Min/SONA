@@ -37,8 +37,15 @@
 	<insert id="fileWrite">
 		INSERT INTO PHOTO_BOARD(ORI_FILENAME,NEW_FILENAME,POST_IDX,PHOTO_CATEGORY)
 			VALUES(#{param1},#{param2},#{param3},#{param4})
-	
 	</insert>
+	
+	<select id="classidx" resultType="com.sona.music.board.dto.ReviewDTO">
+		SELECT
+	</select>
+	
+	<select id="ratee" resultType="com.sona.music.board.dto.ReviewDTO">
+		
+	</select>
 	
 	
 	

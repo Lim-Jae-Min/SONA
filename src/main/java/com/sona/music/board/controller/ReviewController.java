@@ -1,5 +1,6 @@
 package com.sona.music.board.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -40,7 +41,7 @@ public class ReviewController {
 		logger.info("요청 페이지: "+page);
 		
 		int currPage = Integer.parseInt(page);
-		int pagePerCnt = Integer.parseInt(cnt);
+		int pagePerCnt = 5;
 		Map<String, Object>map = reviewService.list(currPage,pagePerCnt);
 		
 		return map;

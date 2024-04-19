@@ -37,6 +37,10 @@ public class ReviewService {
 		result.put("currPage",currPage);
 		result.put("totalPages", reviewDAO.allCount(pagePerCnt));
 		
+		for (ReviewDTO r : list) {
+			logger.info(r.getREVIEW_TITLE()+"");
+		}
+		
 		return result;
 	}
 	

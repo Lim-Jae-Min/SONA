@@ -32,6 +32,7 @@ public class MemberService {
 
 	public MemberDTO login(String id, String pw) {
 		logger.info("여긴 서비스 ");
+		logger.info("id : {} | pw : {}", id, pw);
 		return memberDAO.login(id,pw);
 	}
 	

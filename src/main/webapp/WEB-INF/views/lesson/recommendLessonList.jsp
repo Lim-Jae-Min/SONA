@@ -47,6 +47,7 @@
 }
 #condition {
     width: 100px;
+    height: 24px;
 }
 </style>
 </head>
@@ -157,8 +158,6 @@ $('#userName').click(function slide() {
 });
 
 var showPage = 1;
-var condition = $('#condition').val();
-var searchContent = $('#searchContent').val();
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 	listCall(showPage);

@@ -50,19 +50,20 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/lessonReviewWrite")
-	public String reviewWrite(Model model) {
+	public String reviewWrite(Model model, HttpSession session) {
 		logger.info("리뷰 작성 요청");
 		
-		/*
-		 * List<ReviewDTO> classidx = reviewService.classidx();
-		 * logger.info("classidx size : "+classidx.size());
-		 * model.addAttribute("list1",classidx);
-		 * 
-		 * List<ReviewDTO> ratee = reviewService.ratee();
-		 * logger.info("ratee size : "+ratee.size()); model.addAttribute("list2",ratee);
-		 */
+		String page = "";
+		String type = (String) session.getAttribute("user_type");
 		
-		return "lesson/lessonReviewWrite";
+		if (type.equals("강사")) {
+			page = "lesson/lessonReviewWriteT";
+		} else if(type.equals("수강생")) {
+			page = "lesson/lessonReviewWriteS";
+		}
+		logger.info(type);
+		
+		return page;
 	}
 	
 	@RequestMapping(value="/reviewWrite", method = RequestMethod.POST)

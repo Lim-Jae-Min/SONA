@@ -29,23 +29,17 @@
 	keyProperty="REVIEW_IDX"
 	parameterType="com.sona.music.board.dto.ReviewDTO"
 	>
-	INSERT INTO REVIEW(SCORE,REVIEW_TITLE,REVIEW_CONTENT)
-			VALUES(#{SCORE},#{REVIEW_TITLE},#{REVIEW_CONTENT})
+	INSERT INTO REVIEW(CLASS_IDX,RATER_ID,RATEE_ID,SCORE,REVIEW_TITLE,REVIEW_CONTENT)
+			VALUES(#{CLASS_IDX},#{RATER_ID},#{RATEE_ID},#{SCORE},#{REVIEW_TITLE},#{REVIEW_CONTENT})
 	
 	</insert>
 	
 	<insert id="fileWrite">
-		INSERT INTO PHOTO_BOARD(ORI_FILENAME,NEW_FILENAME,POST_IDX,PHOTO_CATEGORY)
-			VALUES(#{param1},#{param2},#{param3},#{param4})
+		INSERT INTO PHOTO_BOARD(ORI_FILENAME,NEW_FILENAME,POST_IDX,USER_ID,PHOTO_CATEGORY)
+			VALUES(#{param1},#{param2},#{param3},#{param4},#{param5})
 	</insert>
 	
-	<select id="classidx" resultType="com.sona.music.board.dto.ReviewDTO">
-		SELECT
-	</select>
 	
-	<select id="ratee" resultType="com.sona.music.board.dto.ReviewDTO">
-		
-	</select>
 	
 	
 	

@@ -62,14 +62,13 @@
 			<form action="reviewWrite" method="post" enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th id="evaluationCourseName" style="font-size: 14px; display: none;">평가 강의명 :</th>
-						<th id="evaluationStudentName" style="font-size: 14px; display: none;">평가 학생명 :</th>
+						<th>평가 강의명 : 2<input type="hidden" name="CLASS_IDX" value="2">평가 강사명: user2<input type="hidden" name="RATEE_ID" value="user2"></th>
 					</tr>
 					<tr>
 						<th style="font-size: 14px;">리뷰 제목</th>
 						<td><input type="text" name="REVIEW_TITLE"
 							style="width: 300px; font-size: 16px;" /></td>
-						<th style="font-size: 12px;">작성자 :${sessionScope.loginId}</th>
+						<th style="font-size: 12px;">작성자 : <input type="hidden" name="RATER_ID" value="${sessionScope.loginId}"></th>
 						<th style="font-size: 12px;">작성일 : <span id="currentDate"></span></th>
 					</tr>
 					<tr>
@@ -94,6 +93,7 @@
 								style="width: 882px; height: 311px; resize: none;"></textarea></td>
 					</tr>
 					<tr>
+						<input type="hidden" name="PHOTO_CATEGORY" value="Review">
 						<th>리뷰 사진</th>
 						<td colspan="4">
 							<div id="fileList"></div> <input type="file" id="fileInput"
@@ -161,14 +161,6 @@
 	    }
 	});
 	
-	var usertype = '${sessionScope.user_type}';
-	console.log(usertype);
-	
-	if(usertype == '강사'){
-		document.getElementById('evaluationStudentName').style.display = 'block';
-	}else {
-		document.getElementById('evaluationCourseName').style.display = 'block';
-	}
 	
 	
 </script>

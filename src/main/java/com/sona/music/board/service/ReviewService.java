@@ -51,25 +51,32 @@ public class ReviewService {
 		//insert후 생성된 idx 가져오는 방법
 		//조건 1. 파라메터는 DTO로 넣을 것
 		ReviewDTO dto = new ReviewDTO();
+		dto.setCLASS_IDX(Integer.parseInt(param.get("CLASS_IDX")));
+		dto.setRATEE_ID(param.get("RATEE_ID"));
+		dto.setRATER_ID(param.get("RATER_ID"));
 		dto.setSCORE(Double.parseDouble(param.get("SCORE")));
 		dto.setREVIEW_TITLE(param.get("REVIEW_TITLE"));
 		dto.setREVIEW_CONTENT(param.get("REVIEW_CONTENT"));
+		dto.setPHOTO_CATEGORY(param.get("PHOTO_CATEGORY"));
+		
 
 		row = reviewDAO.write(dto); //글쓰기 완료 후 
 
 		//조건3. 이후 dto에서 저장된 키 값을 받아온다.
 		int idx = dto.getREVIEW_IDX();
+		String username = dto.getRATER_ID();
+		String photoCategory = dto.getPHOTO_CATEGORY();
 		logger.info("idx="+idx);
 
 		if(row>0) {
-			fileSave(idx, photos); // 파일 저장
+			fileSave(idx, username, photoCategory, photos); // 파일 저장
 		}
 
 		return row;
 	}
 
 
-	public void fileSave(int idx, MultipartFile photos) {
+	public void fileSave(int idx,String username, String photoCategory, MultipartFile photos) {
 		if(photos != null) {
 			//1. 업로드 할 파일명이 있는가?
 			String fileName = photos.getOriginalFilename();
@@ -89,8 +96,8 @@ public class ReviewService {
 					byte[] bytes = photos.getBytes(); //MultipartFile로 부터 바이너리 추출
 					Path path = Paths.get(file_root+newFileName); //저장 경로 지정
 					Files.write(path, bytes); //저장
-					String photoCategory = "Review";
-					reviewDAO.fileWrite(fileName,newFileName,idx,photoCategory);
+					
+					reviewDAO.fileWrite(fileName,newFileName,idx,username,photoCategory);
 					Thread.sleep(1);//파일명을 위해 강제 휴식 부여
 				} catch (Exception e) {
 
@@ -102,15 +109,6 @@ public class ReviewService {
 		}
 	}
 
-	public List<ReviewDTO> classidx() {
-		
-		return reviewDAO.classidx();
-	}
-
-	public List<ReviewDTO> ratee() {
-		
-		return reviewDAO.ratee();
-	}
 
 }
 	

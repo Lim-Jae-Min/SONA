@@ -12,11 +12,8 @@ public interface ReviewDAO {
 
 	int write(ReviewDTO dto);
 
-	void fileWrite(String fileName, String newFileName, int idx, String photoCategory);
+	void fileWrite(String fileName, String newFileName, int idx, String username, String photoCategory);
 
-	List<ReviewDTO> classidx();
-
-	List<ReviewDTO> ratee();
 
 	
 

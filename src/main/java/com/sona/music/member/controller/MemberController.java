@@ -1,6 +1,8 @@
 package com.sona.music.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
@@ -29,12 +31,27 @@ public class MemberController {
 
     @RequestMapping(value ="/findIdEmail.do", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> findIdEmail (String email, HttpSession session){
+    public Map<String, Object> findIdEmail (String email){
         logger.info("이메일 받은값 : " + email);
         Map<String,Object> map = new HashMap<String,Object>();
-        String emailSession = memberService.findIdEmail(email, session);
-        logger.info(emailSession+ "ID 찾기 요청으로 DB에서 받아온 이메일 ");
-        map.put("emailSession",emailSession);
+        String checkedEmail = memberService.findIdEmail(email);
+        logger.info(checkedEmail);
+        map.put("checkedEmail",checkedEmail);
+        return map;
+    }
+    
+    @RequestMapping(value ="/findPwEmail.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> findPwEmail (String email , String username){
+        logger.info("이메일 받은값 : " + email);
+        Map<String,Object> map = new HashMap<String,Object>();
+        String checkedEmail = memberService.findPwEmail(email,username);
+        String checkedId = memberService.findPwcheckId(username);
+        logger.info("findPwEmail.do 에서 받은 값 : " + checkedEmail + " : " + checkedId );
+        
+        logger.info(checkedEmail);
+        map.put("checkedEmail",checkedEmail);
+        map.put("checkedId", checkedId);
         return map;
     }
 	
@@ -51,6 +68,14 @@ public class MemberController {
 		
 		return "member/idFind";
 	}
+	
+	@RequestMapping(value="/pwFind.go")
+	public String pwFind(Model model) {
+		logger.info("비밀번호 찾기 페이지 접근");
+		
+		return "member/pwFind";
+	}
+	
 	
 	
 	@RequestMapping(value="/login.do")
@@ -98,11 +123,27 @@ public class MemberController {
 */	
 	
 	
-    @RequestMapping(value ="/idFindResult.go", method = RequestMethod.POST)
-    public String idFindResult (){
+    @RequestMapping(value ="/idFindResult.do", method = RequestMethod.POST)
+    public String idFindResult (String email , Model model){
         
-        
-    	
+    	logger.info(email);
+//    	model.addAttribute("email",email);
+    	List<String> findIdList = memberService.findId(email);
+    	model.addAttribute("findId",findIdList);
         return "member/idFindResult";
+    }
+    
+    @RequestMapping(value ="/pwFindResult.do", method = RequestMethod.POST)
+    public String pwFindResult (String username ,String email, Model model){
+        
+    	logger.info(username);
+//    	model.addAttribute("email",email);
+    	String findPwResult = memberService.findPw(username,email);
+    	logger.info(findPwResult+"비밀번호 찾기에서 받은값");
+    	if(findPwResult != null) {
+    		model.addAttribute("findPwResult",findPwResult);
+   		
+    	}
+        return "member/pwFindResult";
     }
 }

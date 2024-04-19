@@ -64,16 +64,14 @@
 <body>
     <%@ include file="layout/header.jsp" %>
     <div id="resultPage">
-        <div class="result-msg">아이디 찾기 결과</div>
+        <div class="result-msg">비밀번호 찾기 결과</div>
         <div class="result-id">
-			<c:forEach items="${findId}" var="ids">
 				<tr>
-					<td>${findId}</td>
+					<td>${findPwResult}</td>
 				</tr>
-			</c:forEach>
         </div>
         <a href="/login.do" class="btn">로그인 하기</a>
-        <a href="pwFind.go" class="btn">비밀번호 찾기</a>
+        <a href="pwFind" class="btn">비밀번호 찾기</a>
     </div>
     <div id="footer">
         <%@ include file="layout/footer.jsp" %>

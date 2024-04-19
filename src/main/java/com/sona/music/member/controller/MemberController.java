@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -25,15 +26,22 @@ public class MemberController {
     @Autowired MemberService memberService;
     
     
+    @RequestMapping(value = "/idFind.go")
+    public String idFind(){
+    	
+    	return "member/idFind";
+    }
+    
+    
     
     @RequestMapping(value ="/findIdEmail.do", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> findIdEmail (String email){
+    public Map<String, Object> findIdEmail (String email, HttpSession session){
         logger.info("이메일 받은값 : " + email);
         Map<String,Object> map = new HashMap<String,Object>();
-        String checkedEmail = memberService.findIdEmail(email);
-        logger.info(checkedEmail+ "ID 찾기 요청으로 DB에서 받아온 이메일 ");
-        map.put("checkedEmail",checkedEmail);
+        String emailSession = memberService.findIdEmail(email, session);
+        logger.info(emailSession+ "ID 찾기 요청으로 DB에서 받아온 이메일 ");
+        map.put("emailSession",emailSession);
         return map;
     }
 	
@@ -90,4 +98,13 @@ public class MemberController {
 		return page;
 	}
 */	
+	
+	
+    @RequestMapping(value ="/idFindResult.go", method = RequestMethod.POST)
+    public String idFindResult (){
+        
+        
+    	
+        return "member/idFindResult";
+    }
 }

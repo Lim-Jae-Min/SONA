@@ -75,6 +75,7 @@
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+
                 <th class="menu"><a href="recommendList.go">추천 강의</a></th>
                 <th class="menu"><a href="allList.go">전체 강의</a></th>
                 <th class="menu"><a href="serviceCenter.go">고객센터</a></th>

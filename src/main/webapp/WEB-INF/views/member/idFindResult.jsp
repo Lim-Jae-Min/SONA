@@ -168,6 +168,7 @@ function findSubmit(){
 		alert("인증번호를 확인 해주세요.");
 	}else if(cfn==true){
 		var email = cfEmail;
+	${}
 	}
 	
 }

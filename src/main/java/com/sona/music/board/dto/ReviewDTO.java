@@ -13,7 +13,8 @@ public class ReviewDTO {
 	private String REVIEW_CONTENT;
 	private Date REVIEW_REG_DATE;
 	private boolean REVIEW_DELETE;
-	
+	private int img_cnt;
+	private String STUDY_DATE;
 	public int getREVIEW_IDX() {
 		return REVIEW_IDX;
 	}
@@ -68,6 +69,20 @@ public class ReviewDTO {
 	public void setREVIEW_DELETE(boolean rEVIEW_DELETE) {
 		REVIEW_DELETE = rEVIEW_DELETE;
 	}
+	public int getImg_cnt() {
+		return img_cnt;
+	}
+	public void setImg_cnt(int img_cnt) {
+		this.img_cnt = img_cnt;
+	}
+	public String getSTUDY_DATE() {
+		return STUDY_DATE;
+	}
+	public void setSTUDY_DATE(String sTUDY_DATE) {
+		STUDY_DATE = sTUDY_DATE;
+	}
+	
+	
 	
 	
 

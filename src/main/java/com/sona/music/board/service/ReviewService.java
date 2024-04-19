@@ -39,6 +39,7 @@ public class ReviewService {
 		
 		for (ReviewDTO r : list) {
 			logger.info(r.getREVIEW_TITLE()+"");
+			logger.info(r.getSTUDY_DATE()+"");
 		}
 		
 		return result;

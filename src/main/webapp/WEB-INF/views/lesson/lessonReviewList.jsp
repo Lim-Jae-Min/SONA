@@ -218,7 +218,7 @@ function listCall(page){
 	        content += '<td><span style="color: #FED000;">★</span>' + item.score + '</td>';
 	        content += '<td>' + item.review_TITLE + '</td>';
 	        content += '<td>' + item.rater_ID + '</td>';
-	        content += '<td>' + item.STUDY_DATE +'</td>';
+	        content += '<td>' + item.study_DATE +'</td>';
 	        content += '<td>';
 	        var img = item.img_cnt > 0 ?'image.png' : 'no_image.png';
 	        content += '<img class="icon" src="resources/img/' + img + '"width= "30" height = "30"/>';

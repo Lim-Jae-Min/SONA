@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.member.service.MemberService;
+import com.sona.music.point.dto.PointDTO;
 
 @Controller
 public class MemberController {
@@ -59,16 +60,32 @@ public class MemberController {
 		
 		
 		MemberDTO info = memberService.login(id, pw);
+		
+		
 //		logger.info("loginId : "+ info.getUSER_ID().toString());
 		
 		if(info != null) {
-			page = "/main/main";
+//			page = "/main/main";
 			session.setAttribute("loginId", info.getUSER_ID());	
 			session.setAttribute("user_type", info.getUSER_TYPE());	
 			session.setAttribute("user_name", info.getUSER_NAME());
+			session.setAttribute("manner_variance", info.getMANNER());
+			session.setAttribute("point", info.getPOINT());
+			
 			String test = (String) session.getAttribute("loginId");
+			String test1 = String.valueOf(session.getAttribute("point")) ;
 			
 			logger.info("test : " + test);
+			logger.info("test1 : " + test1);
+			 // 수강생인 경우
+	        if ("수강생".equals(info.getUSER_TYPE())) {
+	            page = "/main/main"; // 수강생 메인 페이지로 리다이렉트
+	        }
+	        // 강사인 경우
+	        else if ("강사".equals(info.getUSER_TYPE())) {
+	            page = "/main/main"; // 강사 메인 페이지로 리다이렉트
+	        }
+	        
 		}else {
 			model.addAttribute("msg","아이디 또는 비밀번호 확인해주세요");
 		}

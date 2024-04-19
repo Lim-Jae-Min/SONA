@@ -1,5 +1,7 @@
 package com.sona.music.member.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,16 @@ public class MemberService {
 	
 	@Autowired MemberDAO memberDAO;
 
-	public String findIdEmail(String email) {
+	public String findIdEmail(String email, HttpSession session) {
+		
+		// if로 조건붙어주기
+		 String findId = memberDAO.session(email);
+		 if(findId != null) {
+			 session.setAttribute("findId", findId);
+			 logger.info("세션 값 : " + session.getAttribute(findId));
+		 }else {
+			 logger.info("세션 값 받기 실패");
+		 }
 		
 		return  memberDAO.findIdEmail(email);
 	}

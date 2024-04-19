@@ -94,7 +94,7 @@
         <div>
             <ul>
                 <li><a href="joinform.go">회원가입</a></li>
-                <li><a href="">아이디찾기</a></li>
+                <li><a href="idFind.go">아이디찾기</a></li>
                 <li><a href="">비밀번호 찾기</a></li>
             </ul>    
         </div>

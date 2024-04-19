@@ -8,4 +8,6 @@ public interface MemberDAO {
 	
 	MemberDTO login(String id, String pw);
 
+	String session(String email);
+
 }

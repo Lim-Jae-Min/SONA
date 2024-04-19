@@ -23,6 +23,11 @@ public class LessonDTO {
 	private int class_disable;
 	private int class_delete;
 	
+	private String user_name;
+	private String manner;
+	private String new_filename;
+	private int accumulate_student;
+	
 	
 	public int getClass_idx() {
 		return class_idx;
@@ -131,6 +136,30 @@ public class LessonDTO {
 	}
 	public void setClass_delete(int class_delete) {
 		this.class_delete = class_delete;
+	}
+	public String getManner() {
+		return manner;
+	}
+	public void setManner(String manner) {
+		this.manner = manner;
+	}
+	public String getNew_filename() {
+		return new_filename;
+	}
+	public void setNew_filename(String new_filename) {
+		this.new_filename = new_filename;
+	}
+	public int getAccumulate_student() {
+		return accumulate_student;
+	}
+	public void setAccumulate_student(int accumulate_student) {
+		this.accumulate_student = accumulate_student;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	
 	

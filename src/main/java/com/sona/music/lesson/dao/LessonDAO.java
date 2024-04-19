@@ -8,4 +8,8 @@ public interface LessonDAO {
 
 	List<LessonDTO> recommendListCall(int pagePerCnt, int start);
 
+	int allCount(int pagePerCnt);
+
+	List<LessonDTO> recommendListCallSearch(String condition, String content, int pagePerCnt, int start);
+
 }

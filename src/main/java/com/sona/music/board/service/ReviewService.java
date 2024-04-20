@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sona.music.board.dao.ReviewDAO;
@@ -25,7 +26,7 @@ public class ReviewService {
 	
 	@Autowired ReviewDAO reviewDAO;
 	
-	public String file_root = "C:/upload/";
+	public String file_root = "src/main/resources/photos/";
 
 	public Map<String, Object> list(int currPage, int pagePerCnt) {
 		
@@ -38,10 +39,7 @@ public class ReviewService {
 		result.put("currPage",currPage);
 		result.put("totalPages", reviewDAO.allCount(pagePerCnt));
 		
-		for (ReviewDTO r : list) {
-			logger.info(r.getREVIEW_TITLE()+"");
-			logger.info(r.getSTUDY_DATE()+"");
-		}
+		logger.info("리뷰 리스트 페이지 이동");
 		
 		return result;
 	}
@@ -122,6 +120,14 @@ public class ReviewService {
 			}
 
 		}
+	}
+
+	public void detail(int REVIEW_IDX,int POST_IDX, String PHOTO_CATEGORY, Model model) {
+		ReviewDTO dto = reviewDAO.detail(REVIEW_IDX);
+		model.addAttribute("review", dto);
+		
+		List<PhotoDTO> list = reviewDAO.photos(POST_IDX, PHOTO_CATEGORY);
+		model.addAttribute("photos", list);
 	}
 
 

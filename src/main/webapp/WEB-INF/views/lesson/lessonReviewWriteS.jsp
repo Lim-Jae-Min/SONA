@@ -9,11 +9,6 @@
 <link rel="stylesheet" href="resources/css/common.css?after"
 	type="text/css">
 <style></style>
-</head>
-<body>
-	</style>
-</head>
-<body>
 <body>
     <header id="usermain">
         <table id="mainmenu">

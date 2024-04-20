@@ -5,7 +5,8 @@
 <mapper namespace="com.sona.music.board.dao.ReviewDAO">
 
 	<select id="list" resultType="com.sona.music.board.dto.ReviewDTO">
-		SELECT 
+		SELECT
+		r.REVIEW_IDX,
     	r.SCORE, 
     	r.REVIEW_TITLE, 
     	r.RATER_ID, 
@@ -39,9 +40,14 @@
 			VALUES(#{param1},#{param2},#{param3},#{param4},#{param5})
 	</insert>
 	
+	<select id="detail" resultType="com.sona.music.board.dto.ReviewDTO">
+		select * from REVIEW where REVIEW_IDX = #{param1}
+	</select>
 	
-	
-	
+	<select id="photos" resultType="com.sona.music.board.dto.PhotoDTO">
+		SELECT ORI_FILENAME, NEW_FILENAME, POST_IDX,PHOTO_CATEGORY
+		FROM PHOTO_BOARD WHERE POST_IDX = #{param1} AND PHOTO_CATEGORY = #{param2}
+	</select>
 	
 	
 	

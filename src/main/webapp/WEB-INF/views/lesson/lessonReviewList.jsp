@@ -138,6 +138,7 @@
         <table style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
+                	<th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">글번호</th>
                     <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">만족도</th>
                     <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">리뷰 제목</th>
                     <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">작성자</th>
@@ -215,8 +216,9 @@ function listCall(page){
 	     for(item of list){
 	        console.log(item);
 	        content += '<tr>';
+	        content += '<td>' + item.review_IDX + '</td>';
 	        content += '<td><span style="color: #FED000;">★</span>' + item.score + '</td>';
-	        content += '<td>' + item.review_TITLE + '</td>';
+	        content += '<td><a href="#" class="review-link" data-review-idx="' + item.review_IDX + '">' + item.review_TITLE + '</a></td>';
 	        content += '<td>' + item.rater_ID + '</td>';
 	        content += '<td>' + item.study_DATE +'</td>';
 	        content += '<td>';
@@ -229,9 +231,18 @@ function listCall(page){
 	        content += '</tr>';
 	     }
 	     $('#list').html(content);
-	}
-	 
-	 
-
+	
+	$('.review-link').click(function(e) {
+        e.preventDefault(); // 기본 동작 방지
+        console.log('data-review-idx');
+        var reviewIdx = $(this).data('review-idx');// 클릭된 리뷰의 REVIEW_IDX 추출
+        
+        console.log('reviewIdx:', reviewIdx);
+       
+        window.location.href = './lessonReviewDetail?REVIEW_IDX=' + reviewIdx; // REVIEW_IDX를 파라미터로 lessonReviewDetail 페이지로 이동
+    });
+}
+	
+	
 </script>
 </html>

@@ -15,7 +15,6 @@ public class ReviewDTO {
 	private boolean REVIEW_DELETE;
 	private int img_cnt;
 	private String STUDY_DATE;
-	private String PHOTO_CATEGORY;
 	public int getREVIEW_IDX() {
 		return REVIEW_IDX;
 	}
@@ -82,12 +81,7 @@ public class ReviewDTO {
 	public void setSTUDY_DATE(String sTUDY_DATE) {
 		STUDY_DATE = sTUDY_DATE;
 	}
-	public String getPHOTO_CATEGORY() {
-		return PHOTO_CATEGORY;
-	}
-	public void setPHOTO_CATEGORY(String pHOTO_CATEGORY) {
-		PHOTO_CATEGORY = pHOTO_CATEGORY;
-	}
+	
 	
 	
 

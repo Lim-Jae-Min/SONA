@@ -96,7 +96,7 @@
 						<input type="hidden" name="PHOTO_CATEGORY" value="Review">
 						<th>리뷰 사진</th>
 						<td colspan="4">
-							<div id="fileList"></div> <input type="file" id="fileInput"
+							<div id="fileList"></div> <input type="file" name="photos"
 							accept="image/*" multiple="multiple" style="width: 100%;" /> <small
 							style="color: #999;">(한 장의 사진만 첨부 가능합니다)</small>
 						</td>

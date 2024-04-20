@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sona.music.board.dao.ReviewDAO;
+import com.sona.music.board.dto.PhotoDTO;
 import com.sona.music.board.dto.ReviewDTO;
 
 
@@ -57,7 +58,9 @@ public class ReviewService {
 		dto.setSCORE(Double.parseDouble(param.get("SCORE")));
 		dto.setREVIEW_TITLE(param.get("REVIEW_TITLE"));
 		dto.setREVIEW_CONTENT(param.get("REVIEW_CONTENT"));
-		dto.setPHOTO_CATEGORY(param.get("PHOTO_CATEGORY"));
+		
+		PhotoDTO pdto = new PhotoDTO();
+		pdto.setPHOTO_CATEGORY(param.get("PHOTO_CATEGORY"));
 		
 
 		row = reviewDAO.write(dto); //글쓰기 완료 후 
@@ -65,8 +68,10 @@ public class ReviewService {
 		//조건3. 이후 dto에서 저장된 키 값을 받아온다.
 		int idx = dto.getREVIEW_IDX();
 		String username = dto.getRATER_ID();
-		String photoCategory = dto.getPHOTO_CATEGORY();
+		String photoCategory = pdto.getPHOTO_CATEGORY();
 		logger.info("idx="+idx);
+		logger.info("user="+username);
+		logger.info("photoCategory="+photoCategory);
 
 		if(row>0) {
 			fileSave(idx, username, photoCategory, photos); // 파일 저장
@@ -77,7 +82,17 @@ public class ReviewService {
 
 
 	public void fileSave(int idx,String username, String photoCategory, MultipartFile photos) {
+		logger.info(idx+"fileSave");
+		logger.info(username);
+		logger.info(photoCategory);
+		logger.info(photos+"fileSave");
+		
 		if(photos != null) {
+			logger.info(idx+"fileSave");
+			logger.info(username);
+			logger.info(photoCategory);
+			logger.info(photos+"fileSave");
+			
 			//1. 업로드 할 파일명이 있는가?
 			String fileName = photos.getOriginalFilename();
 			logger.info("upload file Name : "+fileName);

@@ -26,7 +26,7 @@ public class ReviewService {
 	
 	@Autowired ReviewDAO reviewDAO;
 	
-	public String file_root = "src/main/resources/photos/";
+	public String file_root = "C:/upload/";
 
 	public Map<String, Object> list(int currPage, int pagePerCnt) {
 		
@@ -129,6 +129,23 @@ public class ReviewService {
 		List<PhotoDTO> list = reviewDAO.photos(POST_IDX, PHOTO_CATEGORY);
 		model.addAttribute("photos", list);
 	}
+
+	public void deleteReview(Integer reviewIdx) {
+		logger.info("리뷰 삭제 요청 - service");
+		 reviewDAO.deleteReview(reviewIdx);
+	}
+
+	public void reviewEdit(Integer rEVIEW_IDX, Integer pOST_IDX, String pHOTO_CATEGORY, Model model) {
+		
+		ReviewDTO dto = reviewDAO.detail(rEVIEW_IDX);
+		model.addAttribute("review", dto);
+		
+		List<PhotoDTO> list = reviewDAO.photos(pOST_IDX, pHOTO_CATEGORY);
+		model.addAttribute("photos", list);
+		
+	}
+
+	
 
 
 }

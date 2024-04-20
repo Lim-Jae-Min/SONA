@@ -19,6 +19,8 @@ public interface ReviewDAO {
 
 	List<PhotoDTO> photos(int pOST_IDX, String pHOTO_CATEGORY);
 
+	void deleteReview(Integer reviewIdx);
+
 
 	
 

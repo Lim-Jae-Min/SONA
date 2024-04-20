@@ -81,7 +81,7 @@ public class ReviewController {
 	
 	@RequestMapping(value="/lessonReviewDetail")
 	public String detail(Integer REVIEW_IDX, HttpSession session, Model model) {
-	    logger.info("detail idx = " + REVIEW_IDX);
+	    logger.info("idx="+REVIEW_IDX+"리뷰 디테일 요청");
 	    
 	    
 	    if(session.getAttribute("loginId") != null && REVIEW_IDX != null) {
@@ -94,22 +94,53 @@ public class ReviewController {
 	    	
 	        reviewService.detail(REVIEW_IDX, POST_IDX, PHOTO_CATEGORY, model);
 	        
-	        return "lesson/lessonReviewDetail"; // 리다이렉트 대신 페이지 이름 반환
+	        return "lesson/lessonReviewDetail"; 
 	    } else {
-	        // REVIEW_IDX가 null이거나 로그인 세션이 없는 경우 처리
-	        return "redirect:/lessonReviewList"; // 리다이렉트
+	        
+	        return "redirect:/lessonReviewList"; 
 	    }
 	}
 	
 	
+	@RequestMapping(value = "/deleteReview", method = RequestMethod.POST)
+	public String deleteReview(@RequestParam("reviewIdx") Integer reviewIdx) {
+		logger.info(reviewIdx+"리뷰 삭제 요청 - controller");
+	    reviewService.deleteReview(reviewIdx);
+	    
+	    return "redirect:/lessonReviewList"; 
+	}
+	
 	
 	
 	@RequestMapping(value="/lessonReviewEdit")
-	public String reviewEdit(Model model) {
-		logger.info("리뷰 수정 요청");
+	public String reviewEdit(Integer idx, Model model, HttpSession session) {
+	    logger.info("idx="+idx + "리뷰 수정 요청");
+	    
+	    String page = "";
+	    String type = (String) session.getAttribute("user_type");
+	    Integer POST_IDX = idx; // POST_IDX 값을 REVIEW_IDX로 설정
+	    String PHOTO_CATEGORY = "Review"; // PHOTO_CATEGORY 값을 고정값으로 설정
+	    
+	    if (type.equals("강사")) {
+	        
+	        reviewService.reviewEdit(idx, POST_IDX, PHOTO_CATEGORY, model);
+	        page = "lesson/lessonReviewEditT";
+	    } else if(type.equals("수강생")) {
+	        
+	        reviewService.reviewEdit(idx, POST_IDX, PHOTO_CATEGORY, model);
+	        page = "lesson/lessonReviewEditS";
+	    }
+	    logger.info(type);
+	    
+	    return page;
+	}
+	
+	@RequestMapping(value="/reviewEdit")
+	public String edit(Integer REVIEW_IDX, Model model) {
+		logger.info(REVIEW_IDX+"리뷰 수정함");
 		
 		
-		return "lesson/lessonReviewEdit";
+		return "lesson/lessonReviewList";
 	}
 	
 	

@@ -15,6 +15,7 @@
     	r.REVIEW_REG_DATE 
 		FROM REVIEW r 
 		JOIN CLASS_HISTORY ch ON r.CLASS_IDX = ch.CLASS_IDX
+		WHERE r.REVIEW_DELETE = 0
 		GROUP BY r.REVIEW_IDX
 		ORDER BY REVIEW_IDX DESC 
 		LIMIT #{param1} OFFSET #{param2};
@@ -49,7 +50,10 @@
 		FROM PHOTO_BOARD WHERE POST_IDX = #{param1} AND PHOTO_CATEGORY = #{param2}
 	</select>
 	
-	
-	
+	<select id="deleteReview" resultType="com.sona.music.board.dto.ReviewDTO">
+		UPDATE REVIEW
+		SET REVIEW_DELETE = 1
+		WHERE REVIEW_IDX = #{param1}
+	</select>
 
 </mapper>

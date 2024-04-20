@@ -124,35 +124,57 @@
     </header>
 	<%@ include file="layout/lessonheader.jsp"%>
 	
-	 <div class="container">
-		<img src="resources/img/review.png" id="review">                  강의 리뷰 상세보기
-	 <div class="review-title">${review.REVIEW_TITLE}</div>
-        <div class="author-info">
-            작성자: ${review.RATER_ID} 작성일자: ${review.REVIEW_REG_DATE}
-            <span class="satisfaction">★${review.SCORE}</span>
-        </div>
-        <div class="content">
-            ${review.REVIEW_CONTENT}
-        </div>
-        <div>리뷰 사진</div>
-        <div>
-        <c:forEach items="${photos}" var="photo">
-			<img src="/photo/${photo.NEW_FILENAME}" width="500" height="300"/>
-			<br/><br/>
-		</c:forEach>	
-        </div>
-        <div>
-        <button class="button blind" onclick="confirmBlind(${review.REVIEW_IDX})">블라인드</button>
-        </div>
-        <div class="button-container">	
-            <button class="button report" onclick="confirmReport(${review.REVIEW_IDX})">신고</button>
-            <button class="button edit" onclick="redirectToEditPage(${review.REVIEW_IDX})">수정</button>
-            <button class="button delete" onclick="confirmDelete(${review.REVIEW_IDX})">삭제</button>
-        </div>
-        <div class="button-container return-btn">
-            <button class="button" onclick="location.href='./lessonReviewList'">리스트로 돌아가기</button>
-        </div>
-    </div>
+	 <div style="text-align: center;">
+		<div
+			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
+			<form action="reviewEdit" method="post" enctype="multipart/form-data" onsubmit="return confirmWrite();">
+				<table>
+					<tr>
+						<th>평가 강의명 : ${review.CLASS_IDX} 평가 강사명: ${review.RATEE_ID}</th>
+					</tr>
+					<tr>
+						<th style="font-size: 14px;">리뷰 제목</th>
+						<td><input type="text" name="REVIEW_TITLE"
+							style="width: 300px; font-size: 16px;" value="${review.REVIEW_TITLE}" /></td>
+						<th style="font-size: 12px;">작성자 : ${sessionScope.loginId}</th>
+						<th style="font-size: 12px;">작성일 : ${review.REVIEW_REG_DATE}</th>
+					</tr>
+					<tr>
+						<th style="color: #FED000;">★${review.SCORE}</th>
+					</tr>
+					<tr>
+						<th>리뷰 내용</th>
+						<td colspan="4"><textarea name="REVIEW_CONTENT"
+								style="width: 882px; height: 311px; resize: none;"> ${review.REVIEW_CONTENT}</textarea></td>
+					</tr>
+					<tr>
+						<input type="hidden" name="PHOTO_CATEGORY" value="Review">
+						<th>리뷰 사진</th>
+						<c:if test="${photos.size()>0}">
+							<tr>
+								<td><c:forEach items="${photos}" var="photo">
+										<img src="/photo/${photo.NEW_FILENAME}" width="500" height="300"/>
+										<br />
+										<br />
+									</c:forEach>
+									</td>
+							</tr>
+						</c:if>
+						<td colspan="4">
+							<div id="fileList"></div> <input type="file" name="photos"
+							accept="image/*" multiple="multiple" style="width: 100%;" /> <small
+							style="color: #999;">(한 장의 사진만 첨부 가능합니다)</small>
+						</td>
+					</tr>
+					<td colspan="5" style="text-align: center;"><input
+							type="button" onclick="location.href='./lessonReviewList'"
+							value="취소" />
+							<button>수정</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
 	
 	<div id="footer">
         <li>상호명 : SONA</li>
@@ -181,54 +203,24 @@
     </div>
 </body>
 <script>
-function confirmBlind(reviewIdx) {
-    if (confirm("블라인드 하시겠습니까?")) {
-        $.ajax({
-            type: "POST",
-            url: "./deleteReview",
-            data: { reviewIdx: reviewIdx },
-            success: function(response) {
-            	alert("블라인드 되었습니다.");
-            	location.href = './lessonReviewList';
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+function confirmWrite() {
+    var result = confirm("수정을 하시겠습니까?");
+    if (result) {
+        // 사용자가 "예"를 선택한 경우
+        alert("수정이 완료되었습니다.");
     }
+    return result; // 사용자가 "아니오"를 선택한 경우도 처리
 }
 
-
-
-function confirmReport() {
-    var confirmation = confirm("신고 하시겠습니까?");
-    if (confirmation) {
-        alert("신고 처리 되었습니다.");
-        location.href = './lessonReviewList';
+$('#userName').click(function slide() {
+	var display = $('#slide').css('display');
+    if (display == 'none') {
+        $('#slide').css('display', 'block');
     }
-}
-
-function confirmDelete(reviewIdx) {
-    if (confirm("삭제 하시겠습니까?")) {
-        $.ajax({
-            type: "POST",
-            url: "./deleteReview",
-            data: { reviewIdx: reviewIdx },
-            success: function(response) {
-            	alert("삭제되었습니다.");
-            	location.href = './lessonReviewList';
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+    if (display == 'block') {
+        $('#slide').css('display', 'none');
     }
-}
-
-function redirectToEditPage(reviewIdx) {
-    window.location.href = './lessonReviewEdit?idx=' + reviewIdx;
-}
-
+});
 
 
 

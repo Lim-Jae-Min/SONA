@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -47,6 +48,12 @@ public class LessonController {
 		Map<String, Object> map = lessonService.allListCall(currPage, pagePerCnt, condition, content, loca, instCategory, inst);
 		
 		return map;
+	}
+	
+	@RequestMapping(value="/lessonOpen.go")
+	public String allList() {
+		logger.info("강의 개설 페이지 이동");
+		return "lesson/lessonOpen";
 	}
 	
 }

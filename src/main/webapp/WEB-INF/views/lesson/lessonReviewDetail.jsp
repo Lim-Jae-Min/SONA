@@ -142,10 +142,14 @@
 		</c:forEach>	
         </div>
         <div>
-        <button class="button blind" onclick="confirmBlind(${review.REVIEW_IDX})">블라인드</button>
+        <c:if test="${user_type eq 'admin'}">
+    		<button class="button blind" onclick="confirmBlind(${review.REVIEW_IDX})">블라인드</button>
+		</c:if>
         </div>
         <div class="button-container">	
-            <button class="button report" onclick="confirmReport(${review.REVIEW_IDX})">신고</button>
+            <c:if test="${loginId eq review.RATEE_ID}">
+   				 <button class="button report" onclick="confirmReport(${review.REVIEW_IDX})">신고</button>
+			</c:if>
             <button class="button edit" onclick="redirectToEditPage(${review.REVIEW_IDX})">수정</button>
             <button class="button delete" onclick="confirmDelete(${review.REVIEW_IDX})">삭제</button>
         </div>
@@ -229,8 +233,26 @@ function redirectToEditPage(reviewIdx) {
     window.location.href = './lessonReviewEdit?idx=' + reviewIdx;
 }
 
+$(document).ready(function() {
+    // 현재 로그인한 사용자의 아이디
+    var loggedInUserId = "${loginId}";
 
+    // 리뷰 작성자의 아이디
+    var reviewUserId = "${review.RATER_ID}";
 
+    // 만약 현재 사용자가 관리자가 아니라면
+    if ("${userType}" !== "admin") {
+        // 블라인드 버튼 숨기기
+        $(".blind").hide();
+    }
+
+    // 만약 현재 로그인한 사용자의 아이디와 리뷰 작성자의 아이디가 일치하는 경우에만
+    // 수정 및 삭제 버튼을 표시합니다.
+    if (loggedInUserId !== reviewUserId) {
+        $(".edit").hide();
+        $(".delete").hide();
+    }
+});
 
 </script>
 </html>

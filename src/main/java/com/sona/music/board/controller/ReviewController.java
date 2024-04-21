@@ -125,6 +125,7 @@ public class ReviewController {
 	public String reviewEdit(Integer idx, Model model, HttpSession session) {
 	    logger.info("idx="+idx + "리뷰 수정 요청");
 	    
+	    
 	    String page = "";
 	    String type = (String) session.getAttribute("user_type");
 	    Integer POST_IDX = idx; // POST_IDX 값을 REVIEW_IDX로 설정

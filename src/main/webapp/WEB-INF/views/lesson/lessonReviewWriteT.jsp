@@ -96,9 +96,12 @@
 						<input type="hidden" name="PHOTO_CATEGORY" value="Review">
 						<th>리뷰 사진</th>
 						<td colspan="4">
-							<div id="fileList"></div> <input type="file" name="photos"
-							accept="image/*" multiple="multiple" style="width: 100%;" /> <small
-							style="color: #999;">(한 장의 사진만 첨부 가능합니다)</small>
+							<div id="fileList"></div> 
+							<input type="file" name="photos"
+							accept="image/*" multiple="multiple" style="width: 100%;"
+							onchange="checkFileCount(this)" /> 
+							<small style="color: #999;">
+							(한장의 사진만 첨부 가능합니다)</small>
 						</td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
@@ -137,39 +140,42 @@
     </div>
 </body>
 <script>
-	var currentDateElement = document.getElementById('currentDate');
-	var currentDate = new Date().toLocaleDateString('ko-KR');
-	currentDateElement.innerText = currentDate;
-	
-	function confirmWrite() {
-	    var result = confirm("리뷰 작성을 하시겠습니까?");
-	    if (result) {
-	        // 사용자가 "예"를 선택한 경우
-	        alert("리뷰 작성이 완료되었습니다.");
-	        // 여기에 작성 완료 후의 동작 추가 가능
-	    }
-	    return result; // 사용자가 "아니오"를 선택한 경우도 처리
-	}
-	
-	$('#userName').click(function slide() {
-		var display = $('#slide').css('display');
-	    if (display == 'none') {
-	        $('#slide').css('display', 'block');
-	    }
-	    if (display == 'block') {
-	        $('#slide').css('display', 'none');
-	    }
-	});
-	
-	/* var usertype = '${sessionScope.user_type}';
-	console.log(usertype);
-	
-	if(usertype == '강사'){
-		document.getElementById('evaluationStudentName').style.display = 'block';
-	}else {
-		document.getElementById('evaluationCourseName').style.display = 'block';
-	} */
-	
+var currentDateElement = document.getElementById('currentDate');
+var currentDate = new Date().toLocaleDateString('ko-KR');
+currentDateElement.innerText = currentDate;
+
+function confirmWrite() {
+    var result = confirm("리뷰 작성을 하시겠습니까?");
+    if (result) {
+        // 사용자가 "예"를 선택한 경우
+        alert("리뷰 작성이 완료되었습니다.");
+        // 여기에 작성 완료 후의 동작 추가 가능
+    }
+    return result; // 사용자가 "아니오"를 선택한 경우도 처리
+}
+
+function checkFileCount(input) {
+    // 현재 첨부된 파일 개수 확인
+    var fileCount = input.files.length;
+    
+    // 첨부 파일이 1장을 초과하는 경우
+    if (fileCount > 1) {
+        // 경고창 표시
+        alert("첨부파일은 1장만 첨부할 수 있습니다.");
+        // 파일 선택 취소
+        input.value = '';
+    }
+}
+
+$('#userName').click(function slide() {
+	var display = $('#slide').css('display');
+    if (display == 'none') {
+        $('#slide').css('display', 'block');
+    }
+    if (display == 'block') {
+        $('#slide').css('display', 'none');
+    }
+});
 	
 </script>
 </html>

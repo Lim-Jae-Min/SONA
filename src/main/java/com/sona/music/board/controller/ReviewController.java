@@ -136,11 +136,33 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/reviewEdit")
-	public String edit(Integer REVIEW_IDX, Model model) {
-		logger.info(REVIEW_IDX+"리뷰 수정함");
+	public String edit(MultipartFile photos,@RequestParam Map<String, String>param, HttpSession session) {
+		logger.info(param.get("REVIEW_IDX")+"리뷰 수정함");
 		
+		String page = "redirect:/lessonReviewList";
 		
-		return "lesson/lessonReviewList";
+		if(session.getAttribute("loginId")!= null) {
+			
+			reviewService.update(photos, param);
+			
+			page = "redirect:/lessonReviewDetail?idx="+param.get("REVIEW_IDX");			
+			}
+		
+		return page;
+		
+	}
+	
+	@RequestMapping(value = "/photoEdit.ajax", method = RequestMethod.POST)
+	public void photoEdit(@RequestParam("postIdx") String postIdx,
+	                      @RequestParam("photoCategory") String photoCategory) {
+	    try {
+	    	logger.info("photoEdit 컨트롤러:"+postIdx);
+	    	logger.info("photoEdit 컨트롤러:"+photoCategory);
+	        // POST_IDX와 PHOTO_CATEGORY를 기준으로 사진을 삭제합니다.
+	        reviewService.photoEdit(postIdx, photoCategory);
+	    } catch (Exception e) {
+	        logger.error("사진 삭제 중 오류가 발생했습니다.", e);
+	    }
 	}
 	
 	

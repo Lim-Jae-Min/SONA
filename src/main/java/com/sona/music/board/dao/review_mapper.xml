@@ -55,5 +55,16 @@
 		SET REVIEW_DELETE = 1
 		WHERE REVIEW_IDX = #{param1}
 	</select>
+	
+	<update id="update" parameterType="map">
+		UPDATE REVIEW SET  
+		REVIEW_TITLE =#{REVIEW_TITLE} , 
+		REVIEW_CONTENT =#{REVIEW_CONTENT} 
+		WHERE REVIEW_IDX = #{REVIEW_IDX}
+	</update>
+	
+	<delete id="photoEdit" parameterType="com.sona.music.board.dto.PhotoDTO">
+    DELETE FROM PHOTO_BOARD WHERE POST_IDX = #{param1} AND PHOTO_CATEGORY = #{param2}
+	</delete>
 
 </mapper>

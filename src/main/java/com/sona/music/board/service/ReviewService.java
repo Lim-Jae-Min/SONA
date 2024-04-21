@@ -145,6 +145,27 @@ public class ReviewService {
 		
 	}
 
+	public int update(MultipartFile photos, Map<String, String> param) {
+		
+		int row = reviewDAO.update(param);
+		logger.info("update count"+row);
+		if(row>0) {
+			int idx = Integer.parseInt(param.get("REVIEW_IDX"));
+			String username = param.get("RATER_ID");
+			String photoCategory = param.get("PHOTO_CATEGORY");
+			fileSave(idx, username, photoCategory, photos);
+		}
+		return row;
+	}
+
+	public void photoEdit(String postIdx, String photoCategory) {
+		
+		logger.info("photoEdit 서비스 :"+postIdx);
+    	logger.info("photoEdit 서비스 :"+photoCategory);
+	
+		reviewDAO.photoEdit(postIdx, photoCategory);
+	}
+
 	
 
 

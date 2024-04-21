@@ -1,6 +1,7 @@
 package com.sona.music.mypage.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 public class MyPageDTO {
 	private String user_id;
@@ -14,10 +15,13 @@ public class MyPageDTO {
 	private boolean user_delete;
 	private Date user_reg_date;
 	private String applyform_inst;
+	private int inst_category_idx;
 	private String applyform_location;
 	private String applyform_days;
 	private String applyform_style;
 	private boolean have_inst;
+    private List<String> selectedDays;
+    private List<String> selectedStyles;
 	
 	public String getUser_id() {
 		return user_id;
@@ -108,6 +112,24 @@ public class MyPageDTO {
 	}
 	public void setUser_bank(String user_bank) {
 		this.user_bank = user_bank;
+	}
+	public int getInst_category_idx() {
+		return inst_category_idx;
+	}
+	public void setInst_category_idx(int inst_category_idx) {
+		this.inst_category_idx = inst_category_idx;
+	}
+	public List<String> getSelectedDays() {
+		return selectedDays;
+	}
+	public void setSelectedDays(List<String> selectedDays) {
+		this.selectedDays = selectedDays;
+	}
+	public List<String> getSelectedStyles() {
+		return selectedStyles;
+	}
+	public void setSelectedStyles(List<String> selectedStyles) {
+		this.selectedStyles = selectedStyles;
 	}
 
 

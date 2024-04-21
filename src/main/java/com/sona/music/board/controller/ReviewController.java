@@ -105,7 +105,16 @@ public class ReviewController {
 	@RequestMapping(value = "/deleteReview", method = RequestMethod.POST)
 	public String deleteReview(@RequestParam("reviewIdx") Integer reviewIdx) {
 		logger.info(reviewIdx+"리뷰 삭제 요청 - controller");
+		
+		String postIdx = String.valueOf(reviewIdx);
+		String photoCategory = "Review";
+	
+		logger.info(postIdx+"리뷰 삭제 요청 - controller");
+		logger.info(photoCategory+"리뷰 삭제 요청 - controller");
+		
+		
 	    reviewService.deleteReview(reviewIdx);
+	    reviewService.photoEdit(postIdx, photoCategory);
 	    
 	    return "redirect:/lessonReviewList"; 
 	}

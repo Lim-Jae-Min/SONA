@@ -147,7 +147,7 @@
         <div class="button-container">	
             <button class="button report" onclick="confirmReport(${review.REVIEW_IDX})">신고</button>
             <button class="button edit" onclick="redirectToEditPage(${review.REVIEW_IDX})">수정</button>
-            <button class="button delete" onclick="confirmDelete(${review.REVIEW_IDX},'${photo.POST_IDX}', '${photo.PHOTO_CATEGORY}')">삭제</button>
+            <button class="button delete" onclick="confirmDelete(${review.REVIEW_IDX})">삭제</button>
         </div>
         <div class="button-container return-btn">
             <button class="button" onclick="location.href='./lessonReviewList'">리스트로 돌아가기</button>
@@ -208,12 +208,12 @@ function confirmReport() {
     }
 }
 
-function confirmDelete(reviewIdx,postIdx, photoCategory) {
+function confirmDelete(reviewIdx) {
     if (confirm("삭제 하시겠습니까?")) {
         $.ajax({
             type: "POST",
             url: "./deleteReview",
-            data: { reviewIdx: reviewIdx, postIdx: postIdx, photoCategory: photoCategory },
+            data: { reviewIdx: reviewIdx },
             success: function(response) {
             	alert("삭제되었습니다.");
             	location.href = './lessonReviewList';

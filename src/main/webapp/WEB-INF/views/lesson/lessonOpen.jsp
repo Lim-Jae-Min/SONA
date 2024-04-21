@@ -231,7 +231,7 @@ button {
 	        			<td colspan="3">
 	        				강의 내용<span class="red">*</span>
 		        			<br/><br/>
-		        			<textarea name="class_content" placeholder="내용을 입력해주세요."></textarea>
+		        			<textarea name="class_content" placeholder="내용을 입력해주세요." id="classContent"></textarea>
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -239,7 +239,7 @@ button {
 	        				강의 지역<span class="red">*</span>
 		        			<br/><br/>
 		        			<select name="class_location" id="location">
-								<option value="지역 전체">전체</option>
+								<option value=""></option>
 								<option value="서울특별시 강남구">서울특별시 강남구</option>
 								<option value="서울특별시 강동구">서울특별시 강동구</option>
 								<option value="서울특별시 강북구">서울특별시 강북구</option>
@@ -273,6 +273,7 @@ button {
 	        				경력 년수<span class="red">*</span>
 	        				<br/><br/>
 	        				<select name="career_years" id="careerYears">
+								<option value=""></option>
 								<option value="1년">1년</option>
 								<option value="2년">2년</option>
 								<option value="3년">3년</option>
@@ -295,14 +296,14 @@ button {
 	        		</tr>
 	        		<tr>
 	        			<td colspan="3">
-	        				경력 사진<span class="red">*</span>&nbsp;&nbsp;&nbsp;<span class="gray">사진은 3개까지 첨부 가능합니다.</span>
+	        				경력 사진&nbsp;&nbsp;&nbsp;<span class="gray">사진은 3개까지 첨부 가능합니다.</span>
 		        			<br/><br/>
 		        			<input type="file" name="class_photos" multiple="multiple" id="photos"/>
 	        			</td>
 	        		</tr>
 	        		<tr>
 	        			<td colspan="3">
-	        				경력 영상 URL<span class="red">*</span>&nbsp;&nbsp;&nbsp;<span class="gray">영상은 1개까지 첨부 가능합니다.</span>
+	        				경력 영상 URL&nbsp;&nbsp;&nbsp;<span class="gray">영상은 1개까지 첨부 가능합니다.</span>
 		        			<br/><br/>
 		        			<button type="button" id="url" onclick="openModal()">URL 첨부</button>
 		        			<br/><br/>
@@ -371,7 +372,7 @@ button {
 	        			<td colspan="3">
 	        				강의료<span class="red">*</span>&nbsp;<span class="gray">(숫자만 입력해주세요.)</span>
 	        				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        			<input type="text" name="class_price" id="classPrice"/>&nbsp;&nbsp;&nbsp;회
+		        			<input type="text" name="class_price" id="classPrice"/>&nbsp;&nbsp;&nbsp;원
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -385,7 +386,7 @@ button {
 	        		</tr>
 	        		<tr>
 	        			<td colspan="3" style="text-align: center;">
-	        				<button type="button" id="submit">강의 개설</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        				<button type="button" id="open">강의 개설</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	        				<button type="button" id="goBack">돌아가기</button>
 	        			</td>
 	        		</tr>
@@ -610,8 +611,10 @@ $('.hour').html(hourContent);
 
 $('#endHour').change(function (){
 	//console.log($('#endHour').val());
-	var start = $('startHour').val();
-	var end = $('endHour').val();
+	var start = $('#startHour').val();
+	var end = $('#endHour').val();
+	console.log(start);
+	console.log(end);
 	if (hourArr.indexOf(start) == -1 || hourArr.indexOf(start) > hourArr.indexOf(end)) {
 		alert('강의 시간을 다시 입력해주세요.');
 		$('#startHour').prop('selectedIndex', 0);
@@ -649,9 +652,51 @@ $('#goBack').click(function() {
 	location.href = "./allList.go";
 });
 
-$('#submit').click(function() {
+$('#open').click(function() {
 	var result = confirm("강의를 개설하시겠습니까?");
-    if (result) {
+	var $className = $('input[name="class_name"]').val();
+	var $classInst = $('select[name="class_inst"]').val();
+	var $classContent = $('textarea[name="class_content"]').val();
+	var $classLocation = $('select[name="class_location"]').val();
+	var $careerYears = $('select[name="career_years"]').val();
+	var $careerContent = $('textarea[name="career_content"]').val();
+	var $classDays = $('input[name="class_days"]').val();
+	var $classStyle = $('input[name="class_style"]').val();
+	var $classTimes = $('input[name="class_times"]').val();
+	var $classPrice = $('input[name="class_price"]').val();
+	
+	console.log($className);
+	console.log($classInst);
+	console.log($classContent);
+	console.log($classLocation);
+	console.log($careerYears);
+	console.log($careerContent);
+	console.log($classDays);
+	console.log($classStyle);
+	console.log($classTimes);
+	console.log($classPrice);
+	
+	if ($className == '') {
+		alert('강의 제목을 입력해주세요!');
+	} else if ($classInst == '' || $classInst == null) {
+		alert('강의 악기를 입력해주세요!');
+	} else if ($classContent == '') {
+		alert('강의 내용을 입력해주세요!');
+	} else if ($classLocation == '') {
+		alert('강의 지역을 입력해주세요!');
+	} else if ($careerYears == '') {
+		alert('경력 년수를 입력해주세요!');
+	} else if ($careerContent == '') {
+		alert('경력 내용을 입력해주세요!');
+	} else if ($classDays == '') {
+		alert('강의 요일을 입력해주세요!');
+	} else if ($classStyle == '') {
+		alert('강의스타일을 입력해주세요!');
+	} else if ($classTimes == '') {
+		alert('강의 총 횟수를 입력해주세요!');
+	} else if ($classPrice == '') {
+		alert('강의 가격을 입력해주세요!');
+	} else if (result) {
         // 사용자가 "예"를 선택한 경우
         alert("강의 개설이 완료되었습니다.");
         // 여기에 작성 완료 후의 동작 추가 가능

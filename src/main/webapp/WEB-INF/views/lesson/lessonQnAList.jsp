@@ -220,6 +220,7 @@ function listCall(page, classIdx){
 	        content += '<input type="hidden" name="CLASS_IDX" value="' + item.class_IDX + '">';
 	        content += '<input type="hidden" name="TEACHER_ID" value="' + item.teacher_ID + '">';
 	        content += '<input type="hidden" name="ANONYMOUS_STATUS" value="' + item.anonymous_STATUS + '">';
+	        content += '<input type="hidden" name="USER_ID" value="' + item.user_ID + '">';
 	        content += '<td>' + item.question_IDX + '</td>';
 	        content += '<td>';
 	        if (item.anonymous_STATUS) {
@@ -255,9 +256,13 @@ function listCall(page, classIdx){
 	    	    var teacherId = $(this).closest('tr').find('input[name="TEACHER_ID"]').val();
 	    	    
 	    	    var anonymousStatus = $(this).data('anonymous');
+	    	    
 	    	    console.log(anonymousStatus);
+	    	    console.log(userId);
+	    	    console.log(teacherId);
+	    	    
 	    	    // 열람 권한 조건 확인
-	    	    if (anonymousStatus === true && (userType === "admin" ||  loginId === userId || loginId === teacherId)) {
+	    	    if (anonymousStatus === true && (userType === "admin"  ||  loginId === userId || loginId === teacherId)) {
         		// 열람 권한이 있는 경우 해당 페이지로 이동
        			 window.location.href = './lessonQnADetail?QUESTION_IDX=' + questionIdx;
     			} else if (anonymousStatus === false) {

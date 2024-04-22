@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sona.music.board.dto.QnADTO;
 import com.sona.music.board.service.QnAService;
 
 @Controller
@@ -74,11 +75,10 @@ public class QnAController {
 	
 	@RequestMapping(value="/lessonQnADetail")
 	public String qnaDetail(Integer QUESTION_IDX, Model model) {
-		logger.info("QnA 디테일 요청");
 		logger.info("idx="+QUESTION_IDX+" Q&A 디테일 요청");
 		
-		qnaService.detail(QUESTION_IDX, model);
 		
+		qnaService.detail(QUESTION_IDX, model);
 		
 		return "lesson/lessonQnADetail";
 	}

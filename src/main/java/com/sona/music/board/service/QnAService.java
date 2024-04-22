@@ -56,9 +56,15 @@ public class QnAService {
 		return row;
 	}
 
-	public void detail(Integer qUESTION_IDX, Model model) {
-		QnADTO dto = qnaDAO.detail(qUESTION_IDX);
-		model.addAttribute("qna",dto);
+	public void detail(Integer QUESTION_IDX, Model model) {
+		logger.info("Q&A 디테일 요청 서비스");
+		
+		QnADTO dto = qnaDAO.detail(QUESTION_IDX);
+		model.addAttribute("question",dto);
+		logger.info(dto.getQ_TITLE());
+		logger.info(dto.getTEACHER_ID());
+		logger.info(dto.getQ_CONTENT());
+		logger.info(String.valueOf(dto.getCLASS_IDX()));
 		
 	}
 	

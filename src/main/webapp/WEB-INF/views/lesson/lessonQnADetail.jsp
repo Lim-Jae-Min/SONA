@@ -126,20 +126,21 @@
 	
 	 <div class="container">
 		<img src="resources/img/QnA.png" id="QnA">                  Q&A 상세보기
-	 <div class="qna-title">글번호:${qna.QUESTION_IDX} Q&A 제목: ${qna.Q_TITLE}</div>
+	 <div class="qna-title"> 글번호:${question.QUESTION_IDX} </div>
+	 <div>Q&A 제목 : ${question.q_TITLE}  </div>
         <div class="author-info">
-            작성자: ${qna.USER_ID} 작성일자: ${qna.Q_REG_DATE} 조회수:${qna.Q_HIT}
+            작성자: ${question.USER_ID} 작성일: ${question.q_REG_DATE} 조회수: ${question.q_HIT}
         </div>
         <div class="content">
-            ${qna.Q_CONTENT}
+        ${question.q_CONTENT}
         </div>
         <div class="button-container">
-        	<button class="button reply" onclick="redirectToReplyPage(${qna.QUESTION_IDX})">답변</button>
-            <button class="button edit" onclick="redirectToEditPage(${qna.QUESTION_IDX})">수정</button>
-            <button class="button delete" onclick="confirmDelete(${qna.QUESTION_IDX})">삭제</button>
+        	<button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX})">답변</button>
+            <button class="button edit" onclick="redirectToEditPage(${question.QUESTION_IDX})">수정</button>
+            <button class="button delete" onclick="confirmDelete(${question.QUESTION_IDX})">삭제</button>
         </div>
         <div class="button-container return-btn">
-            <button class="button" onclick="redirectToList(${qna.CLASS_IDX})">리스트로 돌아가기</button>
+            <button class="button" onclick="redirectToList(${question.CLASS_IDX})">리스트로 돌아가기</button>
         </div>
     </div>
 	
@@ -170,8 +171,7 @@
     </div>
 </body>
 <script>
-
-var classIdx = ${qna.CLASS_IDX};
+var classIdx = ${question.CLASS_IDX};
 
 function confirmDelete(questionIdx) {
     if (confirm("삭제 하시겠습니까?")) {
@@ -181,7 +181,7 @@ function confirmDelete(questionIdx) {
             data: { questionIdx: questionIdx },
             success: function(response) {
             	alert("삭제되었습니다.");
-            	location.href = './lessonQnAList?idx=' + classIdx;
+            	location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
             },
             error: function(error) {
                 console.log(error);
@@ -192,7 +192,7 @@ function confirmDelete(questionIdx) {
 
 
 function redirectToList(classIdx) {
-    window.location.href = './lessonQnAList?idx=' + classIdx;
+    window.location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
 }
 
 
@@ -200,9 +200,9 @@ $(document).ready(function() {
     // 현재 로그인한 사용자의 아이디
     var loggedInUserId = "${sessionScope.loginId}";
     // qna 작성자의 아이디
-    var qnaUserId = "${qna.USER_ID}";
+    var qnaUserId = "${question.USER_ID}";
     
-    var teacherId = "${qna.TEACHER_ID}";
+    var teacherId = "${question.TEACHER_ID}";
 
     // 만약 현재 로그인한 사용자의 아이디와 qna 작성자의 아이디가 일치하는 경우에만
     // 수정 및 삭제 버튼을 표시합니다.

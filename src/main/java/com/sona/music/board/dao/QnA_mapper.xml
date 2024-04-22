@@ -25,7 +25,8 @@
 	LEFT JOIN 
     CLASS_ANSWER CA ON CQ.QUESTION_IDX = CA.QUESTION_IDX
 	WHERE 
-    CQ.CLASS_IDX = #{param3};
+    CQ.CLASS_IDX = #{param3}
+    ORDER BY QUESTION_IDX DESC
 	</select>
 
 	<select id="allCount" resultType="Integer">
@@ -41,8 +42,20 @@
 	>
 	INSERT INTO CLASS_QUESTION(CLASS_IDX,USER_ID,Q_TITLE,Q_CONTENT,ANONYMOUS_STATUS)
 			VALUES(#{CLASS_IDX},#{USER_ID},#{Q_TITLE},#{Q_CONTENT},#{ANONYMOUS_STATUS})
-	
 	</insert>
+	
+	<select id="detail" resultType= "com.sona.music.board.dto.QnADTO">
+	SELECT 
+    CQ.*,
+    CO.USER_ID AS TEACHER_ID
+	FROM 
+   	CLASS_QUESTION CQ
+	INNER JOIN 
+    CLASS_OPEN CO ON CQ.CLASS_IDX = CO.CLASS_IDX
+	WHERE 
+    CQ.QUESTION_IDX = #{param1}
+	</select>
+	
 
 
 </mapper>

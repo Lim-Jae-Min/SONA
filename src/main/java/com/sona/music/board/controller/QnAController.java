@@ -73,9 +73,12 @@ public class QnAController {
 	}
 	
 	@RequestMapping(value="/lessonQnADetail")
-	public String qnaDetail(Integer QUESTION_IDX) {
+	public String qnaDetail(Integer QUESTION_IDX, Model model) {
 		logger.info("QnA 디테일 요청");
 		logger.info("idx="+QUESTION_IDX+" Q&A 디테일 요청");
+		
+		qnaService.detail(QUESTION_IDX, model);
+		
 		
 		return "lesson/lessonQnADetail";
 	}

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.sona.music.board.dao.QnADAO;
 import com.sona.music.board.dto.QnADTO;
@@ -53,6 +54,12 @@ public class QnAService {
 		row = qnaDAO.qwrite(dto);
 		
 		return row;
+	}
+
+	public void detail(Integer qUESTION_IDX, Model model) {
+		QnADTO dto = qnaDAO.detail(qUESTION_IDX);
+		model.addAttribute("qna",dto);
+		
 	}
 	
 }

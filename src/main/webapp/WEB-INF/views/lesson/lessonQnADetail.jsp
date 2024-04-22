@@ -125,36 +125,21 @@
 	<%@ include file="layout/lessonheader.jsp"%>
 	
 	 <div class="container">
-		<img src="resources/img/review.png" id="review">                  강의 리뷰 상세보기
-	 <div class="review-title">${review.REVIEW_TITLE}</div>
+		<img src="resources/img/QnA.png" id="QnA">                  Q&A 상세보기
+	 <div class="qna-title">글번호:${qna.QUESTION_IDX} Q&A 제목: ${qna.Q_TITLE}</div>
         <div class="author-info">
-            작성자: ${review.RATER_ID} 작성일자: ${review.REVIEW_REG_DATE}
-            <span class="satisfaction">★${review.SCORE}</span>
+            작성자: ${qna.USER_ID} 작성일자: ${qna.Q_REG_DATE} 조회수:${qna.Q_HIT}
         </div>
         <div class="content">
-            ${review.REVIEW_CONTENT}
+            ${qna.Q_CONTENT}
         </div>
-        <div>리뷰 사진</div>
-        <div>
-        <c:forEach items="${photos}" var="photo">
-			<img src="/photo/${photo.NEW_FILENAME}" width="500" height="300"/>
-			<br/><br/>
-		</c:forEach>	
-        </div>
-        <div>
-        <c:if test="${user_type eq 'admin'}">
-    		<button class="button blind" onclick="confirmBlind(${review.REVIEW_IDX})">블라인드</button>
-		</c:if>
-        </div>
-        <div class="button-container">	
-            <c:if test="${loginId eq review.RATEE_ID}">
-   				 <button class="button report" onclick="confirmReport(${review.REVIEW_IDX})">신고</button>
-			</c:if>
-            <button class="button edit" onclick="redirectToEditPage(${review.REVIEW_IDX})">수정</button>
-            <button class="button delete" onclick="confirmDelete(${review.REVIEW_IDX})">삭제</button>
+        <div class="button-container">
+        	<button class="button reply" onclick="redirectToReplyPage(${qna.QUESTION_IDX})">답변</button>
+            <button class="button edit" onclick="redirectToEditPage(${qna.QUESTION_IDX})">수정</button>
+            <button class="button delete" onclick="confirmDelete(${qna.QUESTION_IDX})">삭제</button>
         </div>
         <div class="button-container return-btn">
-            <button class="button" onclick="location.href='./lessonReviewList'">리스트로 돌아가기</button>
+            <button class="button" onclick="redirectToList(${qna.CLASS_IDX})">리스트로 돌아가기</button>
         </div>
     </div>
 	
@@ -185,42 +170,18 @@
     </div>
 </body>
 <script>
-function confirmBlind(reviewIdx) {
-    if (confirm("블라인드 하시겠습니까?")) {
-        $.ajax({
-            type: "POST",
-            url: "./deleteReview",
-            data: { reviewIdx: reviewIdx },
-            success: function(response) {
-            	alert("블라인드 되었습니다.");
-            	location.href = './lessonReviewList';
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
-}
 
+var classIdx = ${qna.CLASS_IDX};
 
-
-function confirmReport() {
-    var confirmation = confirm("신고 하시겠습니까?");
-    if (confirmation) {
-        alert("신고 처리 되었습니다.");
-        location.href = './lessonReviewList';
-    }
-}
-
-function confirmDelete(reviewIdx) {
+function confirmDelete(questionIdx) {
     if (confirm("삭제 하시겠습니까?")) {
         $.ajax({
             type: "POST",
-            url: "./deleteReview",
-            data: { reviewIdx: reviewIdx },
+            url: "./deleteQnA",
+            data: { questionIdx: questionIdx },
             success: function(response) {
             	alert("삭제되었습니다.");
-            	location.href = './lessonReviewList';
+            	location.href = './lessonQnAList?idx=' + classIdx;
             },
             error: function(error) {
                 console.log(error);
@@ -229,28 +190,28 @@ function confirmDelete(reviewIdx) {
     }
 }
 
-function redirectToEditPage(reviewIdx) {
-    window.location.href = './lessonReviewEdit?idx=' + reviewIdx;
+
+function redirectToList(classIdx) {
+    window.location.href = './lessonQnAList?idx=' + classIdx;
 }
+
 
 $(document).ready(function() {
     // 현재 로그인한 사용자의 아이디
-    var loggedInUserId = "${loginId}";
+    var loggedInUserId = "${sessionScope.loginId}";
+    // qna 작성자의 아이디
+    var qnaUserId = "${qna.USER_ID}";
+    
+    var teacherId = "${qna.TEACHER_ID}";
 
-    // 리뷰 작성자의 아이디
-    var reviewUserId = "${review.RATER_ID}";
-
-    // 만약 현재 사용자가 관리자가 아니라면
-    if ("${userType}" !== "admin") {
-        // 블라인드 버튼 숨기기
-        $(".blind").hide();
-    }
-
-    // 만약 현재 로그인한 사용자의 아이디와 리뷰 작성자의 아이디가 일치하는 경우에만
+    // 만약 현재 로그인한 사용자의 아이디와 qna 작성자의 아이디가 일치하는 경우에만
     // 수정 및 삭제 버튼을 표시합니다.
-    if (loggedInUserId !== reviewUserId) {
+    if (loggedInUserId !== qnaUserId) {
         $(".edit").hide();
         $(".delete").hide();
+    }
+    if (loggedInUserId !== teacherId) {
+        $(".reply").hide();
     }
 });
 

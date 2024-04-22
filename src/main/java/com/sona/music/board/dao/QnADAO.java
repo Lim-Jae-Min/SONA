@@ -12,4 +12,6 @@ public interface QnADAO {
 
 	List<QnADTO> list(int pagePerCnt, int start, Integer classIdx);
 
+	QnADTO detail(Integer qUESTION_IDX);
+
 }

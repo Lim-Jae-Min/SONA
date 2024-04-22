@@ -28,64 +28,89 @@ public class MyPageController {
 	
 	@RequestMapping(value = "/studentPage.do")
 	public String getUserInfo(Model model, HttpSession session) {
+		logger.info("회원 정보 페이지 이동");
 		String page = "member/login";
 		String loginId = (String) session.getAttribute("loginId");
 		if (loginId != null) {
 			MyPageDTO userInfo = myPageService.getUserInfo(loginId);
 			model.addAttribute("userInfo",userInfo);
+			logger.info("회원 정보 페이지 이동 성공 !");
+
 			page = "studentMyPage/studentPage";
 		}
 		
 		return page;
 	}
-	
 	@RequestMapping(value = "/editStudentPage.go")
 	public String editUserInfo(HttpSession session, Model model) {
-		String page = "member/login";
-		if(session.getAttribute("loginId")!=null) {
-			
-			
-			page = "studentMyPage/editStudentPage";
-		}
-		
-		return page;
+	 logger.info("회원 수정 페이지 이동");
+	    String page = "member/login";
+	    String loginId = (String) session.getAttribute("loginId");
+	    if(loginId != null) {
+	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        // 모델에 사용자 정보 추가
+	        model.addAttribute("userInfo", userInfo);
+	        logger.info("회원 수정 페이지 이동 성공 !");
+	        page = "studentMyPage/editStudentPage";
+	    }
+	    return page;
+	}
+
+	
+	@RequestMapping(value = "/studentPage.edit", method = RequestMethod.POST)
+	public String updateUserInfo(@RequestParam Map<String, Object> map, HttpSession session, Model model) {
+	    String page = "member/login";
+	    logger.info("회원 수정하기 요청이요~ ");
+	    String loginId = (String) session.getAttribute("loginId");
+	    logger.info("전달된 데이터: {}", map);
+
+	    if (loginId != null) {
+	        logger.info("회원 수정하기~ ", map);
+	        myPageService.updateUserInfo(map, loginId); // 로그인 ID를 전달
+	        page = "studentMyPage/editStudentPage";
+	    }
+	    return page;
 	}
 	
-	@RequestMapping("/studentPage.edit")
-    public String updateUserInfo(@RequestParam Map<String, Object> map, HttpSession session, Model model) {
-        String page = "member/login";
-        String loginId = (String) session.getAttribute("loginId"); // 세션에서 loginId 가져오기
+	 @RequestMapping(value = "/confirmPw.ajax", method = RequestMethod.POST)
+	 @ResponseBody
+	    public boolean confirmPw(@RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword) {
+		 
+ 			logger.info("비밀번호 수정 요청~ ");
 
-		if(session.getAttribute("loginId")!= null) {
-		MyPageDTO userInfo = myPageService.getUserInfo(loginId);
-
-		model.addAttribute("userInfo",userInfo);
-
-		myPageService.updateUserInfo(map);
-		page = "studentMyPage/editStudentPage";
-		
-		
-		}
-        return page;
-    }
-	
-	 @RequestMapping(value = "/overlay.do", method = RequestMethod.POST)
-	    @ResponseBody
-	    public boolean overlay(
-	        @RequestParam("newPassword") String newPassword,
-	        @RequestParam("confirmPassword") String confirmPassword
-	    ) {
-	        return myPageService.overlay(newPassword, confirmPassword);
+	        return myPageService.confirmPw(newPassword, confirmPassword);
 	 }
+
 	
 	
 	
 	
 	
-	 @RequestMapping(value = "/submitEdit", method = RequestMethod.POST)
+	 @RequestMapping(value = "/submitEdit.ajax", method = RequestMethod.POST)
 	 public String editUserInfo(@RequestBody MyPageDTO requestData) {
 	     // 서비스로 전달하여 처리
+ 		logger.info("수강신청폼 수정 요청~ ");
+
 	     return myPageService.editUserInfo(requestData);
 	 }
+	 
+	 @RequestMapping(value = "/myTeacher.go")
+		public String myTeacher(HttpSession session, Model model) {
+		 logger.info("회원 수정 페이지 이동");
+		    String page = "member/login";
+		    String loginId = (String) session.getAttribute("loginId");
+		    if(loginId != null) {
+		        // 모델에 사용자 정보 추가
+		        logger.info("즐겨찾기 강사 페이지 이동 성공 !");
+		        page = "studentMyPage/myTeacher";
+		    }
+		    return page;
+		}
+	 
+	
+	 
+	 
+	 
 }
 

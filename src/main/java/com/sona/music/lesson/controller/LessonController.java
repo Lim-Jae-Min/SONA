@@ -62,17 +62,34 @@ public class LessonController {
 	}
 	
 	@RequestMapping(value="/lessonOpen.do", method = RequestMethod.POST)
-	public String lessonOpenDo(MultipartFile[] photos, @RequestParam Map<String, String> param, HttpSession session) {
+	public String lessonOpenDo(@RequestParam("lessonLogo") MultipartFile lessonLogo,@RequestParam("class_photos") MultipartFile[] photos, @RequestParam Map<String, String> param, HttpSession session) {
 		logger.info("강의 개설 controller 도착");
 		logger.info("param : {}", param);
 		logger.info("photos : " + photos);
 		String user_id = (String) session.getAttribute("loginId");
 		String testurl = param.get("video_url");
 		
-		int row = lessonService.lessonOpenDo(photos, param, user_id);
+		int row = lessonService.lessonOpenDo(lessonLogo, photos, param, user_id);
 		
 		
-		return "main/main";
+		return "lesson/allLessonList";
+	}
+	
+	@RequestMapping(value="/lessonDetail.go")
+	public String lessonDetail(String class_idx, HttpSession session, Model model) {
+		String page = "redirect:/main/main";
+		logger.info("lessonDetail idx = " + class_idx);
+		
+		if (session.getAttribute("loginId") != null) {
+			page = "lesson/lessonDetail";
+			// BoardDTO bbs = service.detail(idx);
+			// model.addAttribute("bbs", bbs);
+			
+			// model 줄테니 여기에 bbs 와 photos 담아와라
+			lessonService.lessonDetail(class_idx, model);
+		}
+		
+		return page;
 	}
 	
 }

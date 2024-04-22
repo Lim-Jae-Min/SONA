@@ -5,7 +5,7 @@
 <mapper namespace="com.sona.music.lesson.dao.LessonDAO">
 	
 	<select id="recommendListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
-		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = '강의') AS new_filename
+		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = 'lesson') AS new_filename
 			, co.class_idx
 			, co.class_name
 			, u.user_name
@@ -24,7 +24,7 @@
 	</select>
 	
 	<select id="allListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
-		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = '강의') AS new_filename
+		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = 'lesson') AS new_filename
 			, co.class_idx
 			, co.class_name
 			, u.user_name
@@ -113,5 +113,47 @@
 	<insert id="videoWrite">
 		INSERT CAREER_VIDEO(class_idx, video_url) values(#{param1}, #{param2})
 	</insert>
+	
+	<insert id="photoWrite">
+		INSERT INTO PHOTO_BOARD(user_id, ori_filename, new_filename, post_idx, photo_category) 
+			VALUES(#{param1}, #{param2}, #{param3}, #{param4}, #{param5})
+	</insert>
+	
+	<select id="lessonDetail" resultType="com.sona.music.lesson.dto.LessonDTO">
+		SELECT
+			co.class_name
+			, co.class_inst
+			, (SELECT u.user_name FROM USERS u WHERE u.user_id = co.user_id) AS user_name
+			, FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 2) AS class_score
+			, co.user_id
+			, co.class_location
+			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
+			, co.class_reg_date
+			, co.career_years
+			, co.career_contents
+			, co.class_content
+			, co.class_style
+			, co.class_days
+			, co.class_hours
+			, co.need_inst
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+				THEN 0
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				END AS accumulate_student
+			, co.class_times
+			, co.class_price
+			, (SELECT video_url FROM CAREER_VIDEO cv WHERE cv.class_idx = #{param1}) AS video_url
+		FROM CLASS_OPEN co
+		WHERE co.class_idx = #{param1}
+	</select>
+	
+	<select id="lessonLogoLoad" resultType="String">
+		SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.post_idx = #{param1} AND pb.photo_category = 'Lesson'
+	</select>
+		
+	<select id="lessonPhotosLoad" resultType="com.sona.music.lesson.dto.PhotoDTO">
+		SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.post_idx = #{param1} AND pb.photo_category = 'Career'
+	</select>
+	
 	
 </mapper>

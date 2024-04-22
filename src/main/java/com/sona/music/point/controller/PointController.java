@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.sona.music.lesson.dto.LessonDTO;
+import com.sona.music.lesson.service.LessonService;
 import com.sona.music.point.service.PointService;
 
 @Controller
@@ -77,7 +79,10 @@ public class PointController {
 	
 	@RequestMapping(value = "/lessonPayment.go")
 	public String lessonPaymentGo() {
-
+		int CLASS_IDX = 2;
+		//레슨정보를 가져오기
+		LessonDTO lessonInfo = pointService.paymentGetLesson(CLASS_IDX);
+		
 		return "myPoint/lessonPayment";
 	}
 }

@@ -17,7 +17,11 @@ public class MemberDTO {
     private int POINT;
     private String REVIEW_TITLE;
     private Date CLASS_REG_DATE;
-    private int SCORE;
+    private String SCORE;
+    private String COUNT;
+    private String CLASS_NAME;
+    private String APPLY_IDX;
+    private String TPHOTO;
 	
 	
 	public String getUSER_ID() {
@@ -98,11 +102,35 @@ public class MemberDTO {
 	public void setCLASS_REG_DATE(Date cLASS_REG_DATE) {
 		CLASS_REG_DATE = cLASS_REG_DATE;
 	}
-	public int getSCORE() {
+	public String getSCORE() {
 		return SCORE;
 	}
-	public void setSCORE(int sCORE) {
+	public void setSCORE(String sCORE) {
 		SCORE = sCORE;
+	}
+	public String getCOUNT() {
+		return COUNT;
+	}
+	public void setCOUNT(String cOUNT) {
+		COUNT = cOUNT;
+	}
+	public String getCLASS_NAME() {
+		return CLASS_NAME;
+	}
+	public void setCLASS_NAME(String cLASS_NAME) {
+		CLASS_NAME = cLASS_NAME;
+	}
+	public String getAPPLY_IDX() {
+		return APPLY_IDX;
+	}
+	public void setAPPLY_IDX(String aPPLY_IDX) {
+		APPLY_IDX = aPPLY_IDX;
+	}
+	public String getTPHOTO() {
+		return TPHOTO;
+	}
+	public void setTPHOTO(String tPHOTO) {
+		TPHOTO = tPHOTO;
 	}
 
 	

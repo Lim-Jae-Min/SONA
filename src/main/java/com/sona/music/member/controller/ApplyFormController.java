@@ -31,11 +31,10 @@ public class ApplyFormController {
 		String msg = "강의신청에 실패하였습니다.";
 		String page = "applyForm/applyForm";
 		String seid = (String) session.getAttribute("user_id");
-		Map<String, String> param1 = new HashMap<String, String>();
-	    param1.put("user_id", seid);
+	    param.put("user_id", seid);
+		logger.info("param : {}",param); 
 		
-		
-		int row = applyFormService.apply(param1);
+		int row = applyFormService.apply(param);
 		logger.info("강의신청 row 반환값: "+ row);
 		
 		if(row == 1) {

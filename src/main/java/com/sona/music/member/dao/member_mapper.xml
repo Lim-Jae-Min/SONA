@@ -54,13 +54,46 @@
 	
 	
 	<select id="list" resultType="com.sona.music.member.dto.MemberDTO">
-		SELECT 
+		SELECT co.class_name
+		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+		         THEN 0
+		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+		         END AS count
+		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 2) AS score
+		   , co.class_reg_date
+		FROM CLASS_OPEN co
+		ORDER BY CLASS_IDX desc
+		LIMIT #{param1} OFFSET #{param2}
+	</select>
+	
+	<select id="detail" resultType="com.sona.music.member.dto.MemberDTO">
+		select 
+			u.USER_ID,
+			u.USER_NAME,
+			u.USER_TYPE,
+			CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) 
+				FROM MANNER_HISTORY mh), 2), '') AS manner,
+			(SELECT pb.NEW_FILENAME from PHOTO_BOARD pb JOIN USERS u2 on u2.USER_ID = pb.USER_ID
+				WHERE u.USER_ID = 'user2' and pb.PHOTO_CATEGORY='Lesson') as tphoto
+		FROM USERS u WHERE u.USER_ID = #{param1}
+	</select>
+	
+	<select id="detail" resultType="com.sona.music.member.dto.MemberDTO">
+		select 
+			u.USER_ID,
+			u.USER_NAME,
+			u.USER_TYPE,
+			CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) 
+				FROM MANNER_HISTORY mh), 2), '') AS manner,
+			(SELECT pb.NEW_FILENAME from PHOTO_BOARD pb JOIN USERS u2 on u2.USER_ID = pb.USER_ID
+				WHERE u.USER_ID = 'user2' and pb.PHOTO_CATEGORY='Lesson') as tphoto
+		FROM USERS u WHERE u.USER_ID = #{param1}
 	</select>
 	
 	
 	
 	<select id="allCount" resultType="Integer">
-		SELECT CEIL(COUNT(REVIEW_IDX)/#{param1}) AS pages FROM REVIEW
+		SELECT CEIL(COUNT(*)/#{param1}) AS pages FROM REVIEW
 	</select>
 	
 </mapper>	

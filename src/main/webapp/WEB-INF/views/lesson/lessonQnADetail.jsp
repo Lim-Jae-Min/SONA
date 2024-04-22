@@ -62,13 +62,22 @@
             cursor: pointer;
             border: none;
         }
-        .blind {
-            background-color: #ff0000;
-            color: #ffffff;
-            margin-right: auto; /* 왼쪽 여백 추가 */
-            text-align: left;
-        }
-        .report, .edit, .delete {
+        .question-box {
+    	border: 2px solid #BEE6FF;
+   		border-radius: 10px;
+    	background-color: #FFFFFF;
+    	padding: 20px;
+    	margin-bottom: 20px;
+		}
+		.answer-box {
+    	border: 2px solid #BEE6FF;
+    	border-radius: 10px;
+    	background-color: #BEE6FF; /* 답변 칸의 배경색을 하늘색으로 지정 */
+    	padding: 20px;
+    	margin-bottom: 20px;
+		}
+        
+         .edit, .delete {
             background-color: #ff0000;
             color: #ffffff;
             margin-left: auto; /* 오른쪽 여백 추가 */
@@ -126,23 +135,37 @@
 	
 	 <div class="container">
 		<img src="resources/img/QnA.png" id="QnA">                  Q&A 상세보기
-	 <div class="qna-title"> 글번호:${question.QUESTION_IDX} </div>
-	 <div>Q&A 제목 : ${question.q_TITLE}  </div>
-        <div class="author-info">
-            작성자: ${question.USER_ID} 작성일: ${question.q_REG_DATE} 조회수: ${question.q_HIT}
-        </div>
-        <div class="content">
-        ${question.q_CONTENT}
-        </div>
+	  <div class="question-box">
+        <div class="qna-title">글번호: ${question.QUESTION_IDX}</div>
+        <div>Q&A 제목: ${question.q_TITLE}</div>
+        <div class="author-info">작성자: ${question.USER_ID} 작성일: ${question.q_REG_DATE} 조회수: ${question.q_HIT}</div>
+        <div class="content">${question.q_CONTENT}</div>
         <div class="button-container">
-        	<button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX})">답변</button>
+            <button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX})">답변</button>
             <button class="button edit" onclick="redirectToEditPage(${question.QUESTION_IDX})">수정</button>
             <button class="button delete" onclick="confirmDelete(${question.QUESTION_IDX})">삭제</button>
-        </div>
-        <div class="button-container return-btn">
-            <button class="button" onclick="redirectToList(${question.CLASS_IDX})">리스트로 돌아가기</button>
-        </div>
+        		</div>
+    		</div>
+		<!-- 답변이 아직 작성이 안됐을경우 -->
+		<c:if test="${not empty answerMessage}">
+			<div class="answer-box">
+				<div class="content">${answerMessage}</div>
+			</div>
+		</c:if>
+		<!-- 답변이 작성 됐을 경우 -->
+		<c:if test="${not empty answer}">
+			<div class="answer-box">
+				<div class="author-info">답변자: ${answer.USER_ID} 답변일:
+					${answer.a_REG_DATE}</div>
+				<div class="content">${answer.a_CONTENT}</div>
+			</div>
+		</c:if>
+
+
+		<div class="button-container return-btn">
+        <button class="button" onclick="redirectToList(${question.CLASS_IDX})">리스트로 돌아가기</button>
     </div>
+	</div>
 	
 	<div id="footer">
         <li>상호명 : SONA</li>

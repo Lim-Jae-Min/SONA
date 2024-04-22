@@ -60,14 +60,14 @@ public class QnAController {
 	}
 	
 	@RequestMapping(value="/qWrite", method = RequestMethod.POST)
-	public String qwrite(HttpSession session, @RequestParam Map<String,String>param) {
+	public String qwrite(Integer CLASS_IDX, HttpSession session, @RequestParam Map<String,String>param) {
 		logger.info("리뷰 작성함");
 		logger.info("params = {}", param);
-		String page = "redirect:/lessonQnAList";
+		String page = "redirect:/lessonQnAList?CLASS_IDX="+ CLASS_IDX;
 		if (session.getAttribute("loginId")!=null) {
 			int row = qnaService.qwrite(param);
 			if(row<1) {
-				page = "lesson/lessonQnAWrite";
+				page = "lesson/lessonQnAWrite?CLASS_IDX="+ CLASS_IDX;
 			}
 		}
 		return page;
@@ -76,7 +76,6 @@ public class QnAController {
 	@RequestMapping(value="/lessonQnADetail")
 	public String qnaDetail(Integer QUESTION_IDX, Model model) {
 		logger.info("idx="+QUESTION_IDX+" Q&A 디테일 요청");
-		
 		
 		qnaService.detail(QUESTION_IDX, model);
 		

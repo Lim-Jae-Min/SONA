@@ -56,6 +56,10 @@
     CQ.QUESTION_IDX = #{param1}
 	</select>
 	
+	<select id="adetail" resultType= "com.sona.music.board.dto.QnADTO">
+	SELECT * from CLASS_ANSWER where QUESTION_IDX = #{param1}
+	</select>
+	
 
 
 </mapper>

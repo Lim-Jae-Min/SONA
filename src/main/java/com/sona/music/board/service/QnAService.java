@@ -43,7 +43,7 @@ public class QnAService {
 		dto.setCLASS_IDX(Integer.parseInt(param.get("CLASS_IDX")));
 		dto.setUSER_ID(param.get("USER_ID"));
 		dto.setQ_TITLE(param.get("Q_TITLE"));
-		dto.setQ_CONTENT("Q_CONTENT");
+		dto.setQ_CONTENT(param.get("Q_CONTENT"));
 		
 		//변수에 param 값 스트링으로 저장
 		String anonymousStatusStr = param.get("ANONYMOUS_STATUS");
@@ -65,6 +65,17 @@ public class QnAService {
 		logger.info(dto.getTEACHER_ID());
 		logger.info(dto.getQ_CONTENT());
 		logger.info(String.valueOf(dto.getCLASS_IDX()));
+		logger.info(String.valueOf(dto.getQUESTION_IDX()));
+		
+		QnADTO adto = qnaDAO.adetail(QUESTION_IDX);
+		if (adto == null) {
+		    model.addAttribute("answerMessage", "답변이 아직 작성되지 않았습니다.");
+		} else {
+		    model.addAttribute("answer", adto);
+		    logger.info(String.valueOf(adto.getANSWER_IDX()));
+		    logger.info(adto.getA_CONTENT());
+		    logger.info(String.valueOf(adto.getQUESTION_IDX()));
+		}
 		
 	}
 	

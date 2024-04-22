@@ -83,7 +83,7 @@
     				</td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="location.href='./lessonQnAList'"
+						type="button" onclick="redirectToList(${CLASS_IDX})"
 						value="취소" />
 						<button>작성</button></td>
 					</tr>
@@ -132,6 +132,8 @@ var currentDateElement = document.getElementById('currentDate');
 var currentDate = new Date().toLocaleDateString('ko-KR');
 currentDateElement.innerText = currentDate;
 
+var classIdx = ${CLASS_IDX};
+
 function confirmWrite() {
     var result = confirm("Q&A 작성을 하시겠습니까?");
     if (result) {
@@ -140,6 +142,10 @@ function confirmWrite() {
         // 여기에 작성 완료 후의 동작 추가 가능
     }
     return result; // 사용자가 "아니오"를 선택한 경우도 처리
+}
+
+function redirectToList(classIdx) {
+    window.location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
 }
 
 

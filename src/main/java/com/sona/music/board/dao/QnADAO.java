@@ -14,4 +14,6 @@ public interface QnADAO {
 
 	QnADTO detail(Integer qUESTION_IDX);
 
+	QnADTO adetail(Integer qUESTION_IDX);
+
 }

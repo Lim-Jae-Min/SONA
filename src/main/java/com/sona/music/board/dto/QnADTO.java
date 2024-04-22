@@ -15,6 +15,9 @@ public class QnADTO {
 	private int Q_HIT;
 	private boolean REPLY_CHECK;
 	private String TEACHER_ID;
+	private int ANSWER_IDX;
+	private String A_CONTENT;
+	private Date A_REG_DATE;
 	
 	public int getQUESTION_IDX() {
 		return QUESTION_IDX;
@@ -82,7 +85,24 @@ public class QnADTO {
 	public void setTEACHER_ID(String tEACHER_ID) {
 		TEACHER_ID = tEACHER_ID;
 	}
-	
+	public int getANSWER_IDX() {
+		return ANSWER_IDX;
+	}
+	public void setANSWER_IDX(int aNSWER_IDX) {
+		ANSWER_IDX = aNSWER_IDX;
+	}
+	public String getA_CONTENT() {
+		return A_CONTENT;
+	}
+	public void setA_CONTENT(String a_CONTENT) {
+		A_CONTENT = a_CONTENT;
+	}
+	public Date getA_REG_DATE() {
+		return A_REG_DATE;
+	}
+	public void setA_REG_DATE(Date a_REG_DATE) {
+		A_REG_DATE = a_REG_DATE;
+	}
 	
 	
 

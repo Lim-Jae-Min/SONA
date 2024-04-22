@@ -186,7 +186,8 @@
 	                <input type="radio" id="select2" name="usertype" value="강사"><label for="select2">강사</label>
 	            </li>
 	        </ul>
-	            <button type="button" id=join_button onclick="join()">회원가입</button>
+	           <button type="button" id=join_button onclick="join()">회원가입</button>
+<!-- 	            <button type="submit">회원가입</button> -->
 	    </section>
 	</form>
     <div>
@@ -215,9 +216,9 @@ function join(){
 	var $accountnumber = $('input[name="accountnumber"]');
 	var $usertype = $('input[name="usertype"]');
 	
-	if(overChk == false){
+ 	if(overChk == false){
 		alert('중복 체크를 해주세요.');
-		$id.focus();
+		$id.focus(); 
 	}else if($id.val()==''){
 		alert('아이디를 입력해 주세요!');
 		$id.focus();

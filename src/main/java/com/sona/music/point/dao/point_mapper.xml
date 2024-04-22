@@ -4,4 +4,18 @@
 >
 <mapper namespace="com.sona.music.point.dao.PointDAO">
 
+	<insert id="joinCreatePoint">
+		INSERT INTO USER_POINT(USER_ID, POINT_TYPE, POINT) 
+			VALUES(#{param1},"아이디생성",0)
+	</insert>
+
+	<select id="getHavePoint" resultType="Integer">
+		SELECT SUM(POINT) FROM USER_POINT where USER_ID = #{param1};
+	</select>
+	
+	<insert id="pointChange">
+		INSERT INTO USER_POINT(USER_ID, POINT_TYPE, POINT) 
+			VALUES(#{param1},#{param3},#{param2});
+	</insert>
+	
 </mapper>

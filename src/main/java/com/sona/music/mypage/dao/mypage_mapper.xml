@@ -22,5 +22,27 @@
         LEFT JOIN APPLICATION_FORM af ON u.user_id = af.user_id
         WHERE u.user_id = #{loginId}
     </select>
+    
+    
+		<update id="updateUserInfo" parameterType="map">
+		    UPDATE USERS
+		    SET user_pass = #{confirmPassword},
+		        user_email = #{email},
+		        user_phone = #{phoneNumber},
+		        user_accountnumber = #{accountNumber},
+		        user_bank = #{bank}
+		    WHERE user_id = #{loginId}
+		</update>
+		
+		<update id="editUserInfo" parameterType="map">
+    UPDATE user_data_table
+    SET 
+        inst_category_idx = #{requestData.instCategory},
+        applyform_inst = #{requestData.inst},
+       applyform_location = #{requestData.location},
+        selected_days = #{requestData.selectedDays},
+        selected_styles = #{requestData.selectedStyles}
+    WHERE user_id = #{loginId}
+</update>
 
 </mapper>

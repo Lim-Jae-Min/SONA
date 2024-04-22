@@ -5,44 +5,48 @@
 <mapper namespace="com.sona.music.mypage.dao.MyPageDAO">
 
 	   <select id="getUserInfo" parameterType="String" resultType="com.sona.music.mypage.dto.MyPageDTO">
-        SELECT 
-            u.user_name,
-            u.user_type,
-            u.user_id,
-            u.user_email,
-            u.user_phone,
-            u.user_bank,
-            u.user_accountnumber,
-            af.applyform_inst,
-            af.applyform_location,
-            af.applyform_days,
-            af.applyform_style,
-            af.have_inst
-        FROM USERS u
-        LEFT JOIN APPLICATION_FORM af ON u.user_id = af.user_id
-        WHERE u.user_id = #{loginId}
-    </select>
+    SELECT 
+        u.user_name,
+        u.user_type,
+        u.user_id,
+        u.user_email,
+        u.user_phone,
+        u.user_bank,
+        u.user_accountnumber,
+        af.applyform_inst,
+        af.applyform_location,
+        af.applyform_days,
+        af.applyform_style,
+        af.have_inst
+    FROM USERS u
+    LEFT JOIN (
+        SELECT *
+        FROM APPLICATION_FORM
+        WHERE user_id = #{loginId}
+        LIMIT 1
+    ) af ON u.user_id = af.user_id
+    WHERE u.user_id = #{loginId}
+</select>
     
-    
-		<update id="updateUserInfo" parameterType="map">
-		    UPDATE USERS
-		    SET user_pass = #{confirmPassword},
-		        user_email = #{email},
-		        user_phone = #{phoneNumber},
-		        user_accountnumber = #{accountNumber},
-		        user_bank = #{bank}
-		    WHERE user_id = #{loginId}
-		</update>
-		
-		<update id="editUserInfo" parameterType="map">
-    UPDATE user_data_table
+<update id="updateUserInfo" parameterType="map">
+    UPDATE USERS AS u
+    INNER JOIN APPLICATION_FORM AS us ON u.user_id = us.user_id
     SET 
-        inst_category_idx = #{requestData.instCategory},
-        applyform_inst = #{requestData.inst},
-       applyform_location = #{requestData.location},
-        selected_days = #{requestData.selectedDays},
-        selected_styles = #{requestData.selectedStyles}
-    WHERE user_id = #{loginId}
+        u.user_name = #{name},
+        u.user_pass = #{confirmPassword},
+        u.user_email = #{email},
+        u.user_phone = #{phoneNumber},
+        u.user_accountnumber = #{accountNumber},
+        u.user_bank = #{bank},
+        us.inst_category_idx = #{instCategory},
+        us.applyform_inst = #{inst},
+        us.applyform_location = #{location},
+        us.applyform_days = #{selectedDays},
+        us.applyform_style = #{selectedStyles}
+    WHERE u.user_id = #{loginId}
 </update>
+		
+		
+
 
 </mapper>

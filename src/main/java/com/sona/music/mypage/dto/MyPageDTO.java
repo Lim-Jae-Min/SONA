@@ -9,7 +9,7 @@ public class MyPageDTO {
 	private String user_name;
 	private String user_email;
 	private String user_phone;
-	private String user_accountnumber;
+	private int user_accountnumber;
 	private String user_bank;
 	private String user_type;
 	private boolean user_delete;
@@ -17,12 +17,13 @@ public class MyPageDTO {
 	private String applyform_inst;
 	private int inst_category_idx;
 	private String applyform_location;
-	private String applyform_days;
-	private String applyform_style;
+	private List<String> applyformDays; // 데이터베이스의 컬럼명과 일치하도록 수정
+	private List<String> applyformStyles;
 	private boolean have_inst;
-    private List<String> selectedDays;
-    private List<String> selectedStyles;
-	
+	private String manner;
+	private String new_filename;
+	private int class_idx;
+	private String class_name;
 	public String getUser_id() {
 		return user_id;
 	}
@@ -53,11 +54,17 @@ public class MyPageDTO {
 	public void setUser_phone(String user_phone) {
 		this.user_phone = user_phone;
 	}
-	public String getUser_accountnumber() {
+	public int getUser_accountnumber() {
 		return user_accountnumber;
 	}
-	public void setUser_accountnumber(String user_accountnumber) {
+	public void setUser_accountnumber(int user_accountnumber) {
 		this.user_accountnumber = user_accountnumber;
+	}
+	public String getUser_bank() {
+		return user_bank;
+	}
+	public void setUser_bank(String user_bank) {
+		this.user_bank = user_bank;
 	}
 	public String getUser_type() {
 		return user_type;
@@ -83,23 +90,29 @@ public class MyPageDTO {
 	public void setApplyform_inst(String applyform_inst) {
 		this.applyform_inst = applyform_inst;
 	}
+	public int getInst_category_idx() {
+		return inst_category_idx;
+	}
+	public void setInst_category_idx(int inst_category_idx) {
+		this.inst_category_idx = inst_category_idx;
+	}
 	public String getApplyform_location() {
 		return applyform_location;
 	}
 	public void setApplyform_location(String applyform_location) {
 		this.applyform_location = applyform_location;
 	}
-	public String getApplyform_days() {
-		return applyform_days;
+	public List<String> getApplyformDays() {
+		return applyformDays;
 	}
-	public void setApplyform_days(String applyform_days) {
-		this.applyform_days = applyform_days;
+	public void setApplyformDays(List<String> applyformDays) {
+		this.applyformDays = applyformDays;
 	}
-	public String getApplyform_style() {
-		return applyform_style;
+	public List<String> getApplyformStyles() {
+		return applyformStyles;
 	}
-	public void setApplyform_style(String applyform_style) {
-		this.applyform_style = applyform_style;
+	public void setApplyformStyles(List<String> applyformStyles) {
+		this.applyformStyles = applyformStyles;
 	}
 	public boolean isHave_inst() {
 		return have_inst;
@@ -107,30 +120,32 @@ public class MyPageDTO {
 	public void setHave_inst(boolean have_inst) {
 		this.have_inst = have_inst;
 	}
-	public String getUser_bank() {
-		return user_bank;
+	public String getManner() {
+		return manner;
 	}
-	public void setUser_bank(String user_bank) {
-		this.user_bank = user_bank;
+	public void setManner(String manner) {
+		this.manner = manner;
 	}
-	public int getInst_category_idx() {
-		return inst_category_idx;
+	public String getNew_filename() {
+		return new_filename;
 	}
-	public void setInst_category_idx(int inst_category_idx) {
-		this.inst_category_idx = inst_category_idx;
+	public void setNew_filename(String new_filename) {
+		this.new_filename = new_filename;
 	}
-	public List<String> getSelectedDays() {
-		return selectedDays;
+	public int getClass_idx() {
+		return class_idx;
 	}
-	public void setSelectedDays(List<String> selectedDays) {
-		this.selectedDays = selectedDays;
+	public void setClass_idx(int class_idx) {
+		this.class_idx = class_idx;
 	}
-	public List<String> getSelectedStyles() {
-		return selectedStyles;
+	public String getClass_name() {
+		return class_name;
 	}
-	public void setSelectedStyles(List<String> selectedStyles) {
-		this.selectedStyles = selectedStyles;
+	public void setClass_name(String class_name) {
+		this.class_name = class_name;
 	}
+
+
 
 
 	

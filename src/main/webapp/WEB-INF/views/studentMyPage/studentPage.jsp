@@ -10,14 +10,13 @@
 		.main {
 		    font-size: 20px; 
 		    #contents{
-		    font-size: 15px;
+		    font-size: 15px;}
 		}
 		.main {
 		    font-size: 20px; 
 		}
 </style>
 </head>
-<body>
 <body>
     <header id="usermain">
         <table id="mainmenu">
@@ -59,8 +58,8 @@
                 <h3>마이페이지</h3>
                 <hr/>
                 <a href="#">마이페이지</a>
-                <a href="studentPage.edit">개인 정보 수정</a>
-                <a href="#">즐겨찾기 강사</a>
+                <a href="editStudentPage.go">개인 정보 수정</a>
+                <a href="myTeacher.go">즐겨찾기 강사</a>
                 <a href="#">숨김 강사</a>
                 <a href="#">내가 작성한 Q&A</a>
                 <a href="#">포인트 내역</a>

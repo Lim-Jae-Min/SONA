@@ -59,6 +59,8 @@ public class QnAService {
 	public void detail(Integer QUESTION_IDX, Model model) {
 		logger.info("Q&A 디테일 요청 서비스");
 		
+		qnaDAO.upHit(QUESTION_IDX);
+		
 		QnADTO dto = qnaDAO.detail(QUESTION_IDX);
 		model.addAttribute("question",dto);
 		logger.info(dto.getQ_TITLE());

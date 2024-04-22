@@ -16,4 +16,6 @@ public interface QnADAO {
 
 	QnADTO adetail(Integer qUESTION_IDX);
 
+	void upHit(Integer qUESTION_IDX);
+
 }

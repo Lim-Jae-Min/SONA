@@ -134,17 +134,22 @@
 	
 	<div style="text-align: center;">
     <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-        <img src="resources/img/QnA.png" id="qna">강의 Q&A 
-        <button class="button write" onclick="location.href='./lessonQnAWrite'">Q&A 작성</button>
+        <div style="float: left;">
+            <img src="resources/img/QnA.png" id="qna" style="margin-right: 10px;"> 
+            <span style="vertical-align: middle;">강의 Q&A</span> 
+        </div>
+         <div style="float: right;"> <!-- Q&A 작성 버튼을 오른쪽으로 옮김 -->
+            <button class="button write" onclick="location.href='./lessonQnAWrite'" style="background-color: #BEE6FF; color: black; border: none; padding: 8px 20px; border-radius: 10px;">Q&A 작성</button> <!-- 테두리 없애고 padding 조절 -->
+        </div>
         <table style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
-                	<th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">글번호</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">제목</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">작성자</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">답변 여부</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">조회수</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">작성일자</th>
+                	<th style="border-bottom: 2px solid #BEE6FF; padding: 8px; text-align: center;">글번호</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px; text-align: center;">제목</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px; text-align: center;">작성자</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px; text-align: center;">답변 여부</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px; text-align: center;">조회수</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px; text-align: center;">작성일자</th>
                 </tr>
             </thead>
             <tbody id="list"></tbody>
@@ -238,6 +243,7 @@ function listCall(page, classIdx){
 	        content += '</tr>';
 	     }
 	     $('#list').html(content);
+	     $('#list').parent().css('text-align', 'center');
 	
 	     $('.question-link').click(function(e) {
 	    	    e.preventDefault(); // 기본 동작 방지

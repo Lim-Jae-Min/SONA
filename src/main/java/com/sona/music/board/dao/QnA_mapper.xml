@@ -60,6 +60,10 @@
 	SELECT * from CLASS_ANSWER where QUESTION_IDX = #{param1}
 	</select>
 	
+	<update id="upHit" parameterType="Integer">
+		UPDATE CLASS_QUESTION SET Q_HIT = Q_HIT+1 WHERE QUESTION_IDX = #{qUESTION_IDX}
+	</update>
+	
 
 
 </mapper>

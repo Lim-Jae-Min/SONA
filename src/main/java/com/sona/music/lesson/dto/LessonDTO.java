@@ -17,7 +17,7 @@ public class LessonDTO {
 	private String class_content;
 	private int class_times;
 	private int class_price;
-	private int career_years;
+	private String career_years;
 	private String career_contents;
 	private Date class_reg_date;
 	private int class_disable;
@@ -27,6 +27,7 @@ public class LessonDTO {
 	private String manner;
 	private String new_filename;
 	private int accumulate_student;
+	private String video_url;
 	
 	
 	public int getClass_idx() {
@@ -107,10 +108,10 @@ public class LessonDTO {
 	public void setClass_price(int class_price) {
 		this.class_price = class_price;
 	}
-	public int getCareer_years() {
+	public String getCareer_years() {
 		return career_years;
 	}
-	public void setCareer_years(int career_years) {
+	public void setCareer_years(String career_years) {
 		this.career_years = career_years;
 	}
 	public String getCareer_contents() {
@@ -160,6 +161,12 @@ public class LessonDTO {
 	}
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
+	}
+	public String getVideo_url() {
+		return video_url;
+	}
+	public void setVideo_url(String video_url) {
+		this.video_url = video_url;
 	}
 	
 	

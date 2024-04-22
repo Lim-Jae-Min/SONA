@@ -157,6 +157,10 @@ $('#userName').click(function slide() {
     }
 });
 
+$('#logo').click(function main(){
+	location.href = '/main';
+});
+
 var showPage = 1;
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라

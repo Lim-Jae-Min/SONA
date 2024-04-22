@@ -2,12 +2,18 @@ package com.sona.music.lesson.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sona.music.lesson.service.LessonService;
 
@@ -47,6 +53,26 @@ public class LessonController {
 		Map<String, Object> map = lessonService.allListCall(currPage, pagePerCnt, condition, content, loca, instCategory, inst);
 		
 		return map;
+	}
+	
+	@RequestMapping(value="/lessonOpen.go")
+	public String lessonOpenGo() {
+		logger.info("강의 개설 페이지 이동");
+		return "lesson/lessonOpen";
+	}
+	
+	@RequestMapping(value="/lessonOpen.do", method = RequestMethod.POST)
+	public String lessonOpenDo(MultipartFile[] photos, @RequestParam Map<String, String> param, HttpSession session) {
+		logger.info("강의 개설 controller 도착");
+		logger.info("param : {}", param);
+		logger.info("photos : " + photos);
+		String user_id = (String) session.getAttribute("loginId");
+		String testurl = param.get("video_url");
+		
+		int row = lessonService.lessonOpenDo(photos, param, user_id);
+		
+		
+		return "main/main";
 	}
 	
 }

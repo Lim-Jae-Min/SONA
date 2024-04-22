@@ -78,18 +78,6 @@
 		FROM USERS u WHERE u.USER_ID = #{param1}
 	</select>
 	
-	<select id="detail" resultType="com.sona.music.member.dto.MemberDTO">
-		select 
-			u.USER_ID,
-			u.USER_NAME,
-			u.USER_TYPE,
-			CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) 
-				FROM MANNER_HISTORY mh), 2), '') AS manner,
-			(SELECT pb.NEW_FILENAME from PHOTO_BOARD pb JOIN USERS u2 on u2.USER_ID = pb.USER_ID
-				WHERE u.USER_ID = 'user2' and pb.PHOTO_CATEGORY='Lesson') as tphoto
-		FROM USERS u WHERE u.USER_ID = #{param1}
-	</select>
-	
 	
 	
 	<select id="allCount" resultType="Integer">

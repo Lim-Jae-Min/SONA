@@ -59,7 +59,7 @@
                 <hr/>
                 <a href="studentPage.do">마이페이지</a>
                 <a href="#">개인 정보 수정</a>
-                <a href="#">즐겨찾기 강사</a>
+                <a href="myTeacher.go">즐겨찾기 강사</a>
                 <a href="#">숨김 강사</a>
                 <a href="#">내가 작성한 Q&A</a>
                 <a href="#">포인트 내역</a>
@@ -68,8 +68,8 @@
                 <a href="#">수강 이력</a>
             </div>
  		<div id="content">
- 		<form action = 'studentPage.edit' method = 'post'>
-            <table style="width: 100%;">
+		<form action="./studentPage.edit" method="POST">
+            <table style="width: 100%;">           
                 <thead>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
@@ -103,9 +103,9 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 확인 
                             <span class="contents" style="margin-left: 42px; width: 200px; display: inline-block;">
-                                <input type="password" value="" id="confirmPassword" style="width: 400px; height: 50px; font-size: 29px;">
+                                <input type="password" value="" id="confirmPassword" name="confirmPassword" style="width: 400px; height: 50px; font-size: 29px;">
                             </span>
-								<button type = "button" id="confirmation" onclick="overlay()" style="margin-left: 200px;">확인</button>
+								<button type = "button" id="confirmation" onclick="confirmPw()" style="margin-left: 200px;">확인</button>
                         </td>
                     </tr>
             
@@ -173,15 +173,11 @@
                     </tr>
                          <br>  <br>  <br>  <br>
                                       
-                    <th><button type = "button" onclick="studentEdit()">기본 유저 정보 저장</button></th> 
+                    <th><button type = "button" onclick="studentEdit()">기본 유저 정보 저장</button></th>
                 </tbody>
             </table>
-            
-            
-            
-         </form>
          
-         
+         <table>
             <tr>
                 <td colspan="3">
                     <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
@@ -247,15 +243,16 @@
                 &nbsp;&nbsp; &nbsp;&nbsp;<td>희망요일(중복가능)</td>
                 <td class="main" colspan="2" style="width: 100%; text-align: left;">
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                <br>
-                    <button id="mondayBtn" onclick="changeColor('monday')" style="margin-left: 50px; width: 110px; height: 40px">월</button>
-                    <button id="tuesdayBtn" onclick="changeColor('tuesday')" style="margin-left: 20px; width: 110px; height: 40px">화</button>
-                    <button id="wednesdayBtn" onclick="changeColor('wednesday')" style="margin-left: 20px; width: 110px; height: 40px">수</button>
-                    <button id="thursdayBtn" onclick="changeColor('thursday')" style="margin-left: 20px; width: 110px; height: 40px">목</button>
-                    <button id="fridayBtn" onclick="changeColor('friday')" style="margin-left: 20px; width: 110px; height: 40px">금</button>
-                    <button id="saturdayBtn" onclick="changeColor('saturday')" style="margin-left: 20px; width: 110px; height: 40px">토</button>
-                    <button id="sundayBtn" onclick="changeColor('sunday')" style="margin-left: 20px; width: 110px; height: 40px">일</button>
-
-                    <input type="hidden" id="selectedDays" name="selectedDays" value="">
+					   <button type = "button" id="mondayBtn" onclick="changeColor('monday')" style="margin-left: 50px; width: 110px; height: 40px">월요일</button>
+					<button type = "button" id="tuesdayBtn" onclick="changeColor('tuesday')" style="margin-left: 20px; width: 110px; height: 40px">화요일</button>
+					<button type = "button" id="wednesdayBtn" onclick="changeColor('wednesday')" style="margin-left: 20px; width: 110px; height: 40px">수요일</button>
+					<button type = "button" id="thursdayBtn" onclick="changeColor('thursday')" style="margin-left: 20px; width: 110px; height: 40px">목요일</button>
+					<button type = "button" id="fridayBtn" onclick="changeColor('friday')" style="margin-left: 20px; width: 110px; height: 40px">금요일</button>
+					<button type = "button" id="saturdayBtn" onclick="changeColor('saturday')" style="margin-left: 20px; width: 110px; height: 40px">토요일</button>
+					<button type = "button" id="sundayBtn" onclick="changeColor('sunday')" style="margin-left: 20px; width: 110px; height: 40px">일요일</button>
+					
+					<!-- 선택한 요일 정보를 저장할 숨겨진 입력 필드 -->
+					<input type="hidden" id="selectedDays" name="selectedDays" value="">
                     
                     <!-- 나머지 요일도 동일한 방식으로 추가 -->
                 </td>
@@ -267,28 +264,29 @@
                 &nbsp;&nbsp; &nbsp;&nbsp;<td>희망 강의스타일(중복가능)</td>
                 <td class="main" colspan="2" style="width: 100%; text-align: left;">
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                <br>
-                    <button id="systematicBtn" onclick="changeColor1('systematic')" style="margin-left: 50px; width: 110px; height: 40px">체계적인</button>
-                    <button id="globalBtn" onclick="changeColor1('global')"style="margin-left: 20px; width: 110px; height: 40px">글로벌한</button>
-                    <button id="seriousBtn" onclick="changeColor1('serious')"style="margin-left: 20px; width: 110px; height: 40px">진지한</button>
-                    <button id="freeBtn" onclick="changeColor1('free')"style="margin-left: 20px; width: 110px; height: 40px">자유로운</button>
-                    <button id="practicalBtn" onclick="changeColor1('practical')"style="margin-left: 20px; width: 110px; height: 40px">실기 중심</button>
-                    <button id="creativeBtn" onclick="changeColor1('creative')"style="margin-left: 20px; width: 110px; height: 40px">창의적인</button>
+                    <button type = "button" id="systematicBtn" onclick="changeColor1('systematic')" style="margin-left: 50px; width: 110px; height: 40px">체계적인</button>
+                    <button type = "button" id="globalBtn" onclick="changeColor1('global')"style="margin-left: 20px; width: 110px; height: 40px">글로벌한</button>
+                    <button type = "button" id="seriousBtn" onclick="changeColor1('serious')"style="margin-left: 20px; width: 110px; height: 40px">진지한</button>
+                    <button type = "button" id="freeBtn" onclick="changeColor1('free')"style="margin-left: 20px; width: 110px; height: 40px">자유로운</button>
+                    <button type = "button" id="practicalBtn" onclick="changeColor1('practical')"style="margin-left: 20px; width: 110px; height: 40px">실기 중심</button>
+                    <button type = "button" id="creativeBtn" onclick="changeColor1('creative')"style="margin-left: 20px; width: 110px; height: 40px">창의적인</button>
                     <br><br>
-                    <button id="humorousBtn" onclick="changeColor1('humorous')"style="margin-left: 50px; width: 110px; height: 40px">유머러스한</button>
-                    <button id="activeBtn" onclick="changeColor1('active')"style="margin-left: 20px; width: 110px; height: 40px">적극적인</button>
-                    <button id="strictBtn" onclick="changeColor1('strict')"style="margin-left: 20px; width: 110px; height: 40px">엄격한</button>
-                    <button id="sensibleBtn" onclick="changeColor1('sensible')"style="margin-left: 20px; width: 110px; height: 40px">센스있는</button>
-                    <button id="kindBtn" onclick="changeColor1('kind')"style="margin-left: 20px; width: 110px; height: 40px">자상한</button>
-                    <button id="diligentBtn" onclick="changeColor1('diligent')"style="margin-left: 20px; width: 110px; height: 40px">성실한</button>
+                    <button type = "button" id="humorousBtn" onclick="changeColor1('humorous')"style="margin-left: 50px; width: 110px; height: 40px">유머러스한</button>
+                    <button type = "button" id="activeBtn" onclick="changeColor1('active')"style="margin-left: 20px; width: 110px; height: 40px">적극적인</button>
+                    <button type = "button" id="strictBtn" onclick="changeColor1('strict')"style="margin-left: 20px; width: 110px; height: 40px">엄격한</button>
+                    <button type = "button" id="sensibleBtn" onclick="changeColor1('sensible')"style="margin-left: 20px; width: 110px; height: 40px">센스있는</button>
+                    <button type = "button" id="kindBtn" onclick="changeColor1('kind')"style="margin-left: 20px; width: 110px; height: 40px">자상한</button>
+                    <button type = "button" id="diligentBtn" onclick="changeColor1('diligent')"style="margin-left: 20px; width: 110px; height: 40px">성실한</button>
                     
                     <input type="hidden" id="selectedStyles" name="selectedStyles" value="">
                     <br><br><br>
-                    <button id="editButton" onclick="submitSelectedStyles()">수정하기</button>
                     
+                       </form>
+                             
                     <!-- 나머지 요일도 동일한 방식으로 추가 -->
                 </td>
             </tr>
-
+			</table>
 
         </div>
     </div>
@@ -324,7 +322,7 @@ var overChk = false;
 
 
 
-		function overlay() {
+		function confirmPw() {
 		    var newPassword = $('#newPassword').val();
 		    var confirmPassword = $('#confirmPassword').val();
 		
@@ -333,9 +331,9 @@ var overChk = false;
 		        $('#confirmPassword').val('');
 		    } else {
 		        $.ajax({
-		            url: '/overlay.do',
-		            type: 'POST',
-		            data: { newPassword: newPassword, confirmPassword: confirmPassword },
+		            type:'POST',
+		        	url:'./confirmPw.ajax',
+		            data:{'newPassword':newPassword, 'confirmPassword':confirmPassword},
 		            success: function(response) {
 		                if (response) {
 		                    alert('비밀번호가 일치합니다.');
@@ -345,8 +343,11 @@ var overChk = false;
 		                    $('#confirmPassword').val('');
 		                }
 		            },
-		            error: function() {
+		            error: function(request, status, error) {
 		                alert('서버와의 통신 중 문제가 발생했습니다. 다시 시도해주세요.');
+		                console.log("code: " + request.status)
+		                console.log("message: " + request.responseText)
+		                console.log("error: " + error);
 	                    overChk= true;
 
 		            }
@@ -414,6 +415,62 @@ var overChk = false;
 	    }
 	});
 	
+	var selectedDays = []; // 선택한 요일을 저장할 배열
+	var selectedStyles = []; // 선택한 스타일을 저장할 배열
+
+	function changeColor(day) {
+	    var btnId = day + "Btn";
+	    var button = document.getElementById(btnId);
+	    
+	    // 현재 색 확인
+	    var currentColor = button.style.backgroundColor;
+	    
+	    // 현재 색이 파란색인지 확인하여 다른 색으로 변경
+	    if (currentColor !== "blue") {
+	        // 파란색이 아니면 파란색으로 변경
+	        button.style.backgroundColor = "blue";
+	        selectedDays.push(day);
+	    } else {
+	        // 파란색이면 원래 색상으로 변경
+	        button.style.backgroundColor = ""; // 빈 문자열로 설정하여 기본 색상으로 돌아감
+	        var index = selectedDays.indexOf(day);
+	        if (index !== -1) {
+	            // 이미 선택된 요일인 경우 배열에서 제거
+	            selectedDays.splice(index, 1);
+	        }
+	    }
+
+	    // 숨겨진 입력 필드에 선택한 요일 정보 업데이트
+	    document.getElementById("selectedDays").value = selectedDays.join(",");
+	}
+	
+	function changeColor1(style) {
+	    var btnId = style + "Btn";
+	    var button = document.getElementById(btnId);
+	    
+	    // 현재 색 확인
+	    var currentColor = button.style.backgroundColor;
+		console.log(btnId);
+	    // 현재 색이 파란색인지 확인하여 다른 색으로 변경
+	    if (currentColor !== "blue") {
+	        // 파란색이 아니면 파란색으로 변경
+	        button.style.backgroundColor = "blue";
+	        selectedStyles.push(day);
+	    } else {
+	        // 파란색이면 원래 색상으로 변경
+	        button.style.backgroundColor = ""; // 빈 문자열로 설정하여 기본 색상으로 돌아감
+	        var index = selectedStyles.indexOf(day);
+	        if (index !== -1) {
+	            // 이미 선택된 요일인 경우 배열에서 제거
+	            selectedStyles.splice(index, 1);
+	        }
+	    }
+		console.log("ㅎㅇ");
+
+	    // 숨겨진 입력 필드에 선택한 요일 정보 업데이트
+	    document.getElementById("selectedStyles").value = selectedStyles.join(",");
+	}
+	
 	function studentEdit() {
 	    var $name = $('input[name="name"]');
 	    var $pw = $('input[name="confirmPassword"]');
@@ -421,11 +478,24 @@ var overChk = false;
 	    var $phoneNumber = $('input[name="phoneNumber"]');
 	    var $accountNumber = $('input[name="accountNumber"]');
 	    var $bank = $('select[name="bank"]');
-		
-	    if(overChk == false){
-			alert('비밀번호 확인을 해주세요');
-			$pw.focus();
-		}else if ($name.val() == '') {
+	    var $instCategory = $('select[name="instCategory"]');
+	    var $inst = $('select[name="inst"]');
+	    var $location = $('select[name="location"]');
+	   
+	    // 체크된 요일 가져오기
+	    $('input[name="dayCheckbox"]:checked').each(function() {
+	        selectedDays.push($(this).val());
+	    });
+	    
+	    // 체크된 스타일 가져오기
+	    $('input[name="styleCheckbox"]:checked').each(function() {
+	        selectedStyles.push($(this).val());
+	    });
+
+	    if (overChk == false) {
+	        alert('비밀번호 확인을 해주세요');
+	        $pw.focus();
+	    } else if ($name.val() == '') {
 	        alert('이름을 입력해주세요.');
 	        $name.focus();
 	    } else if ($pw.val() == '') {
@@ -439,115 +509,47 @@ var overChk = false;
 	        $phoneNumber.focus();
 	    } else if ($accountNumber.val() == '') {
 	        alert('계좌번호를 입력해주세요');
+	        $accountNumber.focus();
 	    } else if ($bank.val() == '') {
 	        alert('은행을 선택해주세요');
-	        $email.focus();
+	        $bank.focus();
+	    } else if ($instCategory.val() == '') {
+	        alert('희망악기 카테고리를 선택해주세요');
+	        $instCategory.focus();
+	    } else if ($inst.val() == '') {
+	        alert('희망악기를 선택해주세요');
+	        $inst.focus();
+	    } else if ($location.val() == '') {
+	        alert('희망지역을 선택해주세요');
+	        $location.focus();
 	    } else {
-	        // 데이터 넣기전에 확인
-	        var regExp = new RegExp('[a-zA-Zㄱ-ㅎ가-힣]');
-	        var match = regExp.test($phoneNumber.val()); // 위의 표현식 일치 여부
-	        if (match) {
-	            alert('숫자만 입력해 주세요!');
-	            $phoneNumber.val('')
-	            $phoneNumber.focus();
+	        // 전화번호가 숫자만 포함하는지 확인
+	        var accountNumberValue = $accountNumber.val();
+	        var regExp = /^[0-9]+$/;
+	        if (!regExp.test(accountNumberValue)) {
+	            alert('전화번호는 숫자만 입력해 주세요!');
+	            $accountNumber.val('');
+	            $accountNumber.focus();
 	            return false;
 	        }
-	        console.log(match);
 
-	        console.log('서버로 회원 수정요청');
-
-	        // AJAX를 사용하여 서버로 요청을 보냄
-	        $.ajax({
-	            url: '/studentPage.edit', // 요청을 보낼 URL
-	            type: 'POST', // POST 방식으로 요청
-	            data: $('form').serialize(), // 폼 데이터를 직렬화하여 전송
-	            success: function(response) {
-	                // 요청이 성공했을 때의 처리
-
-	                console.log('서버 응답:', response);
-	                // 서버 응답에 따라 추가적인 작업 수행 가능
-	            },
-	            error: function() {
-	                // 요청이 실패했을 때의 처리
-	                console.error('서버 요청 실패');
-	            }
-	        });
+	        // 폼을 직접 제출
+	        $('form').submit();
 	    }
 	}
 	
 	
 	
 	
-	var selectedDays = []; // 선택한 요일을 저장할 배열
-	
-	function submitSelectedStyles() {
-	    var selectedStyles = [];
-	
-	    // 모든 스타일 버튼에 대해 선택된 스타일 정보를 확인
-	    var buttons = document.querySelectorAll('button[id$="Btn"]');
-	    buttons.forEach(function(button) {
-	        if (button.style.backgroundColor === "blue") {
-	            var style = button.id.replace("Btn", "");
-	            selectedStyles.push(style);
-	        }
-	    });
-
-    // 선택한 스타일 정보를 숨겨진 입력 필드에 업데이트
-    document.getElementById("selectedStyles").value = selectedStyles.join(",");
-
-   
-}
-	
-	function changeColor(day) {
-	    var btnId = day + "Btn";
-	    var button = document.getElementById(btnId);
-	    button.style.backgroundColor = "blue"; // 선택한 요일의 색을 파란색으로 변경
-	
-	    // 선택한 요일 정보를 배열에 추가
-	    selectedDays.push(day);
-	
-	    // 숨겨진 입력 필드에 선택한 요일 정보 업데이트
-	    document.getElementById("selectedDays").value = selectedDays.join(",");
-	}
-	
-	
-	function submitEdit() {
-	    // 선택된 요소들의 값을 가져옴
-	    var instCategory = $('#instCategory').val();
-	    // inst 값은 변경된 select 요소의 값으로부터 가져오도록 변경
-	    var inst = $('#inst').val(); 
-	    var location = $('#location').val();
-	    var selectedDays = $('#selectedDays').val();
-	    var selectedStyles = $('#selectedStyles').val();
-
-	    // 필요한 유효성 검사 및 데이터 처리
-
-	    // AJAX를 사용하여 서버로 데이터 전송
-	    $.ajax({
-	        url: '/submitEdit', // 수정할 정보를 처리하는 서버의 엔드포인트
-	        type: 'POST', // POST 방식으로 요청
-	        data: {
-	            instCategory: instCategory,
-	            inst: inst,
-	            location: location,
-	            selectedDays: selectedDays,
-	            selectedStyles: selectedStyles
-	        },
-	        success: function(response) {
-	            // 요청이 성공했을 때의 처리
-	            console.log('서버 응답:', response);
-	            // 서버 응답에 따라 추가적인 작업 수행 가능
-	        },
-	        error: function() {
-	            // 요청이 실패했을 때의 처리
-	            console.error('서버 요청 실패');
-	        }
-	    });
-	}
-	
 	function changeColor1(style) {
-	    var button = document.getElementById(style + "Btn");
-	    button.style.backgroundColor = "blue"; // 선택한 스타일의 색을 파란색으로 변경
+	    var btnId = style + "Btn";
+	    var button = document.getElementById(btnId);
+	    
+	    if (button.style.backgroundColor === "blue") {
+	        button.style.backgroundColor = ""; // Resetting to default color
+	    } else {
+	        button.style.backgroundColor = "blue"; // Changing to blue color
+	    }
 	}
 
 </script>

@@ -24,9 +24,11 @@ public class LessonDTO {
 	private int class_delete;
 	
 	private String user_name;
+	private String class_score;
 	private String manner;
 	private String new_filename;
 	private int accumulate_student;
+	private int video_idx;
 	private String video_url;
 	
 	
@@ -167,6 +169,18 @@ public class LessonDTO {
 	}
 	public void setVideo_url(String video_url) {
 		this.video_url = video_url;
+	}
+	public int getVideo_idx() {
+		return video_idx;
+	}
+	public void setVideo_idx(int video_idx) {
+		this.video_idx = video_idx;
+	}
+	public String getClass_score() {
+		return class_score;
+	}
+	public void setClass_score(String class_score) {
+		this.class_score = class_score;
 	}
 	
 	

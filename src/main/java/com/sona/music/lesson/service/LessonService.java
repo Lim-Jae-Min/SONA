@@ -12,10 +12,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sona.music.board.dto.QnADTO;
+import com.sona.music.board.dto.ReviewDTO;
 import com.sona.music.lesson.dao.LessonDAO;
 import com.sona.music.lesson.dto.LessonDTO;
+import com.sona.music.lesson.dto.PhotoDTO;
 
 @Service
 public class LessonService {
@@ -59,7 +63,7 @@ public class LessonService {
 		return result;
 	}
 
-	public int lessonOpenDo(MultipartFile[] photos, Map<String, String> param, String user_id) {
+	public int lessonOpenDo(MultipartFile lessonLogo, MultipartFile[] photos, Map<String, String> param, String user_id) {
 		logger.info("강의 개설 Service 접속 완료");
 
 		int row = -1;
@@ -91,31 +95,54 @@ public class LessonService {
 		logger.info("class_idx = " + idx);
 		
 		if (row > 0) {
-			if (!url.equals("")) {
+			if (!(url == null)) {
 				int videoRow = lessonDAO.videoWrite(idx, url);
 			}
-			fileSave(idx, user_id, photos);			
+			fileSave(idx, user_id, photos, lessonLogo);			
 		}
 		
 		return row;
 	}
 	
-	public void fileSave(int idx, String user_id, MultipartFile[] photos) {
-		for (int i = 0; i < photos.length; i++) {
-			MultipartFile photo = photos[i];
+	public void fileSave(int idx, String user_id, MultipartFile[] photos, MultipartFile lessonLogo) {
+		logger.info("filesave 도착");
+		
+		String fileName = lessonLogo.getOriginalFilename();
+		logger.info("fileName : " + fileName);
+		if (!fileName.equals("")) { // 파일명이 있다 == 업로드 파일이 있다면
+			// 1. 기존 파일명에서 확장자 추출 (high.gif)
+			// 1-2. subString 활용 방법
+			String ext = fileName.substring(fileName.lastIndexOf("."));
 			
+			// 2. 새파일명 생성
+			String newFileName = System.currentTimeMillis() + ext;
+			logger.info(fileName + " -> " + newFileName);
+			
+			// 3. 파일 저장
+			try {
+				byte[] bytes = lessonLogo.getBytes(); // MultipartFile 로부터 바이너리 추출
+				Path path = Paths.get(file_root + newFileName); // 저장 경로 지정
+				Files.write(path, bytes);
+				
+				String photo_category = "Lesson";
+				
+				lessonDAO.photoWrite(user_id, fileName, newFileName, idx, photo_category);
+				
+				Thread.sleep(1); // 파일명이 곂치지 않기 위해 강제 휴식 부여
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		for (MultipartFile photo : photos) {
+			logger.info("filesave 쪼개기 시작");
 			// 1. 업로드할 파일 명이 있는가?
-			String fileName = photo.getOriginalFilename();
+			fileName = photo.getOriginalFilename();
 			logger.info("fileName : " + fileName);
 			if (!fileName.equals("")) { // 파일명이 있다 == 업로드 파일이 있다면
 				// 1. 기존 파일명에서 확장자 추출 (high.gif)
-				
-				/* 1-1. split 활용 방법
-				String[] arr = fileName.split("\\.");
-				String ext = arr[arr.length - 1];
-//				String ext = fileName.split(".")[1];
-				 */
-				
 				// 1-2. subString 활용 방법
 				String ext = fileName.substring(fileName.lastIndexOf("."));
 				
@@ -129,7 +156,9 @@ public class LessonService {
 					Path path = Paths.get(file_root + newFileName); // 저장 경로 지정
 					Files.write(path, bytes);
 					
-//					lessonDAO.photoWrite(fileName, newFileName, idx);
+					String photo_category = "Career";
+					
+					lessonDAO.photoWrite(user_id, fileName, newFileName, idx, photo_category);
 					
 					Thread.sleep(1); // 파일명이 곂치지 않기 위해 강제 휴식 부여
 					
@@ -138,6 +167,27 @@ public class LessonService {
 				}
 			}
 		}
+		
+	}
+
+	public void lessonDetail(String class_idx, Model model) {
+		logger.info("상세보기 Service 접속 완료");
+		LessonDTO dto = lessonDAO.lessonDetail(class_idx);
+		model.addAttribute("lesson", dto);
+		
+//		List<PhotoDTO> list = dao.photos(idx);
+		String lessonLogo = lessonDAO.lessonLogoLoad(class_idx);
+		logger.info("lessonLogo : {}", lessonLogo);
+		model.addAttribute("lessonLogo", lessonLogo);
+		
+		List<PhotoDTO> photos = lessonDAO.lessonPhotosLoad(class_idx);
+		model.addAttribute("photos", photos);
+		
+//		List<ReviewDTO> reviewList = lessonDAO.lessonReviewList(class_idx);
+//		model.addAttribute("reviewList", reviewList);
+//		
+//		List<QnADTO> QnAList = lessonDAO.lessonQnAList(class_idx);
+//		model.addAttribute("reviewList", reviewList);
 		
 	}
 	

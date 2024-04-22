@@ -307,7 +307,8 @@ button {
 		        			<br/><br/>
 		        			<button type="button" id="url" onclick="openModal()">URL 첨부</button>
 		        			<br/><br/>
-		        			<div id="receiveURL" name="video_url"></div>
+		        			<div id="receiveURL"></div>
+		        			<input type="text" class="multiclickresult" id="videoURL" name="video_url"/>
 	        			</td>
 	        		</tr>
 	        		<tr>

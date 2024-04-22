@@ -4,4 +4,45 @@
 >
 <mapper namespace="com.sona.music.board.dao.QnADAO">
 
+
+	<select id="list" resultType= "com.sona.music.board.dto.QnADTO">
+	SELECT 
+    CQ.QUESTION_IDX,
+    CQ.CLASS_IDX,
+    CQ.USER_ID,
+    CQ.Q_TITLE,
+    CQ.Q_CONTENT,
+    CQ.ANONYMOUS_STATUS,
+    CQ.Q_REG_DATE,
+    CQ.Q_DELETE,
+    CQ.Q_HIT,
+    CO.USER_ID AS TEACHER_ID,
+    (CASE WHEN CA.QUESTION_IDX IS NOT NULL THEN TRUE ELSE FALSE END) AS REPLY_CHECK
+	FROM 
+    CLASS_QUESTION CQ
+	INNER JOIN 
+    CLASS_OPEN CO ON CQ.CLASS_IDX = CO.CLASS_IDX
+	LEFT JOIN 
+    CLASS_ANSWER CA ON CQ.QUESTION_IDX = CA.QUESTION_IDX
+	WHERE 
+    CQ.CLASS_IDX = #{param3};
+	</select>
+
+	<select id="allCount" resultType="Integer">
+		SELECT CEIL(COUNT(QUESTION_IDX)/#{param1}) AS pages FROM CLASS_QUESTION
+	</select>
+	
+	
+	<insert id="qwrite"
+	useGeneratedKeys="true"
+	keyColumn = "QUESTION_IDX"
+	keyProperty="QUESTION_IDX"
+	parameterType="com.sona.music.board.dto.QnADTO"
+	>
+	INSERT INTO CLASS_QUESTION(CLASS_IDX,USER_ID,Q_TITLE,Q_CONTENT,ANONYMOUS_STATUS)
+			VALUES(#{CLASS_IDX},#{USER_ID},#{Q_TITLE},#{Q_CONTENT},#{ANONYMOUS_STATUS})
+	
+	</insert>
+
+
 </mapper>

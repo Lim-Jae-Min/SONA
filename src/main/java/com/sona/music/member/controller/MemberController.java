@@ -33,7 +33,7 @@ public class MemberController {
     public Map<String, Object> findIdEmail (String email, HttpSession session){
         logger.info("이메일 받은값 : " + email);
         Map<String,Object> map = new HashMap<String,Object>();
-        String emailSession = memberService.findIdEmail(email, session);
+        String emailSession = memberService.findIdEmail(email);
         logger.info(emailSession+ "ID 찾기 요청으로 DB에서 받아온 이메일 ");
         map.put("emailSession",emailSession);
         return map;

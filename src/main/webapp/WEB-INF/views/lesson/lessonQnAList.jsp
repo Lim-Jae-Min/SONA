@@ -134,7 +134,8 @@
 	
 	<div style="text-align: center;">
     <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-        <img src="resources/img/QnA.png" id="review">강의 Q&A
+        <img src="resources/img/QnA.png" id="qna">강의 Q&A 
+        <button class="button write" onclick="location.href='./lessonQnAWrite'">Q&A 작성</button>
         <table style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
@@ -159,7 +160,6 @@
         </table>
     </div>
 </div>
-
  <div id="footer">
             <li>상호명 : SONA</li>
             <li>대표자 : 김○○</li>
@@ -171,18 +171,20 @@
 </body>
 <script>
 var showPage =1;
+var classIdx = ${classIdx};
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 	listCall(showPage);
 });
 
-function listCall(page){
+function listCall(page, classIdx){
     $.ajax({
        type:'get',
-       url:'./list.ajax',
+       url:'./qnalist.ajax',
        data:{
           'page':page,
-          'cnt':5
+          'cnt':5,
+          'classIdx':${classIdx}
        },
        dataType:'json',
        success:function(data){
@@ -199,7 +201,7 @@ function listCall(page){
         		  console.log(evt); // 이벤트 객체
         		  console.log(pg); //클릭한 페이지 번호
         		  showPage = pg;
-        		  listCall(pg);
+        		  listCall(pg, classIdx);
         	  }
         	  
           });
@@ -215,32 +217,84 @@ function listCall(page){
 	     for(item of list){
 	        console.log(item);
 	        content += '<tr>';
-	        content += '<td>' + item.review_IDX + '</td>';
-	        content += '<td><span style="color: #FED000;">★</span>' + item.score + '</td>';
-	        content += '<td><a href="#" class="review-link" data-review-idx="' + item.review_IDX + '">' + item.review_TITLE + '</a></td>';
-	        content += '<td>' + item.rater_ID + '</td>';
-	        content += '<td>' + item.study_DATE +'</td>';
+	        content += '<input type="hidden" name="CLASS_IDX" value="' + item.class_IDX + '">';
+	        content += '<input type="hidden" name="TEACHER_ID" value="' + item.teacher_ID + '">';
+	        content += '<input type="hidden" name="ANONYMOUS_STATUS" value="' + item.anonymous_STATUS + '">';
+	        content += '<td>' + item.question_IDX + '</td>';
 	        content += '<td>';
-	        var img = item.img_cnt > 0 ?'image.png' : 'no_image.png';
-	        content += '<img class="icon" src="resources/img/' + img + '"width= "30" height = "30"/>';
+	        if (item.anonymous_STATUS) {
+	            content += '<img src="resources/img/locked.png" style="width: 16px; height: 16px; margin-right: 5px;">';
+	        }
+	        content += '<a href="#" class="question-link" data-question-idx="' + item.question_IDX + '" data-anonymous="' + item.anonymous_STATUS + '">' + item.q_TITLE + '</a>';
 	        content += '</td>';
-	        var date = new Date(item.review_REG_DATE);
+	        content += '<td>' + item.user_ID + '</td>';
+	        var replyCheck = item.reply_CHECK ? "Y" : "N";
+	        content += '<td>' + replyCheck +'</td>';
+	        content += '<td>' + item.q_HIT +'</td>';
+	        var date = new Date(item.q_REG_DATE);
 	        var dateStr = date.toLocaleDateString("ko-KR");
 	        content += '<td>' + dateStr + '</td>';
 	        content += '</tr>';
 	     }
 	     $('#list').html(content);
 	
-	$('.review-link').click(function(e) {
-        e.preventDefault(); // 기본 동작 방지
-        console.log('data-review-idx');
-        var reviewIdx = $(this).data('review-idx');// 클릭된 리뷰의 REVIEW_IDX 추출
-        
-        console.log('reviewIdx:', reviewIdx);
-       
-        window.location.href = './lessonReviewDetail?REVIEW_IDX=' + reviewIdx; // REVIEW_IDX를 파라미터로 lessonReviewDetail 페이지로 이동
-    });
-}
+	     $('.question-link').click(function(e) {
+	    	    e.preventDefault(); // 기본 동작 방지
+	    	    
+	    	    // 클릭된 글의 QUESTION_IDX 추출
+	    	    var questionIdx = $(this).data('question-idx');
+	    	    
+	    	    // 유저 타입 확인
+	    	    var userType = "${sessionScope.user_type}";
+	    	    var loginId = "${sessionScope.loginId}";
+	    	    
+	    	    // 해당 글의 작성자 아이디 추출
+	    	    var userId = $(this).closest('tr').find('input[name="USER_ID"]').val();
+	    	    
+	    	    // 해당 강의글을 작성한 강사의 아이디 추출
+	    	    var teacherId = $(this).closest('tr').find('input[name="TEACHER_ID"]').val();
+	    	    
+	    	    var anonymousStatus = $(this).data('anonymous');
+	    	    console.log(anonymousStatus);
+	    	    // 열람 권한 조건 확인
+	    	    if (anonymousStatus === true && (userType === "admin" ||  loginId === userId || loginId === teacherId)) {
+        		// 열람 권한이 있는 경우 해당 페이지로 이동
+       			 window.location.href = './lessonQnADetail?QUESTION_IDX=' + questionIdx;
+    			} else if (anonymousStatus === false) {
+        		// ANONYMOUS_STATUS가 false이면 해당 페이지로 이동
+        		window.location.href = './lessonQnADetail?QUESTION_IDX=' + questionIdx;
+    			} else {
+        		// 그 외의 경우에는 열람 권한이 없음을 알림창으로 표시
+        		alert("열람 권한이 없습니다.");
+    			}
+	    	});
+		}
+	
+	$(document).ready(function() {
+		
+		var userType = "${sessionScope.user_type}";
+		
+	    // 만약 현재 사용자가 수강생이 아니라면
+	    if (userType !== "수강생") {
+	        // 작성 버튼 숨기기
+	        $(".write").hide();
+	    }
+
+	});
+	
+	$(document).ready(function() {
+	    // Q&A 작성 버튼 클릭 이벤트 처리
+	    $(".write").click(function() {
+	        // hidden 필드로부터 CLASS_IDX 값 가져오기
+	        var classIdx = $('input[name="CLASS_IDX"]').val();
+
+	        // Q&A 작성 페이지로 이동할 URL
+	        var url = './lessonQnAWrite?CLASS_IDX=' + classIdx;
+
+	        // 해당 URL로 이동
+	        window.location.href = url;
+	    });
+	});
 	
 	
 </script>

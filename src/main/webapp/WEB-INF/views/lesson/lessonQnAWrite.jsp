@@ -48,60 +48,42 @@
 	<%@ include file="layout/lessonheader.jsp"%>
 
 
-	<img src="resources/img/review.png" id="review"> 강의 리뷰 작성
+	 <img src="resources/img/QnA.png" id="review"> Q&A 작성
 	<br />
 
 	<div style="text-align: center;">
 		<div
 			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-			<form action="reviewWrite" method="post"
+			<form action="qWrite" method="post"
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>평가 강의명 : 2<input type="hidden" name="CLASS_IDX" value="2">평가
-							강사명: user2<input type="hidden" name="RATEE_ID" value="user2"></th>
+						<th>질문 강의IDX: ${CLASS_IDX}<input type="hidden" name="CLASS_IDX" value="${CLASS_IDX}"></th>
 					</tr>
 					<tr>
-						<th style="font-size: 14px;">리뷰 제목</th>
-						<td><input type="text" name="REVIEW_TITLE"
+						<th style="font-size: 14px;">Q&A 제목</th>
+						<td><input type="text" name="Q_TITLE"
 							style="width: 300px; font-size: 16px;" /></td>
 						<th style="font-size: 12px;">작성자 : ${sessionScope.loginId}<input
-							type="hidden" name="RATER_ID" value="${sessionScope.loginId}"></th>
+							type="hidden" name="USER_ID" value="${sessionScope.loginId}"></th>
 						<th style="font-size: 12px;">작성일 : <span id="currentDate"></span></th>
 					</tr>
 					<tr>
-						<th>만족도</th>
-						<td colspan="4"><span style="color: #FED000;">★</span> <select
-							name="SCORE" style="margin-left: 10px;">
-								<option value="0.5">0.5</option>
-								<option value="1.0">1.0</option>
-								<option value="1.5">1.5</option>
-								<option value="2.0">2.0</option>
-								<option value="2.5">2.5</option>
-								<option value="3.0">3.0</option>
-								<option value="3.5">3.5</option>
-								<option value="4.0">4.0</option>
-								<option value="4.5">4.5</option>
-								<option value="5.0">5.0</option>
-						</select></td>
-					</tr>
-					<tr>
-						<th>리뷰 내용</th>
-						<td colspan="4"><textarea name="REVIEW_CONTENT"
+						<th>Q&A 내용</th>
+						<td colspan="4"><textarea name="Q_CONTENT"
 								style="width: 882px; height: 311px; resize: none;"></textarea></td>
 					</tr>
 					<tr>
-						<input type="hidden" name="PHOTO_CATEGORY" value="Review">
-						<th>리뷰 사진</th>
-						<td colspan="4">
-							<div id="fileList"></div> <input type="file" name="photos"
-							accept="image/*" multiple="multiple" style="width: 100%;"
-							onchange="checkFileCount(this)" /> <small style="color: #999;">
-								(한장의 사진만 첨부 가능합니다)</small>
-						</td>
+   					 <th>공개 여부</th>
+    				<td>
+        				<input type="radio" id="public" name="ANONYMOUS_STATUS" value="false" checked>
+        				<label for="public">공개</label>
+        				<input type="radio" id="private" name="ANONYMOUS_STATUS" value="true">
+        				<label for="private">비공개</label>
+    				</td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="location.href='./lessonReviewList'"
+						type="button" onclick="location.href='./lessonQnAList'"
 						value="취소" />
 						<button>작성</button></td>
 					</tr>
@@ -151,7 +133,7 @@ var currentDate = new Date().toLocaleDateString('ko-KR');
 currentDateElement.innerText = currentDate;
 
 function confirmWrite() {
-    var result = confirm("리뷰 작성을 하시겠습니까?");
+    var result = confirm("Q&A 작성을 하시겠습니까?");
     if (result) {
         // 사용자가 "예"를 선택한 경우
         alert("리뷰 작성이 완료되었습니다.");
@@ -160,18 +142,7 @@ function confirmWrite() {
     return result; // 사용자가 "아니오"를 선택한 경우도 처리
 }
 
-function checkFileCount(input) {
-    // 현재 첨부된 파일 개수 확인
-    var fileCount = input.files.length;
-    
-    // 첨부 파일이 1장을 초과하는 경우
-    if (fileCount > 1) {
-        // 경고창 표시
-        alert("첨부파일은 1장만 첨부할 수 있습니다.");
-        // 파일 선택 취소
-        input.value = '';
-    }
-}
+
 
 $('#userName').click(function slide() {
 	var display = $('#slide').css('display');

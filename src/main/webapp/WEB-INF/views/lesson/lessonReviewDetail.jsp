@@ -229,19 +229,16 @@ function confirmDelete(reviewIdx) {
     }
 }
 
-function redirectToEditPage(reviewIdx) {
-    window.location.href = './lessonReviewEdit?idx=' + reviewIdx;
-}
-
 $(document).ready(function() {
     // 현재 로그인한 사용자의 아이디
-    var loggedInUserId = "${loginId}";
+    var loggedInUserId = "${sessionScope.loginId}";
+    var userType = "${sessionScope.user_type}";
 
     // 리뷰 작성자의 아이디
     var reviewUserId = "${review.RATER_ID}";
 
     // 만약 현재 사용자가 관리자가 아니라면
-    if ("${userType}" !== "admin") {
+    if (userType !== "admin") {
         // 블라인드 버튼 숨기기
         $(".blind").hide();
     }
@@ -253,6 +250,12 @@ $(document).ready(function() {
         $(".delete").hide();
     }
 });
+
+function redirectToEditPage(reviewIdx) {
+    window.location.href = './lessonReviewEdit?idx=' + reviewIdx;
+}
+
+
 
 </script>
 </html>

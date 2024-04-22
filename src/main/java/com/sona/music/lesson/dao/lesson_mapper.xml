@@ -98,4 +98,20 @@
 			
 		</if>
 	</select>
+	
+	<insert id="lessonWrite"
+		useGeneratedKeys="true"
+		keyColumn="class_idx"
+		keyProperty="class_idx"
+		parameterType="com.sona.music.lesson.dto.LessonDTO">
+		INSERT CLASS_OPEN(user_id, inst_category_idx, class_inst, class_location, class_days, class_hours, need_inst, class_style,
+			class_name, class_content, class_times, class_price, career_years, career_contents)
+		values(#{user_id}, #{inst_category_idx}, #{class_inst}, #{class_location}, #{class_days}, #{class_hours}, #{need_inst}, #{class_style},
+			#{class_name}, #{class_content}, #{class_times}, #{class_price}, #{career_years}, #{career_contents})
+	</insert>
+	
+	<insert id="videoWrite">
+		INSERT CAREER_VIDEO(class_idx, video_url) values(#{param1}, #{param2})
+	</insert>
+	
 </mapper>

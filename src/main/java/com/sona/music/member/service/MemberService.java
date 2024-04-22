@@ -1,5 +1,6 @@
 package com.sona.music.member.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sona.music.board.dto.ReviewDTO;
 import com.sona.music.member.dao.MemberDAO;
 import com.sona.music.member.dto.MemberDTO;
 
@@ -65,6 +67,24 @@ public class MemberService {
 		logger.info("회원가입 param 값: " + param);
 		int row = memberDAO.join(param);
 		return row;
+	}
+
+	public Map<String, Object> classreview(int currPage, int pagePerCnt) {
+		int start = (currPage-1)*pagePerCnt;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<MemberDTO> list = memberDAO.list(pagePerCnt,start);
+		logger.info("list size: "+list.size());
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", memberDAO.allCount(pagePerCnt));
+		
+		for (MemberDTO r : list) {
+			logger.info(r.getREVIEW_TITLE()+"");
+			logger.info(r.getCLASS_REG_DATE()+"");
+		}
+		
+		return result;
 	}
 	
 }

@@ -16,9 +16,9 @@ public class ApplyFormService {
 	
 	@Autowired ApplyFormDAO applyFormDAO;
 
-	public int apply(Map<String, String> param1) {
-		logger.info("강의신청 param 값: " + param1);
-		int row = applyFormDAO.apply(param1);
+	public int apply(Map<String, String> param) {
+		logger.info("강의신청 param 값: " + param);
+		int row = applyFormDAO.apply(param);
 		logger.info("row: " + row);
 		return row;
 	}

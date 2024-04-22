@@ -15,6 +15,7 @@ public class ReviewDTO {
 	private boolean REVIEW_DELETE;
 	private int img_cnt;
 	private String STUDY_DATE;
+	
 	public int getREVIEW_IDX() {
 		return REVIEW_IDX;
 	}

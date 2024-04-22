@@ -223,19 +223,35 @@ public class MemberController {
 	/*회원 상세보기*/
 	@RequestMapping(value="/classreview.ajax")
 	@ResponseBody
-	public Map<String , Object> listCall(String page, String cnt){
+	public Map<String , Object> listCall(String page, String cnt, String user_id){
+		logger.info("listCall 요청");
+		logger.info("받아온 유저 user_id: "+user_id);
+		logger.info("페이지당 보여줄 갯수:"+cnt);
+		logger.info("요청 페이지: "+page);
+		
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = 5;
+		Map<String, Object>map = memberService.classreview(currPage, pagePerCnt, user_id);
+		logger.info("map : {}",map);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/classreview2.ajax")
+	@ResponseBody
+	public Map<String , Object> listCall2(String page, String cnt){
 		logger.info("listCall 요청");
 		logger.info("페이지당 보여줄 갯수:"+cnt);
 		logger.info("요청 페이지: "+page);
 		
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 5;
-		Map<String, Object>map = memberService.classreview(currPage,pagePerCnt);
+		Map<String, Object>map = memberService.classreview2(currPage, pagePerCnt);
+		logger.info("map : {}",map);
 		
 		return map;
 	}
-	
-	
 	
 	
     @RequestMapping(value ="/idFindResult.go", method = RequestMethod.POST)

@@ -5,9 +5,9 @@
 <mapper namespace="com.sona.music.member.dao.ApplyFormDAO">
 
 <insert id="apply" parameterType="map">
-    INSERT INTO APPLICATION_FORM (INST_CATEGORY_IDX, APPLYFORM_INST, APPLYFORM_LOCATION, APPLYFORM_DAYS,
-    	 HAVE_INST, APPLYFORM_STYLE, USER_ID)
-    VALUES (#{instCategory}, #{inst}, #{location}, #{class_days}, #{have}, #{class_style}, #{user_id})
+    INSERT INTO APPLICATION_FORM (USER_ID, INST_CATEGORY_IDX, APPLYFORM_INST, APPLYFORM_LOCATION, APPLYFORM_DAYS,
+    	 HAVE_INST, APPLYFORM_STYLE)
+    VALUES (#{user_id}, #{instCategory}, #{inst}, #{location}, #{class_days}, #{have}, #{class_style})
 </insert>
 
 

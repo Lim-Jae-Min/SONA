@@ -14,6 +14,8 @@
 		text-align: left;
    	 	margin-left: 100px;
 		}
+		
+		
 </style>
 </head>
 <body>
@@ -63,9 +65,9 @@
 
                     <tr>
                         &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png" style="margin-left: 30px;"  id="account"></td>
-                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}<span><br><br>${userInfo.user_id}</td>
+                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${detail.user_name} ${detail.user_type}<span><br><br>${detail.user_id}</td>
                         <td style="width: 60%; min-width: 150px; text-align: right;">
-                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">44.5
+                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${detail.manner}
                         </td>
                     </tr>
                 </thead>
@@ -89,7 +91,7 @@
             <thead>
                 <tr>
                     <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">No</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">리뷰 제목</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">제목</th>
                     <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">누적 수강생 수</th>
                     <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">만족도</th>
                     <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">개설일자</th>
@@ -101,6 +103,35 @@
       	     <div class="container">                           
              <nav aria-label="Page navigation" style="text-align:center">
              <ul class="pagination" id="pagination"></ul>
+             </nav>               
+            </div>
+      	</td>
+      </tr>
+        </table>
+    </div>
+</div>
+
+  <hr style="flex: 1; margin-top: 10px; border: 0; border-top: 4px solid #BEE6FF;">
+	
+	<div style="text-align: center;">
+    <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px; margin-top: 24px;">
+        <img src="resources/img/review.png" id="review">회원이 받은 리뷰
+        <table style="border-collapse: collapse; width: 100%;">
+            <thead>
+                <tr>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">No</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">제목</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">작성자</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">만족도</th>
+                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">작성일자</th>
+                </tr>
+            </thead>
+            <tbody id="list2"></tbody>
+            <tr>
+      		<td colspan="6" >
+      	     <div class="container">                           
+             <nav aria-label="Page navigation" style="text-align:center">
+             <ul class="pagination" id="pagination2"></ul>
              </nav>               
             </div>
       	</td>
@@ -128,6 +159,7 @@ var showPage =1;
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 	listCall(showPage);
+	listCall2(showPage);
 });
 
 function listCall(page){
@@ -170,15 +202,11 @@ function drawList(list){
     for(item of list){
        console.log(item);
        content += '<tr>';
-       content += '<td><span style="color: #FED000;">★</span>' + item.score + '</td>';
-       content += '<td>' + item.review_TITLE + '</td>';
-       content += '<td>' + item.rater_ID + '</td>';
-       content += '<td>' + item.study_DATE +'</td>';
-       content += '<td>';
-       var img = item.img_cnt > 0 ?'image.png' : 'no_image.png';
-       content += '<img class="icon" src="resources/img/' + img + '"width= "30" height = "30"/>';
-       content += '</td>';
-       var date = new Date(item.review_REG_DATE);
+       content += '<td>&nbsp;&nbsp;&nbsp;'+ item.apply_IDX +'</td>';
+       content += '<td>' + item.class_NAME + '</td>';
+       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.count+'명' + '</td>';
+       content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
+       var date = new Date(item.class_REG_DATE);
        var dateStr = date.toLocaleDateString("ko-KR");
        content += '<td>' + dateStr + '</td>';
        content += '</tr>';
@@ -187,6 +215,57 @@ function drawList(list){
 }
 
 
+function listCall2(page){
+    $.ajax({
+       type:'get',
+       url:'./classreview2.ajax',
+       data:{
+          'page':page,
+          'cnt':5
+       },
+       dataType:'json',
+       success:function(data){
+          drawList2(data.list);
+          console.log(data);
+          //플러그인 추가
+          var startPage = data.currPage > data.totalPages? data.totalPages : data.currPage;
+          
+          $('#pagination2').twbsPagination({
+        	  startPage:startPage, //시작페이지
+        	  totalPages:data.totalPages, //총 페이지 갯수
+        	  visiblePages:5, //보여줄 페이지 수 [1][2][3][4][5]
+         	  onPageClick:function(evt, pg){//페이지 클릭시 실행 함수
+        		  console.log(evt); // 이벤트 객체
+        		  console.log(pg); //클릭한 페이지 번호
+        		  showPage = pg;
+        		  listCall2(pg);
+        	  }
+        	  
+          });
+          
+       },
+       error:function(error){
+          console.log(error)
+       }
+    });
+}
+
+function drawList2(list){
+    var content = '';
+    for(item of list){
+       console.log(item);
+       content += '<tr>';
+       content += '<td>&nbsp;&nbsp;&nbsp;'+ item.apply_IDX +'</td>';
+       content += '<td>' + item.class_NAME + '</td>';
+       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.count+'명' + '</td>';
+       content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
+       var date = new Date(item.class_REG_DATE);
+       var dateStr = date.toLocaleDateString("ko-KR");
+       content += '<td>' + dateStr + '</td>';
+       content += '</tr>';
+    }
+    $('#list2').html(content);
+}
 
 
 </script>

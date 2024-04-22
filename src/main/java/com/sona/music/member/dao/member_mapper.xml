@@ -37,7 +37,7 @@
 			u.USER_NAME,
 			u.USER_TYPE,
 			CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) 
-				FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 2), '') AS manner,
+				FROM MANNER_HISTORY mh), 2), '') AS manner,
 			(SELECT sum(up.POINT) 
 				FROM USER_POINT up WHERE up.user_id = u.user_id) as point
 		FROM USERS u WHERE u.USER_ID = #{param1} AND u.USER_PASS = #{param2}	
@@ -51,4 +51,16 @@
 		INSERT INTO USERS(USER_ID,USER_NAME,USER_EMAIL,USER_PASS,USER_PHONE,USER_ACCOUNTNUMBER,USER_TYPE,USER_BANK)
 		VALUES(#{id},#{name},#{email},#{pw},#{phone},#{accountnumber},#{usertype},#{bank})
 	</insert>
+	
+	
+	<select id="list" resultType="com.sona.music.member.dto.MemberDTO">
+		SELECT 
+	</select>
+	
+	
+	
+	<select id="allCount" resultType="Integer">
+		SELECT CEIL(COUNT(REVIEW_IDX)/#{param1}) AS pages FROM REVIEW
+	</select>
+	
 </mapper>	

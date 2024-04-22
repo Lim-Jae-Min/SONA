@@ -29,6 +29,7 @@
 .join ul {
     list-style-type: none; /* 리스트의 글머리 제거 */
     padding: 0; /* 기본 패딩 제거 */
+    margin-top: 	-9px;
 }
 
 .join li {
@@ -40,7 +41,7 @@
     margin-bottom: 5px;
     margin-top: 0;
 }
-.join button{
+#join_button{
     background-color: #BEE6FF;
     border-radius: 6px;
     font-size: 100%;
@@ -76,6 +77,7 @@
     display: flex; /* 라디오 버튼을 가로로 정렬하기 위해 flexbox 사용 */
     justify-content: center; /* 가운데 정렬 */
      margin-left: 92px;
+     margin-top:14px;
 }
 
 
@@ -107,7 +109,33 @@
 .ptag p{
 	margin-bottom: 0px;
 }
-.boxcolor input
+
+.join #info__id {
+  position: relative;
+}
+
+#info__id input[type="text"] {
+  width: calc(80% - 9px); /* 입력 필드 너비 설정 */
+  padding: 10px; /* 입력 필드 안 여백 설정 */
+  font-size: 16px; /* 폰트 크기 설정 */
+  border-radius: 5px; /* 테두리 모서리 둥글게 설정 */
+}
+
+#info__id .check {
+  position: absolute;
+  width: 90px; /* 버튼 너비 설정 */
+  height: calc(100% - 13px); /* 버튼 높이 설정 */
+  top: 0;
+  right: -20px;
+  margin: auto 0;
+  border: none; /* 버튼의 테두리 없애기 */
+  background-color: #BEE6FF; /* 버튼 배경색 설정 */
+  color: black; /* 버튼 텍스트 색상 설정 */
+  border-radius: 0 10px 10px 0; /* 버튼 오른쪽 모서리 둥글게 설정 */
+}
+#boxcolor{
+
+}
 </style>
 </head>
 <body>
@@ -125,16 +153,19 @@
     <form action="join.do" method="post">
 	    <section class="join" >
 	        <h1>회원가입</h1>
-	        <ul><li><p>*아이디</p></li>
-	            <li><input type="text" placeholder="아이디" name="id"></li>
-	            <li><input type="button" id="check" value="중복체크" onclick="overlay()"/></li>
+	        	<p>*아이디</p>
+	            <div id="info__id">
+                <input type="text" placeholder="아이디" name="id">
+                <input type="button" class="check" value="중복체크" onclick="overlay()"/>
+                </div>
+	        <ul>
 	            <li><p>*이름</p></li>
 	            <li><input type="text" placeholder="이름(실명)"name="name"></li>
 	            <li><p>*이메일 인증</p></li>
 	            <li><input type="text" placeholder="이메일을 입력해주세요." name="email"></li>
 	            <li><p>*비밀번호</p></li>
 	            <li><input type="password" placeholder="비밀번호" name="pw"></li>
-	            <li id="boxcolor"><input type="password"  placeholder="비밀번호 확인" name="confirm"></li>
+	            <li ><input id="boxcolor" type="password"  placeholder="비밀번호 확인" name="confirm"></li>
 	            <li><p>*전화번호</p></li>
 	            <li><input type="text" placeholder="전화번호 입력" name="phone"></li>
 	            <li class="ptag"><p>*계좌번호</p>
@@ -154,8 +185,8 @@
 	                <input type="radio" id="select" name="usertype" value="수강생"><label for="select">수강생</label>
 	                <input type="radio" id="select2" name="usertype" value="강사"><label for="select2">강사</label>
 	            </li>
-	            <li><button type="button" onclick="join()">회원가입</button></li>
 	        </ul>
+	            <button type="button" id=join_button onclick="join()">회원가입</button>
 	    </section>
 	</form>
     <div>
@@ -196,7 +227,7 @@ function join(){
 	}else if($email.val()==''){
 		alert('이메일을 입력 해 주세요!');
 		$email.focus();
-	}else if($pw.val()==null){
+	}else if($pw.val()==''){
 		alert('비밀번호를 입력 해 주세요!');
 		$pw.focus();
 	}else if($confirm.val()==''){
@@ -213,11 +244,18 @@ function join(){
 		alert('사용자 유형을 선택 해 주세요!');
 	}else{
 		var regExp = new RegExp('[a-zA-Zㄱ-ㅎ가-하]');
-		var match = regExp.test($phone.val(), $accountnumber.val());
+		var match = regExp.test($phone.val());
+		var match2 = regExp.test($accountnumber.val());
+		
 		if(match){
-			alert('숫자만 입력해 주세요.');
-			$age.val('');
-			$age.focus();
+			alert('전화번호에 숫자만 입력해 주세요.');
+			$phone.val('');
+			$phone.focus();
+			return false;
+		}else if(match2){
+			alert('계좌 번호에 숫자만 입력해 주세요.');
+			$accountnumber.val('');
+			$accountnumber.focus();
 			return false;
 		}
 		$('form').submit();
@@ -255,16 +293,34 @@ function overlay(){
 	});
 	
 }
-
-$('#confirm').on('keyup',function(){
+/*
+$('#boxcolor').on('keyup',function(){
 	if($('input[name="pw"]').val() == $(this).val()){
 		$('#boxcolor').css({'background-color':'lightgreen'});
 	}else{
-		$('#boxcolor').css({'background-color':'lightred'});
+		$('#boxcolor').css({'background-color':'red'});
 	}
 });
+  
+ */
+ $('#boxcolor').on('keyup', function() {
+	    var confirmPassword = $(this).val();
+	    var password = $('input[name="pw"]').val();
+	    
+	    if (confirmPassword === '') {
+	        $(this).css({'background-color': 'white'}); // 값이 비어있을 때 기본 배경색으로 변경
+	    } else if (confirmPassword === password) {
+	        $(this).css({'background-color': 'lightgreen'});
+	    } else {
+	        $(this).css({'background-color': 'red'});
+	    }
+	});
  
  
+ 
+$('#logo').click(function main(){
+	   location.href = '/main';
+	});
 
 </script>
 </html>

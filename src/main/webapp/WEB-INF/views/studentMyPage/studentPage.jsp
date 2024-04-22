@@ -273,6 +273,9 @@
     </div>
 </body>
 <script>
+$('#logo').click(function main(){
+	   location.href = '/main';
+	});
 
 $('#userName').click(function slide() {
 	var display = $('#slide').css('display');

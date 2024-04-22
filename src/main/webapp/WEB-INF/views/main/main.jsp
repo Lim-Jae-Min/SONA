@@ -88,5 +88,9 @@ $('#userName').click(function slide() {
     }
 });
 
+$('#logo').click(function main(){
+	location.href = '/main';
+});
+
 </script>
 </html>

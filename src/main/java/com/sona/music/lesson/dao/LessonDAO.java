@@ -16,4 +16,8 @@ public interface LessonDAO {
 	Object allListCount(int pagePerCnt, String condition, String content, String loca, String instCategory,
 			String inst);
 
+	int lessonWrite(LessonDTO dto);
+
+	int videoWrite(int idx, String url);
+
 }

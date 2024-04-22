@@ -170,6 +170,7 @@ public class LessonService {
 		
 	}
 
+
 	public void lessonDetail(String class_idx, Model model) {
 		logger.info("상세보기 Service 접속 완료");
 		LessonDTO dto = lessonDAO.lessonDetail(class_idx);
@@ -190,5 +191,6 @@ public class LessonService {
 //		model.addAttribute("reviewList", reviewList);
 		
 	}
+
 	
 }

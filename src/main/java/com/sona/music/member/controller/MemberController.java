@@ -1,6 +1,7 @@
 package com.sona.music.member.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +20,7 @@ import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.member.service.MemberService;
 import com.sona.music.mypage.dto.MyPageDTO;
 import com.sona.music.point.dto.PointDTO;
+import com.sona.music.point.service.PointService;
 
 @Controller
 public class MemberController {
@@ -26,17 +28,71 @@ public class MemberController {
     Logger logger = LoggerFactory.getLogger(getClass());
     
     @Autowired MemberService memberService;
+    @Autowired PointService pointService;
     
     
     @RequestMapping(value ="/findIdEmail.do", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> findIdEmail (String email, HttpSession session){
+    public Map<String, Object> findIdEmail (String email){
         logger.info("이메일 받은값 : " + email);
         Map<String,Object> map = new HashMap<String,Object>();
-        String emailSession = memberService.findIdEmail(email);
-        logger.info(emailSession+ "ID 찾기 요청으로 DB에서 받아온 이메일 ");
-        map.put("emailSession",emailSession);
+
+        String checkedEmail = memberService.findIdEmail(email);
+        logger.info(checkedEmail+ "ID 찾기 요청으로 DB에서 받아온 이메일 ");
+        map.put("checkedEmail",checkedEmail);
+
         return map;
+    }
+    
+    @RequestMapping(value ="/findPwEmail.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> findPwEmail (String email , String username){
+        logger.info("이메일 받은값 : " + email);
+        Map<String,Object> map = new HashMap<String,Object>();
+        String checkedEmail = memberService.findPwEmail(email,username);
+        String checkedId = memberService.findPwcheckId(username);
+        logger.info("findPwEmail.do 에서 받은 값 : " + checkedEmail + " : " + checkedId );
+        
+        logger.info(checkedEmail);
+        map.put("checkedEmail",checkedEmail);
+        map.put("checkedId", checkedId);
+        return map;
+    }
+    
+    @RequestMapping(value ="/pwFindResult.do", method = RequestMethod.POST)
+    public String pwFindResult (String username ,String email, Model model){
+        
+    	logger.info(username);
+//    	model.addAttribute("email",email);
+    	String findPwResult = memberService.findPw(username,email);
+    	logger.info(findPwResult+"비밀번호 찾기에서 받은값");
+    	if(findPwResult != null) {
+    		model.addAttribute("findPwResult",findPwResult);
+    		model.addAttribute("username",username);
+   		
+    	}
+        return "member/pwFindResult";
+    }
+    
+    @RequestMapping(value ="/changePw.go", method = RequestMethod.POST)
+    public String changePwSendId (String changePwNeedId, Model model){
+        
+    	logger.info(changePwNeedId + "비밀번호 변경으로 보내줄 아이디 값");
+    	model.addAttribute("changePwNeedId", changePwNeedId);
+
+        return "member/changePw";
+    }
+    
+    @RequestMapping(value ="/changePw.do", method = RequestMethod.POST)
+    public String changePw (String changePwNeedId, String newPassword, Model model){
+        
+    	logger.info(changePwNeedId + "찐 비밀번호 변경에서 받은 아이디");
+    	logger.info(newPassword + "찐 비밀번호 변경에서 받은 비밀번호");
+    	
+    	int row = memberService.changePw(changePwNeedId,newPassword);
+//    	model.addAttribute("changePwNeedId", changePwNeedId);
+
+        return "member/login";
     }
 	
 	@RequestMapping(value="/joinform.go")
@@ -157,6 +213,10 @@ public class MemberController {
 	        session.setAttribute("user_id", param.get("id"));
 	        logger.info("session id: "+ session.getAttribute("user_id"));
 	        msg = "회원가입에 성공하였습니다.";
+	        // 포인트 아이디 생성
+	        String joinId =param.get("id");
+	        pointService.joinCreatePoint(joinId);
+	        //
 		}
 		model.addAttribute("msg",msg);		
 		return page;
@@ -203,4 +263,15 @@ public class MemberController {
     	
         return "member/idFindResult";
     }
+    
+    @RequestMapping(value ="/idFindResult.do", method = RequestMethod.POST)
+    public String idFindResult (String email , Model model){
+        
+    	logger.info(email);
+//    	model.addAttribute("email",email);
+    	List<String> findIdList = memberService.findId(email);
+    	model.addAttribute("findId",findIdList);
+        return "member/idFindResult";
+    }
+    
 }

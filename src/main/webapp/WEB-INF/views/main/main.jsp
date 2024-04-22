@@ -75,7 +75,13 @@
         <br/><br/><br/>
         <div><a href="#">로그아웃</a></div>
     </div>
+    
+    <a href="apply.go">강의신청 test</a>
+    </br>
+    <a href="userdetail.go">회원 상세보기</a>
 </body>
+
+		
 <script>
 
 $('#userName').click(function slide() {

@@ -15,6 +15,9 @@ public class MemberDTO {
 	private Date USER_REG_DATE;
 	private String MANNER;
     private int POINT;
+    private String REVIEW_TITLE;
+    private Date CLASS_REG_DATE;
+    private int SCORE;
 	
 	
 	public String getUSER_ID() {
@@ -82,6 +85,24 @@ public class MemberDTO {
 	}
 	public void setPOINT(int pOINT) {
 		POINT = pOINT;
+	}
+	public String getREVIEW_TITLE() {
+		return REVIEW_TITLE;
+	}
+	public void setREVIEW_TITLE(String rEVIEW_TITLE) {
+		REVIEW_TITLE = rEVIEW_TITLE;
+	}
+	public Date getCLASS_REG_DATE() {
+		return CLASS_REG_DATE;
+	}
+	public void setCLASS_REG_DATE(Date cLASS_REG_DATE) {
+		CLASS_REG_DATE = cLASS_REG_DATE;
+	}
+	public int getSCORE() {
+		return SCORE;
+	}
+	public void setSCORE(int sCORE) {
+		SCORE = sCORE;
 	}
 
 	

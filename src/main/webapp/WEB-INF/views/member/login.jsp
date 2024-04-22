@@ -63,12 +63,12 @@
 .login div ul {
     display: flex;
     justify-content: center;
-    margin-top: 0;
-    margin-left: 22px;
+    margin-top: -13px;
+    margin-left: 13px;
 }
 .login div ul li {position: relative; padding: 0 40px;}
-.login div ul li~li:after {content: ""; position: absolute; left: 0; top: 4px;
-                         height: 14px; width: 1px; background: #111; transform: rotate(25deg);}
+.login div ul li~li:after {content: ""; position: absolute; left: 0; top: 6px;
+                         height: 11px; width: 1px; background: #111; transform: rotate(0deg);}
 .login div ul li a {font-size: 20%; color: #111;}
 
 </style>
@@ -97,9 +97,9 @@
     
         <div>
             <ul>
-                <li><a href="joinform.go">회원가입</a></li>
                 <li><a href="idFind.go">아이디찾기</a></li>
                 <li><a href="pwFind.go">비밀번호 찾기</a></li>
+                <li><a href="joinform.go">회원가입</a></li>
             </ul>    
         </div>
     </section>
@@ -116,5 +116,8 @@
     </div>
 </body>
 <script>
+$('#logo').click(function main(){
+	   location.href = '/main';
+	});
 </script>
 </html>

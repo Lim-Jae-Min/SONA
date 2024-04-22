@@ -28,4 +28,8 @@ public interface MemberDAO {
 
 	int join(Map<String, String> param);
 
+	List<MemberDTO> list(int pagePerCnt, int start);
+
+	Object allCount(int pagePerCnt);
+
 }

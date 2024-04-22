@@ -215,12 +215,13 @@ function drawList(list){
 	if (list.length < 5) {
 		content += '<tr>'
 		for (var i = 0; i < list.length; i++) {
-			content += '<th><img src="/photo/"' + list[i].new_filename + 'class="lessonImg"></th>'
+			console.log(list[i].new_filename);
+			content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>'
 		}
 	 	content += '</tr>';
 	 	content += '<tr>';
 	 	for (var i = 0; i < list.length; i++) {
-			content += '<th><a href="del?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
+			content += '<th><a href="lessonDetail.go?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
 		}
 		 content += '</tr>';
 		 content += '<tr class="smallFont">';
@@ -249,12 +250,12 @@ function drawList(list){
 	}else {
 		content += '<tr>';
 		for (var i = 0; i < 5; i++) {
-			content += '<th><img src="/photo/"' + list[i].new_filename + 'class="lessonImg"></th>'
+			content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>'
 		}
 	 	content += '</tr>';
 	 	content += '<tr>';
 	 	for (var i = 0; i < 5; i++) {
-			content += '<th><a href="del?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
+			content += '<th><a href="lessonDetail.go?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
 		}
 	 	content += '</tr>';
 	 	content += '<tr class="smallFont">';
@@ -280,12 +281,12 @@ function drawList(list){
 	 	content += '<tr id="blank"></tr>';
 	 	content += '<tr>';
 	 	for (var i = 5; i < list.length; i++) {
-			content += '<th><img src="/photo/"' + list[i].new_filename + 'class="lessonImg"></th>'
+			content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>'
 		}
 	 	content += '</tr>';
 	 	content += '<tr>';
 	 	for (var i = 5; i < list.length; i++) {
-			content += '<th><a href="del?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
+			content += '<th><a href="lessonDetail.go?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
 		}
 	 	content += '</tr>';
 	 	content += '<tr class="smallFont">';

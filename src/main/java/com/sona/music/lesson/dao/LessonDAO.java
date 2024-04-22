@@ -2,7 +2,10 @@ package com.sona.music.lesson.dao;
 
 import java.util.List;
 
+import com.sona.music.board.dto.QnADTO;
+import com.sona.music.board.dto.ReviewDTO;
 import com.sona.music.lesson.dto.LessonDTO;
+import com.sona.music.lesson.dto.PhotoDTO;
 
 public interface LessonDAO {
 
@@ -19,5 +22,17 @@ public interface LessonDAO {
 	int lessonWrite(LessonDTO dto);
 
 	int videoWrite(int idx, String url);
+
+	void photoWrite(String user_id, String fileName, String newFileName, int idx, String photo_category);
+
+	LessonDTO lessonDetail(String class_idx);
+
+	String lessonLogoLoad(String class_idx);
+
+	List<PhotoDTO> lessonPhotosLoad(String class_idx);
+
+//	List<ReviewDTO> lessonReviewList(String class_idx);
+//
+//	List<QnADTO> lessonQnAList(String class_idx);
 
 }

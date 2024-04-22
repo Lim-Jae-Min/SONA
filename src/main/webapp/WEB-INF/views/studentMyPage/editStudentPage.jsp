@@ -67,8 +67,8 @@
                 <a href="#">내가 작성한 리뷰</a>
                 <a href="#">수강 이력</a>
             </div>
- <div id="content">
-            <form id="updateForm" action="/updateUserInfo" method="post">
+ 		<div id="content">
+ 		<form action = 'studentPage.edit' method = 'post'>
             <table style="width: 100%;">
                 <thead>
                     <tr>
@@ -78,8 +78,8 @@
                         <td style="width: 60%; text-align: left;">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="resources/img/account_box.png" style="display: inline-block; vertical-align: middle;">
                             <div style="display: inline-block; vertical-align: middle;">
-                                <input type="text" name="name" value="USER" style="margin-left: 10px; display: block; width: 400px; height: 35px;"> <!-- 텍스트 입력란 -->
-                                &nbsp;&nbsp;seajnu15
+                                <input type="text" name="name" value="${userInfo.user_name}" style="margin-left: 10px; display: block; width: 400px; height: 35px;"> <!-- 텍스트 입력란 -->
+                                &nbsp;&nbsp;${userInfo.user_id}
                             </div>
                         </td>    
                     </tr>
@@ -92,7 +92,7 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;새 비밀번호 
                             <span class="contents" style="margin-left: 61px; width: 200px; display: inline-block;">
-                                <input type="password" value="USER" id="newPassword" style="width: 400px; height: 50px; font-size: 29px;">
+                                <input type="password" value="" id="newPassword" style="width: 400px; height: 50px; font-size: 29px;">
                             </span>
                         </td>
                     </tr>
@@ -103,9 +103,9 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 확인 
                             <span class="contents" style="margin-left: 42px; width: 200px; display: inline-block;">
-                                <input type="password" value="USER" id="confirmPassword" style="width: 400px; height: 50px; font-size: 29px;">
+                                <input type="password" value="" id="confirmPassword" style="width: 400px; height: 50px; font-size: 29px;">
                             </span>
-								<button id="confirmation" onclick="checkPasswordMatch()" style="margin-left: 200px;">확인</button>
+								<button type = "button" id="confirmation" onclick="overlay()" style="margin-left: 200px;">확인</button>
                         </td>
                     </tr>
             
@@ -124,7 +124,7 @@
                         <td class="main" colspan="2" style="width: 50%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 
                             <span class="contents" style="margin-left: 109px; width: 200px; display: inline-block;">
-                                <input type="text" value="USER" id="email" style="width: 400px; height: 50px; font-size: 29px;">
+                                <input type="text" value="${userInfo.user_email}" name="email" style="width: 400px; height: 50px; font-size: 29px;">
                             </span>
                         </td>
                     </tr>            
@@ -135,7 +135,7 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 
                             <span class="contents" style="margin-left: 89px; width: 200px; display: inline-block;">
-                                <input type="text" value="USER" id="phoneNumber" style="width: 400px; height: 50px; font-size: 29px;">
+                                <input type="text" value="${userInfo.user_phone}" name="phoneNumber" style="width: 400px; height: 50px; font-size: 29px;">
                             </span>
                         </td>
                     </tr>
@@ -148,13 +148,15 @@
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계좌번호 
                             
                             <span class="contents" style="margin-left: 89px; width: 200px; display: inline-block;">
-                                <input type="text" value="USER" id="accountNumber" style="width: 400px; height: 50px; font-size: 29px;">
+                                <input type="text" value="${userInfo.user_accountnumber}" name="accountNumber" style="width: 400px; height: 50px; font-size: 29px;">
                             </span>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
+                    
+                    
                     <tr>
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                       		<select name="bank" id="bank" style="width: 50%;">
@@ -168,11 +170,18 @@
                      		</select>
                         
                         </td>
-                    </tr> 
+                    </tr>
+                         <br>  <br>  <br>  <br>
+                                      
+                    <th><button type = "button" onclick="studentEdit()">기본 유저 정보 저장</button></th> 
                 </tbody>
             </table>
-            </form>
-            <br>  <br>  <br>  <br>
+            
+            
+            
+         </form>
+         
+         
             <tr>
                 <td colspan="3">
                     <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
@@ -310,24 +319,46 @@
     </div>
 </body>
 <script>
+
+var overChk = false;
+
+
+
+		function overlay() {
+		    var newPassword = $('#newPassword').val();
+		    var confirmPassword = $('#confirmPassword').val();
+		
+		    if (newPassword !== confirmPassword) {
+		        alert('입력하신 비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+		        $('#confirmPassword').val('');
+		    } else {
+		        $.ajax({
+		            url: '/overlay.do',
+		            type: 'POST',
+		            data: { newPassword: newPassword, confirmPassword: confirmPassword },
+		            success: function(response) {
+		                if (response) {
+		                    alert('비밀번호가 일치합니다.');
+		                    overChk= true;
+		                } else {
+		                    alert('입력하신 비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+		                    $('#confirmPassword').val('');
+		                }
+		            },
+		            error: function() {
+		                alert('서버와의 통신 중 문제가 발생했습니다. 다시 시도해주세요.');
+	                    overChk= true;
+
+		            }
+		        });
+		    }
+		}
+
+
+	$('#logo').click(function main(){
+		   location.href = '/main';
+		});
     
-    function checkPasswordMatch() {
-        var password = document.getElementById("newPassword").value;
-        var confirmPassword = document.getElementById("confirmPassword").value;
-
-        if (password != confirmPassword) {
-            alert("비밀번호가 일치하지 않습니다. 다시 확인해주세요.");
-            document.getElementById("editButton").disabled = true; // 비밀번호가 일치하지 않으면 버튼 비활성화
-        } else {
-        	alert("확인되었습니다!");
-        
-       	   document.getElementById("editButton").disabled = false; // 비밀번호가 일치하면 버튼 활성화
-        }
-    }
-
-
-
-
 	var category1 = ['클래식 피아노', '재즈 피아노', '피아노 반주'];
 	var category2 = ['어쿠스틱 기타', '일렉 기타', '베이스 기타'];
 	var category3 = ['바이올린', '비올라', '첼로', '콘트라베이스'];
@@ -383,6 +414,69 @@
 	    }
 	});
 	
+	function studentEdit() {
+	    var $name = $('input[name="name"]');
+	    var $pw = $('input[name="confirmPassword"]');
+	    var $email = $('input[name="email"]');
+	    var $phoneNumber = $('input[name="phoneNumber"]');
+	    var $accountNumber = $('input[name="accountNumber"]');
+	    var $bank = $('select[name="bank"]');
+		
+	    if(overChk == false){
+			alert('비밀번호 확인을 해주세요');
+			$pw.focus();
+		}else if ($name.val() == '') {
+	        alert('이름을 입력해주세요.');
+	        $name.focus();
+	    } else if ($pw.val() == '') {
+	        alert('비밀번호를 입력해주세요');
+	        $pw.focus();
+	    } else if ($email.val() == '') {
+	        alert('이메일을 입력해주세요');
+	        $email.focus();
+	    } else if ($phoneNumber.val() == '') {
+	        alert('전화번호를 입력해주세요');
+	        $phoneNumber.focus();
+	    } else if ($accountNumber.val() == '') {
+	        alert('계좌번호를 입력해주세요');
+	    } else if ($bank.val() == '') {
+	        alert('은행을 선택해주세요');
+	        $email.focus();
+	    } else {
+	        // 데이터 넣기전에 확인
+	        var regExp = new RegExp('[a-zA-Zㄱ-ㅎ가-힣]');
+	        var match = regExp.test($phoneNumber.val()); // 위의 표현식 일치 여부
+	        if (match) {
+	            alert('숫자만 입력해 주세요!');
+	            $phoneNumber.val('')
+	            $phoneNumber.focus();
+	            return false;
+	        }
+	        console.log(match);
+
+	        console.log('서버로 회원 수정요청');
+
+	        // AJAX를 사용하여 서버로 요청을 보냄
+	        $.ajax({
+	            url: '/studentPage.edit', // 요청을 보낼 URL
+	            type: 'POST', // POST 방식으로 요청
+	            data: $('form').serialize(), // 폼 데이터를 직렬화하여 전송
+	            success: function(response) {
+	                // 요청이 성공했을 때의 처리
+
+	                console.log('서버 응답:', response);
+	                // 서버 응답에 따라 추가적인 작업 수행 가능
+	            },
+	            error: function() {
+	                // 요청이 실패했을 때의 처리
+	                console.error('서버 요청 실패');
+	            }
+	        });
+	    }
+	}
+	
+	
+	
 	
 	var selectedDays = []; // 선택한 요일을 저장할 배열
 	
@@ -417,39 +511,39 @@
 	}
 	
 	
-	$('#editButton').click(function(e) {
-	    e.preventDefault(); // 제출 버튼의 기본 동작 방지
-
+	function submitEdit() {
+	    // 선택된 요소들의 값을 가져옴
+	    var instCategory = $('#instCategory').val();
+	    // inst 값은 변경된 select 요소의 값으로부터 가져오도록 변경
+	    var inst = $('#inst').val(); 
+	    var location = $('#location').val();
 	    var selectedDays = $('#selectedDays').val();
 	    var selectedStyles = $('#selectedStyles').val();
 
-	    // 선택한 요일 정보를 서버에 전송
-	    $.ajax({
-	        url: '/submitSelectedDays',
-	        type: 'POST',
-	        data: { selectedDays: selectedDays },
-	        success: function(response) {
-	            console.log('요일 정보 전송 성공');
-	        },
-	        error: function(xhr, status, error) {
-	            console.error('요일 정보 전송 오류:', error);
-	        }
-	    });
+	    // 필요한 유효성 검사 및 데이터 처리
 
-	    // 선택한 스타일 정보를 서버에 전송
+	    // AJAX를 사용하여 서버로 데이터 전송
 	    $.ajax({
-	        url: '/submitSelectedStyles',
-	        type: 'POST',
-	        data: { selectedStyles: selectedStyles },
-	        success: function(response) {
-	            console.log('스타일 정보 전송 성공');
+	        url: '/submitEdit', // 수정할 정보를 처리하는 서버의 엔드포인트
+	        type: 'POST', // POST 방식으로 요청
+	        data: {
+	            instCategory: instCategory,
+	            inst: inst,
+	            location: location,
+	            selectedDays: selectedDays,
+	            selectedStyles: selectedStyles
 	        },
-	        error: function(xhr, status, error) {
-	            console.error('스타일 정보 전송 오류:', error);
+	        success: function(response) {
+	            // 요청이 성공했을 때의 처리
+	            console.log('서버 응답:', response);
+	            // 서버 응답에 따라 추가적인 작업 수행 가능
+	        },
+	        error: function() {
+	            // 요청이 실패했을 때의 처리
+	            console.error('서버 요청 실패');
 	        }
 	    });
-	});
-	
+	}
 	
 	function changeColor1(style) {
 	    var button = document.getElementById(style + "Btn");

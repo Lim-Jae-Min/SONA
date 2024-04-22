@@ -164,9 +164,7 @@
 					<option value="5">타악기</option>
 					<option value="6">그 외</option>
 				</select>
-				<select name="inst" id="inst" class="inst">
-
-				</select>
+				<select name="inst" id="inst" class="inst"></select>
 				<br/><br/>
                 <select name="condition" id="condition">
                     <option value="class_name">강의명</option>
@@ -194,7 +192,6 @@
       			</td>
       		</tr>
         </table>
-        
     </div>
     <div id="footer">
         <li>상호명 : SONA</li>
@@ -231,6 +228,10 @@ $('#userName').click(function slide() {
     if (display == 'block') {
         $('#slide').css('display', 'none');
     }
+});
+
+$('#logo').click(function main(){
+	location.href = '/main';
 });
 
 if ('${user_type}' == '강사') {

@@ -1,5 +1,7 @@
 package com.sona.music.mypage.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -58,8 +60,29 @@ public class MyPageController {
 	}
 
 	
+	@RequestMapping(value = "/myQnA.go")
+	public String myQnA(HttpSession session, Model model) {
+	 logger.info("회원 수정 페이지 이동");
+	    String page = "member/login";
+	    String loginId = (String) session.getAttribute("loginId");
+	    if(loginId != null) {
+	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        // 모델에 사용자 정보 추가
+	        model.addAttribute("userInfo", userInfo);
+	        logger.info("회원 수정 페이지 이동 성공 !");
+	        page = "studentMyPage/myQnA";
+	    }
+	    return page;
+	}
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/studentPage.edit", method = RequestMethod.POST)
-	public String updateUserInfo(@RequestParam Map<String, Object> map, HttpSession session, Model model) {
+	public String updateUserInfo(@RequestParam Map<String, String> map, HttpSession session, Model model) {
 	    String page = "member/login";
 	    logger.info("회원 수정하기 요청이요~ ");
 	    String loginId = (String) session.getAttribute("loginId");
@@ -67,7 +90,9 @@ public class MyPageController {
 
 	    if (loginId != null) {
 	        logger.info("회원 수정하기~ ", map);
-	        myPageService.updateUserInfo(map, loginId); // 로그인 ID를 전달
+	        map.put("user_id", loginId);
+
+	        myPageService.updateUserInfo(new HashMap<> (map)); // 로그인 ID를 전달
 	        page = "studentMyPage/editStudentPage";
 	    }
 	    return page;
@@ -75,7 +100,7 @@ public class MyPageController {
 	
 	 @RequestMapping(value = "/confirmPw.ajax", method = RequestMethod.POST)
 	 @ResponseBody
-	    public boolean confirmPw(@RequestParam("newPassword") String newPassword, @RequestParam("confirmPassword") String confirmPassword) {
+	    public boolean confirmPw(@RequestParam("newPassword") String newPassword, @RequestParam("user_pass") String confirmPassword) {
 		 
  			logger.info("비밀번호 수정 요청~ ");
 
@@ -107,8 +132,19 @@ public class MyPageController {
 		    }
 		    return page;
 		}
-	 
-	
+	 @RequestMapping(value = "/myQnA.do")
+	 public String qnaList(Model model, HttpSession session) {
+	        // Q&A 목록을 서비스로부터 가져와 모델에 추가
+		    String page = "member/login";
+		    String loginId = (String) session.getAttribute("loginId");
+
+		    if (loginId != null) {
+		        List<MyPageDTO> qnaList = myPageService.getAllQnA(); // 서비스를 통해 매퍼의 결과를 받아옴
+		        model.addAttribute("qnaList", qnaList); // 모델에 결과를 추가
+		        page = "studentMyPage/myQnA";
+		    }
+		    return page;
+		}
 	 
 	 @RequestMapping(value="/studentWrittenList.go")
 	 public String studentWrittenListGo () {

@@ -7,17 +7,9 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
-		.main {
-		    font-size: 20px; 
-		    #contents{
-		    font-size: 15px;
-		}
-		.main {
-		    font-size: 20px; 
-		}
+    
 </style>
 </head>
-<body>
 <body>
     <header id="usermain">
         <table id="mainmenu">
@@ -35,7 +27,14 @@
 	                	</c:if>
                 	</c:if>
                 </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu">
+                	<c:if test="${sessionScope.loginId eq null}">
+                		<a href="login.go">전체 강의</a>
+                	</c:if>
+                	<c:if test="${sessionScope.loginId ne null}">
+                		<a href="allList.go">전체 강의</a>
+                	</c:if>
+                </th>
                 <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
@@ -59,23 +58,8 @@
             </c:if>
         </table>
     </header>
-    <div id="wrapper">
-	    <div id="sidemenu">
-	        <h3>마이페이지</h3>
-	        <hr/>
-	        <a href="#">마이페이지</a>
-	        <a href="#">개인 정보 수정</a>
-	        <a href="#">즐겨찾기 강사</a>
-	        <a href="#">숨김 강사</a>
-	        <a href="#">내가 작성한 Q&A</a>
-	        <a href="#">포인트 내역</a>
-	        <a href="#">내가 받은 리뷰</a>
-	        <a href="#">내가 작성한 리뷰</a>
-	        <a href="#">수강 이력</a>
-	    </div>
-    </div>
-    <div id="content">
-        
+    <div>
+        ${msg}
     </div>
     <div id="footer">
         <li>상호명 : SONA</li>
@@ -125,10 +109,6 @@ $('#userName').click(function slide() {
 $('#logo').click(function main(){
 	location.href = '/main';
 });
-$('.alarm').click(function alarmList() {
-	location.href = 'alarmList.go';
-});
-
 
 </script>
 </html>

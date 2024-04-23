@@ -143,6 +143,8 @@
 			, co.class_times
 			, co.class_price
 			, (SELECT video_url FROM CAREER_VIDEO cv WHERE cv.class_idx = #{param1}) AS video_url
+			, co.class_disable
+			, co.class_delete
 		FROM CLASS_OPEN co
 		WHERE co.class_idx = #{param1}
 	</select>
@@ -153,6 +155,33 @@
 		
 	<select id="lessonPhotosLoad" resultType="com.sona.music.lesson.dto.PhotoDTO">
 		SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.post_idx = #{param1} AND pb.photo_category = 'Career'
+	</select>
+	
+	<select id="lessonReviewList" resultType="com.sona.music.board.dto.ReviewDTO">
+		SELECT
+			(SELECT pb.new_filename FROM PHOTO_BOARD pb 
+			WHERE pb.user_id = r.rater_id AND pb.photo_category = 'Profile' ORDER BY pb.photo_idx LIMIT 1) AS profile_photoname
+			, (SELECT u.user_name FROM USERS u WHERE u.user_id = r.rater_id) AS rater_name
+			, r.score
+			, r.review_title
+			, r.review_idx
+		FROM REVIEW r
+		WHERE r.class_idx = #{param1} AND r.REVIEW_DELETE = 0
+		ORDER BY r.review_idx DESC LIMIT 4;
+	</select>
+	
+	<select id="lessonQnAList" resultType="com.sona.music.board.dto.QnADTO">
+		SELECT
+			cq.q_title
+			, cq.anonymous_status
+			, cq.question_idx
+		FROM CLASS_QUESTION cq
+		WHERE cq.class_idx = #{param1}
+		ORDER BY cq.question_idx DESC LIMIT 4
+	</select>
+	
+	<select id="applyCheck" resultType="com.sona.music.lesson.dto.LessonDTO">
+		SELECT ah.apply_idx, ah.apply_state FROM APPLY_HISTORY ah WHERE ah.class_idx = #{param1} AND ah.user_id = #{param2} ORDER BY ah.class_idx DESC LIMIT 1
 	</select>
 	
 	

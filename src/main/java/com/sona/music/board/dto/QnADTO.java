@@ -15,6 +15,7 @@ public class QnADTO {
 	private int Q_HIT;
 	private boolean REPLY_CHECK;
 	private String TEACHER_ID;
+	
 	public int getQUESTION_IDX() {
 		return QUESTION_IDX;
 	}

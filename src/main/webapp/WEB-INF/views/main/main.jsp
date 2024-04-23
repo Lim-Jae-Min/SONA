@@ -22,7 +22,7 @@
             </tr>
         </table>
         <table id="mymenu">
-            <c:if test="${loginName != null}">
+            <c:if test="${loginId != null}">
                 <tr>
                     <c:if test="${alarmCount > 0}">
                         <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
@@ -31,10 +31,10 @@
                         <th><img src="resources/img/alarm.png" class="miniimg"></th>
                     </c:if>
                     <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${loginName}</div></th>
+                    <th><div id="userName">${loginId}</div></th>
                 </tr>
             </c:if>
-            <c:if test="${loginName == null}">
+            <c:if test="${loginId == null}">
                 <tr>
                     <c:if test="${alarmCount > 0}">
                         <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
@@ -61,17 +61,17 @@
     <div id="slide">
         <table>
             <tr>
-                <td colspan="2">${loginName} 회원님</td>
+                <td colspan="2">${loginId} 회원님</td>
                 <td>&nbsp&nbsp&nbsp</td>
-                <td class="manner">♥ ${manner}</td>
+                <td class="manner">♥ ${manner_variance}</td>
             </tr>
         </table>
         <br/>
-        <div>보유 포인트 : <span>${totalPoint}</span></div>
+        <div>보유 포인트 : <span>${point}P</span></div>
         <br/>
         <div><a href="#">내가 쓴 리뷰</a></div>
         <br/>
-        <div><a href="myPage.go">마이페이지</a></div>
+        <div><a href="studentPage.do">마이페이지</a></div>
         <br/><br/><br/>
         <div><a href="#">로그아웃</a></div>
     </div>

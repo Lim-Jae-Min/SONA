@@ -57,6 +57,9 @@
 	padding-bottom: 20px;
 	width: 50%
 }
+.smallInterval {
+	padding-bottom: 20px;
+}
 #left {
 	display: inline-block;
 	float: left;
@@ -73,9 +76,9 @@
 	color: red;
 }
 .yellow {
-	color: yellow;
+	color: #ffc400;
 }
-#lessonLogo {
+.lessonLogo {
 	height: 120px;
 	width: 120px;
 }
@@ -148,6 +151,46 @@ button {
 	height: 700px;
 	width: auto;
 }
+.reviewProfile {
+	width: 50px;
+	height: 50px;
+}
+.smallFontSize {
+	font-size: 12px;
+}
+.smallListBox {
+	width: 350px;
+	height: 320px;
+	border: solid 2px #BEE6FF;
+	border-radius: 5px;
+	padding: 20px;
+}
+.smallList {
+	width: 100%;
+}
+.reviewLeft {
+	width: 60px;
+}
+.locked {
+	width: 20px;
+	height: 20px;
+}
+.centerBox {
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#blindButton {
+	background-color: red;
+}
+#editButton {
+	background-color: rgb(219, 219, 219);
+	color: black;
+}
+#disableButton {
+	background-color: rgb(68, 68, 68);
+}
 </style>
 </head>
 <body>
@@ -155,33 +198,45 @@ button {
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu"><a href="recommendList.go">추천 강의</a></th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu">
+                	<c:if test="${sessionScope.loginId eq null}">
+                		<c:if test="${sessionScope.user_type ne '강사'}">
+		                	<a href="login.go">추천 강의</a>                	
+	                	</c:if>
+                	</c:if>
+                	<c:if test="${sessionScope.loginId ne null}">
+                		<c:if test="${sessionScope.user_type ne '강사'}">
+		                	<a href="recommendList.go">추천 강의</a>                	
+	                	</c:if>
+                	</c:if>
+                </th>
+                <th class="menu">
+                	<c:if test="${sessionScope.loginId eq null}">
+                		<a href="login.go">전체 강의</a>
+                	</c:if>
+                	<c:if test="${sessionScope.loginId ne null}">
+                		<a href="allList.go">전체 강의</a>
+                	</c:if>
+                </th>
                 <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
         <table id="mymenu">
-            <c:if test="${loginName != null}">
+            <c:if test="${sessionScope.loginId ne null}">
                 <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
+                    <c:if test="${sessionScope.alarm_count > 0}">
+                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
                     </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
+                    <c:if test="${sessionScope.alarm_count == 0}">
+                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
                     </c:if>
                     <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${loginName}</div></th>
+                    <th><div id="userName">${sessionScope.user_name}</div></th>
                 </tr>
             </c:if>
-            <c:if test="${loginName == null}">
+            <c:if test="${sessionScope.loginId eq null}">
                 <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
-                    </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
-                    </c:if>
-                    <th><a href="#">로그인</a></th>
+                    <th><a href="login.go">로그인</a></th>
                 </tr>
             </c:if>
         </table>
@@ -199,7 +254,12 @@ button {
         		<table>
         			<tr>
         				<td>${lesson.user_name}</td>
-        				<td rowspan="3"><img src="/photo/${lessonLogo}" id="lessonLogo"></td>
+        				<c:if test="${lessonLogo != null}">
+        					<td rowspan="3"><img src="/photo/${lessonLogo}" class="lessonLogo"></td>
+        				</c:if>
+        				<c:if test="${lessonLogo == null}">
+        					<td rowspan="3"><img src="resources/img/basic_user.png" class="lessonLogo"></td>
+        				</c:if>
         			</tr>
         			<tr>
         				<td>${lesson.class_location}</td>
@@ -312,13 +372,13 @@ button {
 	        	</tr>
 	        	<tr>
 	        		<td colspan="2" id="imgRow">
-	        			<c:if test="${lesson.video_url eq ''}">
+	        			<c:if test="${lesson.video_url eq null}">
 	        				등록된 영상이 없습니다.
 	        			</c:if>
-	        			<c:if test="${lesson.video_url ne ''}">
+	        			<c:if test="${lesson.video_url ne null}">
 	        				<iframe 
-				                width="800" height="auto" 
-				                src="https://youtu.be/d8IobxcRguU?si=uTWJUPsaWSqaPEJF" 
+				                width="800" height="600" 
+				                src="${lesson.video_url}" 
                 				title="강의 영상" 
 				                frameborder="0" 
 				                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -326,6 +386,117 @@ button {
                 			</iframe>
 	        			</c:if>
 	        		</td>
+	        	</tr>
+	        	<tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr>
+	        	<tr>
+	        		<td class="BigInterval">
+	  	      			<img src="resources/img/musical-note.png" class="note">&nbsp;&nbsp;강의 리뷰
+	        		</td>
+	        		<td class="BigInterval">
+	        			<img src="resources/img/musical-note.png" class="note">&nbsp;&nbsp;강의 Q&A
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td>
+	        			<div class="smallListBox">
+		        			<c:if test="${reviewList.size() < 1}">
+		        				등록된 리뷰가 없습니다.
+		        			</c:if>
+		        			<table class="smallList">
+		        				<c:forEach items="${reviewList}" var="review">
+		        					<tr>
+			        					<th class="smallInterval reviewLeft">
+			        						<c:if test="${review.profile_photoname eq null}">
+			        							<img src="resources/img/basic_user.png" class="reviewProfile">
+			        						</c:if>
+			        						<c:if test="${review.profile_photoname ne null}">
+			        							<img src="/photo/${review.profile_photoname}" class="reviewProfile">
+			        						</c:if>
+			        					</th>
+			        					<td class="smallInterval">
+			        						<span class="smallFontSize">${review.rater_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallFontSize yellow">★ ${review.SCORE}</span>
+			        						<br/>
+			        						<span><a href="lessonReviewDetail?REVIEW_IDX=${review.REVIEW_IDX}">${review.REVIEW_TITLE}</a></span>
+			        					</td>
+		        					</tr>
+		        				</c:forEach>
+		        				<tr>
+		        					<th colspan="2"><button id="moreReview">더보기</button></th>
+		        				</tr>
+		        			</table>
+	        			</div>
+	        		</td>
+	        		<td>
+	        			<div class="smallListBox">
+		        			<c:if test="${QnAList.size() < 1}">
+		        				등록된 Q&A가 없습니다.
+		        			</c:if>
+		        			<table class="smallList">
+		        				<c:forEach items="${QnAList}" var="QnA">
+		        					<tr>
+			        					<td class="smallInterval">
+			        						<c:if test="${QnA.ANONYMOUS_STATUS}">
+			        							비공개 Q&A 입니다. <img src="resources/img/locked.png" class="locked">
+			        						</c:if>
+			        						<c:if test="${!QnA.ANONYMOUS_STATUS}">
+				        						<span><a href="lessonQnADetail?QUESTION_IDX=${QnA.QUESTION_IDX}">${QnA.q_TITLE}</a></span>
+			        						</c:if>
+			        					</td>
+		        					</tr>
+		        				</c:forEach>
+		        				<tr>
+		        					<th colspan="2"><button id="moreQnA">더보기</button></th>
+		        				</tr>
+		        			</table>
+	        			</div>
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td class="BigInterval">
+	  	      			<img src="resources/img/musical-note.png" class="note">&nbsp;&nbsp;누적 수강생 수
+	        		</td>
+	        		<td class="BigInterval">
+	        			<img src="resources/img/musical-note.png" class="note">&nbsp;&nbsp;강의료
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td>
+	        			<div class="smallcontentBox centerBox">
+		        			${lesson.accumulate_student} 명
+	        			</div>
+	        		</td>
+	        		<td>
+	        			<div class="smallcontentBox centerBox">
+		        			총 ${lesson.class_times}회
+		        			<br/><br/>
+		        			${lesson.class_price} 원
+	        			</div>
+	        		</td>
+	        	</tr>
+	        	<tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr>
+	        	<tr>
+	        		<th class="BigInterval" colspan="2">
+	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state ne '신청 완료' and applyCheck.apply_state ne '수락 완료' and applyCheck.apply_state ne '결제 완료'}">
+		  	      			<button>수강신청</button>
+	        			</c:if>
+	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '신청 완료'}">
+		  	      			수강 신청이 완료되었습니다!
+	        			</c:if>
+	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '수락 완료'}">
+		  	      			수강 신청이 수락되었습니다. 결제를 진행해주세요!
+		  	      			<br/><br/>
+		  	      			<button id="paymentGo">바로가기</button>
+	        			</c:if>
+	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '결제 완료'}">
+		  	      			수강 진행중입니다.
+	        			</c:if>
+	  	      			<c:if test="${sessionScope.user_type eq '관리자'}">
+		  	      			<button id="blindButton">블라인드</button>
+	        			</c:if>
+	  	      			<c:if test="${sessionScope.loginId eq lesson.user_id}">
+		  	      			<button id="editButton">강의수정</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="disableButton">비활성화</button>
+	        			</c:if>
+	        		</th>
 	        	</tr>
         	</table>
         </div>
@@ -345,24 +516,29 @@ button {
         <li>사업자등록번호 : 000-00-00000</li>
         <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
     </div>
-</body>
-</html>
     <div id="slide">
         <table>
             <tr>
-                <td colspan="2">${loginName} 회원님</td>
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td class="manner">♥ ${manner}</td>
+                <td colspan="2">${sessionScope.user_name} 회원님</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td class="manner">♥ ${sessionScope.manner_variance}</td>
             </tr>
         </table>
         <br/>
-        <div>보유 포인트 : <span>${totalPoint}</span></div>
+        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
         <br/>
-        <div><a href="#">내가 쓴 리뷰</a></div>
+        <div>
+        	<c:if test="${sessionScope.user_type eq '수강생'}">
+	        	<a href="studentWrittenList.go">내가 쓴 리뷰</a>        	
+        	</c:if>
+        	<c:if test="${sessionScope.user_type eq '강사'}">
+	        	<a href="teacherWrittenList.go">내가 쓴 리뷰</a>        	
+        	</c:if>
+        </div>
         <br/>
-        <div><a href="#">마이페이지</a></div>
+        <div><a href="myPage.go">마이페이지</a></div>
         <br/><br/><br/>
-        <div><a href="#">로그아웃</a></div>
+        <div><a href="logout.do">로그아웃</a></div>
     </div>
 </body>
 <script>
@@ -379,6 +555,9 @@ $('#userName').click(function slide() {
 
 $('#logo').click(function main(){
 	location.href = '/main';
+});
+$('.alarm').click(function alarmList() {
+	location.href = 'alarmList.go';
 });
 
 var styles = '${lesson.class_style}';
@@ -460,6 +639,12 @@ function closeModal() {
 }
 console.log('${lesson.video_url}');
 
+$('#moreReview').click(function (){
+	location.href = 'lessonReviewList';
+});
+$('#moreQnA').click(function (){
+	location.href = 'lessonQnAList';
+});
 
 </script>
 </html>

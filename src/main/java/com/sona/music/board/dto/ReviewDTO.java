@@ -16,6 +16,9 @@ public class ReviewDTO {
 	private int img_cnt;
 	private String STUDY_DATE;
 	
+	private String rater_name;
+	private String profile_photoname;
+	
 	public int getREVIEW_IDX() {
 		return REVIEW_IDX;
 	}
@@ -81,6 +84,18 @@ public class ReviewDTO {
 	}
 	public void setSTUDY_DATE(String sTUDY_DATE) {
 		STUDY_DATE = sTUDY_DATE;
+	}
+	public String getRater_name() {
+		return rater_name;
+	}
+	public void setRater_name(String rater_name) {
+		this.rater_name = rater_name;
+	}
+	public String getProfile_photoname() {
+		return profile_photoname;
+	}
+	public void setProfile_photoname(String profile_photoname) {
+		this.profile_photoname = profile_photoname;
 	}
 	
 	

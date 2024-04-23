@@ -37,13 +37,13 @@ public class QnAController {
 	
 	@RequestMapping(value="/qnalist.ajax")
 	@ResponseBody
-	public Map<String , Object> listCall(String page, String cnt, Integer classIdx){
+	public Map<String , Object> listCall(String page, @RequestParam(value="classIdx") Integer classIdx, @RequestParam(value="cnt", defaultValue = "5") String cnt){
 		logger.info("listCall 요청");
 		logger.info("페이지당 보여줄 갯수:"+cnt);
 		logger.info("요청 페이지: "+page);
-		
+		logger.info("classIDx{}",classIdx);
 		int currPage = Integer.parseInt(page);
-		int pagePerCnt = 5;
+		int pagePerCnt = Integer.parseInt(cnt);
 		Map<String, Object>map = qnaService.list(currPage,pagePerCnt,classIdx);
 		
 		return map;

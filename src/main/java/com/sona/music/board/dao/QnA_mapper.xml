@@ -27,6 +27,7 @@
 	WHERE 
     CQ.CLASS_IDX = #{param3}
     ORDER BY QUESTION_IDX DESC
+    LIMIT #{param2}, 5
 	</select>
 
 	<select id="allCount" resultType="Integer">

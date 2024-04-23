@@ -18,7 +18,7 @@
 		WHERE r.REVIEW_DELETE = 0
 		GROUP BY r.REVIEW_IDX
 		ORDER BY REVIEW_IDX DESC 
-		LIMIT #{param1} OFFSET #{param2};
+		LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<select id="allCount" resultType="Integer">

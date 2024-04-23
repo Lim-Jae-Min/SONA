@@ -22,7 +22,9 @@
 	</select>
 	
 	<select id="allCount" resultType="Integer">
-		SELECT CEIL(COUNT(REVIEW_IDX)/#{param1}) AS pages FROM REVIEW
+		SELECT CEIL(COUNT(REVIEW_IDX)/#{param1}) AS pages 
+		FROM REVIEW
+		WHERE REVIEW_DELETE = 0;
 	</select>
 	
 	<insert id="write"
@@ -32,7 +34,7 @@
 	parameterType="com.sona.music.board.dto.ReviewDTO"
 	>
 	INSERT INTO REVIEW(CLASS_IDX,RATER_ID,RATEE_ID,SCORE,REVIEW_TITLE,REVIEW_CONTENT)
-			VALUES(#{CLASS_IDX},#{RATER_ID},#{RATEE_ID},#{SCORE},#{REVIEW_TITLE},#{REVIEW_CONTENT})
+			VALUES(#{class_idx},#{rater_id},#{ratee_id},#{score},#{review_title},#{review_content})
 	
 	</insert>
 	
@@ -50,17 +52,17 @@
 		FROM PHOTO_BOARD WHERE POST_IDX = #{param1} AND PHOTO_CATEGORY = #{param2}
 	</select>
 	
-	<select id="deleteReview" resultType="com.sona.music.board.dto.ReviewDTO">
+	<update id="deleteReview">
 		UPDATE REVIEW
 		SET REVIEW_DELETE = 1
 		WHERE REVIEW_IDX = #{param1}
-	</select>
+	</update>
 	
 	<update id="update" parameterType="map">
 		UPDATE REVIEW SET  
-		REVIEW_TITLE =#{REVIEW_TITLE} , 
-		REVIEW_CONTENT =#{REVIEW_CONTENT} 
-		WHERE REVIEW_IDX = #{REVIEW_IDX}
+		REVIEW_TITLE =#{review_title} , 
+		REVIEW_CONTENT =#{review_content} 
+		WHERE REVIEW_IDX = #{review_idx}
 	</update>
 	
 	<delete id="photoEdit" parameterType="com.sona.music.board.dto.PhotoDTO">

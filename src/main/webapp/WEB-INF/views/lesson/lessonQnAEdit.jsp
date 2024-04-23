@@ -234,22 +234,22 @@ body {
 				onsubmit="return confirmWrite(event);">
 				<table>
 					<tr>
-						<th>평가 강의번호 : ${review.CLASS_IDX} 평가 강사명: ${review.RATEE_ID}</th>
+						<th>평가 강의번호 :  평가 강사명: </th>
 					</tr>
 					<tr>
 						<td><input type="hidden" name="REVIEW_IDX"
-							value="${review.REVIEW_IDX}" /></td>
+							value="" /></td>
 						<th style="font-size: 14px;">리뷰 제목</th>
 						<td><input type="text" name="REVIEW_TITLE"
 							style="width: 300px; font-size: 16px;"
-							value="${review.REVIEW_TITLE}" /></td>
-						<th style="font-size: 12px;">작성자 : ${review.RATER_ID}<input
-							type="hidden" name="RATER_ID" value="${review.RATER_ID}" /></th>
-						<th style="font-size: 12px;">작성일 : ${review.REVIEW_REG_DATE}</th>
+							value="" /></td>
+						<th style="font-size: 12px;">작성자 :<input
+							type="hidden" name="RATER_ID" value="" /></th>
+						<th style="font-size: 12px;">작성일 : </th>
 					</tr>
 					<tr>
 						<td colspan="4"
-							style="color: #FED000; font-size: 22px; text-align: right;">★${review.SCORE}</td>
+							style="color: #FED000; font-size: 22px; text-align: right;">★</td>
 					</tr>
 					<tr>
 						<td colspan="4"
@@ -259,26 +259,9 @@ body {
 					<tr>
 						<th>리뷰 내용</th>
 						<td colspan="2"><textarea name="REVIEW_CONTENT"
-								style="width: 882px; height: 311px; resize: none;"> ${review.REVIEW_CONTENT}</textarea></td>
+								style="width: 882px; height: 311px; resize: none;"> </textarea></td>
 					</tr>
-					<tr>
-						<input type="hidden" name="PHOTO_CATEGORY" value="Review">
-						<th>리뷰 사진</th>
-						<td><c:if test="${photos.size() > 0}">
-								<c:forEach items="${photos}" var="photo">
-									<div class="photo-container">
-										<img src="/photo/${photo.NEW_FILENAME}" width="500"
-											height="300" />
-										<button
-											onclick="deletePhoto('${photo.POST_IDX}', '${photo.PHOTO_CATEGORY}', event)">삭제</button>
-									</div>
-								</c:forEach>
-							</c:if>
-							<div id="fileList"></div> <input type="file" name="photos"
-							accept="image/*" onchange="checkFileCountAndExistingPhoto(this)"
-							style="width: 100%;" /> <small style="color: #999;">(한
-								장의 사진만 첨부 가능합니다)</small></td>
-					</tr>
+						
 					<td colspan="5" style="text-align: center;"><input
 						type="button" onclick="location.href='./lessonReviewList'"
 						value="취소" />

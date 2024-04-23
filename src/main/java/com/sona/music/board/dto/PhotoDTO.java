@@ -2,48 +2,47 @@ package com.sona.music.board.dto;
 
 public class PhotoDTO {
 	
-	private int PHOTO_IDX;
-	private String USER_ID;
-	private String ORI_FILENAME;
-	private String NEW_FILENAME;
-	private int POST_IDX;
-	private String PHOTO_CATEGORY;
-	
-	public int getPHOTO_IDX() {
-		return PHOTO_IDX;
+	private int photo_idx;
+	private String user_id;
+	private String ori_filename;
+	private String new_filename;
+	private int post_idx;
+	private String photo_category;
+	public int getPhoto_idx() {
+		return photo_idx;
 	}
-	public void setPHOTO_IDX(int pHOTO_IDX) {
-		PHOTO_IDX = pHOTO_IDX;
+	public void setPhoto_idx(int photo_idx) {
+		this.photo_idx = photo_idx;
 	}
-	public String getUSER_ID() {
-		return USER_ID;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setUSER_ID(String uSER_ID) {
-		USER_ID = uSER_ID;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	public String getORI_FILENAME() {
-		return ORI_FILENAME;
+	public String getOri_filename() {
+		return ori_filename;
 	}
-	public void setORI_FILENAME(String oRI_FILENAME) {
-		ORI_FILENAME = oRI_FILENAME;
+	public void setOri_filename(String ori_filename) {
+		this.ori_filename = ori_filename;
 	}
-	public String getNEW_FILENAME() {
-		return NEW_FILENAME;
+	public String getNew_filename() {
+		return new_filename;
 	}
-	public void setNEW_FILENAME(String nEW_FILENAME) {
-		NEW_FILENAME = nEW_FILENAME;
+	public void setNew_filename(String new_filename) {
+		this.new_filename = new_filename;
 	}
-	public int getPOST_IDX() {
-		return POST_IDX;
+	public int getPost_idx() {
+		return post_idx;
 	}
-	public void setPOST_IDX(int pOST_IDX) {
-		POST_IDX = pOST_IDX;
+	public void setPost_idx(int post_idx) {
+		this.post_idx = post_idx;
 	}
-	public String getPHOTO_CATEGORY() {
-		return PHOTO_CATEGORY;
+	public String getPhoto_category() {
+		return photo_category;
 	}
-	public void setPHOTO_CATEGORY(String pHOTO_CATEGORY) {
-		PHOTO_CATEGORY = pHOTO_CATEGORY;
+	public void setPhoto_category(String photo_category) {
+		this.photo_category = photo_category;
 	}
 	
 	

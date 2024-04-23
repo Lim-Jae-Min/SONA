@@ -50,23 +50,23 @@ public class ReviewService {
 		//insert후 생성된 idx 가져오는 방법
 		//조건 1. 파라메터는 DTO로 넣을 것
 		ReviewDTO dto = new ReviewDTO();
-		dto.setCLASS_IDX(Integer.parseInt(param.get("CLASS_IDX")));
-		dto.setRATEE_ID(param.get("RATEE_ID"));
-		dto.setRATER_ID(param.get("RATER_ID"));
-		dto.setSCORE(Double.parseDouble(param.get("SCORE")));
-		dto.setREVIEW_TITLE(param.get("REVIEW_TITLE"));
-		dto.setREVIEW_CONTENT(param.get("REVIEW_CONTENT"));
+		dto.setClass_idx(Integer.parseInt(param.get("class_idx")));
+		dto.setRatee_id(param.get("ratee_id"));
+		dto.setRater_id(param.get("rater_id"));
+		dto.setScore(Double.parseDouble(param.get("score")));
+		dto.setReview_title(param.get("review_title"));
+		dto.setReview_content(param.get("review_content"));
 		
 		PhotoDTO pdto = new PhotoDTO();
-		pdto.setPHOTO_CATEGORY(param.get("PHOTO_CATEGORY"));
+		pdto.setPhoto_category(param.get("photo_category"));
 		
 
 		row = reviewDAO.write(dto); //글쓰기 완료 후 
 
 		//조건3. 이후 dto에서 저장된 키 값을 받아온다.
-		int idx = dto.getREVIEW_IDX();
-		String username = dto.getRATER_ID();
-		String photoCategory = pdto.getPHOTO_CATEGORY();
+		int idx = dto.getReview_idx();
+		String username = dto.getRater_id();
+		String photoCategory = pdto.getPhoto_category();
 		logger.info("idx="+idx);
 		logger.info("user="+username);
 		logger.info("photoCategory="+photoCategory);
@@ -122,11 +122,11 @@ public class ReviewService {
 		}
 	}
 
-	public void detail(int REVIEW_IDX,int POST_IDX, String PHOTO_CATEGORY, Model model) {
-		ReviewDTO dto = reviewDAO.detail(REVIEW_IDX);
+	public void detail(int review_idx,int post_idx, String photo_category, Model model) {
+		ReviewDTO dto = reviewDAO.detail(review_idx);
 		model.addAttribute("review", dto);
 		
-		List<PhotoDTO> list = reviewDAO.photos(POST_IDX, PHOTO_CATEGORY);
+		List<PhotoDTO> list = reviewDAO.photos(post_idx, photo_category);
 		model.addAttribute("photos", list);
 	}
 
@@ -135,12 +135,12 @@ public class ReviewService {
 		 reviewDAO.deleteReview(reviewIdx);
 	}
 
-	public void reviewEdit(Integer rEVIEW_IDX, Integer pOST_IDX, String pHOTO_CATEGORY, Model model) {
+	public void reviewEdit(Integer review_idx, Integer post_idx, String photo_category, Model model) {
 		
-		ReviewDTO dto = reviewDAO.detail(rEVIEW_IDX);
+		ReviewDTO dto = reviewDAO.detail(review_idx);
 		model.addAttribute("review", dto);
 		
-		List<PhotoDTO> list = reviewDAO.photos(pOST_IDX, pHOTO_CATEGORY);
+		List<PhotoDTO> list = reviewDAO.photos(post_idx, photo_category);
 		model.addAttribute("photos", list);
 		
 	}
@@ -150,9 +150,9 @@ public class ReviewService {
 		int row = reviewDAO.update(param);
 		logger.info("update count"+row);
 		if(row>0) {
-			int idx = Integer.parseInt(param.get("REVIEW_IDX"));
-			String username = param.get("RATER_ID");
-			String photoCategory = param.get("PHOTO_CATEGORY");
+			int idx = Integer.parseInt(param.get("review_idx"));
+			String username = param.get("rater_id");
+			String photoCategory = param.get("photo_category");
 			fileSave(idx, username, photoCategory, photos);
 		}
 		return row;

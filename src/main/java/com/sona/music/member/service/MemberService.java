@@ -102,10 +102,10 @@ public class MemberService {
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
 		for (ReviewDTO r : list) {
-			logger.info(r.getREVIEW_TITLE()+"");
-			logger.info(r.getRATER_ID()+"");
-			logger.info(r.getSCORE()+"");
-			logger.info(r.getREVIEW_REG_DATE()+"");
+			logger.info(r.getReview_title()+"");
+			logger.info(r.getRater_id()+"");
+			logger.info(r.getScore()+"");
+			logger.info(r.getReview_reg_date()+"");
 		}
 		
 		return result;

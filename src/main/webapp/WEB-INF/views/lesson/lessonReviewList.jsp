@@ -246,16 +246,16 @@ function listCall(page){
 	     for(item of list){
 	        console.log(item);
 	        content += '<tr>';
-	        content += '<td>' + item.review_IDX + '</td>';
+	        content += '<td>' + item.review_idx + '</td>';
 	        content += '<td><span style="color: #FED000;">★</span>' + item.score + '</td>';
-	        content += '<td><a href="#" class="review-link" data-review-idx="' + item.review_IDX + '">' + item.review_TITLE + '</a></td>';
-	        content += '<td>' + item.rater_ID + '</td>';
-	        content += '<td>' + item.study_DATE +'</td>';
+	        content += '<td><a href="#" class="review-link" data-review-idx="' + item.review_idx + '">' + item.review_title + '</a></td>';
+	        content += '<td>' + item.rater_id + '</td>';
+	        content += '<td>' + item.study_date +'</td>';
 	        content += '<td>';
 	        var img = item.img_cnt > 0 ?'image.png' : 'no_image.png';
 	        content += '<img class="icon" src="resources/img/' + img + '"width= "30" height = "30"/>';
 	        content += '</td>';
-	        var date = new Date(item.review_REG_DATE);
+	        var date = new Date(item.review_reg_date);
 	        var dateStr = date.toLocaleDateString("ko-KR");
 	        content += '<td>' + dateStr + '</td>';
 	        content += '</tr>';
@@ -269,7 +269,7 @@ function listCall(page){
         
         console.log('reviewIdx:', reviewIdx);
        
-        window.location.href = './lessonReviewDetail?REVIEW_IDX=' + reviewIdx; // REVIEW_IDX를 파라미터로 lessonReviewDetail 페이지로 이동
+        window.location.href = './lessonReviewDetail?review_idx=' + reviewIdx; // REVIEW_IDX를 파라미터로 lessonReviewDetail 페이지로 이동
     });
 }
 	

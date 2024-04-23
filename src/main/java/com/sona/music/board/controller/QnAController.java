@@ -26,10 +26,10 @@ public class QnAController {
 	
 	
 	@RequestMapping(value="/lessonQnAList")
-	public String qnalist(Integer CLASS_IDX, Model model) {
-		logger.info("idx="+CLASS_IDX+"QnA 리스트 요청");
+	public String qnalist(Integer class_idx, Model model) {
+		logger.info("idx="+class_idx+"QnA 리스트 요청");
 		
-		model.addAttribute("classIdx", CLASS_IDX);
+		model.addAttribute("classIdx", class_idx);
 		
 		return "lesson/lessonQnAList";
 	}
@@ -51,57 +51,57 @@ public class QnAController {
 	
 	
 	@RequestMapping(value="/lessonQnAWrite")
-	public String qnaWrite(Integer CLASS_IDX, Model model, HttpSession session) {
-		logger.info("강의IDX"+CLASS_IDX+"QnA 작성 요청");
+	public String qnaWrite(Integer class_idx, Model model, HttpSession session) {
+		logger.info("강의IDX"+class_idx+"QnA 작성 요청");
 		
-		model.addAttribute("CLASS_IDX", CLASS_IDX);
+		model.addAttribute("class_idx", class_idx);
 		
 		return "lesson/lessonQnAWrite";
 	}
 	
 	@RequestMapping(value="/qWrite", method = RequestMethod.POST)
-	public String qwrite(Integer CLASS_IDX, HttpSession session, @RequestParam Map<String,String>param) {
+	public String qwrite(Integer class_idx, HttpSession session, @RequestParam Map<String,String>param) {
 		logger.info("리뷰 작성함");
 		logger.info("params = {}", param);
-		String page = "redirect:/lessonQnAList?CLASS_IDX="+ CLASS_IDX;
+		String page = "redirect:/lessonQnAList?class_idx="+ class_idx;
 		if (session.getAttribute("loginId")!=null) {
 			int row = qnaService.qwrite(param);
 			if(row<1) {
-				page = "lesson/lessonQnAWrite?CLASS_IDX="+ CLASS_IDX;
+				page = "lesson/lessonQnAWrite?class_idx="+ class_idx;
 			}
 		}
 		return page;
 	}
 	
 	@RequestMapping(value="/lessonQnADetail")
-	public String qnaDetail(Integer QUESTION_IDX, Model model) {
-		logger.info("idx="+QUESTION_IDX+" Q&A 디테일 요청");
+	public String qnaDetail(Integer question_idx, Model model) {
+		logger.info("idx="+question_idx+" Q&A 디테일 요청");
 		
-		qnaService.detail(QUESTION_IDX, model);
+		qnaService.detail(question_idx, model);
 		
 		return "lesson/lessonQnADetail";
 	}
 	
 	@RequestMapping(value="/lessonQnAReply")
-	public String qnaReply(Integer QUESTION_IDX, Model model) {
-		logger.info("질문 idx ="+QUESTION_IDX+" Q&A 답변 작성 요청");
+	public String qnaReply(Integer question_idx, Model model) {
+		logger.info("질문 idx ="+question_idx+" Q&A 답변 작성 요청");
 		
-		qnaService.detail(QUESTION_IDX, model);
+		qnaService.detail(question_idx, model);
 		
 		return "lesson/lessonQnAReply";
 	}
 	
 	@RequestMapping(value="/aWrite")
 	public String aWrite(@RequestParam Map<String, String> param, HttpSession session) {
-		logger.info("질문 idx ="+param.get("QUESTION_IDX")+" Q&A 답변 작성 요청");
-		logger.info(param.get("CLASS_IDX"));
+		logger.info("질문 idx ="+param.get("question_idx")+" Q&A 답변 작성 요청");
+		logger.info(param.get("class_idx"));
 		
-		String page = "redirect:/lessonQnAList?CLASS_IDX="+ param.get("CLASS_IDX");
+		String page = "redirect:/lessonQnAList?class_idx="+ param.get("class_idx");
 		if(session.getAttribute("loginId")!=null) {
 			int row = qnaService.reply(param);
 			
 			if(row<1) {
-				page = "lesson/lessonQnAReply?QUESTION_IDX="+param.get("QUESTION_IDX");
+				page = "lesson/lessonQnAReply?question_idx="+param.get("question_idx");
 			}
 			
 		}
@@ -109,6 +109,49 @@ public class QnAController {
 		
 		return page;
 	}
+	
+	
+	
+	@RequestMapping(value = "/deleteQuestion.ajax")
+	public String deleteQuestion(@RequestParam("questionIdx") int questionIdx) {
+		logger.info(questionIdx+"질문 삭제 요청 - 컨트롤러");
+		
+		qnaService.deleteQuestion(questionIdx);
+		
+		
+		return "redirect:/lessonReviewList";
+	}
+	
+	@RequestMapping(value = "/deleteAnswer.ajax")
+	public String deleteAnswer(@RequestParam("questionIdx") int questionIdx) {
+		logger.info(questionIdx+"답변 삭제 요청 - 컨트롤러");
+		
+		qnaService.deleteAnswer(questionIdx);
+		
+		
+		return "redirect:/lessonReviewList";
+	}
+	
+	@RequestMapping(value = "/deleteAllQnA.ajax")
+	public String deleteAllQnA(@RequestParam("questionIdx") int questionIdx) {
+		logger.info(questionIdx+"질문 삭제 요청 - 컨트롤러");
+		
+		qnaService.deleteQuestion(questionIdx);
+		qnaService.deleteAnswer(questionIdx);
+		
+		return "redirect:/lessonReviewList";
+	}
+	
+	@RequestMapping(value = "/lessonQnAEdit")
+	public String qnaEdit(Integer question_idx, Model model) {
+		logger.info(question_idx+"질문 수정 요청 - 컨트롤러");
+		
+		model.addAttribute("question_idx",question_idx);
+		
+		
+		return "lesson/lessonQnAEdit";
+	}
+	
 	
 	
 }

@@ -12,12 +12,22 @@ public interface QnADAO {
 
 	List<QnADTO> list(int pagePerCnt, int start, Integer classIdx);
 
-	QnADTO detail(Integer qUESTION_IDX);
+	
 
-	QnADTO adetail(Integer qUESTION_IDX);
+	
 
-	void upHit(Integer qUESTION_IDX);
+	
 
 	int reply(QnADTO dto);
+
+	void deleteQuestion(int questionIdx);
+
+	void upHit(Integer question_idx);
+
+	QnADTO detail(Integer question_idx);
+
+	QnADTO adetail(Integer question_idx);
+
+	void deleteAnswer(int questionIdx);
 
 }

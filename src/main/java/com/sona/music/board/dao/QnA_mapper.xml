@@ -25,13 +25,16 @@
 	LEFT JOIN 
     CLASS_ANSWER CA ON CQ.QUESTION_IDX = CA.QUESTION_IDX
 	WHERE 
-    CQ.CLASS_IDX = #{param3}
+    CQ.CLASS_IDX = #{param3} AND
+    CQ.Q_DELETE = 0
     ORDER BY QUESTION_IDX DESC
     LIMIT #{param2}, 5
 	</select>
 
 	<select id="allCount" resultType="Integer">
-		SELECT CEIL(COUNT(QUESTION_IDX)/#{param1}) AS pages FROM CLASS_QUESTION
+		SELECT CEIL(COUNT(QUESTION_IDX) / #{param1}) AS pages 
+		FROM CLASS_QUESTION 
+		WHERE Q_DELETE = 0;
 	</select>
 	
 	
@@ -42,7 +45,7 @@
 	parameterType="com.sona.music.board.dto.QnADTO"
 	>
 	INSERT INTO CLASS_QUESTION(CLASS_IDX,USER_ID,Q_TITLE,Q_CONTENT,ANONYMOUS_STATUS)
-			VALUES(#{CLASS_IDX},#{USER_ID},#{Q_TITLE},#{Q_CONTENT},#{ANONYMOUS_STATUS})
+			VALUES(#{class_idx},#{user_id},#{q_title},#{q_content},#{anonymous_status})
 	</insert>
 	
 	<select id="detail" resultType= "com.sona.music.board.dto.QnADTO">
@@ -62,7 +65,7 @@
 	</select>
 	
 	<update id="upHit" parameterType="Integer">
-		UPDATE CLASS_QUESTION SET Q_HIT = Q_HIT+1 WHERE QUESTION_IDX = #{qUESTION_IDX}
+		UPDATE CLASS_QUESTION SET Q_HIT = Q_HIT+1 WHERE QUESTION_IDX = #{question_idx}
 	</update>
 	
 	<insert id="reply"
@@ -72,9 +75,18 @@
 	parameterType="com.sona.music.board.dto.QnADTO"
 	>
 	INSERT INTO CLASS_ANSWER(QUESTION_IDX,USER_ID,A_CONTENT)
-			VALUES(#{QUESTION_IDX},#{USER_ID},#{A_CONTENT})
+			VALUES(#{question_idx},#{user_id},#{a_content})
 	</insert>
 	
+	<update id="deleteQuestion">
+		UPDATE CLASS_QUESTION
+		SET Q_DELETE = 1
+		WHERE QUESTION_IDX = #{param1}
+	</update>
+	
+	<delete id="deleteAnswer" parameterType="com.sona.music.board.dto.QnADTO">
+		DELETE FROM CLASS_ANSWER WHERE QUESTION_IDX = #{param1}
+	</delete>
 
 
 </mapper>

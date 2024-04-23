@@ -225,20 +225,20 @@
 	 <div class="container">
 		<img src="resources/img/QnA.png" id="QnA">                  Q&A 상세보기
 	  <div class="question-box">
-        <div class="qna-title">글번호: ${question.QUESTION_IDX}</div>
-        <div>Q&A 제목: ${question.q_TITLE} 강의 idx : ${question.CLASS_IDX}</div>
-        <div class="author-info">작성자: ${question.USER_ID} 작성일: ${question.q_REG_DATE} 조회수: ${question.q_HIT}</div>
-        <div class="content">${question.q_CONTENT}</div>
+        <div class="qna-title">글번호: ${question.question_idx}</div>
+        <div>Q&A 제목: ${question.q_title} 강의 idx : ${question.class_idx}</div>
+        <div class="author-info">작성자: ${question.user_id} 작성일: ${question.q_reg_date} 조회수: ${question.q_hit}</div>
+        <div class="content">${question.q_content}</div>
             <c:if test="${not empty answer}">
        		<div style="text-align: right;">
-            <button class="button delete" onclick="confirmAllDelete(${question.QUESTION_IDX})"> 전체 삭제</button>
+            <button class="button delete" onclick="confirmAllDelete(${question.question_idx},${question.class_idx})"> 전체 삭제</button>
             </div>
             </c:if>
             <c:if test="${not empty answerMessage}">
             <div style="text-align: right; display: flex; justify-content: flex-end;">
-            <button class="button edit" onclick="redirectToEditPage(${question.QUESTION_IDX})">수정</button>
-            <button class="button delete" onclick="confirmDelete(${question.QUESTION_IDX})">삭제</button>
-    		<button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX},${question.CLASS_IDX})">답변</button>
+            <button class="button edit" onclick="redirectToEditPage(${question.question_idx},${question.class_idx})">수정</button>
+            <button class="button delete" onclick="confirmDelete(${question.question_idx})">삭제</button>
+    		<button class="button reply" onclick="redirectToReplyPage(${question.question_idx},${question.class_idx})">답변</button>
     		</div>
 			</c:if>
 			<!-- 답변이 아직 작성이 안됐을경우 -->
@@ -250,16 +250,16 @@
 		<!-- 답변이 작성 됐을 경우 -->
 		<c:if test="${not empty answer}">
 			<div class="answer-box">
-				<div class="author-info">답변자: ${answer.USER_ID} 답변일:
-					${answer.a_REG_DATE}</div>
-				<div class="content">${answer.a_CONTENT}</div>
+				<div class="author-info">답변자: ${answer.user_id} 답변일:
+					${answer.a_reg_date}</div>
+				<div class="content">${answer.a_content}</div>
 				 <div style="text-align: right;">
-				<button class="button adelete" onclick="confirmDelete(${question.QUESTION_IDX})">삭제</button>
+				<button class="button adelete" onclick="answerDelete(${question.question_idx})">삭제</button>
 			</div>
 			</div>
 		</c:if>
 		<div class="button-container return-btn">
-            <button class="button" onclick="redirectToList(${question.CLASS_IDX})">리스트로 돌아가기</button>
+            <button class="button" onclick="redirectToList(${question.class_idx})">리스트로 돌아가기</button>
         </div>
         		</div>
     		</div>
@@ -299,18 +299,20 @@
     </div>
 </body>
 <script>
-var classIdx = ${question.CLASS_IDX};
-var qidx = ${question.QUESTION_IDX};
+var classIdx = ${question.class_idx};
+var questionIdx = ${question.question_idx};
+
 
 function confirmDelete(questionIdx) {
-    if (confirm("삭제 하시겠습니까?")) {
+    if (confirm("질문을 삭제 하시겠습니까?")) {
         $.ajax({
             type: "POST",
-            url: "./deleteQnA",
+            url: "./deleteQuestion.ajax",
             data: { questionIdx: questionIdx },
             success: function(response) {
-            	alert("삭제되었습니다.");
-            	location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
+            	alert("질문이 삭제되었습니다.");
+            	console.log(classIdx);
+            	location.href = './lessonQnAList?class_idx=' + classIdx;
             },
             error: function(error) {
                 console.log(error);
@@ -323,11 +325,30 @@ function confirmAllDelete(questionIdx) {
     if (confirm("질문과 답변 모두 삭제 하시겠습니까?")) {
         $.ajax({
             type: "POST",
-            url: "./deleteAllQnA",
+            url: "./deleteAllQnA.ajax",
             data: { questionIdx: questionIdx },
             success: function(response) {
-            	alert("전체 삭제되었습니다.");
-            	location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
+            	alert("모두 삭제되었습니다.");
+            	console.log(classIdx);
+            	location.href = './lessonQnAList?class_idx=' + classIdx;
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+}
+
+function answerDelete(questionIdx) {
+    if (confirm("답변을 삭제 하시겠습니까?")) {
+        $.ajax({
+            type: "POST",
+            url: "./deleteAnswer.ajax",
+            data: { questionIdx: questionIdx },
+            success: function(response) {
+            	alert("답변이 삭제되었습니다.");
+            	console.log(classIdx);
+            	location.href = './lessonQnAList?class_idx=' + classIdx;
             },
             error: function(error) {
                 console.log(error);
@@ -343,9 +364,9 @@ $(document).ready(function() {
     // 현재 로그인한 사용자의 아이디
     var loggedInUserId = "${sessionScope.loginId}";
     // qna 작성자의 아이디
-    var qnaUserId = "${question.USER_ID}";
+    var qnaUserId = "${question.user_id}";
     
-    var teacherId = "${question.TEACHER_ID}";
+    var teacherId = "${question.teacher_id}";
 
     // 만약 현재 로그인한 사용자의 아이디와 qna 작성자의 아이디가 일치하는 경우에만
     // 수정 및 삭제 버튼을 표시합니다.
@@ -360,16 +381,16 @@ $(document).ready(function() {
 });
 
 function redirectToList(classIdx) {
-    window.location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
+    window.location.href = './lessonQnAList?class_idx=' + classIdx;
 }
 
 
 function redirectToEditPage(qidx) {
-    window.location.href = './lessonQnAEdit?QUESTION_IDX=' + qidx;
+    window.location.href = './lessonQnAEdit?question_idx=' + questionIdx;
 }
 
 function redirectToReplyPage(qidx) {
-    window.location.href = './lessonQnAReply?QUESTION_IDX=' + qidx;
+    window.location.href = './lessonQnAReply?question_idx=' + questionIdx;
 }
 
 $('.alarm').click(function alarmList() {

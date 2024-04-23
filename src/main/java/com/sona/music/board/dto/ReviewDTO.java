@@ -4,74 +4,72 @@ import java.sql.Date;
 
 public class ReviewDTO {
 	
-	private int REVIEW_IDX;
-	private int CLASS_IDX;
-	private String RATER_ID;
-	private String RATEE_ID;
-	private double SCORE;
-	private String REVIEW_TITLE;
-	private String REVIEW_CONTENT;
-	private Date REVIEW_REG_DATE;
-	private boolean REVIEW_DELETE;
+	private int review_idx;
+	private int class_idx;
+	private String rater_id;
+	private String ratee_id;
+	private double score;
+	private String review_title;
+	private String review_content;
+	private Date review_reg_date;
+	private boolean review_delete;
 	private int img_cnt;
-	private String STUDY_DATE;
-	
+	private String study_date;
 	private String rater_name;
 	private String profile_photoname;
-	
-	public int getREVIEW_IDX() {
-		return REVIEW_IDX;
+	public int getReview_idx() {
+		return review_idx;
 	}
-	public void setREVIEW_IDX(int rEVIEW_IDX) {
-		REVIEW_IDX = rEVIEW_IDX;
+	public void setReview_idx(int review_idx) {
+		this.review_idx = review_idx;
 	}
-	public int getCLASS_IDX() {
-		return CLASS_IDX;
+	public int getClass_idx() {
+		return class_idx;
 	}
-	public void setCLASS_IDX(int cLASS_IDX) {
-		CLASS_IDX = cLASS_IDX;
+	public void setClass_idx(int class_idx) {
+		this.class_idx = class_idx;
 	}
-	public String getRATER_ID() {
-		return RATER_ID;
+	public String getRater_id() {
+		return rater_id;
 	}
-	public void setRATER_ID(String rATER_ID) {
-		RATER_ID = rATER_ID;
+	public void setRater_id(String rater_id) {
+		this.rater_id = rater_id;
 	}
-	public String getRATEE_ID() {
-		return RATEE_ID;
+	public String getRatee_id() {
+		return ratee_id;
 	}
-	public void setRATEE_ID(String rATEE_ID) {
-		RATEE_ID = rATEE_ID;
+	public void setRatee_id(String ratee_id) {
+		this.ratee_id = ratee_id;
 	}
-	public double getSCORE() {
-		return SCORE;
+	public double getScore() {
+		return score;
 	}
-	public void setSCORE(double sCORE) {
-		SCORE = sCORE;
+	public void setScore(double score) {
+		this.score = score;
 	}
-	public String getREVIEW_TITLE() {
-		return REVIEW_TITLE;
+	public String getReview_title() {
+		return review_title;
 	}
-	public void setREVIEW_TITLE(String rEVIEW_TITLE) {
-		REVIEW_TITLE = rEVIEW_TITLE;
+	public void setReview_title(String review_title) {
+		this.review_title = review_title;
 	}
-	public String getREVIEW_CONTENT() {
-		return REVIEW_CONTENT;
+	public String getReview_content() {
+		return review_content;
 	}
-	public void setREVIEW_CONTENT(String rEVIEW_CONTENT) {
-		REVIEW_CONTENT = rEVIEW_CONTENT;
+	public void setReview_content(String review_content) {
+		this.review_content = review_content;
 	}
-	public Date getREVIEW_REG_DATE() {
-		return REVIEW_REG_DATE;
+	public Date getReview_reg_date() {
+		return review_reg_date;
 	}
-	public void setREVIEW_REG_DATE(Date rEVIEW_REG_DATE) {
-		REVIEW_REG_DATE = rEVIEW_REG_DATE;
+	public void setReview_reg_date(Date review_reg_date) {
+		this.review_reg_date = review_reg_date;
 	}
-	public boolean isREVIEW_DELETE() {
-		return REVIEW_DELETE;
+	public boolean isReview_delete() {
+		return review_delete;
 	}
-	public void setREVIEW_DELETE(boolean rEVIEW_DELETE) {
-		REVIEW_DELETE = rEVIEW_DELETE;
+	public void setReview_delete(boolean review_delete) {
+		this.review_delete = review_delete;
 	}
 	public int getImg_cnt() {
 		return img_cnt;
@@ -79,11 +77,11 @@ public class ReviewDTO {
 	public void setImg_cnt(int img_cnt) {
 		this.img_cnt = img_cnt;
 	}
-	public String getSTUDY_DATE() {
-		return STUDY_DATE;
+	public String getStudy_date() {
+		return study_date;
 	}
-	public void setSTUDY_DATE(String sTUDY_DATE) {
-		STUDY_DATE = sTUDY_DATE;
+	public void setStudy_date(String study_date) {
+		this.study_date = study_date;
 	}
 	public String getRater_name() {
 		return rater_name;
@@ -97,6 +95,9 @@ public class ReviewDTO {
 	public void setProfile_photoname(String profile_photoname) {
 		this.profile_photoname = profile_photoname;
 	}
+	
+	
+	
 	
 	
 	

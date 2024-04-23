@@ -80,19 +80,19 @@ public class ReviewController {
 	
 	
 	@RequestMapping(value="/lessonReviewDetail")
-	public String detail(Integer REVIEW_IDX, HttpSession session, Model model) {
-	    logger.info("idx="+REVIEW_IDX+"리뷰 디테일 요청");
+	public String detail(Integer review_idx, HttpSession session, Model model) {
+	    logger.info("idx="+review_idx+"리뷰 디테일 요청");
 	    
 	    
-	    if(session.getAttribute("loginId") != null && REVIEW_IDX != null) {
+	    if(session.getAttribute("loginId") != null && review_idx != null) {
 	    	
-	    	Integer POST_IDX = REVIEW_IDX; // POST_IDX 값을 REVIEW_IDX로 설정
-	        String PHOTO_CATEGORY = "Review"; // PHOTO_CATEGORY 값을 고정값으로 설정
+	    	Integer post_idx = review_idx; // POST_IDX 값을 REVIEW_IDX로 설정
+	        String photo_category = "Review"; // PHOTO_CATEGORY 값을 고정값으로 설정
 	        
-	        logger.info("detail post idx = " + POST_IDX);
-	        logger.info("detail photo category = " + PHOTO_CATEGORY);
+	        logger.info("detail post idx = " + post_idx);
+	        logger.info("detail photo category = " + photo_category);
 	    	
-	        reviewService.detail(REVIEW_IDX, POST_IDX, PHOTO_CATEGORY, model);
+	        reviewService.detail(review_idx, post_idx, photo_category, model);
 	        
 	        return "lesson/lessonReviewDetail"; 
 	    } else {
@@ -128,16 +128,16 @@ public class ReviewController {
 	    
 	    String page = "";
 	    String type = (String) session.getAttribute("user_type");
-	    Integer POST_IDX = idx; // POST_IDX 값을 REVIEW_IDX로 설정
-	    String PHOTO_CATEGORY = "Review"; // PHOTO_CATEGORY 값을 고정값으로 설정
+	    Integer post_idx = idx; // POST_IDX 값을 REVIEW_IDX로 설정
+	    String photo_category = "Review"; // PHOTO_CATEGORY 값을 고정값으로 설정
 	    
 	    if (type.equals("강사")) {
 	        
-	        reviewService.reviewEdit(idx, POST_IDX, PHOTO_CATEGORY, model);
+	        reviewService.reviewEdit(idx, post_idx, photo_category, model);
 	        page = "lesson/lessonReviewEditT";
 	    } else if(type.equals("수강생")) {
 	        
-	        reviewService.reviewEdit(idx, POST_IDX, PHOTO_CATEGORY, model);
+	        reviewService.reviewEdit(idx, post_idx, photo_category, model);
 	        page = "lesson/lessonReviewEditS";
 	    }
 	    logger.info(type);
@@ -147,7 +147,7 @@ public class ReviewController {
 	
 	@RequestMapping(value="/reviewEdit")
 	public String edit(MultipartFile photos,@RequestParam Map<String, String>param, HttpSession session) {
-		logger.info(param.get("REVIEW_IDX")+"리뷰 수정함");
+		logger.info(param.get("review_idx")+"리뷰 수정함");
 		
 		String page = "redirect:/lessonReviewList";
 		
@@ -155,7 +155,7 @@ public class ReviewController {
 			
 			reviewService.update(photos, param);
 			
-			page = "redirect:/lessonReviewDetail?idx="+param.get("REVIEW_IDX");			
+			page = "redirect:/lessonReviewDetail?idx="+param.get("review_idx");			
 			}
 		
 		return page;

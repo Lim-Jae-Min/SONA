@@ -40,43 +40,43 @@ public class QnAService {
 		int row = -1;
 		
 		QnADTO dto = new QnADTO();
-		dto.setCLASS_IDX(Integer.parseInt(param.get("CLASS_IDX")));
-		dto.setUSER_ID(param.get("USER_ID"));
-		dto.setQ_TITLE(param.get("Q_TITLE"));
-		dto.setQ_CONTENT(param.get("Q_CONTENT"));
+		dto.setClass_idx(Integer.parseInt(param.get("class_idx")));
+		dto.setUser_id(param.get("user_id"));
+		dto.setQ_title(param.get("q_title"));
+		dto.setQ_content(param.get("q_content"));
 		
 		//변수에 param 값 스트링으로 저장
-		String anonymousStatusStr = param.get("ANONYMOUS_STATUS");
+		String anonymousStatusStr = param.get("anonymous_status");
 		//"true"와 equals 면 true, 아니면 false
 		boolean anonymousStatus = "true".equals(anonymousStatusStr);
-		dto.setANONYMOUS_STATUS(anonymousStatus);
+		dto.setAnonymous_status(anonymousStatus);
 		
 		row = qnaDAO.qwrite(dto);
 		
 		return row;
 	}
 
-	public void detail(Integer QUESTION_IDX, Model model) {
+	public void detail(Integer question_idx, Model model) {
 		logger.info("Q&A 디테일 요청 - 서비스");
 		
-		qnaDAO.upHit(QUESTION_IDX);
+		qnaDAO.upHit(question_idx);
 		
-		QnADTO dto = qnaDAO.detail(QUESTION_IDX);
+		QnADTO dto = qnaDAO.detail(question_idx);
 		model.addAttribute("question",dto);
-		logger.info(dto.getQ_TITLE());
-		logger.info(dto.getTEACHER_ID());
-		logger.info(dto.getQ_CONTENT());
-		logger.info(String.valueOf(dto.getCLASS_IDX()));
-		logger.info(String.valueOf(dto.getQUESTION_IDX()));
+		logger.info(dto.getQ_title());
+		logger.info(dto.getTeacher_id());
+		logger.info(dto.getQ_content());
+		logger.info(String.valueOf(dto.getClass_idx()));
+		logger.info(String.valueOf(dto.getQuestion_idx()));
 		
-		QnADTO adto = qnaDAO.adetail(QUESTION_IDX);
+		QnADTO adto = qnaDAO.adetail(question_idx);
 		if (adto == null) {
 		    model.addAttribute("answerMessage", "답변이 아직 작성되지 않았습니다.");
 		} else {
 		    model.addAttribute("answer", adto);
-		    logger.info(String.valueOf(adto.getANSWER_IDX()));
-		    logger.info(adto.getA_CONTENT());
-		    logger.info(String.valueOf(adto.getQUESTION_IDX()));
+		    logger.info(String.valueOf(adto.getAnswer_idx()));
+		    logger.info(adto.getA_content());
+		    logger.info(String.valueOf(adto.getQuestion_idx()));
 		}
 		
 	}
@@ -87,14 +87,26 @@ public class QnAService {
 		logger.info("Q&A 답변 작성 요청 - 서비스");
 		
 		QnADTO dto = new QnADTO();
-		dto.setQUESTION_IDX(Integer.parseInt(param.get("QUESTION_IDX")));
-		dto.setUSER_ID(param.get("USER_ID"));
-		dto.setA_CONTENT(param.get("A_CONTENT"));
+		dto.setQuestion_idx(Integer.parseInt(param.get("question_idx")));
+		dto.setUser_id(param.get("user_id"));
+		dto.setA_content(param.get("a_content"));
 		
 		row = qnaDAO.reply(dto);
 		
 		
 		return row;
+	}
+
+	public void deleteQuestion(int questionIdx) {
+		logger.info("질문 삭제 요청 - service");
+		qnaDAO.deleteQuestion(questionIdx);
+		
+	}
+
+	public void deleteAnswer(int questionIdx) {
+		logger.info("답변 삭제 요청 - service");
+		qnaDAO.deleteAnswer(questionIdx);
+		
 	}
 	
 }

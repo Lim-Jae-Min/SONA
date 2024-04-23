@@ -146,32 +146,32 @@
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>질문 강의IDX: ${CLASS_IDX}<input type="hidden" name="CLASS_IDX" value="${CLASS_IDX}"></th>
+						<th>질문 강의IDX: ${class_idx}<input type="hidden" name="class_idx" value="${class_idx}"></th>
 					</tr>
 					<tr>
 						<th style="font-size: 14px;">Q&A 제목</th>
-						<td><input type="text" name="Q_TITLE"
+						<td><input type="text" name="q_title"
 							style="width: 300px; font-size: 16px;" /></td>
 						<th style="font-size: 12px;">작성자 : ${sessionScope.loginId}<input
-							type="hidden" name="USER_ID" value="${sessionScope.loginId}"></th>
+							type="hidden" name="user_id" value="${sessionScope.loginId}"></th>
 						<th style="font-size: 12px;">작성일 : <span id="currentDate"></span></th>
 					</tr>
 					<tr>
 						<th>Q&A 내용</th>
-						<td colspan="4"><textarea name="Q_CONTENT"
+						<td colspan="4"><textarea name="q_content"
 								style="width: 882px; height: 311px; resize: none;"></textarea></td>
 					</tr>
 					<tr>
    					 <th>공개 여부</th>
     				<td>
-        				<input type="radio" id="public" name="ANONYMOUS_STATUS" value="false" checked>
+        				<input type="radio" id="public" name="anonymous_status" value="false" checked>
         				<label for="public">공개</label>
-        				<input type="radio" id="private" name="ANONYMOUS_STATUS" value="true">
+        				<input type="radio" id="private" name="anonymous_status" value="true">
         				<label for="private">비공개</label>
     				</td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="redirectToList(${CLASS_IDX})"
+						type="button" onclick="redirectToList(${class_idx})"
 						value="취소" />
 						<button>작성</button></td>
 					</tr>
@@ -217,7 +217,7 @@ var currentDateElement = document.getElementById('currentDate');
 var currentDate = new Date().toLocaleDateString('ko-KR');
 currentDateElement.innerText = currentDate;
 
-var classIdx = ${CLASS_IDX};
+var classIdx = ${class_idx};
 
 function confirmWrite() {
     var result = confirm("Q&A 작성을 하시겠습니까?");
@@ -230,7 +230,7 @@ function confirmWrite() {
 }
 
 function redirectToList(classIdx) {
-    window.location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
+    window.location.href = './lessonQnAList?class_idx=' + classIdx;
 }
 
 

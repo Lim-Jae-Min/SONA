@@ -151,27 +151,27 @@
     <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
         <form action="aWrite" method="post" enctype="multipart/form-data" onsubmit="return confirmWrite();">
             <table>
-             <input type="hidden" name="CLASS_IDX" value="${question.CLASS_IDX}">
+             <input type="hidden" name="class_idx" value="${question.class_idx}">
                 <tr  style="text-align: left;">
-                    <th>Q&A 번호 : ${question.QUESTION_IDX}<input type="hidden" name="QUESTION_IDX" value="${question.QUESTION_IDX}"></th>
+                    <th>Q&A 번호 : ${question.question_idx}<input type="hidden" name="question_idx" value="${question.question_idx}"></th>
                 </tr>
                 <tr>
-                    <td>질문 내용: ${question.q_CONTENT}</td>
+                    <td>질문 내용: ${question.q_content}</td>
                 </tr>
                 <tr>
-                    <td>작성자: ${question.USER_ID} 작성일: ${question.q_REG_DATE}</td>
+                    <td>작성자: ${question.user_id} 작성일: ${question.Q_reg_date}</td>
                 </tr>
             </table>
             <div style="font-size: 12px; text-align: right;">
-                    작성자 : ${sessionScope.loginId}<input type="hidden" name="USER_ID" value="${sessionScope.loginId}">
+                    작성자 : ${sessionScope.loginId}<input type="hidden" name="user_id" value="${sessionScope.loginId}">
                     작성일 : <span id="currentDate"></span>
              </div>
             <div style="margin-top: 10px; text-align: left;">답변 내용</div>
             <div class="answer-box">
-                <textarea name="A_CONTENT" style="width: 882px; height: 311px; resize: none;"></textarea>
+                <textarea name="a_content" style="width: 882px; height: 311px; resize: none;"></textarea>
             </div>
             <div style="text-align: right;">
-                <input type="button" value="취소" onclick="redirectToList(${question.CLASS_IDX})" />
+                <input type="button" value="취소" onclick="redirectToList(${question.class_idx})" />
                 <button>작성</button>
             </div>
         </form>
@@ -214,7 +214,7 @@
     </div>
 </body>
 <script>
-var classIdx = ${question.CLASS_IDX};
+var classIdx = ${question.class_idx};
 
 var currentDateElement = document.getElementById('currentDate');
 var currentDate = new Date().toLocaleDateString('ko-KR');
@@ -231,7 +231,7 @@ function confirmWrite() {
 }
 
 function redirectToList(classIdx) {
-    window.location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
+    window.location.href = './lessonQnAList?class_idx=' + classIdx;
 }
 
 $('#userName').click(function slide() {

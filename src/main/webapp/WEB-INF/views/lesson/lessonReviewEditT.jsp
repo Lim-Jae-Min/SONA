@@ -235,22 +235,22 @@ body {
 				onsubmit="return confirmWrite(event);">
 				<table>
 					<tr>
-						<th>평가 강의번호 : ${review.CLASS_IDX} 평가 학생명: ${review.RATEE_ID}</th>
+						<th>평가 강의번호 : ${review.class_idx} 평가 학생명: ${review.ratee_id}</th>
 					</tr>
 					<tr>
-						<td><input type="hidden" name="REVIEW_IDX"
-							value="${review.REVIEW_IDX}" /></td>
+						<td><input type="hidden" name="review_idx"
+							value="${review.review_idx}" /></td>
 						<th style="font-size: 14px;">리뷰 제목</th>
-						<td><input type="text" name="REVIEW_TITLE"
+						<td><input type="text" name="review_title"
 							style="width: 300px; font-size: 16px;"
-							value="${review.REVIEW_TITLE}" /></td>
-						<th style="font-size: 12px;">작성자 : ${review.RATER_ID}<input
-							type="hidden" name="RATER_ID" value="${review.RATER_ID}" /></th>
-						<th style="font-size: 12px;">작성일 : ${review.REVIEW_REG_DATE}</th>
+							value="${review.review_title}" /></td>
+						<th style="font-size: 12px;">작성자 : ${review.rater_id}<input
+							type="hidden" name="rater_id" value="${review.rater_id}" /></th>
+						<th style="font-size: 12px;">작성일 : ${review.review_reg_date}</th>
 					</tr>
 					<tr>
 						<td colspan="4"
-							style="color: #FED000; font-size: 22px; text-align: right;">★${review.SCORE}</td>
+							style="color: #FED000; font-size: 22px; text-align: right;">★${review.score}</td>
 					</tr>
 					<tr>
 						<td colspan="4"
@@ -259,19 +259,19 @@ body {
 					</tr>
 					<tr>
 						<th>리뷰 내용</th>
-						<td colspan="2"><textarea name="REVIEW_CONTENT"
-								style="width: 882px; height: 311px; resize: none;"> ${review.REVIEW_CONTENT}</textarea></td>
+						<td colspan="2"><textarea name="review_content"
+								style="width: 882px; height: 311px; resize: none;"> ${review.review_content}</textarea></td>
 					</tr>
 					<tr>
-						<input type="hidden" name="PHOTO_CATEGORY" value="Review">
+						<input type="hidden" name="photo_category" value="Review">
 						<th>리뷰 사진</th>
 						<td><c:if test="${photos.size() > 0}">
 								<c:forEach items="${photos}" var="photo">
 									<div class="photo-container">
-										<img src="/photo/${photo.NEW_FILENAME}" width="500"
+										<img src="/photo/${photo.new_filename}" width="500"
 											height="300" />
 										<button
-											onclick="deletePhoto('${photo.POST_IDX}', '${photo.PHOTO_CATEGORY}', event)">삭제</button>
+											onclick="deletePhoto('${photo.post_idx}', '${photo.photo_category}', event)">삭제</button>
 									</div>
 								</c:forEach>
 							</c:if>

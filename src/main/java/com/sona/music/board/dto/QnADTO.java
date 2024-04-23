@@ -4,107 +4,107 @@ import java.sql.Date;
 
 public class QnADTO {
 	
-	private int QUESTION_IDX;
-	private int CLASS_IDX;
-	private String USER_ID;
-	private String Q_TITLE;
-	private String Q_CONTENT;
-	private boolean ANONYMOUS_STATUS;
-	private Date Q_REG_DATE;
-	private boolean Q_DELETE;
-	private int Q_HIT;
-	private boolean REPLY_CHECK;
-	private String TEACHER_ID;
-	private int ANSWER_IDX;
-	private String A_CONTENT;
-	private Date A_REG_DATE;
+	private int question_idx;
+	private int class_idx;
+	private String user_id;
+	private String q_title;
+	private String q_content;
+	private boolean anonymous_status;
+	private Date q_reg_date;
+	private boolean q_delete;
+	private int q_hit;
+	private boolean reply_check;
+	private String teacher_id;
+	private int answer_idx;
+	private String a_content;
+	private Date a_reg_date;
+	public int getQuestion_idx() {
+		return question_idx;
+	}
+	public void setQuestion_idx(int question_idx) {
+		this.question_idx = question_idx;
+	}
+	public int getClass_idx() {
+		return class_idx;
+	}
+	public void setClass_idx(int class_idx) {
+		this.class_idx = class_idx;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getQ_title() {
+		return q_title;
+	}
+	public void setQ_title(String q_title) {
+		this.q_title = q_title;
+	}
+	public String getQ_content() {
+		return q_content;
+	}
+	public void setQ_content(String q_content) {
+		this.q_content = q_content;
+	}
+	public boolean isAnonymous_status() {
+		return anonymous_status;
+	}
+	public void setAnonymous_status(boolean anonymous_status) {
+		this.anonymous_status = anonymous_status;
+	}
+	public Date getQ_reg_date() {
+		return q_reg_date;
+	}
+	public void setQ_reg_date(Date q_reg_date) {
+		this.q_reg_date = q_reg_date;
+	}
+	public boolean isQ_delete() {
+		return q_delete;
+	}
+	public void setQ_delete(boolean q_delete) {
+		this.q_delete = q_delete;
+	}
+	public int getQ_hit() {
+		return q_hit;
+	}
+	public void setQ_hit(int q_hit) {
+		this.q_hit = q_hit;
+	}
+	public boolean isReply_check() {
+		return reply_check;
+	}
+	public void setReply_check(boolean reply_check) {
+		this.reply_check = reply_check;
+	}
+	public String getTeacher_id() {
+		return teacher_id;
+	}
+	public void setTeacher_id(String teacher_id) {
+		this.teacher_id = teacher_id;
+	}
+	public int getAnswer_idx() {
+		return answer_idx;
+	}
+	public void setAnswer_idx(int answer_idx) {
+		this.answer_idx = answer_idx;
+	}
+	public String getA_content() {
+		return a_content;
+	}
+	public void setA_content(String a_content) {
+		this.a_content = a_content;
+	}
+	public Date getA_reg_date() {
+		return a_reg_date;
+	}
+	public void setA_reg_date(Date a_reg_date) {
+		this.a_reg_date = a_reg_date;
+	}
 
 	
-	public int getQUESTION_IDX() {
-		return QUESTION_IDX;
-	}
-	public void setQUESTION_IDX(int qUESTION_IDX) {
-		QUESTION_IDX = qUESTION_IDX;
-	}
-	public int getCLASS_IDX() {
-		return CLASS_IDX;
-	}
-	public void setCLASS_IDX(int cLASS_IDX) {
-		CLASS_IDX = cLASS_IDX;
-	}
-	public String getUSER_ID() {
-		return USER_ID;
-	}
-	public void setUSER_ID(String uSER_ID) {
-		USER_ID = uSER_ID;
-	}
-	public String getQ_TITLE() {
-		return Q_TITLE;
-	}
-	public void setQ_TITLE(String q_TITLE) {
-		Q_TITLE = q_TITLE;
-	}
-	public String getQ_CONTENT() {
-		return Q_CONTENT;
-	}
-	public void setQ_CONTENT(String q_CONTENT) {
-		Q_CONTENT = q_CONTENT;
-	}
-	public boolean isANONYMOUS_STATUS() {
-		return ANONYMOUS_STATUS;
-	}
-	public void setANONYMOUS_STATUS(boolean aNONYMOUS_STATUS) {
-		ANONYMOUS_STATUS = aNONYMOUS_STATUS;
-	}
-	public Date getQ_REG_DATE() {
-		return Q_REG_DATE;
-	}
-	public void setQ_REG_DATE(Date q_REG_DATE) {
-		Q_REG_DATE = q_REG_DATE;
-	}
-	public boolean isQ_DELETE() {
-		return Q_DELETE;
-	}
-	public void setQ_DELETE(boolean q_DELETE) {
-		Q_DELETE = q_DELETE;
-	}
-	public int getQ_HIT() {
-		return Q_HIT;
-	}
-	public void setQ_HIT(int q_HIT) {
-		Q_HIT = q_HIT;
-	}
-	public boolean isREPLY_CHECK() {
-		return REPLY_CHECK;
-	}
-	public void setREPLY_CHECK(boolean rEPLY_CHECK) {
-		REPLY_CHECK = rEPLY_CHECK;
-	}
-	public String getTEACHER_ID() {
-		return TEACHER_ID;
-	}
-	public void setTEACHER_ID(String tEACHER_ID) {
-		TEACHER_ID = tEACHER_ID;
-	}
-	public int getANSWER_IDX() {
-		return ANSWER_IDX;
-	}
-	public void setANSWER_IDX(int aNSWER_IDX) {
-		ANSWER_IDX = aNSWER_IDX;
-	}
-	public String getA_CONTENT() {
-		return A_CONTENT;
-	}
-	public void setA_CONTENT(String a_CONTENT) {
-		A_CONTENT = a_CONTENT;
-	}
-	public Date getA_REG_DATE() {
-		return A_REG_DATE;
-	}
-	public void setA_REG_DATE(Date a_REG_DATE) {
-		A_REG_DATE = a_REG_DATE;
-	}
-	
+
 	
 
 }

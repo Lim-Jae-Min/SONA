@@ -16,15 +16,19 @@ public interface ReviewDAO {
 
 	void fileWrite(String fileName, String newFileName, int idx, String username, String photoCategory);
 
-	ReviewDTO detail(int rEVIEW_IDX);
+	
 
-	List<PhotoDTO> photos(int pOST_IDX, String pHOTO_CATEGORY);
+	
 
 	void deleteReview(Integer reviewIdx);
 
 	int update(Map<String, String> param);
 
 	void photoEdit(String postIdx, String photoCategory);
+
+	ReviewDTO detail(int review_idx);
+
+	List<PhotoDTO> photos(int post_idx, String photo_category);
 
 
 	

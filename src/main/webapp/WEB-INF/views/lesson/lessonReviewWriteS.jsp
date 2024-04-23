@@ -146,20 +146,20 @@
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>평가 강의명 : 2<input type="hidden" name="CLASS_IDX" value="2"></th>
+						<th>평가 강의명 : 2<input type="hidden" name="class_idx" value="2"></th>
 					</tr>
 					<tr>
 						<th style="font-size: 14px;">Q&A 제목</th>
-						<td><input type="text" name="REVIEW_TITLE"
+						<td><input type="text" name="review_title"
 							style="width: 300px; font-size: 16px;" /></td>
 						<th style="font-size: 12px;">작성자 : ${sessionScope.loginId}<input
-							type="hidden" name="RATER_ID" value="${sessionScope.loginId}"></th>
+							type="hidden" name="rater_id" value="${sessionScope.loginId}"></th>
 						<th style="font-size: 12px;">작성일 : <span id="currentDate"></span></th>
 					</tr>
 					<tr>
 						<th>만족도</th>
 						<td colspan="4"><span style="color: #FED000;">★</span> <select
-							name="SCORE" style="margin-left: 10px;">
+							name="score" style="margin-left: 10px;">
 								<option value="0.5">0.5</option>
 								<option value="1.0">1.0</option>
 								<option value="1.5">1.5</option>
@@ -174,11 +174,11 @@
 					</tr>
 					<tr>
 						<th>리뷰 내용</th>
-						<td colspan="4"><textarea name="REVIEW_CONTENT"
+						<td colspan="4"><textarea name="review_content"
 								style="width: 882px; height: 311px; resize: none;"></textarea></td>
 					</tr>
 					<tr>
-						<input type="hidden" name="PHOTO_CATEGORY" value="Review">
+						<input type="hidden" name="photo_category" value="Review">
 						<th>리뷰 사진</th>
 						<td colspan="4">
 							<div id="fileList"></div> <input type="file" name="photos"

@@ -214,32 +214,32 @@
 	
 	 <div class="container">
 		<img src="resources/img/review.png" id="review">                  강의 리뷰 상세보기
-	 <div class="review-title">${review.REVIEW_TITLE}</div>
+	 <div class="review-title">${review.review_title}</div>
         <div class="author-info">
-            작성자: ${review.RATER_ID} 작성일자: ${review.REVIEW_REG_DATE}
-            <span class="satisfaction">★${review.SCORE}</span>
+            작성자: ${review.rater_id} 작성일자: ${review.review_reg_date}
+            <span class="satisfaction">★${review.score}</span>
         </div>
         <div class="content">
-            ${review.REVIEW_CONTENT}
+            ${review.review_content}
         </div>
         <div>리뷰 사진</div>
         <div>
         <c:forEach items="${photos}" var="photo">
-			<img src="/photo/${photo.NEW_FILENAME}" width="500" height="300"/>
+			<img src="/photo/${photo.new_filename}" width="500" height="300"/>
 			<br/><br/>
 		</c:forEach>	
         </div>
         <div>
         <c:if test="${user_type eq 'admin'}">
-    		<button class="button blind" onclick="confirmBlind(${review.REVIEW_IDX})">블라인드</button>
+    		<button class="button blind" onclick="confirmBlind(${review.review_idx})">블라인드</button>
 		</c:if>
         </div>
         <div class="button-container">	
-            <c:if test="${loginId eq review.RATEE_ID}">
-   				 <button class="button report" onclick="confirmReport(${review.REVIEW_IDX})">신고</button>
+            <c:if test="${loginId eq review.ratee_id}">
+   				 <button class="button report" onclick="confirmReport(${review.review_idx})">신고</button>
 			</c:if>
-            <button class="button edit" onclick="redirectToEditPage(${review.REVIEW_IDX})">수정</button>
-            <button class="button delete" onclick="confirmDelete(${review.REVIEW_IDX})">삭제</button>
+            <button class="button edit" onclick="redirectToEditPage(${review.review_idx})">수정</button>
+            <button class="button delete" onclick="confirmDelete(${review.review_idx})">삭제</button>
         </div>
         <div class="button-container return-btn">
             <button class="button" onclick="location.href='./lessonReviewList'">리스트로 돌아가기</button>
@@ -330,7 +330,7 @@ $(document).ready(function() {
     var userType = "${sessionScope.user_type}";
 
     // 리뷰 작성자의 아이디
-    var reviewUserId = "${review.RATER_ID}";
+    var reviewUserId = "${review.rater_id}";
 
     // 만약 현재 사용자가 관리자가 아니라면
     if (userType !== "admin") {

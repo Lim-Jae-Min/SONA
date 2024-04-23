@@ -252,22 +252,22 @@ function listCall(page, classIdx){
 	     for(item of list){
 	        console.log(item);
 	        content += '<tr>';
-	        content += '<input type="hidden" name="CLASS_IDX" value="' + item.class_IDX + '">';
-	        content += '<input type="hidden" name="TEACHER_ID" value="' + item.teacher_ID + '">';
-	        content += '<input type="hidden" name="ANONYMOUS_STATUS" value="' + item.anonymous_STATUS + '">';
-	        content += '<input type="hidden" name="USER_ID" value="' + item.user_ID + '">';
-	        content += '<td>' + item.question_IDX + '</td>';
+	        content += '<input type="hidden" name="class_idx" value="' + item.class_idx + '">';
+	        content += '<input type="hidden" name="teacher_id" value="' + item.teacher_id + '">';
+	        content += '<input type="hidden" name="anonymous_status" value="' + item.anonymous_status + '">';
+	        content += '<input type="hidden" name="user_id" value="' + item.user_id + '">';
+	        content += '<td>' + item.question_idx + '</td>';
 	        content += '<td>';
-	        if (item.anonymous_STATUS) {
+	        if (item.anonymous_status) {
 	            content += '<img src="resources/img/locked.png" style="width: 16px; height: 16px; margin-right: 5px;">';
 	        }
-	        content += '<a href="#" class="question-link" data-question-idx="' + item.question_IDX + '" data-anonymous="' + item.anonymous_STATUS + '">' + item.q_TITLE + '</a>';
+	        content += '<a href="#" class="question-link" data-question-idx="' + item.question_idx + '" data-anonymous="' + item.anonymous_status + '">' + item.q_title + '</a>';
 	        content += '</td>';
-	        content += '<td>' + item.user_ID + '</td>';
-	        var replyCheck = item.reply_CHECK ? "Y" : "N";
+	        content += '<td>' + item.user_id + '</td>';
+	        var replyCheck = item.reply_check ? "Y" : "N";
 	        content += '<td>' + replyCheck +'</td>';
-	        content += '<td>' + item.q_HIT +'</td>';
-	        var date = new Date(item.q_REG_DATE);
+	        content += '<td>' + item.q_hit +'</td>';
+	        var date = new Date(item.q_reg_date);
 	        var dateStr = date.toLocaleDateString("ko-KR");
 	        content += '<td>' + dateStr + '</td>';
 	        content += '</tr>';
@@ -286,10 +286,10 @@ function listCall(page, classIdx){
 	    	    var loginId = "${sessionScope.loginId}";
 	    	    
 	    	    // 해당 글의 작성자 아이디 추출
-	    	    var userId = $(this).closest('tr').find('input[name="USER_ID"]').val();
+	    	    var userId = $(this).closest('tr').find('input[name="user_id"]').val();
 	    	    
 	    	    // 해당 강의글을 작성한 강사의 아이디 추출
-	    	    var teacherId = $(this).closest('tr').find('input[name="TEACHER_ID"]').val();
+	    	    var teacherId = $(this).closest('tr').find('input[name="teacher_id"]').val();
 	    	    
 	    	    var anonymousStatus = $(this).data('anonymous');
 	    	    
@@ -300,10 +300,10 @@ function listCall(page, classIdx){
 	    	    // 열람 권한 조건 확인
 	    	    if (anonymousStatus === true && (userType === "admin"  ||  loginId === userId || loginId === teacherId)) {
         		// 열람 권한이 있는 경우 해당 페이지로 이동
-       			 window.location.href = './lessonQnADetail?QUESTION_IDX=' + questionIdx;
+       			 window.location.href = './lessonQnADetail?question_idx=' + questionIdx;
     			} else if (anonymousStatus === false) {
         		// ANONYMOUS_STATUS가 false이면 해당 페이지로 이동
-        		window.location.href = './lessonQnADetail?QUESTION_IDX=' + questionIdx;
+        		window.location.href = './lessonQnADetail?question_idx=' + questionIdx;
     			} else {
         		// 그 외의 경우에는 열람 권한이 없음을 알림창으로 표시
         		alert("열람 권한이 없습니다.");
@@ -327,10 +327,10 @@ function listCall(page, classIdx){
 	    // Q&A 작성 버튼 클릭 이벤트 처리
 	    $(".write").click(function() {
 	        // hidden 필드로부터 CLASS_IDX 값 가져오기
-	        var classIdx = $('input[name="CLASS_IDX"]').val();
+	        var classIdx = $('input[name="class_idx"]').val();
 
 	        // Q&A 작성 페이지로 이동할 URL
-	        var url = './lessonQnAWrite?CLASS_IDX=' + classIdx;
+	        var url = './lessonQnAWrite?class_idx=' + classIdx;
 
 	        // 해당 URL로 이동
 	        window.location.href = url;

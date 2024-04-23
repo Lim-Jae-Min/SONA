@@ -77,10 +77,11 @@
     	margin-bottom: 20px;
 		}
         
-         .edit, .delete {
+         .edit, .delete, .adelete, .reply {
             background-color: #ff0000;
             color: #ffffff;
-            margin-left: auto; /* 오른쪽 여백 추가 */
+            margin-left: 10px; /* 오른쪽 여백 추가 */
+            margin-bottom: 12px;
         }
         .edit {
             background-color: #BEE6FF;
@@ -228,19 +229,20 @@
         <div>Q&A 제목: ${question.q_TITLE}</div>
         <div class="author-info">작성자: ${question.USER_ID} 작성일: ${question.q_REG_DATE} 조회수: ${question.q_HIT}</div>
         <div class="content">${question.q_CONTENT}</div>
-        <div class="button-container">
+            <c:if test="${not empty answer}">
+       		<div style="text-align: right;">
+            <button class="button delete" onclick="confirmAllDelete(${question.QUESTION_IDX})"> 전체 삭제</button>
+            </div>
+            </c:if>
+            <c:if test="${not empty answerMessage}">
+            <div style="text-align: right; display: flex; justify-content: flex-end;">
             <button class="button edit" onclick="redirectToEditPage(${question.QUESTION_IDX})">수정</button>
             <button class="button delete" onclick="confirmDelete(${question.QUESTION_IDX})">삭제</button>
-            <c:if test="${not empty answerMessage}">
-            <div style="text-align: right;">
     		<button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX})">답변</button>
-			</c:if>
-			</div>
-        		</div>
     		</div>
-		<!-- 답변이 아직 작성이 안됐을경우 -->
+			</c:if>
+			<!-- 답변이 아직 작성이 안됐을경우 -->
 		<c:if test="${not empty answerMessage}">
-			
 			<div class="answer-box">
 				<div class="content">${answerMessage}</div>
 			</div>
@@ -251,11 +253,17 @@
 				<div class="author-info">답변자: ${answer.USER_ID} 답변일:
 					${answer.a_REG_DATE}</div>
 				<div class="content">${answer.a_CONTENT}</div>
+				 <div style="text-align: right;">
+				<button class="button adelete" onclick="confirmDelete(${question.QUESTION_IDX})">삭제</button>
+			</div>
 			</div>
 		</c:if>
 		<div class="button-container return-btn">
             <button class="button" onclick="redirectToList(${question.CLASS_IDX})">리스트로 돌아가기</button>
         </div>
+        		</div>
+    		</div>
+		
 
 		<div id="footer">
         <li>상호명 : SONA</li>
@@ -311,6 +319,23 @@ function confirmDelete(questionIdx) {
     }
 }
 
+function confirmAllDelete(questionIdx) {
+    if (confirm("질문과 답변 모두 삭제 하시겠습니까?")) {
+        $.ajax({
+            type: "POST",
+            url: "./deleteAllQnA",
+            data: { questionIdx: questionIdx },
+            success: function(response) {
+            	alert("전체 삭제되었습니다.");
+            	location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+}
+
 
 
 
@@ -330,6 +355,7 @@ $(document).ready(function() {
     }
     if (loggedInUserId !== teacherId) {
         $(".reply").hide();
+        $(".adelete").hide();
     }
 });
 

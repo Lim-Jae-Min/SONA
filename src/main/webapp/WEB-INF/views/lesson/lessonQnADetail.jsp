@@ -195,6 +195,7 @@
 </body>
 <script>
 var classIdx = ${question.CLASS_IDX};
+var qidx = ${question.QUESTION_IDX};
 
 function confirmDelete(questionIdx) {
     if (confirm("삭제 하시겠습니까?")) {
@@ -214,9 +215,6 @@ function confirmDelete(questionIdx) {
 }
 
 
-function redirectToList(classIdx) {
-    window.location.href = './lessonQnAList?CLASS_IDX=' + classIdx;
-}
 
 
 $(document).ready(function() {
@@ -237,6 +235,22 @@ $(document).ready(function() {
         $(".reply").hide();
     }
 });
+
+function redirectToList(classIdx) {
+    window.location.href = './lessonQnAList?QUESTION_IDX=' + classIdx;
+}
+
+
+function redirectToEditPage(qidx) {
+    window.location.href = './lessonQnAEdit?QUESTION_IDX=' + qidx;
+}
+
+function redirectToReplyPage(qidx) {
+    window.location.href = './lessonQnARepy?QUESTION_IDX=' + qidx;
+}
+
+
+
 
 </script>
 </html>

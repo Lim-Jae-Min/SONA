@@ -168,6 +168,11 @@
 	    </div>
 </body>
 <script>
+	var msg = '${msg}'; // 쿼터 빠지면 넣은 문구가 변수로 인식됨.
+	if(msg != ''){
+	alert(msg);
+}
+
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});

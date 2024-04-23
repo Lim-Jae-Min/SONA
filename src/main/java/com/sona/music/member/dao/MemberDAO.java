@@ -32,8 +32,10 @@ public interface MemberDAO {
 
 	int allCount(int pagePerCnt);
 
-	Object detail(String user_id);
 
 	List<ReviewDTO> list2(String user_id, int pagePerCnt, int start);
+
+	MemberDTO detail(String user_id);
+
 
 }

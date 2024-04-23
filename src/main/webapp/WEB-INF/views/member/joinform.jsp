@@ -125,7 +125,7 @@
 #info__id .check {
   position: absolute;
   width: 90px; /* 버튼 너비 설정 */
-  height: calc(100% - 13px); /* 버튼 높이 설정 */
+  height: calc(100% - 8px); /* 버튼 높이 설정 */
   top: 0;
   right: -20px;
   margin: auto 0;
@@ -222,6 +222,14 @@
 	    </section>
 	</form>
     <div>
+    </div>
+    <div id="footer">
+        <li>상호명 : SONA</li>
+        <li>대표자 : 김○○</li>
+        <li>전화 : 02-123-4567</li>
+        <li>팩스 : 02-123-4568</li>
+        <li>사업자등록번호 : 000-00-00000</li>
+        <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
     </div>
     <div id="slide">
         <table>

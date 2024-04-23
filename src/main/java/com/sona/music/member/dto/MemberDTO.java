@@ -22,7 +22,7 @@ public class MemberDTO {
     private String COUNT;
     private String CLASS_NAME;
     private String APPLY_IDX;
-    private String TPHOTO;
+    private String PROFILE;
 	
 	
 	public String getUSER_ID() {
@@ -127,17 +127,17 @@ public class MemberDTO {
 	public void setAPPLY_IDX(String aPPLY_IDX) {
 		APPLY_IDX = aPPLY_IDX;
 	}
-	public String getTPHOTO() {
-		return TPHOTO;
-	}
-	public void setTPHOTO(String tPHOTO) {
-		TPHOTO = tPHOTO;
-	}
 	public int getAlarm_count() {
 		return alarm_count;
 	}
 	public void setAlarm_count(int alarm_count) {
 		this.alarm_count = alarm_count;
+	}
+	public String getPROFILE() {
+		return PROFILE;
+	}
+	public void setPROFILE(String pROFILE) {
+		PROFILE = pROFILE;
 	}
 
 	

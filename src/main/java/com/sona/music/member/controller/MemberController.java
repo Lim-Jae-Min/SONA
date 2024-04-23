@@ -117,17 +117,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/apply.go")
-	public String applyForm(Model model) {
+	public String applyForm(Model model, HttpSession session) {
 		logger.info("강의신청 페이지 접근");
+		logger.info("session ID: "+session.getAttribute("loginId"));
 		
 		return "applyForm/applyForm";
 	}
 	
 	/*회원 상세보기*/
 	@RequestMapping(value="/userdetail.go")
-	public String userdetail(Model model) {
+	public String userdetail(Model model, HttpSession session, String user_id) {
 		logger.info("회원상세보기 페이지 접근");
-		
+		MemberDTO detail = memberService.userdetail(user_id);
+		model.addAttribute("detail" , detail);
 		return "member/userDetail";
 	}
 	
@@ -140,8 +142,6 @@ public class MemberController {
 		
 		MemberDTO info = memberService.login(id, pw);
 		
-		
-//		logger.info("loginId : "+ info.getUSER_ID().toString());
 		
 		if(info != null) {
 //			page = "/main/main";
@@ -231,7 +231,7 @@ public class MemberController {
 //		logger.info("listCall 요청");
 //		logger.info("받아온 유저 user_id: "+user_id);
 //		logger.info("페이지당 보여줄 갯수:"+cnt);
-//		logger.info("요청 페이지: "+page);
+//		logger.info("요청 페이지: "+page); 
 //		
 		
 		int currPage = Integer.parseInt(page);

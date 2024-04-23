@@ -20,6 +20,13 @@
 		    padding-bottom: 32px;
 		}
 		
+		.list-item{
+			box-sizing: border-box;
+			border-block-end: inherit;
+		}
+		
+	
+		
 </style>
 </head>
 <body>
@@ -72,11 +79,19 @@
                 <thead>
    			 <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
 
-                    <tr>
-                        &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png" style="margin-left: 30px;"  id="account"></td>
-                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${detail.user_name} ${detail.user_type}<span><br><br>${detail.user_id}</td>
+                        <tr> 
+        				<td>${lesson.user_name}</td>
+        				<c:if test="${detail.PROFILE != null}">
+        					&nbsp;<td rowspan="2" style="width: 70px;"><img src="/photo/${detail.PROFILE}" id="profile"></td>
+        				</c:if>
+        				<c:if test="${detail.PROFILE == null}">
+        					&nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/basic_user.png" class="lessonLogo"></td>
+        				</c:if>
+        				</tr>
+                        
+                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${detail.USER_NAME} ${detail.USER_TYPE}</span><br><br>${detail.USER_ID}</td>
                         <td style="width: 60%; min-width: 150px; text-align: right;">
-                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${detail.manner}
+                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${detail.MANNER}
                         </td>
                     </tr>
                 </thead>
@@ -85,7 +100,7 @@
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">${userInfo.user_email}</span></td>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일: <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">${detail.USER_EMAIL}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -198,6 +213,9 @@ $('#userName').click(function slide() {
     }
 });
 
+$('#logo').click(function main(){
+	   location.href = '/main';
+	});
 
 var showPage =1;
 
@@ -245,7 +263,7 @@ function drawList(list){
     var content = '';
     for(item of list){
        console.log(item);
-       content += '<tr>';
+       content += '<tr class = "list-item">';
        content += '<td>'+'인덱스 번호' +'</td>';
        content += '<td>' + item.class_NAME + '</td>';
        content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.count+'명' + '</td>';
@@ -298,7 +316,7 @@ function drawList2(list){
     var content = '';
     for(item of list){
        console.log(item);
-       content += '<tr>';
+       content += '<tr class="list-item">';
        content += '<td>'+ '인덱스 번호' +'</td>';
        content += '<td>'+ item.review_TITLE +'</td>';
        content += '<td>&nbsp;&nbsp;&nbsp;' + item.rater_ID + '</td>';

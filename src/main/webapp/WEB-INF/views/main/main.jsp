@@ -46,7 +46,6 @@
                 </tr>
             </c:if>
             <c:if test="${sessionScope.loginId eq null}">
->>>>>>> origin/master
                 <tr>
                     <th><a href="login.go">로그인</a></th>
                 </tr>

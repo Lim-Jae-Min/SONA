@@ -79,7 +79,7 @@ public class MemberService {
 		result.put("list", list);
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
-		result.put("detail", memberDAO.detail(user_id));
+		
 		for (MemberDTO r : list) {
 //			logger.info(r.getCLASS_NAME()+"");
 //			logger.info(r.getCLASS_REG_DATE()+"");
@@ -102,13 +102,41 @@ public class MemberService {
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
 		for (ReviewDTO r : list) {
-			logger.info(r.getREVIEW_TITLE()+"");
-			logger.info(r.getRATER_ID()+"");
-			logger.info(r.getSCORE()+"");
-			logger.info(r.getREVIEW_REG_DATE()+"");
+//			logger.info(r.getREVIEW_TITLE()+"");
+//			logger.info(r.getRATER_ID()+"");
+//			logger.info(r.getSCORE()+"");
+//			logger.info(r.getREVIEW_REG_DATE()+"");
 		}
 		
 		return result;
 	}
+/*
+	public Map<String, Object> userdetail(String user_id) {
+		logger.info("서비스");
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<MemberDTO> list = memberDAO.detail(user_id);
+		result.put("detail", list);
+		for (MemberDTO r : list) {
+			logger.info(r.getUSER_NAME()+"");
+			logger.info(r.getMANNER()+"");
+			logger.info(r.getUSER_EMAIL()+"");
+			logger.info(r.getUSER_TYPE()+"");
+		}
+		return result;
+	}
+
+ */
+
+	public MemberDTO userdetail(String user_id) {
+		logger.info("서비스");
+		MemberDTO detail = memberDAO.detail(user_id);
+		logger.info("회원 정보: "+ detail);
+		return memberDAO.detail(user_id);
+	}
+
+	
+
+	
+
 	
 }

@@ -19,7 +19,7 @@
 	</insert>
 	
 	<select id="paymentGetLesson" resultType="com.sona.music.lesson.dto.LessonDTO">
-		SELECT CLASS_IDX, USER_ID, 
+		SELECT *,
 			(SELECT USER_NAME FROM USERS WHERE USERS.USER_ID = CLASS_OPEN.USER_ID) 
 			AS USER_NAME FROM CLASS_OPEN
 			WHERE CLASS_IDX = #{param1};

@@ -29,8 +29,8 @@ public class PointController {
 		model.addAttribute(model);
 		String chargePointLoginId = (String) session.getAttribute("loginId");
 		logger.info(chargePointLoginId);
-		int havaPoint = pointService.getHavePoint(chargePointLoginId);
-		model.addAttribute("havaPoint", havaPoint);
+		int havePoint = pointService.getHavePoint(chargePointLoginId);
+		model.addAttribute("havePoint", havePoint);
 		return "myPoint/chargePoint";
 	}
 	
@@ -55,8 +55,8 @@ public class PointController {
 		model.addAttribute(model);
 		String chargePointLoginId = (String) session.getAttribute("loginId");
 		logger.info(chargePointLoginId);
-		int havaPoint = pointService.getHavePoint(chargePointLoginId);
-		model.addAttribute("havaPoint", havaPoint);
+		int havePoint = pointService.getHavePoint(chargePointLoginId);
+		model.addAttribute("havePoint", havePoint);
 		return "myPoint/withdrawPoint";
 	}
 	
@@ -78,11 +78,29 @@ public class PointController {
 	}
 	
 	@RequestMapping(value = "/lessonPayment.go")
-	public String lessonPaymentGo() {
+	public String lessonPaymentGo(Model model,HttpSession session) {
 		int CLASS_IDX = 2;
 		//레슨정보를 가져오기
+		String chargePointLoginId =(String) session.getAttribute("loginId");
+		int havePoint = pointService.getHavePoint(chargePointLoginId);
 		LessonDTO lessonInfo = pointService.paymentGetLesson(CLASS_IDX);
+		model.addAttribute("USER_NAME",lessonInfo.getUser_name());
+		model.addAttribute("Class_name",lessonInfo.getClass_name());
+		model.addAttribute("Class_times",lessonInfo.getClass_times());
+		model.addAttribute("Class_price",lessonInfo.getClass_price());
+		model.addAttribute("havePoint", havePoint);
+		int remainPoint = havePoint- lessonInfo.getClass_price();
+		model.addAttribute("remainPoint",remainPoint);
 		
 		return "myPoint/lessonPayment";
 	}
+	
+	@RequestMapping(value = "/lessonPayment.do")
+	public String lessonPaymentDo(Model model,HttpSession session) {
+		
+		
+		
+		return "myPoint/lessonPayment";
+	}
+	
 }

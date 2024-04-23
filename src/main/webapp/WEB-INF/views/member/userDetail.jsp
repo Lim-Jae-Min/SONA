@@ -24,7 +24,10 @@
 			box-sizing: border-box;
 			border-block-end: inherit;
 		}
-		
+		.profile {
+			width: 200px;
+			height: 200px;
+		}
 	
 		
 </style>
@@ -78,20 +81,18 @@
             <table style="width: 100%;">
                 <thead>
    			 <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
-
                         <tr> 
-        				<td>${lesson.user_name}</td>
-        				<c:if test="${detail.PROFILE != null}">
-        					&nbsp;<td rowspan="2" style="width: 70px;"><img src="/photo/${detail.PROFILE}" id="profile"></td>
+        				<c:if test="${detail.profile != null}">
+        					&nbsp;<td rowspan="2" style="width: 50px;"><img src="/photo/${detail.profile}" class="profile"></td>
         				</c:if>
-        				<c:if test="${detail.PROFILE == null}">
-        					&nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/basic_user.png" class="lessonLogo"></td>
+        				<c:if test="${detail.profile == null}">
+        					&nbsp;<td rowspan="2" style="width: 50px;"><img src="resources/img/basic_user.png" class="profile"></td>
         				</c:if>
         				</tr>
                         
-                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${detail.USER_NAME} ${detail.USER_TYPE}</span><br><br>${detail.USER_ID}</td>
+                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${detail.user_name} ${detail.user_type}</span><br><br>${detail.user_id}</td>
                         <td style="width: 60%; min-width: 150px; text-align: right;">
-                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${detail.MANNER}
+                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${detail.manner}
                         </td>
                     </tr>
                 </thead>
@@ -100,7 +101,7 @@
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일: <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">${detail.USER_EMAIL}</span></td>
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일: <span class="contents" style="margin-left: 7px; width: 200px; display: inline-block;">${detail.user_email}</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -265,10 +266,10 @@ function drawList(list){
        console.log(item);
        content += '<tr class = "list-item">';
        content += '<td>'+'인덱스 번호' +'</td>';
-       content += '<td>' + item.class_NAME + '</td>';
-       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.count+'명' + '</td>';
-       content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
-       var date = new Date(item.class_REG_DATE);
+       content += '<td>' + item.class_name + '</td>';
+       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.Count+'명' + '</td>';
+       content += '<td><span style="color: #FED000;">★</span>' + item.Score +'</td>';
+       var date = new Date(item.class_reg_date);
        var dateStr = date.toLocaleDateString("ko-KR");
        content += '<td>' + dateStr + '</td>';
        content += '</tr>';
@@ -317,7 +318,7 @@ function drawList2(list){
     for(item of list){
        console.log(item);
        content += '<tr class="list-item">';
-       content += '<td>'+ '인덱스 번호' +'</td>';
+       content += '<td>&nbsp;&nbsp;'+ item.index_order +'</td>';
        content += '<td>'+ item.review_TITLE +'</td>';
        content += '<td>&nbsp;&nbsp;&nbsp;' + item.rater_ID + '</td>';
        content += '<td>&nbsp;&nbsp;<span style="color: #FED000;">★</span>' + item.score +'</td>';

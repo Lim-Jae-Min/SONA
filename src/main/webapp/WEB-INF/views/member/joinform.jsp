@@ -303,7 +303,7 @@ function join(){
 		console.log(usertype.val());
 		alert('사용자 유형을 선택 해 주세요!');
 	}else{
-		var regExp = new RegExp('[a-zA-Zㄱ-ㅎ가-하]');
+		var regExp = new RegExp('[^0-9]');
 		var match = regExp.test($phone.val());
 		var match2 = regExp.test($accountnumber.val());
 		

@@ -81,11 +81,11 @@ public class MemberService {
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
 		
 		for (MemberDTO r : list) {
-//			logger.info(r.getCLASS_NAME()+"");
-//			logger.info(r.getCLASS_REG_DATE()+"");
-//			logger.info(r.getCOUNT()+"");
-//			logger.info(r.getSCORE()+"");
-//			logger.info(r.getAPPLY_IDX()+"");
+			logger.info(r.getClass_name()+"");
+			logger.info(r.getClass_leg_date()+"");
+			logger.info(r.getCount()+"");
+			logger.info(r.getScore()+"");
+			logger.info(r.getApply_idx()+"");
 		}
 		
 		return result;
@@ -106,26 +106,12 @@ public class MemberService {
 //			logger.info(r.getRATER_ID()+"");
 //			logger.info(r.getSCORE()+"");
 //			logger.info(r.getREVIEW_REG_DATE()+"");
+//			logger.info(r.getIndex_order()+"");
 		}
 		
 		return result;
 	}
-/*
-	public Map<String, Object> userdetail(String user_id) {
-		logger.info("서비스");
-		Map<String, Object> result = new HashMap<String, Object>();
-		List<MemberDTO> list = memberDAO.detail(user_id);
-		result.put("detail", list);
-		for (MemberDTO r : list) {
-			logger.info(r.getUSER_NAME()+"");
-			logger.info(r.getMANNER()+"");
-			logger.info(r.getUSER_EMAIL()+"");
-			logger.info(r.getUSER_TYPE()+"");
-		}
-		return result;
-	}
 
- */
 
 	public MemberDTO userdetail(String user_id) {
 		logger.info("서비스");

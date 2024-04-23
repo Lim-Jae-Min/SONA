@@ -80,7 +80,7 @@
 		ORDER BY CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>
-	
+	<!-- 
 	<select id="list2" resultType="com.sona.music.board.dto.ReviewDTO">
 		SELECT review_title,
 			rater_id,
@@ -89,7 +89,33 @@
 			FROM REVIEW WHERE ratee_id = 'user2'
 			ORDER BY REVIEW_IDX DESC
 			LIMIT #{param2} OFFSET #{param3}
-	</select>
+	</select>	
+	 -->
+	<select id="list2" resultType="com.sona.music.board.dto.ReviewDTO">
+	SELECT 
+	    review_title,
+	    rater_id,
+	    score,
+	    review_reg_date,
+	    total_reviews - ROW_NUMBER() OVER (ORDER BY REVIEW_IDX DESC) + 1 AS index_order
+	FROM 
+	    (
+	        SELECT 
+	            review_title,
+	            rater_id,
+	            score,
+	            review_reg_date,
+	            REVIEW_IDX,
+	            (SELECT COUNT(*) FROM REVIEW WHERE ratee_id = 'user2') AS total_reviews
+	        FROM 
+	            REVIEW 
+	        WHERE 
+	            ratee_id = 'user2'
+	    ) AS review_with_total_reviews
+	ORDER BY REVIEW_IDX DESC
+	    LIMIT #{param2} OFFSET #{param3}
+   
+	</select>	
 	
 	
 	<select id="allCount" resultType="Integer">

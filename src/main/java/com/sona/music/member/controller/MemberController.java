@@ -145,11 +145,11 @@ public class MemberController {
 		
 		if(info != null) {
 //			page = "/main/main";
-			session.setAttribute("loginId", info.getUSER_ID());	
-			session.setAttribute("user_type", info.getUSER_TYPE());	
-			session.setAttribute("user_name", info.getUSER_NAME());
-			session.setAttribute("manner_variance", info.getMANNER());
-			session.setAttribute("point", info.getPOINT());
+			session.setAttribute("loginId", info.getUser_id());	
+			session.setAttribute("user_type", info.getUser_type());	
+			session.setAttribute("user_name", info.getUser_name());
+			session.setAttribute("manner_variance", info.getManner());
+			session.setAttribute("point", info.getPoint());
 			session.setAttribute("alarm_count", info.getAlarm_count());
 			
 			String test = (String) session.getAttribute("loginId");
@@ -158,11 +158,11 @@ public class MemberController {
 			logger.info("test : " + test);
 			logger.info("test1 : " + test1);
 			 // 수강생인 경우
-	        if ("수강생".equals(info.getUSER_TYPE())) {
+	        if ("수강생".equals(info.getUser_type())) {
 	            page = "/main/main"; // 수강생 메인 페이지로 리다이렉트
 	        }
 	        // 강사인 경우
-	        else if ("강사".equals(info.getUSER_TYPE())) {
+	        else if ("강사".equals(info.getUser_type())) {
 	            page = "/main/main"; // 강사 메인 페이지로 리다이렉트
 	        }
 	        

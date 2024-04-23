@@ -7,10 +7,14 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
-    
+.topTable {
+	padding: 10px;
+}
+#topRow {
+	border-bottom: solid 3px gray;
+}
 </style>
 </head>
-<body>
 <body>
     <header id="usermain">
         <table id="mainmenu">
@@ -53,7 +57,14 @@
         </table>
     </header>
     <div>
-        ${msg}
+        <table class="topTable">
+        	<tr id="topRow">
+        		<td>1</td>
+        		<td>1</td>
+        		<td>1</td>
+        		<td>1</td>
+        	</tr>
+        </table>
     </div>
     <div id="footer">
         <li>상호명 : SONA</li>
@@ -83,18 +94,11 @@
         	</c:if>
         </div>
         <br/>
-        <div><a href="studentPage.do">마이페이지</a></div>
+        <div><a href="myPage.go">마이페이지</a></div>
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
     </div>
-    
-    <a href="apply.go">강의신청 test</a>
-    <br/>
-    <a href="userdetail.go?user_id=user2">회원 상세보기</a>
-    <br/>
-    <a href="lessonLog.go">강의일지 test</a>
 </body>
-
 <script>
 
 $('#userName').click(function slide() {
@@ -110,7 +114,6 @@ $('#userName').click(function slide() {
 $('#logo').click(function main(){
 	location.href = '/main';
 });
-
 $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';
 });

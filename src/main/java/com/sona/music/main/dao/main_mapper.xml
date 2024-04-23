@@ -7,5 +7,9 @@
 	<select id="id" resultType="String">
 		SELECT user_id FROM USERS WHERE user_id = 'test'
 	</select>
+	
+	<select id="myInst" resultType="String">
+		SELECT applyform_inst FROM APPLICATION_FORM WHERE user_id = #{param1}
+	</select>
 
 </mapper>

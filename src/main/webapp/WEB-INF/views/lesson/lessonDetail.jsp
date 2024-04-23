@@ -639,10 +639,10 @@ function closeModal() {
 console.log('${lesson.video_url}');
 
 $('#moreReview').click(function (){
-	location.href = 'lessonReviewList?class_idx=${lesson.class_idx}';
+	location.href = 'lessonReviewList?CLASS_IDX=${lesson.class_idx}';
 });
 $('#moreQnA').click(function (){
-	location.href = 'lessonQnAList?class_idx=${lesson.class_idx}';
+	location.href = 'lessonQnAList?CLASS_IDX=${lesson.class_idx}';
 });
 $('#lessonApplyButton').click(function (){
 	var result = confirm("수강 신청하시겠습니까?");

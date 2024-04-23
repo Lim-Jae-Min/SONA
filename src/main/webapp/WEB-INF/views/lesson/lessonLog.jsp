@@ -7,11 +7,96 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
-.topTable {
-	padding: 10px;
+#content {
+	text-align: center;
 }
-#topRow {
+.topTable {
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+#bottomTable {
+	border-collapse: collapse;
+	margin: 0 auto;
+}
+.topRow {
 	border-bottom: solid 3px gray;
+}
+.top-first-col {
+	padding: 20px;
+	width: 150px;
+}
+.top-second-col {
+	padding: 20px;
+	width: 350px;
+}
+.right-border {
+	border-right: solid 3px gray;
+}
+.gray {
+	color: gray;
+}
+.profileImg {
+	width: 120px;
+	height: 120px;
+}
+.bottom-first-row {
+	background-color: lightgray;
+	border-top: solid 2px black;
+	border-bottom: solid 2px black;
+}
+.bottom-first-col {
+	width: 50px;
+	padding: 3px 10px;
+}
+.bottom-second-col {
+	width: 580px;
+	padding: 3px 10px;
+}
+.bottom-third-col {
+	width: 150px;
+	padding: 3px 10px;
+}
+.bottom-fourth-col {
+	width: 150px;
+	padding: 3px 10px;
+}
+.bottom-fifth-col {
+	width: 100px;
+	padding: 3px 10px;
+}
+.bottom-normal-row {
+	border-bottom: solid 2px gray;
+	text-align: center;
+	height: 40px;
+}
+button {
+	background-color: #0070b6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
+}
+.editComplete {
+	display: none;
+}
+.editCancel {
+	background-color: gray;
+	display: none;
+}
+.save {
+	display: none;
+}
+.absent {
+	background-color: red;
+	display: none;
+}
+.edit {
+	background-color: rgb(68, 68, 68);
+	display: none;
+}
+.lesson {
+	width: 100%
 }
 </style>
 </head>
@@ -56,15 +141,64 @@
             </c:if>
         </table>
     </header>
-    <div>
+    <div id="content">
+    	<br/><br/><br/>
         <table class="topTable">
-        	<tr id="topRow">
-        		<td>1</td>
-        		<td>1</td>
-        		<td>1</td>
-        		<td>1</td>
+        	<tr class="topRow">
+        		<th class="top-first-col">강의명</th>
+        		<td class="top-second-col"><b>어쿠스틱 기타 강의</b></td>
+        		<th class="top-first-col">강의 시작일</th>
+        		<td class="top-second-col"><b>2024-05-20</b></td>
+        	</tr>
+        	<tr>
+        		<th class="top-first-col">
+        			<c:if test="false">
+        				<img src="/photo/" class="profileImg">
+        			</c:if>
+        			<c:if test="true">
+        				<img src="resources/img/basic_user.png" class="profileImg">
+        			</c:if>
+        		</th>
+        		<td class="top-second-col right-border">
+        			ㅇㅇㅇ 수강생
+        			<br/><br/>
+        			<small class="gray">수강생 ID</small>
+        		</td>
+        		<th class="top-first-col">
+        			<c:if test="false">
+        				<img src="/photo/" class="profileImg">
+        			</c:if>
+        			<c:if test="true">
+        				<img src="resources/img/basic_user.png" class="profileImg">
+        			</c:if>
+        		</th>
+        		<td class="top-second-col">
+        			ㅇㅇㅇ 강사
+        			<br/><br/>
+        			<small class="gray">수강생 ID</small>
+        		</td>
+        	</tr>
+        	<tr>
+        		<th class="top-first-col">이메일</th>
+        		<td class="top-second-col right-border">수강생@email.com</td>
+        		<th class="top-first-col">이메일</th>
+        		<td class="top-second-col">강사@email.com</td>
+        	</tr>
+        	<tr>
+        		<th class="top-first-col">전화번호</th>
+        		<td class="top-second-col right-border">010-1234-1234</td>
+        		<th class="top-first-col">전화번호</th>
+        		<td class="top-second-col">010-1234-1234</td>
         	</tr>
         </table>
+        <br/><br/><br/>
+        <form action="lessonLogWrite.do" method="post">
+	        <table id="bottomTable">
+	        	
+	        </table>
+        </form>
+        
+        <br/><br/><br/><br/><br/><br/>
     </div>
     <div id="footer">
         <li>상호명 : SONA</li>
@@ -116,6 +250,143 @@ $('#logo').click(function main(){
 });
 $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';
+});
+
+var content = '<tr>';
+content += '<td colspan="5">&nbsp;&nbsp;&nbsp;<b>강의 일지</b><br/><br/></td>';
+content += '</tr>';
+content += '<tr class="bottom-first-row">';
+content += '<th class="bottom-first-col">회차</th>';
+content += '<th class="bottom-second-col">내용</th>';
+content += '<th class="bottom-third-col">수업일자</th>';
+content += '<th class="bottom-fourth-col">작성일자</th>';
+content += '<th class="bottom-fifth-col"></th>';
+content += '</tr>';
+console.log(content);
+
+
+var total_times = 4;
+
+for (var i = 1; i <= total_times; i++) {
+	
+	content += '<tr class="bottom-normal-row">';
+	content += '<td class="bottom-first-col">' + i + '</td>';
+	content += '<td class="bottom-second-col"></td>';
+	content += '<td class="bottom-third-col"></td>';
+	content += '<td class="bottom-fourth-col"></td>';
+	content += '<th class="bottom-fifth-col"><button class="save" type="button">저장</button>&nbsp;<button class="edit" type="button">수정</button>&nbsp;'
+	content += '<button class="editComplete" type="button">수정 완료</button>&nbsp;<button class="absent" type="button">결석</button>';
+	content += '&nbsp;<button class="editCancel" type="button">수정 취소</button></th>';
+	content += '</tr>';
+}
+
+$('#bottomTable').html(content);
+
+var accumulate_times = 3;
+var list = '${list}';
+console.log(list);
+
+for (var i = 0; i < accumulate_times; i++) {
+	$('.bottom-second-col').eq(i + 1).html('테스트');
+	$('.bottom-third-col').eq(i + 1).html('2024-04-01');
+	$('.bottom-fourth-col').eq(i + 1).html('2024-04-02');
+	if (total_times != accumulate_times) {
+		$('.edit').eq(i).css('display', 'inline-block');
+	}
+}
+
+// <input type="text" class="lesson contentBox" name="content"/>
+// <input type="date" class="lesson date" name="date"/>
+// <button class="save" type="button">저장</button>&nbsp;<button class="edit" type="button">수정</button>&nbsp;
+// <button class="editComplete" type="button">수정 완료</button>&nbsp;<button class="absent" type="button">결석</button></br>
+// <button class="editCancel" type="button">수정 완료</button>
+
+if (total_times != accumulate_times) {
+	$('.bottom-second-col').eq(accumulate_times + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
+	$('.bottom-third-col').eq(accumulate_times + 1).html('<input type="date" class="lesson date" name="date"/>');
+	$('.save').eq(accumulate_times).css('display', 'inline-block');
+	$('.absent').eq(accumulate_times).css('display', 'inline-block');
+}
+
+var backUpData1 = [];
+var backUpData2 = [];
+
+$('.edit').click(function (){
+	var index = $('.edit').index(this);
+	// console.log(index);
+	$(this).css('display', 'none');
+	$('.save').eq(accumulate_times).css('display', 'none');
+	$('.absent').eq(accumulate_times).css('display', 'none');
+	
+	backUpData1[0] = index;
+	backUpData1[1] = $('.bottom-second-col').eq(index + 1).html();
+	backUpData2[0] = index;
+	backUpData2[1] = $('.bottom-third-col').eq(index + 1).html();
+	// console.log(backUpData1);
+	
+	$('.bottom-second-col').eq(index + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
+	$('.bottom-third-col').eq(index + 1).html('<input type="date" class="lesson date" name="date"/>');
+	$('.bottom-second-col').eq(accumulate_times + 1).html('');
+	$('.bottom-third-col').eq(accumulate_times + 1).html('');
+	$('.editComplete').eq(index).css('display', 'inline-block');
+	$('.editCancel').eq(index).css('display', 'inline-block');
+});
+
+$('.editCancel').click(function (){
+	var index = backUpData1[0];
+	console.log(backUpData1[1]);
+	
+	$(this).css('display', 'none');
+	$('.editComplete').eq(index).css('display', 'none');
+	// console.log(backUpData1);
+	$('.bottom-second-col').eq(index + 1).html(backUpData1[1]);
+	$('.bottom-third-col').eq(index + 1).html(backUpData2[1]);
+	$('.bottom-second-col').eq(accumulate_times + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
+	$('.bottom-third-col').eq(accumulate_times + 1).html('<input type="date" class="lesson date" name="date"/>');
+	$('.save').eq(accumulate_times).css('display', 'inline-block');
+	$('.absent').eq(accumulate_times).css('display', 'inline-block');
+	$('.edit').eq(index).css('display', 'inline-block');
+});
+$('.editComplete').click(function (){
+	$('form').attr('action', 'lessonLogEdit.do');
+	var $contentBox = $('.contentBox');
+	var $date = $('.date');
+	
+	var result = confirm("수정하시겠습니까?");
+	if (result) {
+		if ($contentBox.val() == '') {
+			alert('내용을 입력해주세요.');
+			$contentBox.focus();
+		} else if ($date.val() == '') {
+			alert('날짜를 입력해주세요.');
+			$date.focus();
+		} else {
+			$('form').submit();
+		}
+	}
+});
+$('.save').click(function (){
+	var $contentBox = $('.contentBox');
+	var $date = $('.date');
+	
+	var result = confirm("저장하시겠습니까?");
+	if (result) {
+		if ($contentBox.val() == '') {
+			alert('내용을 입력해주세요.');
+			$contentBox.focus();
+		} else if ($date.val() == '') {
+			alert('날짜를 입력해주세요.');
+			$date.focus();
+		} else {
+			$('form').submit();
+		}
+	}
+});
+$('.absent').click(function (){
+	var result = confirm("결석 처리하시겠습니까?");
+	if (result) {
+		location.href = 'lessonAbsent.do';
+	}
 });
 
 </script>

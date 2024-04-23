@@ -701,50 +701,51 @@ $('#open').click(function() {
 	console.log($classStyle.val());
 	console.log($classTimes.val());
 	console.log($classPrice.val()); */
-	
-	if ($className.val() == '') {
-		alert('강의 제목을 입력해주세요!');
-		$className.focus();
-	} else if ($classInst.val() == '' || $classInst.val() == null) {
-		alert('강의 악기를 입력해주세요!');
-		$classInst.focus();
-	} else if ($classContent.val() == '') {
-		alert('강의 내용을 입력해주세요!');
-		$classContent.focus();
-	} else if ($classLocation.val() == '') {
-		alert('강의 지역을 입력해주세요!');
-		$classLocation.focus();
-	} else if ($careerYears.val() == '') {
-		alert('경력 년수를 입력해주세요!');
-		$careerYears.focus();
-	} else if ($careerContent.val() == '') {
-		alert('경력 내용을 입력해주세요!');
-		$careerContent.focus();
-	} else if ($classDays.val() == '') {
-		alert('강의 요일을 입력해주세요!');
-		$classDays.focus();
-	} else if ($classStyle.val() == '') {
-		alert('강의스타일을 입력해주세요!');
-		$classStyle.focus();
-	} else if ($classTimes.val() == '') {
-		alert('강의 총 횟수를 입력해주세요!');
-		$classTimes.focus();
-	} else if ($classPrice.val() == '') {
-		alert('강의 가격을 입력해주세요!');
-		$classPrice.focus();
-	} else {
-		if (timesTest) {
-			alert('강의 총 횟수에 숫자만 입력해 주세요.');
-			$classTimes.val('');
+	if (result) {
+		if ($className.val() == '') {
+			alert('강의 제목을 입력해주세요!');
+			$className.focus();
+		} else if ($classInst.val() == '' || $classInst.val() == null) {
+			alert('강의 악기를 입력해주세요!');
+			$classInst.focus();
+		} else if ($classContent.val() == '') {
+			alert('강의 내용을 입력해주세요!');
+			$classContent.focus();
+		} else if ($classLocation.val() == '') {
+			alert('강의 지역을 입력해주세요!');
+			$classLocation.focus();
+		} else if ($careerYears.val() == '') {
+			alert('경력 년수를 입력해주세요!');
+			$careerYears.focus();
+		} else if ($careerContent.val() == '') {
+			alert('경력 내용을 입력해주세요!');
+			$careerContent.focus();
+		} else if ($classDays.val() == '') {
+			alert('강의 요일을 입력해주세요!');
+			$classDays.focus();
+		} else if ($classStyle.val() == '') {
+			alert('강의스타일을 입력해주세요!');
+			$classStyle.focus();
+		} else if ($classTimes.val() == '') {
+			alert('강의 총 횟수를 입력해주세요!');
 			$classTimes.focus();
-			return false;
-		} else if (priceTest) {
-			alert('강의 가격에 숫자만 입력해 주세요.');
-			$classPrice.val('');
+		} else if ($classPrice.val() == '') {
+			alert('강의 가격을 입력해주세요!');
 			$classPrice.focus();
-			return false;
+		} else {
+			if (timesTest) {
+				alert('강의 총 횟수에 숫자만 입력해 주세요.');
+				$classTimes.val('');
+				$classTimes.focus();
+				return false;
+			} else if (priceTest) {
+				alert('강의 가격에 숫자만 입력해 주세요.');
+				$classPrice.val('');
+				$classPrice.focus();
+				return false;
+			}
+			$('form').submit();
 		}
-		$('form').submit();
 	}
 });
 

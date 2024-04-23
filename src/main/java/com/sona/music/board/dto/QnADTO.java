@@ -18,7 +18,6 @@ public class QnADTO {
 	private int ANSWER_IDX;
 	private String A_CONTENT;
 	private Date A_REG_DATE;
-
 	
 	public int getQUESTION_IDX() {
 		return QUESTION_IDX;

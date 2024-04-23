@@ -170,10 +170,5 @@ public class LessonController {
 		return "lesson/allLessonList";
 	}
 	
-	@RequestMapping(value="/lessonLog.go")
-	public String lessonLogGo () {
-		
-		return "lesson/lessonLog";
-	}
 	
 }

@@ -71,51 +71,55 @@
 </head>
 <body>
     <%@ include file="../member/layout/header.jsp" %>
-    <div class="wrapper">
-        <!-- 프로필 영역 -->
-        <div class="section profile">
-            <div class="profile-info">
-                <img src="profile.jpg" alt="프로필 사진">
-                <div class="lecture-info">
-                    <span id="teacherId">${teacherName} 강사님 </span><br>
-                    <span>강의 제목: ${lectureTitle}</span><br>
-                    <span>강의 횟수: ${lectureCount}</span><br>
-                    <span>강의 가격: ${lecturePrice}</span>
-                </div>
-            </div>
-        </div>
-        <!-- 각 영역을 구분하는 수평선 -->
-        <div class="divider"></div>
-
-        <!-- 보유 포인트 영역 -->
-        <div class="section">
-            <span>보유 포인트: ${havePoint}</span>
-        </div>
-        <!-- 수평선 -->
-        <div class="divider"></div>
-
-        <!-- 강의료 및 포인트 정보 영역 -->
-        <div class="section">
-            <span>총 강의료: ${totalLectureFee}</span><br>
-            <span>현재 포인트: ${currentPoint}</span><br>
-            <span>남은 포인트: ${remainingPoint}</span>
-        </div>
-        <!-- 수평선 -->
-        <div class="divider"></div>
-
-        <!-- 최종 결제 금액 영역 -->
-        <div class="section">
-            <span>최종 결제 금액: ${finalPaymentAmount}</span>
-        </div>
-        <!-- 수평선 -->
-        <div class="divider"></div>
-
-        <!-- 버튼 영역 -->
-        <div class="btn-group">
-            <button type="submit" class="btn">결제하기</button>
-            <button type="button" class="btn">취소하기</button>
-        </div>
-    </div>
+    <form action="">
+	    <div class="wrapper">
+	        <!-- 프로필 영역 -->
+	        <div class="section profile">
+	            <div class="profile-info">
+	                <img src="profile.jpg" alt="프로필 사진">
+	                <div class="lecture-info">
+	                	<input type="hidden" name="${USER_NAME}">
+	                	<input type="hidden" name="${Class_price}">
+	                    <span id="teacherId">${USER_NAME} 강사님 </span><br>
+	                    <span>강의 제목: ${Class_name}</span><br>
+	                    <span>강의 횟수: ${Class_times}</span><br>
+	                    <span>강의 가격: ${Class_price}</span>
+	                </div>
+	            </div>
+	        </div>
+	        <!-- 각 영역을 구분하는 수평선 -->
+	        <div class="divider"></div>
+	
+	        <!-- 보유 포인트 영역 -->
+	        <div class="section">
+	            <span>보유 포인트: ${havePoint}</span>
+	        </div>
+	        <!-- 수평선 -->
+	        <div class="divider"></div>
+	
+	        <!-- 강의료 및 포인트 정보 영역 -->
+	        <div class="section">
+	            <span>총 강의료: ${Class_price}</span><br>
+	            <span>현재 포인트: ${havePoint}</span><br>
+	            <span>남은 포인트: ${remainPoint}</span>
+	        </div>
+	        <!-- 수평선 -->
+	        <div class="divider"></div>
+	
+	        <!-- 최종 결제 금액 영역 -->
+	        <div class="section">
+	            <span>최종 결제 금액: ${Class_price}</span>
+	        </div>
+	        <!-- 수평선 -->
+	        <div class="divider"></div>
+	
+	        <!-- 버튼 영역 -->
+	        <div class="btn-group">
+	            <button type="submit" class="btn">결제하기</button>
+	            <button type="button" class="btn">취소하기</button>
+	        </div>
+	    </div>
+    </form>
 </body>
 
 
@@ -124,5 +128,7 @@
 </div>
 </body>
 <script>
+
+
 </script>
 </html>

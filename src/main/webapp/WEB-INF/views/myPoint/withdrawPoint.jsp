@@ -65,7 +65,7 @@
         <div class="profile">
             <img src="profile.jpg" alt="프로필 사진">
             <span id="userId">${sessionScope.loginId}</span>
-            <div>님이 보유중인 포인트 ${havaPoint} P</div>
+            <div>님이 보유중인 포인트 ${havePoint} P</div>
         </div>
 
         <div class="container">
@@ -83,7 +83,7 @@
 
             <!-- 포인트 정보 표시 -->
             <div class="point-info">
-                <p>보유 포인트: <span id="currentPoints">${havaPoint} P</span></p>
+                <p>보유 포인트: <span id="currentPoints">${havePoint} P</span></p>
                 <p>출금 포인트: <span id="withdrawingPoints">0</span></p>
                 <p>출금 후 포인트: <span id="afterPoints">0</span></p>
             </div>
@@ -91,37 +91,49 @@
         </div>
     </form>
 
-    <script>
-        // 출금 포인트 및 출금 후 포인트 계산 및 UI 업데이트 함수
-        function calculatePoints() {
-            // 출금 금액 입력값 가져오기
-            var currentPoints = ${havaPoint};
-            var withdrawAmount = parseInt(document.getElementById('withdrawAmount').value);
-
-            // 현재 보유 포인트 가져오기 (여기서는 임의의 값으로 대체)
-            var currentPoints = ${havaPoint};
-
-            // 출금 방식 선택 여부 확인
-            var withdrawMethod = document.querySelector('input[name="withdrawMethod"]:checked');
-
-            // 출금 방식에 따라 출금 금액 설정 (여기서는 출금 금액과 출금 후 포인트를 동일하게 처리)
-            var withdrawingPoints = withdrawAmount;
-
-            // 출금 후 포인트 계산
-            var afterPoints = currentPoints - withdrawingPoints;
-
-            // UI 업데이트
-            document.getElementById('currentPoints').innerText = currentPoints + ' P';
-            document.getElementById('withdrawingPoints').innerText = withdrawingPoints + ' P';
-            document.getElementById('afterPoints').innerText = afterPoints + ' P';
-            
-            if(afterPoints<0){
-            	alert("출금 금액이 보유 포인트 보다 많습니다. 다시 입력해 주세요.");
-            	 parseInt(document.getElementById('withdrawAmount').value=0);
-            	 calculatePoints();
-            }
+<script>
+    // 페이지 로드 시 저장된 출금 금액 불러오기
+    window.onload = function() {
+        var savedWithdrawAmount = sessionStorage.getItem('withdrawAmount');
+        if (savedWithdrawAmount !== null) {
+            document.getElementById('withdrawAmount').value = savedWithdrawAmount;
+            calculatePoints();
         }
-    </script>
+    };
+
+    // 출금 포인트 및 출금 후 포인트 계산 및 UI 업데이트 함수
+    function calculatePoints() {
+        // 출금 금액 입력값 가져오기
+        var currentPoints = ${havePoint};
+        var withdrawAmount = parseInt(document.getElementById('withdrawAmount').value);
+
+        // 현재 보유 포인트 가져오기 (여기서는 임의의 값으로 대체)
+        var currentPoints = ${havePoint};
+
+        // 출금 방식 선택 여부 확인
+        var withdrawMethod = document.querySelector('input[name="withdrawMethod"]:checked');
+
+        // 출금 방식에 따라 출금 금액 설정 (여기서는 출금 금액과 출금 후 포인트를 동일하게 처리)
+        var withdrawingPoints = withdrawAmount;
+
+        // 출금 후 포인트 계산
+        var afterPoints = currentPoints - withdrawingPoints;
+
+        // UI 업데이트
+        document.getElementById('currentPoints').innerText = currentPoints + ' P';
+        document.getElementById('withdrawingPoints').innerText = withdrawingPoints + ' P';
+        document.getElementById('afterPoints').innerText = afterPoints + ' P';
+        
+        if(afterPoints<0){
+            alert("출금 금액이 보유 포인트보다 많습니다. 다시 입력해 주세요.");
+            document.getElementById('withdrawAmount').value = 0;
+            calculatePoints();
+        } else {
+            // 계산된 출금 금액을 세션 스토리지에 저장
+            sessionStorage.setItem('withdrawAmount', withdrawAmount);
+        }
+    }
+</script>
 </body>
 
 

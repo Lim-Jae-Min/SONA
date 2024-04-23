@@ -43,12 +43,14 @@ public class PointService {
 		int Class_price = lessonInfo.getClass_price();
 		String User_name = lessonInfo.getUser_name();
 		String Class_name = lessonInfo.getClass_name();
+		int Class_times = lessonInfo.getClass_times();
 		
 		
 		logger.info(id + "강의 결제에서 가져온 강의 아이디");
 		logger.info(User_name + "강의 결제에서 가져온 강의 아이디");
 		logger.info(Class_name + "강의 결제에서 가져온 강의 아이디");
 		logger.info(Class_price + "강의 결제에서 가져온 강의 가격");
+		logger.info(Class_times + "강의 결제에서 가져온 강의 횟수");
 		
 		return lessonInfo;
 	}

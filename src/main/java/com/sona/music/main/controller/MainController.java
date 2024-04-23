@@ -54,4 +54,10 @@ public class MainController {
 		return "studentMyPage/studentPage";
 	}
 	
+	@RequestMapping(value="/alarmList.go")
+	public String alarmList(Model model) {
+		model.addAttribute("msg", "알림 리스트 이동");
+		return "alarm/alarmList";
+	}
+	
 }

@@ -77,16 +77,14 @@ public class LessonController {
 	
 	@RequestMapping(value="/lessonDetail.go")
 	public String lessonDetail(String class_idx, HttpSession session, Model model) {
-		String page = "redirect:/main/main";
+		String page = "redirect:/";
+		String loginId = (String) session.getAttribute("loginId");
 		logger.info("lessonDetail idx = " + class_idx);
 		
 		if (session.getAttribute("loginId") != null) {
 			page = "lesson/lessonDetail";
-			// BoardDTO bbs = service.detail(idx);
-			// model.addAttribute("bbs", bbs);
 			
-			// model 줄테니 여기에 bbs 와 photos 담아와라
-			lessonService.lessonDetail(class_idx, model);
+			lessonService.lessonDetail(class_idx, model, loginId);
 		}
 		
 		return page;

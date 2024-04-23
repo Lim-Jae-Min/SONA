@@ -15,6 +15,7 @@ public class MemberDTO {
 	private Date USER_REG_DATE;
 	private String MANNER;
     private int POINT;
+    private int alarm_count;
     private String REVIEW_TITLE;
     private Date CLASS_REG_DATE;
     private String SCORE;
@@ -131,6 +132,12 @@ public class MemberDTO {
 	}
 	public void setTPHOTO(String tPHOTO) {
 		TPHOTO = tPHOTO;
+	}
+	public int getAlarm_count() {
+		return alarm_count;
+	}
+	public void setAlarm_count(int alarm_count) {
+		this.alarm_count = alarm_count;
 	}
 
 	

@@ -6,7 +6,7 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
+<link rel="stylesheet" href="resources/css/common.css" type="text/css">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
@@ -49,6 +49,7 @@
     width: 100px;
     height: 24px;
 }
+
 </style>
 </head>
 <body>
@@ -57,33 +58,45 @@
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu"><a href="recommendList.go">추천 강의</a></th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu">
+                	<c:if test="${sessionScope.loginId eq null}">
+                		<c:if test="${sessionScope.user_type ne '강사'}">
+		                	<a href="login.go">추천 강의</a>                	
+	                	</c:if>
+                	</c:if>
+                	<c:if test="${sessionScope.loginId ne null}">
+                		<c:if test="${sessionScope.user_type ne '강사'}">
+		                	<a href="recommendList.go">추천 강의</a>                	
+	                	</c:if>
+                	</c:if>
+                </th>
+                <th class="menu">
+                	<c:if test="${sessionScope.loginId eq null}">
+                		<a href="login.go">전체 강의</a>
+                	</c:if>
+                	<c:if test="${sessionScope.loginId ne null}">
+                		<a href="allList.go">전체 강의</a>
+                	</c:if>
+                </th>
                 <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
         <table id="mymenu">
-            <c:if test="${loginName != null}">
+            <c:if test="${sessionScope.loginId ne null}">
                 <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
+                    <c:if test="${sessionScope.alarm_count > 0}">
+                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
                     </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
+                    <c:if test="${sessionScope.alarm_count == 0}">
+                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
                     </c:if>
                     <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${loginName}</div></th>
+                    <th><div id="userName">${sessionScope.user_name}</div></th>
                 </tr>
             </c:if>
-            <c:if test="${loginName == null}">
+            <c:if test="${sessionScope.loginId eq null}">
                 <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
-                    </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
-                    </c:if>
-                    <th><a href="#">로그인</a></th>
+                    <th><a href="login.go">로그인</a></th>
                 </tr>
             </c:if>
         </table>
@@ -131,19 +144,26 @@
     <div id="slide">
         <table>
             <tr>
-                <td colspan="2">${loginName} 회원님</td>
-                <td>&nbsp;&nbsp;&nbsp;</td>
-                <td class="manner">♥ ${manner}</td>
+                <td colspan="2">${sessionScope.user_name} 회원님</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td class="manner">♥ ${sessionScope.manner_variance}</td>
             </tr>
         </table>
         <br/>
-        <div>보유 포인트 : <span>${totalPoint}</span></div>
+        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
         <br/>
-        <div><a href="#">내가 쓴 리뷰</a></div>
+        <div>
+        	<c:if test="${sessionScope.user_type eq '수강생'}">
+	        	<a href="studentWrittenList.go">내가 쓴 리뷰</a>        	
+        	</c:if>
+        	<c:if test="${sessionScope.user_type eq '강사'}">
+	        	<a href="teacherWrittenList.go">내가 쓴 리뷰</a>        	
+        	</c:if>
+        </div>
         <br/>
         <div><a href="myPage.go">마이페이지</a></div>
         <br/><br/><br/>
-        <div><a href="#">로그아웃</a></div>
+        <div><a href="logout.do">로그아웃</a></div>
     </div>
 </body>
 <script>
@@ -159,6 +179,9 @@ $('#userName').click(function slide() {
 
 $('#logo').click(function main(){
 	location.href = '/main';
+});
+$('.alarm').click(function alarmList() {
+	location.href = 'alarmList.go';
 });
 
 var showPage = 1;
@@ -215,8 +238,11 @@ function drawList(list){
 	if (list.length < 5) {
 		content += '<tr>'
 		for (var i = 0; i < list.length; i++) {
-			console.log(list[i].new_filename);
-			content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>'
+			if (list[i].new_filename != null) {
+				content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>';
+			}else {
+				content += '<th><img src="resources/img/basic_user.png" class="lessonImg"></th>';
+			}
 		}
 	 	content += '</tr>';
 	 	content += '<tr>';
@@ -250,7 +276,11 @@ function drawList(list){
 	}else {
 		content += '<tr>';
 		for (var i = 0; i < 5; i++) {
-			content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>'
+			if (list[i].new_filename != null) {
+				content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>';
+			}else {
+				content += '<th><img src="resources/img/basic_user.png" class="lessonImg"></th>';
+			}
 		}
 	 	content += '</tr>';
 	 	content += '<tr>';
@@ -281,7 +311,11 @@ function drawList(list){
 	 	content += '<tr id="blank"></tr>';
 	 	content += '<tr>';
 	 	for (var i = 5; i < list.length; i++) {
-			content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>'
+	 		if (list[i].new_filename != null) {
+				content += '<th><img src="/photo/' + list[i].new_filename + '" class="lessonImg"></th>';
+			}else {
+				content += '<th><img src="resources/img/basic_user.png" class="lessonImg"></th>';
+			}
 		}
 	 	content += '</tr>';
 	 	content += '<tr>';

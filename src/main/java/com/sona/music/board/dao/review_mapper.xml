@@ -66,5 +66,7 @@
 	<delete id="photoEdit" parameterType="com.sona.music.board.dto.PhotoDTO">
     DELETE FROM PHOTO_BOARD WHERE POST_IDX = #{param1} AND PHOTO_CATEGORY = #{param2}
 	</delete>
+	
+	
 
 </mapper>

@@ -14,7 +14,11 @@
 		text-align: left;
    	 	margin-left: 100px;
 		}
-		
+		#content{
+		    flex: 1;
+		    padding: 10px;
+		    padding-bottom: 32px;
+		}
 		
 </style>
 </head>
@@ -23,33 +27,38 @@
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu"><a href="#">추천 강의</a></th>
-                <th class="menu"><a href="#">전체 강의</a></th>
-                <th class="menu"><a href="#">고객센터</a></th>
+                <th class="menu">
+                   <c:if test="${sessionScope.loginId eq null}">
+                      <c:if test="${sessionScope.user_type ne '강사'}">
+                         <a href="login.go">추천 강의</a>                   
+                      </c:if>
+                   </c:if>
+                   <c:if test="${sessionScope.loginId ne null}">
+                      <c:if test="${sessionScope.user_type ne '강사'}">
+                         <a href="recommendList.go">추천 강의</a>                   
+                      </c:if>
+                   </c:if>
+                </th>
+                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
         <table id="mymenu">
-            <c:if test="${loginName != null}">
+            <c:if test="${sessionScope.loginId ne null}">
                 <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
+                    <c:if test="${sessionScope.alarm_count > 0}">
+                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
                     </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
+                    <c:if test="${sessionScope.alarm_count == 0}">
+                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
                     </c:if>
                     <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${loginName}</div></th>
+                    <th><div id="userName">${sessionScope.user_name}</div></th>
                 </tr>
             </c:if>
-            <c:if test="${loginName == null}">
+            <c:if test="${sessionScope.loginId eq null}">
                 <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
-                    </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
-                    </c:if>
-                    <th><a href="#">로그인</a></th>
+                    <th><a href="login.go">로그인</a></th>
                 </tr>
             </c:if>
         </table>
@@ -85,7 +94,7 @@
         <hr style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
 	
 	<div style="text-align: center;">
-    <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px; margin-top: 24px;">
+    <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px; margin-top: 43px;">
         <img src="resources/img/review.png" id="review">강의 목록
         <table style="border-collapse: collapse; width: 100%;">
             <thead>
@@ -114,7 +123,7 @@
   <hr style="flex: 1; margin-top: 10px; border: 0; border-top: 4px solid #BEE6FF;">
 	
 	<div style="text-align: center;">
-    <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px; margin-top: 24px;">
+    <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px; margin-top: 30px;">
         <img src="resources/img/review.png" id="review">회원이 받은 리뷰
         <table style="border-collapse: collapse; width: 100%;">
             <thead>
@@ -140,9 +149,44 @@
     </div>
 </div>
         </form>
-    
+<div id="footer">
+        <li>상호명 : SONA</li>
+        <li>대표자 : 김○○</li>
+        <li>전화 : 02-123-4567</li>
+        <li>팩스 : 02-123-4568</li>
+        <li>사업자등록번호 : 000-00-00000</li>
+        <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
+    </div>
+    <div id="slide">
+        <table>
+            <tr>
+                <td colspan="2">${sessionScope.user_name} 회원님</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td class="manner">♥ ${sessionScope.manner_variance}</td>
+            </tr>
+        </table>
+        <br/>
+        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
+        <br/>
+        <div>
+           <c:if test="${sessionScope.user_type eq '수강생'}">
+              <a href="studentWrittenList.go">내가 쓴 리뷰</a>           
+           </c:if>
+           <c:if test="${sessionScope.user_type eq '강사'}">
+              <a href="teacherWrittenList.go">내가 쓴 리뷰</a>           
+           </c:if>
+        </div>
+        <br/>
+        <div><a href="myPage.go">마이페이지</a></div>
+        <br/><br/><br/>
+        <div><a href="logout.do">로그아웃</a></div>
+    </div>
 </body>
 <script>
+
+$('.alarm').click(function alarmList() {
+	   location.href = 'alarmList.go';
+	});
 
 $('#userName').click(function slide() {
 	var display = $('#slide').css('display');
@@ -202,7 +246,7 @@ function drawList(list){
     for(item of list){
        console.log(item);
        content += '<tr>';
-       content += '<td>&nbsp;&nbsp;&nbsp;'+ item.apply_IDX +'</td>';
+       content += '<td>'+'인덱스 번호' +'</td>';
        content += '<td>' + item.class_NAME + '</td>';
        content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.count+'명' + '</td>';
        content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
@@ -255,11 +299,11 @@ function drawList2(list){
     for(item of list){
        console.log(item);
        content += '<tr>';
-       content += '<td>&nbsp;&nbsp;&nbsp;'+ item.apply_IDX +'</td>';
-       content += '<td>' + item.class_NAME + '</td>';
-       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.count+'명' + '</td>';
-       content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
-       var date = new Date(item.class_REG_DATE);
+       content += '<td>'+ '인덱스 번호' +'</td>';
+       content += '<td>'+ item.review_TITLE +'</td>';
+       content += '<td>&nbsp;&nbsp;&nbsp;' + item.rater_ID + '</td>';
+       content += '<td>&nbsp;&nbsp;<span style="color: #FED000;">★</span>' + item.score +'</td>';
+       var date = new Date(item.review_REG_DATE);
        var dateStr = date.toLocaleDateString("ko-KR");
        content += '<td>' + dateStr + '</td>';
        content += '</tr>';

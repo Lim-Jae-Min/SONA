@@ -94,6 +94,7 @@ public class QnAController {
 	@RequestMapping(value="/aWrite")
 	public String aWrite(@RequestParam Map<String, String> param, HttpSession session) {
 		logger.info("질문 idx ="+param.get("QUESTION_IDX")+" Q&A 답변 작성 요청");
+		logger.info(param.get("CLASS_IDX"));
 		
 		String page = "redirect:/lessonQnAList?CLASS_IDX="+ param.get("CLASS_IDX");
 		if(session.getAttribute("loginId")!=null) {

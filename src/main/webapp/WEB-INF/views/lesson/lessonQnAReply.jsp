@@ -151,6 +151,7 @@
     <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
         <form action="aWrite" method="post" enctype="multipart/form-data" onsubmit="return confirmWrite();">
             <table>
+             <input type="hidden" name="CLASS_IDX" value="${question.CLASS_IDX}">
                 <tr  style="text-align: left;">
                     <th>Q&A 번호 : ${question.QUESTION_IDX}<input type="hidden" name="QUESTION_IDX" value="${question.QUESTION_IDX}"></th>
                 </tr>

@@ -226,7 +226,7 @@
 		<img src="resources/img/QnA.png" id="QnA">                  Q&A 상세보기
 	  <div class="question-box">
         <div class="qna-title">글번호: ${question.QUESTION_IDX}</div>
-        <div>Q&A 제목: ${question.q_TITLE}</div>
+        <div>Q&A 제목: ${question.q_TITLE} 강의 idx : ${question.CLASS_IDX}</div>
         <div class="author-info">작성자: ${question.USER_ID} 작성일: ${question.q_REG_DATE} 조회수: ${question.q_HIT}</div>
         <div class="content">${question.q_CONTENT}</div>
             <c:if test="${not empty answer}">
@@ -238,7 +238,7 @@
             <div style="text-align: right; display: flex; justify-content: flex-end;">
             <button class="button edit" onclick="redirectToEditPage(${question.QUESTION_IDX})">수정</button>
             <button class="button delete" onclick="confirmDelete(${question.QUESTION_IDX})">삭제</button>
-    		<button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX})">답변</button>
+    		<button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX},${question.CLASS_IDX})">답변</button>
     		</div>
 			</c:if>
 			<!-- 답변이 아직 작성이 안됐을경우 -->

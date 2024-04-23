@@ -209,7 +209,7 @@ var showPage =1;
 var classIdx = ${classIdx};
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
-	listCall(showPage);
+	listCall(showPage,classIdx);
 });
 
 function listCall(page, classIdx){
@@ -249,6 +249,7 @@ function listCall(page, classIdx){
 }
 	function drawList(list){
 	     var content = '';
+	     var num = 1;
 	     for(item of list){
 	        console.log(item);
 	        content += '<tr>';

@@ -17,13 +17,24 @@ public class MyPageDTO {
 	private String applyform_inst;
 	private int inst_category_idx;
 	private String applyform_location;
-	private List<String> applyformDays; // 데이터베이스의 컬럼명과 일치하도록 수정
-	private List<String> applyformStyles;
+	private List<String> applyform_days;
+	private List<String> applyform_style;
 	private boolean have_inst;
 	private String manner;
 	private String new_filename;
 	private int class_idx;
 	private String class_name;
+	private String q_title;
+	private String q_reg_date;
+	private String question_idx;
+	private String answer_idx;
+	private boolean anonymous_status;
+	private String answer_status;
+
+	
+	
+	
+	
 	public String getUser_id() {
 		return user_id;
 	}
@@ -102,18 +113,7 @@ public class MyPageDTO {
 	public void setApplyform_location(String applyform_location) {
 		this.applyform_location = applyform_location;
 	}
-	public List<String> getApplyformDays() {
-		return applyformDays;
-	}
-	public void setApplyformDays(List<String> applyformDays) {
-		this.applyformDays = applyformDays;
-	}
-	public List<String> getApplyformStyles() {
-		return applyformStyles;
-	}
-	public void setApplyformStyles(List<String> applyformStyles) {
-		this.applyformStyles = applyformStyles;
-	}
+	
 	public boolean isHave_inst() {
 		return have_inst;
 	}
@@ -144,6 +144,55 @@ public class MyPageDTO {
 	public void setClass_name(String class_name) {
 		this.class_name = class_name;
 	}
+	public List<String> getApplyform_days() {
+		return applyform_days;
+	}
+	public void setApplyform_days(List<String> applyform_days) {
+		this.applyform_days = applyform_days;
+	}
+	public List<String> getApplyform_style() {
+		return applyform_style;
+	}
+	public void setApplyform_style(List<String> applyform_style) {
+		this.applyform_style = applyform_style;
+	}
+	public String getQ_title() {
+		return q_title;
+	}
+	public void setQ_title(String q_title) {
+		this.q_title = q_title;
+	}
+	public String getQ_reg_date() {
+		return q_reg_date;
+	}
+	public void setQ_reg_date(String q_reg_date) {
+		this.q_reg_date = q_reg_date;
+	}
+	public String getQuestion_idx() {
+		return question_idx;
+	}
+	public void setQuestion_idx(String question_idx) {
+		this.question_idx = question_idx;
+	}
+	public String getAnswer_idx() {
+		return answer_idx;
+	}
+	public void setAnswer_idx(String answer_idx) {
+		this.answer_idx = answer_idx;
+	}
+	public boolean isAnonymous_status() {
+		return anonymous_status;
+	}
+	public void setAnonymous_status(boolean anonymous_status) {
+		this.anonymous_status = anonymous_status;
+	}
+	public String getAnswer_status() {
+		return answer_status;
+	}
+	public void setAnswer_status(String answer_status) {
+		this.answer_status = answer_status;
+	}
+
 
 
 

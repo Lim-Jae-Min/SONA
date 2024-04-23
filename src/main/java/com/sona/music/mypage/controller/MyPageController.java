@@ -146,6 +146,17 @@ public class MyPageController {
 		    return page;
 		}
 	 
+	 @RequestMapping(value="/studentWrittenList.go")
+	 public String studentWrittenListGo () {
+		 
+		 return "studentMyPage/studentWrittenList";
+	 }
+	 @RequestMapping(value="/teacherWrittenList.go")
+	 public String teacherWrittenListGo () {
+		 
+		 return "teacherMyPage/teacherWrittenList";
+	 }
+	 
 	 
 	 
 }

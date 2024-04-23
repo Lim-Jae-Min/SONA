@@ -71,6 +71,7 @@ public class LessonService {
 		// insert 후 생성된 idx 가져오는 방법
 		// 조건1. 파라메터는 DTO로 넣을것
 		LessonDTO dto = new LessonDTO();
+		
 		dto.setUser_id(user_id);
 		dto.setClass_name(param.get("class_name"));
 		dto.setInst_category_idx(Integer.parseInt(param.get("inst_category_idx")));
@@ -91,12 +92,23 @@ public class LessonService {
 		
 		// 조건3. 이후 dto 에서 저장된 키 값을 받아 온다.
 		int idx = dto.getClass_idx();
-		String url = param.get("video_url");
-		logger.info("class_idx = " + idx);
 		
+		String ori_url = param.get("video_url");
+		String new_url = "";
+		
+		if (!ori_url.contains("watch")) {
+			new_url = ori_url.substring(ori_url.lastIndexOf("/")+1, ori_url.indexOf("?"));			
+		}else {
+			new_url = ori_url.substring(ori_url.indexOf("=")+1);
+		}
+		new_url = "https://www.youtube.com/embed/" + new_url;
+		
+		logger.info("new_url = " + new_url);
+		
+		logger.info("class_idx = " + idx);
 		if (row > 0) {
-			if (!(url == null)) {
-				int videoRow = lessonDAO.videoWrite(idx, url);
+			if (!(new_url == null)) {
+				lessonDAO.videoWrite(idx, new_url);
 			}
 			fileSave(idx, user_id, photos, lessonLogo);			
 		}
@@ -171,7 +183,7 @@ public class LessonService {
 	}
 
 
-	public void lessonDetail(String class_idx, Model model) {
+	public void lessonDetail(String class_idx, Model model, String loginId) {
 		logger.info("상세보기 Service 접속 완료");
 		LessonDTO dto = lessonDAO.lessonDetail(class_idx);
 		model.addAttribute("lesson", dto);
@@ -184,11 +196,14 @@ public class LessonService {
 		List<PhotoDTO> photos = lessonDAO.lessonPhotosLoad(class_idx);
 		model.addAttribute("photos", photos);
 		
-//		List<ReviewDTO> reviewList = lessonDAO.lessonReviewList(class_idx);
-//		model.addAttribute("reviewList", reviewList);
-//		
-//		List<QnADTO> QnAList = lessonDAO.lessonQnAList(class_idx);
-//		model.addAttribute("reviewList", reviewList);
+		List<ReviewDTO> reviewList = lessonDAO.lessonReviewList(class_idx);
+		model.addAttribute("reviewList", reviewList);
+		
+		List<QnADTO> QnAList = lessonDAO.lessonQnAList(class_idx);
+		model.addAttribute("QnAList", QnAList);
+		
+		LessonDTO applyCheck = lessonDAO.applyCheck(class_idx, loginId);
+		model.addAttribute("applyCheck", applyCheck);
 		
 	}
 

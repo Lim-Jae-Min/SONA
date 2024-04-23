@@ -31,6 +31,9 @@ public class LessonDTO {
 	private int video_idx;
 	private String video_url;
 	
+	private int apply_idx;
+	private String apply_state;
+	
 	
 	public int getClass_idx() {
 		return class_idx;
@@ -181,6 +184,18 @@ public class LessonDTO {
 	}
 	public void setClass_score(String class_score) {
 		this.class_score = class_score;
+	}
+	public int getApply_idx() {
+		return apply_idx;
+	}
+	public void setApply_idx(int apply_idx) {
+		this.apply_idx = apply_idx;
+	}
+	public String getApply_state() {
+		return apply_state;
+	}
+	public void setApply_state(String apply_state) {
+		this.apply_state = apply_state;
 	}
 	
 	

@@ -33,7 +33,11 @@
             </tr>
         </table>
         <table id="mymenu">
+<<<<<<< HEAD
+            <c:if test="${loginId != null}">
+=======
             <c:if test="${sessionScope.loginId ne null}">
+>>>>>>> origin/master
                 <tr>
                     <c:if test="${sessionScope.alarm_count > 0}">
                         <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
@@ -42,10 +46,17 @@
                         <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
                     </c:if>
                     <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+<<<<<<< HEAD
+                    <th><div id="userName">${loginId}</div></th>
+                </tr>
+            </c:if>
+            <c:if test="${loginId == null}">
+=======
                     <th><div id="userName">${sessionScope.user_name}</div></th>
                 </tr>
             </c:if>
             <c:if test="${sessionScope.loginId eq null}">
+>>>>>>> origin/master
                 <tr>
                     <th><a href="login.go">로그인</a></th>
                 </tr>
@@ -83,7 +94,7 @@
         	</c:if>
         </div>
         <br/>
-        <div><a href="myPage.go">마이페이지</a></div>
+        <div><a href="studentPage.do">마이페이지</a></div>
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
     </div>

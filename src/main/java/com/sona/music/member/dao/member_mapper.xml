@@ -54,18 +54,6 @@
 	</insert>
 	
 	
-	<select id="list" resultType="com.sona.music.member.dto.MemberDTO">
-		SELECT co.class_name
-		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
-		         THEN 0
-		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
-		         END AS count
-		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 2) AS score
-		   , co.class_reg_date
-		FROM CLASS_OPEN co
-		ORDER BY CLASS_IDX desc
-		LIMIT #{param1} OFFSET #{param2}
-	</select>
 	
 	<select id="detail" resultType="com.sona.music.member.dto.MemberDTO">
 		select 
@@ -79,6 +67,28 @@
 		FROM USERS u WHERE u.USER_ID = #{param1}
 	</select>
 	
+	<select id="list" resultType="com.sona.music.member.dto.MemberDTO">
+		SELECT co.class_name
+		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+		         THEN 0
+		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+		         END AS count
+		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 2) AS score
+		   , co.class_reg_date
+		FROM CLASS_OPEN co
+		ORDER BY CLASS_IDX desc
+		LIMIT #{param2} OFFSET #{param3}
+	</select>
+	
+	<select id="list2" resultType="com.sona.music.board.dto.ReviewDTO">
+		SELECT review_title,
+			rater_id,
+			score,
+			review_reg_date
+			FROM REVIEW WHERE ratee_id = 'user2'
+			ORDER BY REVIEW_IDX DESC
+			LIMIT #{param2} OFFSET #{param3}
+	</select>
 	
 	
 	<select id="allCount" resultType="Integer">

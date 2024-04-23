@@ -261,6 +261,15 @@
     <div id="slide">
         <table>
             <tr>
+<<<<<<< HEAD
+                <td colspan="2">${loginId} 회원님</td>
+                <td>&nbsp&nbsp&nbsp</td>
+                <td class="manner">♥ ${manner_variance}</td>
+            </tr>
+        </table>
+        <br/>
+        <div>보유 포인트 : <span>${point}</span></div>
+=======
                 <td colspan="2">${sessionScope.user_name} 회원님</td>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td class="manner">♥ ${sessionScope.manner_variance}</td>
@@ -268,6 +277,7 @@
         </table>
         <br/>
         <div>보유 포인트 : <span>${sessionScope.point}</span></div>
+>>>>>>> origin/master
         <br/>
         <div>
            <c:if test="${sessionScope.user_type eq '수강생'}">
@@ -278,7 +288,11 @@
            </c:if>
         </div>
         <br/>
+<<<<<<< HEAD
+        <div><a href="studentPage.do">마이페이지</a></div>
+=======
         <div><a href="myPage.go">마이페이지</a></div>
+>>>>>>> origin/master
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
     </div>

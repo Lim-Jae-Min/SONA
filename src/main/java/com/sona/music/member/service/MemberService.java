@@ -74,39 +74,38 @@ public class MemberService {
 		int start = (currPage-1)*pagePerCnt;
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<MemberDTO> list = memberDAO.list(pagePerCnt,start);
+		List<MemberDTO> list = memberDAO.list(user_id,pagePerCnt,start);
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
 		result.put("detail", memberDAO.detail(user_id));
 		for (MemberDTO r : list) {
-			logger.info(r.getCLASS_NAME()+"");
-			logger.info(r.getCLASS_REG_DATE()+"");
-			logger.info(r.getCOUNT()+"");
-			logger.info(r.getSCORE()+"");
-			logger.info(r.getAPPLY_IDX()+"");
+//			logger.info(r.getCLASS_NAME()+"");
+//			logger.info(r.getCLASS_REG_DATE()+"");
+//			logger.info(r.getCOUNT()+"");
+//			logger.info(r.getSCORE()+"");
+//			logger.info(r.getAPPLY_IDX()+"");
 		}
 		
 		return result;
 	}
 
-	public Map<String, Object> classreview2(int currPage, int pagePerCnt) {
+	public Map<String, Object> classreview2(int currPage, int pagePerCnt, String user_id) {
 
 		int start = (currPage-1)*pagePerCnt;
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<MemberDTO> list = memberDAO.list(pagePerCnt,start);
+		List<ReviewDTO> list = memberDAO.list2(user_id,pagePerCnt,start);
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
-		for (MemberDTO r : list) {
-			logger.info(r.getCLASS_NAME()+"");
-			logger.info(r.getCLASS_REG_DATE()+"");
-			logger.info(r.getCOUNT()+"");
+		for (ReviewDTO r : list) {
+			logger.info(r.getREVIEW_TITLE()+"");
+			logger.info(r.getRATER_ID()+"");
 			logger.info(r.getSCORE()+"");
-			logger.info(r.getAPPLY_IDX()+"");
+			logger.info(r.getREVIEW_REG_DATE()+"");
 		}
 		
 		return result;

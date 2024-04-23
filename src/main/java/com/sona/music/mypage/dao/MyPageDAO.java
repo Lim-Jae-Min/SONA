@@ -17,7 +17,11 @@ public interface MyPageDAO {
 
 	String editUserInfo(MyPageDTO requestData);
 
-	int updateUserInfo(Map<String, Object> map, String loginId);
+	int updateUserInfo(Map<String, String> map);
+
+
+	List<MyPageDTO> getAllQnA();
+
 
 
 

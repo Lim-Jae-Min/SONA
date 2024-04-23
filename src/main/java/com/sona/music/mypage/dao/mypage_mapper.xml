@@ -28,24 +28,39 @@
     WHERE u.user_id = #{loginId}
 </select>
     
-<update id="updateUserInfo" parameterType="map">
-    UPDATE USERS AS u
-    INNER JOIN APPLICATION_FORM AS us ON u.user_id = us.user_id
-    SET 
-        u.user_name = #{name},
-        u.user_pass = #{confirmPassword},
-        u.user_email = #{email},
-        u.user_phone = #{phoneNumber},
-        u.user_accountnumber = #{accountNumber},
-        u.user_bank = #{bank},
-        us.inst_category_idx = #{instCategory},
-        us.applyform_inst = #{inst},
-        us.applyform_location = #{location},
-        us.applyform_days = #{selectedDays},
-        us.applyform_style = #{selectedStyles}
-    WHERE u.user_id = #{loginId}
-</update>
+    <update id="updateUserInfo" parameterType="map">
+        UPDATE USERS u
+        INNER JOIN APPLICATION_FORM us ON u.user_id = us.user_id
+        SET 
+            u.user_name = #{user_name},
+            u.user_pass = #{user_pass},
+            u.user_email = #{user_email},
+            u.user_phone = #{user_phone},
+            u.user_accountnumber = #{user_accountnumber},
+            u.user_bank = #{user_bank},
+            us.inst_category_idx = #{instCategory},
+            us.applyform_inst = #{applyform_inst},
+            us.applyform_location = #{applyform_location},
+            us.applyform_days = #{applyform_days},
+            us.applyform_style = #{applyform_style}
+        WHERE u.user_id = #{loginId}
+    </update>
 		
+		
+		<select id = "qnaList" parameterType="String" resultType="com.sona.music.mypage.dto.MyPageDTO" >
+		SELECT 
+		    cq.ANONYMOUS_STATUS,
+		    cq.Q_TITLE,
+		    CASE WHEN cq.QUESTION_IDX = ca.ANSWER_IDX THEN 'Y' ELSE 'N' END AS ANSWER_STATUS,
+		    cq.Q_REG_DATE
+		FROM 
+		    CLASS_QUESTION cq
+		LEFT JOIN 
+		    CLASS_ANSWER ca ON cq.QUESTION_IDX = ca.ANSWER_IDX
+		
+		
+		
+		</select>
 		
 
 

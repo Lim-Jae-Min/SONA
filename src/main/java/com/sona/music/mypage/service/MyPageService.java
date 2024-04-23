@@ -30,15 +30,30 @@ public class MyPageService {
 		return newPassword.equals(confirmPassword);	
 		
 	}
-	@Transactional
-	public int updateUserInfo(Map<String, Object> map, String loginId) {
-	    int row = myPageDAO.updateUserInfo(map, loginId);
-	    return row;
-	}
+	
+	public int updateUserInfo(Map<String, String> map) {
+		    // 전달된 데이터를 맵에 추가합니다.
+        	logger.info("회원 수정하기~ ", map);
+		    logger.info("전달된 데이터: {}", map);
+
+		    // DAO를 통해 업데이트 수행
+		    int row = myPageDAO.updateUserInfo(map);
+		    
+		    // 업데이트된 행 수 반환
+		    return row;
+		}
 
 	public String editUserInfo(MyPageDTO requestData) {
 		return myPageDAO.editUserInfo(requestData);
 	}
+
+	public List<MyPageDTO> getAllQnA() {
+		// TODO Auto-generated method stub
+		return myPageDAO.getAllQnA();
+	}
+
+
+
 
 
 	

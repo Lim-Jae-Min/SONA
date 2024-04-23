@@ -149,6 +149,7 @@ public class MemberController {
 			session.setAttribute("user_name", info.getUSER_NAME());
 			session.setAttribute("manner_variance", info.getMANNER());
 			session.setAttribute("point", info.getPOINT());
+			session.setAttribute("alarm_count", info.getAlarm_count());
 			
 			String test = (String) session.getAttribute("loginId");
 			String test1 = String.valueOf(session.getAttribute("point")) ;
@@ -273,5 +274,20 @@ public class MemberController {
     	model.addAttribute("findId",findIdList);
         return "member/idFindResult";
     }
+    
+    @RequestMapping(value="/logout.do")
+    public String logoutDo(HttpSession session) {
+    	
+    	session.removeAttribute("loginId");	
+		session.removeAttribute("user_type");	
+		session.removeAttribute("user_name");
+		session.removeAttribute("manner_variance");
+		session.removeAttribute("point");
+		session.removeAttribute("alarm_count");
+    	
+    	return "main/main";
+    }
+    
+    
     
 }

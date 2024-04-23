@@ -31,8 +31,11 @@ public interface LessonDAO {
 
 	List<PhotoDTO> lessonPhotosLoad(String class_idx);
 
-//	List<ReviewDTO> lessonReviewList(String class_idx);
-//
-//	List<QnADTO> lessonQnAList(String class_idx);
+	List<ReviewDTO> lessonReviewList(String class_idx);
+
+	List<QnADTO> lessonQnAList(String class_idx);
+
+	LessonDTO applyCheck(String class_idx, String loginId);
+
 
 }

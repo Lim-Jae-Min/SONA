@@ -24,4 +24,14 @@
 			AS USER_NAME FROM CLASS_OPEN
 			WHERE CLASS_IDX = #{param1};
 	</select>
+	
+	<insert id="lessonPayApyHistory" >
+		INSERT INTO APPLY_HISTORY(CLASS_IDX,USER_ID,APPLY_STATE)
+			VALUES(#{param1},#{param2},#{param3});
+			
+	</insert>
+	
+	<select id="getPhotoName">
+		SELECT NEW_FILENAME FROM PHOTO_BOARD WHERE USER_ID = #{param1} AND PHOTO_CATEGORY = #{param2} limit 1;
+	</select>
 </mapper>

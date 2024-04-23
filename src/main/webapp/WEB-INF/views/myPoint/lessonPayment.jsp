@@ -68,6 +68,10 @@
         .lecture-info {
               text-align: left;
         }
+    	img {
+        width: 100px; /* 이미지의 너비 */
+        height: 100px; /* 이미지의 높이 */
+   		 }
     </style>
 </head>
 <body>
@@ -113,15 +117,17 @@
         </table>
     </header>
     
-    <form action="">
+    <form action="lessonPayment.do" method="post">
 	    <div class="wrapper">
 	        <!-- 프로필 영역 -->
 	        <div class="section profile">
 	            <div class="profile-info">
-	                <img src="profile.jpg" alt="프로필 사진">
+	                <img src="/photo/1.jpg" alt="프로필 사진">
 	                <div class="lecture-info">
-	                	<input type="hidden" name="${USER_NAME}">
-	                	<input type="hidden" name="${Class_price}">
+	                	<input type="hidden" name="TuserName" value="${USER_NAME}"> <!-- 강사 이름정보 -->
+	                	<input type="hidden" name="classPrice" value="${Class_price}"> <!-- 강의 가격 -->
+	                	<input type = "hidden" name= "TuserId" value="${T_USER_ID}"> <!-- 강사 아이디  -->
+	                	<input type="hidden" name="classIdx" value="${Class_idx}">
 	                    <span id="teacherId">${USER_NAME} 강사님 </span><br>
 	                    <span>강의 제목: ${Class_name}</span><br>
 	                    <span>강의 횟수: ${Class_times}</span><br>
@@ -197,13 +203,12 @@
     </div>
 </body>
 
-
-<div id="footer">
-    <%@ include file="../member/layout/footer.jsp" %>
-</div>
-</body>
 <script>
-
+var msg = '${msg}';
+console.log(msg);
+if(msg != ''){
+	alert(msg);
+}
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});

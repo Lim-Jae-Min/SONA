@@ -13,4 +13,8 @@ public interface PointDAO {
 
 	LessonDTO paymentGetLesson(Integer cLASS_IDX);
 
+	int lessonPayApyHistory(Integer classIdx, String id, String applyState);
+
+//	String getPhotoName(String user_id);
+
 }

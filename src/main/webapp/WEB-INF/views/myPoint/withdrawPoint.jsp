@@ -59,7 +59,60 @@
         margin-top: 20px;
     }
     
+        /* Modal Container */
+    .modal {
+        display: none; /* 숨겨진 상태 */
+        position: fixed; /* 고정 위치 */
+        z-index: 1; /* 다른 요소 위에 표시 */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto; /* 스크롤 가능하도록 설정 */
+        background-color: rgba(0,0,0,0.5); /* 배경색 및 투명도 조절 */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto; /* 모달을 화면 중앙에 위치 */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%; /* 모달의 너비 */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        animation-name: modalopen;
+        animation-duration: 0.4s;
+    }
+
+    /* Modal Open Animation */
+    @keyframes modalopen {
+        from {opacity: 0}
+        to {opacity: 1}
+    }
+
+    /* Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
     
+    img {
+        width: 150px; /* 이미지의 너비 */
+        height: 150px; /* 이미지의 높이 */
+   	}
+   	.profile {
+        text-align: center; /* 텍스트 가운데 정렬 */
+        margin-bottom: 20px; /* 아래 여백 */
+   	}
 </style>
 
 <body>
@@ -108,8 +161,10 @@
     <!-- 헤더 영역에 프로필 및 로그인한 유저 정보 표시 -->
     <form action="withdrawPoint.do" method="post">
         <div class="profile">
-            <img src="profile.jpg" alt="프로필 사진">
+            <img src="/photo/1.jpg" alt="프로필 사진">
+            <br>
             <span id="userId">${sessionScope.loginId}</span>
+            <br>
             <div>님이 보유중인 포인트 ${havePoint} P</div>
         </div>
 
@@ -134,7 +189,29 @@
             </div>
             <button type="submit">출금하기</button>
         </div>
+        
     </form>
+        <!-- Button to Open the Modal -->
+<button onclick="openWithdrawModal()">Open Modal</button>
+
+<!-- The Modal -->
+<div id="withdrawModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeWithdrawModal()">&times;</span>
+    <h2>포인트 출금</h2>
+    <!-- 포인트 정보 표시 -->
+    <div class="point-info">
+      <p>현재 포인트: <span id="currentPointModal">0</span></p>
+      <p>출금 포인트: <span id="withdrawPointModal">0</span></p>
+      <p>남은 포인트: <span id="remainingPointModal">0</span></p>
+    </div>
+    <!-- 확인과 취소 버튼 -->
+    <div class="btn-group">
+      <button type="button" onclick="confirmWithdraw()">확인</button>
+      <button type="button" onclick="closeWithdrawModal()">취소</button>
+    </div>
+  </div>
+</div>
 <!-- 주요기능   -->
 <!-- footer -->
 <div id="footer">
@@ -215,14 +292,42 @@
 </script>
 </body>
 
-
-</body>
 <script>
 
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});
 	
+	
+function openWithdrawModal() {
+	  document.getElementById("withdrawModal").style.display = "block";
+	}
+
+	// Close the Withdraw Modal
+	function closeWithdrawModal() {
+	  document.getElementById("withdrawModal").style.display = "none";
+	}
+
+	// Confirm Withdraw
+	function confirmWithdraw() {
+	  // 여기서 출금 작업을 수행합니다.
+	  // 임시로 출금 성공 여부를 랜덤하게 지정합니다.
+	  var success = Math.random() < 0.5; // 50% 확률로 출금 성공 또는 실패
+	  if (success) {
+	    alert("결제가 완료되었습니다.");
+	  } else {
+	    alert("출금을 실패하였습니다.");
+	  }
+	  closeWithdrawModal();
+	}
+
+	// Close the Withdraw Modal When Clicking Outside of It
+	window.onclick = function(event) {
+	  var modal = document.getElementById("withdrawModal");
+	  if (event.target == modal) {
+	    closeWithdrawModal();
+	  }
+	}
 	
 </script>
 </html>

@@ -163,6 +163,18 @@ input[type="password"] {
         <div><a href="logout.do">로그아웃</a></div>
     </div>
 	
+	<form action="chargePoint.go" method="post">
+		<button type="submit">충전페이지</button>
+	</form>
+	
+	<form action="withdrawPoint.go" method="post">
+		<button type="submit">출금페이지</button>
+	</form>
+	
+	<form action="lessonPayment.go" method="post">
+		<button type="submit">결제페이지</button>
+	</form>
+	
 </body>
 <script>
 /* function submitEmail(){

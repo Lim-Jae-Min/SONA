@@ -9,7 +9,7 @@
  <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
  <style>
         .container {
-            max-width: 400px;
+            max-width: 500px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -23,7 +23,7 @@
         label {
             display: block;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
         }
 
         input[type="text"],
@@ -49,6 +49,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            text-align: center;
         }
 
         .btn:hover {
@@ -58,10 +59,31 @@
         .result {
             margin-top: 20px;
         }
+        
+        .profile {
+        text-align: center; /* 텍스트 가운데 정렬 */
+        margin-bottom: 20px; /* 아래 여백 */
+    	}
+    	img {
+        width: 150px; /* 이미지의 너비 */
+        height: 150px; /* 이미지의 높이 */
+   		 }
+   		 
+   		 
+		.payment-methods {
+		    display: flex; /* 가로 배치를 위한 설정 */
+		    align-items: center; /* 가로 중앙 정렬 */
+		}
+		
+		.payment-methods label {
+		    margin-right: 10px; /* 라벨 사이 간격 조정 */
+		}
     </style>
 </head>
 <body>
-<body>
+
+
+<!-- 헤더 -->
 <header id="usermain">
         <table id="mainmenu">
             <tr>
@@ -102,12 +124,19 @@
             </c:if>
         </table>
     </header>
+    
+    <!-- 헤더 -->
+    
+    
+    
     <!-- 헤더 영역에 프로필 및 로그인한 유저 정보 표시 -->
     <form action="chargePoint.do" method="post">
 	        <div class="profile">
-	            <img src="profile.jpg" alt="프로필 사진">
+	            <img src="/photo/1.jpg" alt="프로필 사진">
+	            <br>
 	            <span id="userId">${sessionScope.loginId}
-	            <div> 님이 보유중인 포인트 ${havaPoint}</div>
+	            <br>
+	            <div> 님이 보유중인 포인트 ${havePoint} P</div>
 	            </span>
 	        </div>
 	
@@ -120,27 +149,35 @@
 	        </div>
 	
 	        <!-- 결제 방식 선택 -->
-	        <div class="form-group">
-	            <label>결제 방식:</label><br>
-	            <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" onchange="calculatePoints()">
-	            <label for="creditCard">신용카드</label><br>
-	            <input type="radio" id="debitCard" name="paymentMethod" value="debitCard" onchange="calculatePoints()">
-	            <label for="debitCard">직불카드</label><br>
-	            <input type="radio" id="bankTransfer" name="paymentMethod" value="bankTransfer" onchange="calculatePoints()">
-	            <label for="bankTransfer">계좌이체</label>
-	        </div>
-	
+
+		<div class="form-group">
+		    <label>결제 방식:</label>
+		    <hr> <!-- 선 추가 -->
+		    <div class="payment-methods">
+		        <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" onchange="calculatePoints()">
+		        <label for="creditCard">신용카드</label>
+		        <input type="radio" id="debitCard" name="paymentMethod" value="debitCard" onchange="calculatePoints()">
+		        <label for="debitCard">직불카드</label>
+		        <input type="radio" id="bankTransfer" name="paymentMethod" value="bankTransfer" onchange="calculatePoints()">
+		        <label for="bankTransfer">계좌이체</label>
+		    </div>
+		</div>
+		
 	        <!-- 포인트 정보 표시 -->
 	        <div class="point-info">
-	            <p>보유 포인트: <span id="currentPoints">${havaPoint} P</span></p>
+	        <hr>
+	            <p>보유 포인트: <span id="currentPoints">${havePoint} P</span></p>
 	            <p>충전 포인트: <span id="chargingPoints">0</span></p>
 	            <p>결제금액: <span id="paymentAmount">0</span></p>
 	            <p>충전 후 포인트: <span id="afterPoints">0</span></p>
 	        </div>
-	    <button type="submit"> 결제하기 </button>
+	            <hr>
+	    <button type="button" class="btn" onclick="test()"> 결제하기 </button>
 	    </div>
 	</form>
 	
+	
+	<!-- 풋터 -->
 	<div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>
@@ -174,54 +211,78 @@
         <div><a href="logout.do">로그아웃</a></div>
     </div>
     
-    <script>
-        // 충전 포인트, 결제금액, 충전 후 포인트 계산 및 UI 업데이트 함수
-        function calculatePoints() {
-            // 충전금액 입력값 가져오기
-            var chargeAmount = parseInt(document.getElementById('chargeAmount').value);
-
-            // 현재 보유 포인트 가져오기 (여기서는 임의의 값으로 대체)
-            var currentPoints = ${havaPoint};
-
-            // 결제 방식 선택 여부 확인
-            var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
-
-            // 결제 방식에 따라 결제 금액 설정 (여기서는 임의의 값으로 대체)
-            var paymentAmount = chargeAmount*1.05;
-            if (paymentMethod) {
-                var method = paymentMethod.value;
-                if (method === 'creditCard') {
-                    // 신용카드 선택 시 추가 처리
-                } else if (method === 'debitCard') {
-                    // 직불카드 선택 시 추가 처리
-                } else if (method === 'bankTransfer') {
-                    // 계좌이체 선택 시 추가 처리
-                }
-            }
-
-            // 충전 포인트 및 충전 후 포인트 계산
-            var chargingPoints = chargeAmount;
-            var afterPoints = currentPoints + chargingPoints;
-
-            // UI 업데이트
-            document.getElementById('currentPoints').innerText = currentPoints;
-            document.getElementById('chargingPoints').innerText = chargingPoints;
-            document.getElementById('paymentAmount').innerText = paymentAmount;
-            document.getElementById('afterPoints').innerText = afterPoints;
-        }
-        
-        
-    </script>
+    
+    	<!-- 풋터 -->
+    	
 </body>
 
-<div id="footer">
-    <%@ include file="../member/layout/footer.jsp" %>
-</div>
-</body>
 <script>
 
+function test() {
+    // 충전 금액, 충전 후 포인트 가져오기
+    var chargeAmount = parseInt(document.getElementById('chargeAmount').value);
+    
+    // 컨펌 메시지 설정
+    var confirmationMessage = "충전 금액: " + chargeAmount + " P\n"; 
+    confirmationMessage += "정말로 충전하시겠습니까?";
+    
+    // 사용자에게 컨펌 요청
+    var confirmed = confirm(confirmationMessage);
+    
+    // 사용자가 확인을 눌렀을 때
+    if (confirmed) {
+        // 충전 성공 여부 확인 (여기서는 예시로 성공했다고 가정)
+        var chargeSuccess = true; // 충전 성공 여부, 실제로는 이 로직을 백엔드에서 처리해야 합니다.
+        
+        if (chargeSuccess) {
+            // 충전이 성공했을 때
+            alert("포인트 충전이 완료되었습니다.");
+        } else {
+            // 충전이 실패했을 때
+            alert("포인트 충전을 실패하였습니다.");
+        }
+    } else {
+        // 사용자가 취소를 눌렀을 때
+        alert("포인트 충전이 취소되었습니다.");
+    }
+}
+// 충전 포인트, 결제금액, 충전 후 포인트 계산 및 UI 업데이트 함수
+function calculatePoints() {
+    // 충전금액 입력값 가져오기
+    var chargeAmount = parseInt(document.getElementById('chargeAmount').value);
+
+    // 현재 보유 포인트 가져오기 (여기서는 임의의 값으로 대체)
+    var currentPoints = ${havePoint};
+
+    // 결제 방식 선택 여부 확인
+    var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+
+    // 결제 방식에 따라 결제 금액 설정 (여기서는 임의의 값으로 대체)
+    var paymentAmount = chargeAmount*1.05;
+    if (paymentMethod) {
+        var method = paymentMethod.value;
+        if (method === 'creditCard') {
+            // 신용카드 선택 시 추가 처리
+        } else if (method === 'debitCard') {
+            // 직불카드 선택 시 추가 처리
+        } else if (method === 'bankTransfer') {
+            // 계좌이체 선택 시 추가 처리
+        }
+    }
+
+    // 충전 포인트 및 충전 후 포인트 계산
+    var chargingPoints = chargeAmount;
+    var afterPoints = currentPoints + chargingPoints;
+
+    // UI 업데이트
+    document.getElementById('currentPoints').innerText = currentPoints;
+    document.getElementById('chargingPoints').innerText = chargingPoints;
+    document.getElementById('paymentAmount').innerText = paymentAmount;
+    document.getElementById('afterPoints').innerText = afterPoints;
+}
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});
+
 </script>
 </html>

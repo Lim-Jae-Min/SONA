@@ -57,7 +57,7 @@ public class QnAService {
 	}
 
 	public void detail(Integer QUESTION_IDX, Model model) {
-		logger.info("Q&A 디테일 요청 서비스");
+		logger.info("Q&A 디테일 요청 - 서비스");
 		
 		qnaDAO.upHit(QUESTION_IDX);
 		
@@ -79,6 +79,22 @@ public class QnAService {
 		    logger.info(String.valueOf(adto.getQUESTION_IDX()));
 		}
 		
+	}
+
+	public int reply(Map<String, String> param) {
+		int row = -1;
+		
+		logger.info("Q&A 답변 작성 요청 - 서비스");
+		
+		QnADTO dto = new QnADTO();
+		dto.setQUESTION_IDX(Integer.parseInt(param.get("QUESTION_IDX")));
+		dto.setUSER_ID(param.get("USER_ID"));
+		dto.setA_CONTENT(param.get("A_CONTENT"));
+		
+		row = qnaDAO.reply(dto);
+		
+		
+		return row;
 	}
 	
 }

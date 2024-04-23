@@ -64,6 +64,16 @@
 		UPDATE CLASS_QUESTION SET Q_HIT = Q_HIT+1 WHERE QUESTION_IDX = #{qUESTION_IDX}
 	</update>
 	
+	<insert id="reply"
+	useGeneratedKeys="true"
+	keyColumn = "ANSWER_IDX"
+	keyProperty="ANSWER_IDX"
+	parameterType="com.sona.music.board.dto.QnADTO"
+	>
+	INSERT INTO CLASS_ANSWER(QUESTION_IDX,USER_ID,A_CONTENT)
+			VALUES(#{QUESTION_IDX},#{USER_ID},#{A_CONTENT})
+	</insert>
+	
 
 
 </mapper>

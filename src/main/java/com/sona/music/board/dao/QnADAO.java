@@ -18,4 +18,6 @@ public interface QnADAO {
 
 	void upHit(Integer qUESTION_IDX);
 
+	int reply(QnADTO dto);
+
 }

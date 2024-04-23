@@ -8,7 +8,74 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after"
 	type="text/css">
-<style></style>
+<style>
+   /* Header Container */
+.header {
+    background-color: #FFF;
+    padding: 20px;
+    display: flex;
+    align-items: flex-end;
+}
+
+/* Course Info */
+.course-info {
+    margin-right: auto;
+}
+
+.course-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.category {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.rating {
+    font-size: 14px;
+    color: black; 
+}
+
+/* Teacher Info */
+.teacher-info {
+    margin-left: auto;
+    text-align: right;
+}
+
+.teacher-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.location {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.likes {
+    font-size: 16px;
+    color: black; 
+}
+
+.rounded-image {
+    background-color: #BEE6FF;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.rounded-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
 <body>
 	<header id="usermain">
         <table id="mainmenu">

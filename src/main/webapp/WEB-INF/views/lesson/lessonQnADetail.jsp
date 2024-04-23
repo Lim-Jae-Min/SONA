@@ -43,7 +43,7 @@
             margin-left: 20px;
         }
         .content {
-            width: 882px;
+            width: 820x;
             height: 311px;
             border: 1px solid #BEE6FF;
             border-radius: 10px;
@@ -229,13 +229,18 @@
         <div class="author-info">작성자: ${question.USER_ID} 작성일: ${question.q_REG_DATE} 조회수: ${question.q_HIT}</div>
         <div class="content">${question.q_CONTENT}</div>
         <div class="button-container">
-            <button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX})">답변</button>
             <button class="button edit" onclick="redirectToEditPage(${question.QUESTION_IDX})">수정</button>
             <button class="button delete" onclick="confirmDelete(${question.QUESTION_IDX})">삭제</button>
+            <c:if test="${not empty answerMessage}">
+            <div style="text-align: right;">
+    		<button class="button reply" onclick="redirectToReplyPage(${question.QUESTION_IDX})">답변</button>
+			</c:if>
+			</div>
         		</div>
     		</div>
 		<!-- 답변이 아직 작성이 안됐을경우 -->
 		<c:if test="${not empty answerMessage}">
+			
 			<div class="answer-box">
 				<div class="content">${answerMessage}</div>
 			</div>
@@ -248,7 +253,9 @@
 				<div class="content">${answer.a_CONTENT}</div>
 			</div>
 		</c:if>
-
+		<div class="button-container return-btn">
+            <button class="button" onclick="redirectToList(${question.CLASS_IDX})">리스트로 돌아가기</button>
+        </div>
 
 		<div id="footer">
         <li>상호명 : SONA</li>
@@ -336,7 +343,7 @@ function redirectToEditPage(qidx) {
 }
 
 function redirectToReplyPage(qidx) {
-    window.location.href = './lessonQnARepy?QUESTION_IDX=' + qidx;
+    window.location.href = './lessonQnAReply?QUESTION_IDX=' + qidx;
 }
 
 $('.alarm').click(function alarmList() {

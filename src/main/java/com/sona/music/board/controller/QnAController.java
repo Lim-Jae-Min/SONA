@@ -82,6 +82,32 @@ public class QnAController {
 		return "lesson/lessonQnADetail";
 	}
 	
+	@RequestMapping(value="/lessonQnAReply")
+	public String qnaReply(Integer QUESTION_IDX, Model model) {
+		logger.info("질문 idx ="+QUESTION_IDX+" Q&A 답변 작성 요청");
+		
+		qnaService.detail(QUESTION_IDX, model);
+		
+		return "lesson/lessonQnAReply";
+	}
+	
+	@RequestMapping(value="/aWrite")
+	public String aWrite(@RequestParam Map<String, String> param, HttpSession session) {
+		logger.info("질문 idx ="+param.get("QUESTION_IDX")+" Q&A 답변 작성 요청");
+		
+		String page = "redirect:/lessonQnAList?CLASS_IDX="+ param.get("CLASS_IDX");
+		if(session.getAttribute("loginId")!=null) {
+			int row = qnaService.reply(param);
+			
+			if(row<1) {
+				page = "lesson/lessonQnAReply?QUESTION_IDX="+param.get("QUESTION_IDX");
+			}
+			
+		}
+		
+		
+		return page;
+	}
 	
 	
 }

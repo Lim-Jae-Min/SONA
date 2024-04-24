@@ -4,4 +4,6 @@ public interface MainDAO {
 
 	String id();
 
+	String myInst(String loginId);
+
 }

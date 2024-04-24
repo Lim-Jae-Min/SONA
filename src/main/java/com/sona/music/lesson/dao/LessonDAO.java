@@ -9,12 +9,12 @@ import com.sona.music.lesson.dto.PhotoDTO;
 
 public interface LessonDAO {
 
-	List<LessonDTO> recommendListCall(int pagePerCnt, int start, String condition, String content);
+	List<LessonDTO> recommendListCall(int pagePerCnt, int start, String condition, String content, String inst);
 
 	List<LessonDTO> allListCall(int pagePerCnt, int start, String condition, String content, String loca,
 			String instCategory, String inst);
 
-	Object recommendListCount(int pagePerCnt, String condition, String content);
+	Object recommendListCount(int pagePerCnt, String condition, String content, String inst);
 
 	Object allListCount(int pagePerCnt, String condition, String content, String loca, String instCategory,
 			String inst);
@@ -25,17 +25,35 @@ public interface LessonDAO {
 
 	void photoWrite(String user_id, String fileName, String newFileName, int idx, String photo_category);
 
-	LessonDTO lessonDetail(String class_idx);
+	LessonDTO lessonDetail(int idx);
 
-	String lessonLogoLoad(String class_idx);
+	String lessonLogoLoad(int idx);
 
-	List<PhotoDTO> lessonPhotosLoad(String class_idx);
+	List<PhotoDTO> lessonPhotosLoad(int idx);
 
-	List<ReviewDTO> lessonReviewList(String class_idx);
+	List<ReviewDTO> lessonReviewList(int idx);
 
-	List<QnADTO> lessonQnAList(String class_idx);
+	List<QnADTO> lessonQnAList(int idx);
 
-	LessonDTO applyCheck(String class_idx, String loginId);
+	LessonDTO applyCheck(int idx, String loginId);
+
+	void leesonApply(int class_idx, String loginId);
+
+	void lessonBlind(int class_idx);
+
+	void lessonUnBlind(int class_idx);
+
+	void lessonDisable(int class_idx);
+
+	void lessonUnDisable(int class_idx);
+
+	int lessonUpdate(LessonDTO dto);
+
+	void videoUpsert(int idx, String new_url);
+
+	void lessonLogoDel(int idx);
+
+	void lessonPhotosDel(int idx);
 
 
 }

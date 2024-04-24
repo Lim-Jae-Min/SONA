@@ -70,14 +70,7 @@
 	                	</c:if>
                 	</c:if>
                 </th>
-                <th class="menu">
-                	<c:if test="${sessionScope.loginId eq null}">
-                		<a href="login.go">전체 강의</a>
-                	</c:if>
-                	<c:if test="${sessionScope.loginId ne null}">
-                		<a href="allList.go">전체 강의</a>
-                	</c:if>
-                </th>
+                <th class="menu"><a href="allList.go">전체 강의</a></th>
                 <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
@@ -104,9 +97,9 @@
     <div id="content">
         <div id="top">
             <br/>
-            <b class="highlight">${loginName}</b>님을 위한 추천 강의
+            <b class="highlight">${sessionScope.user_name}</b>님을 위한 추천 강의
             <br/><br/>
-            <b class="highlight">${loginName}</b>님이 선호하는 악기 <b class="highlight">${myInst}</b> 추천 강의입니다.
+            <b class="highlight">${sessionScope.user_name}</b>님이 선호하는 악기 <b class="highlight">${inst}</b> 추천 강의입니다.
             <span id="searchbox">
                 <select name="condition" id="condition">
                     <option value="class_name">강의명</option>
@@ -195,16 +188,17 @@ $('input[type="button"]').click(function (){
 	listCall(showPage);
 });
 
+var inst = '${inst}';
 
-
-function listCall(page, condition, searchContent){
+function listCall(page){
     $.ajax({
        type:'get',
        url:'./recommendList.ajax',
        data:{
     	   'page':page,
     	   'condition':$('#condition').val(),
-    	   'content':$('#searchContent').val()
+    	   'content':$('#searchContent').val(),
+    	   'inst':inst
        },
        dataType:'json',
        success:function(data){

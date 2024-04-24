@@ -46,7 +46,6 @@
                 </tr>
             </c:if>
             <c:if test="${sessionScope.loginId eq null}">
->>>>>>> origin/master
                 <tr>
                     <th><a href="login.go">로그인</a></th>
                 </tr>
@@ -90,9 +89,14 @@
     </div>
     
     <a href="apply.go">강의신청 test</a>
-    </br>
+    <br/>
     <a href="userdetail.go?user_id=user2">회원 상세보기</a>
+
     <a href="noticeManagement.go">공지사강관리</a>
+
+    <br/>
+    <a href="lessonLog.go">강의일지 test</a>
+
 </body>
 
 <script>

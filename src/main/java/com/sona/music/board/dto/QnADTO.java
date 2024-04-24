@@ -3,8 +3,7 @@ package com.sona.music.board.dto;
 import java.sql.Date;
 
 public class QnADTO {
-	
-<<<<<<< HEAD
+
 	private int question_idx;
 	private int class_idx;
 	private String user_id;

@@ -186,21 +186,21 @@
 	        <h1>회원가입</h1>
 	        	<p>*아이디</p>
 	            <div id="info__id">
-                <input type="text" placeholder="아이디" name="id">
+                <input type="text" placeholder="아이디" name="user_id">
                 <input type="button" class="check" value="중복체크" onclick="overlay()"/>
                 </div>
 	        <ul>
 	            <li><p>*이름</p></li>
-	            <li><input type="text" placeholder="이름(실명)"name="name"></li>
+	            <li><input type="text" placeholder="이름(실명)"name="user_name"></li>
 	            <li><p>*이메일 인증</p></li>
-	            <li><input type="text" placeholder="이메일을 입력해주세요." name="email"></li>
+	            <li><input type="text" placeholder="이메일을 입력해주세요." name="user_email"></li>
 	            <li><p>*비밀번호</p></li>
-	            <li><input type="password" placeholder="비밀번호" name="pw"></li>
+	            <li><input type="password" placeholder="비밀번호" name="user_pass"></li>
 	            <li ><input id="boxcolor" type="password"  placeholder="비밀번호 확인" name="confirm"></li>
 	            <li><p>*전화번호</p></li>
-	            <li><input type="text" placeholder="전화번호 입력" name="phone"></li>
+	            <li><input type="text" placeholder="전화번호 입력" name="user_phone"></li>
 	            <li class="ptag"><p>*계좌번호</p>
-	            <select name="bank">
+	            <select name="user_bank">
 				        <option value="국민은행">국민은행</option>
 				        <option value="신한은행">신한은행</option>
 				        <option value="우리은행">우리은행</option>
@@ -211,10 +211,10 @@
 				        <!-- 다른 은행도 필요에 따라 추가할 수 있습니다 -->
 				</select>
 	            </li>
-	            <li class="ptag"><input type="text" placeholder="'-'를 제외한 계좌번호를 입력해주세요." name="accountnumber"></li>
+	            <li class="ptag"><input type="text" placeholder="'-'를 제외한 계좌번호를 입력해주세요." name="user_accountnumber"></li>
 	            <li class="radio">
-	                <input type="radio" id="select" name="usertype" value="수강생"><label for="select">수강생</label>
-	                <input type="radio" id="select2" name="usertype" value="강사"><label for="select2">강사</label>
+	                <input type="radio" id="select" name="user_type" value="수강생"><label for="select">수강생</label>
+	                <input type="radio" id="select2" name="user_type" value="강사"><label for="select2">강사</label>
 	            </li>
 	        </ul>
 	           <button type="button" id=join_button onclick="join()">회원가입</button>
@@ -266,14 +266,14 @@ var overChk = false;
 
 
 function join(){
-	var $id = $('input[name="id"]');
-	var $name = $('input[name="name"]');
-	var $email = $('input[name="email"]');
-	var $pw = $('input[name="pw"]');
+	var $id = $('input[name="user_id"]');
+	var $name = $('input[name="user_name"]');
+	var $email = $('input[name="user_email"]');
+	var $pw = $('input[name="user_pass"]');
 	var $confirm = $('input[name="confirm"]');
-	var $phone = $('input[name="phone"]');
-	var $accountnumber = $('input[name="accountnumber"]');
-	var $usertype = $('input[name="usertype"]');
+	var $phone = $('input[name="user_phone"]');
+	var $accountnumber = $('input[name="user_accountnumber"]');
+	var $usertype = $('input[name="user_type"]');
 	
  	if(overChk == false){
 		alert('중복 체크를 해주세요.');
@@ -365,7 +365,7 @@ $('#boxcolor').on('keyup',function(){
  */
  $('#boxcolor').on('keyup', function() {
 	    var confirmPassword = $(this).val();
-	    var password = $('input[name="pw"]').val();
+	    var password = $('input[name="user_pass"]').val();
 	    
 	    if (confirmPassword === '') {
 	        $(this).css({'background-color': 'white'}); // 값이 비어있을 때 기본 배경색으로 변경

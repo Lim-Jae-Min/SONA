@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.mypage.dto.MyPageDTO;
 import com.sona.music.mypage.service.MyPageService;
 
@@ -27,6 +28,7 @@ public class MyPageController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired MyPageService myPageService;
+	
 	
 	@RequestMapping(value = "/studentPage.do")
 	public String getUserInfo(Model model, HttpSession session) {
@@ -60,6 +62,25 @@ public class MyPageController {
 	}
 
 	
+	/*강사 마이페이지로 이동*/
+	@RequestMapping(value = "/teacherPage.go")
+	public String getUserInfo2(Model model, HttpSession session) {
+		logger.info("강사 마이페이지 이동 요청");
+		String page = "member/login";
+		String loginId = (String) session.getAttribute("loginId");
+		int point = (int) session.getAttribute("point");
+	    logger.info("point : "+ point);
+		if (loginId != null) {
+			MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+			model.addAttribute("userInfo",userInfo);
+			logger.info("강사 회원 정보 페이지 이동 성공 !");
+			page = "teacherMyPage/teacherPage";
+		}
+		
+		return page;
+	}
+	
+	
 	@RequestMapping(value = "/myQnA.go")
 	public String myQnA(HttpSession session, Model model) {
 	 logger.info("회원 수정 페이지 이동");
@@ -91,7 +112,6 @@ public class MyPageController {
 	    if (loginId != null) {
 	        logger.info("회원 수정하기~ ", map);
 	        map.put("user_id", loginId);
-
 	        myPageService.updateUserInfo(new HashMap<> (map)); // 로그인 ID를 전달
 	        page = "studentMyPage/editStudentPage";
 	    }

@@ -9,21 +9,22 @@ public class MemberDTO {
 	private String user_name;
 	private String user_email;
 	private String user_phone;
-	private int user_accountnumber;
+	private String user_accountnumber;
 	private String user_type;
 	private int user_delete;
+	private String user_bank;
 	private Date user_leg_date;
 	private String manner;
     private int point;
     private int alarm_count;
     private String review_title;
-    private Date class_leg_date;
+    private Date class_reg_date;
     private String score;
     private String count;
     private String class_name;
     private String apply_idx;
     private String profile;
-
+    private String index_order;
     
 	public String getUser_id() {
 		return user_id;
@@ -55,10 +56,10 @@ public class MemberDTO {
 	public void setUser_phone(String user_phone) {
 		this.user_phone = user_phone;
 	}
-	public int getUser_accountnumber() {
+	public String getUser_accountnumber() {
 		return user_accountnumber;
 	}
-	public void setUser_accountnumber(int user_accountnumber) {
+	public void setUser_accountnumber(String user_accountnumber) {
 		this.user_accountnumber = user_accountnumber;
 	}
 	public String getUser_type() {
@@ -103,11 +104,11 @@ public class MemberDTO {
 	public void setReview_title(String review_title) {
 		this.review_title = review_title;
 	}
-	public Date getClass_leg_date() {
-		return class_leg_date;
+	public Date getClass_reg_date() {
+		return class_reg_date;
 	}
-	public void setClass_leg_date(Date class_leg_date) {
-		this.class_leg_date = class_leg_date;
+	public void setClass_reg_date(Date class_leg_date) {
+		this.class_reg_date = class_leg_date;
 	}
 	public String getScore() {
 		return score;
@@ -138,6 +139,18 @@ public class MemberDTO {
 	}
 	public void setProfile(String profile) {
 		this.profile = profile;
+	}
+	public String getIndex_order() {
+		return index_order;
+	}
+	public void setIndex_order(String index_order) {
+		this.index_order = index_order;
+	}
+	public String getUser_bank() {
+		return user_bank;
+	}
+	public void setUser_bank(String user_bank) {
+		this.user_bank = user_bank;
 	}
 	
 	

@@ -23,6 +23,8 @@ public class MyPageService {
 	@Autowired MyPageDAO myPageDAO;
 
 	public MyPageDTO getUserInfo(String loginId) {
+		MyPageDTO list = myPageDAO.getUserInfo(loginId);
+		logger.info("userInfo list: {} ", list);
 		return myPageDAO.getUserInfo(loginId);
 	}
 

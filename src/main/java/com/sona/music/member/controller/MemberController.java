@@ -212,11 +212,11 @@ public class MemberController {
 	        }
 	        
 	        // 회원가입에 성공하면 user_id를 세션에 저장
-	        session.setAttribute("user_id", param.get("id"));
+	        session.setAttribute("user_id", param.get("user_id"));
 	        logger.info("session id: "+ session.getAttribute("user_id"));
 	        msg = "회원가입에 성공하였습니다.";
 	        // 포인트 아이디 생성
-	        String joinId =param.get("id");
+	        String joinId =param.get("user_id");
 	        pointService.joinCreatePoint(joinId);
 	        //
 		}

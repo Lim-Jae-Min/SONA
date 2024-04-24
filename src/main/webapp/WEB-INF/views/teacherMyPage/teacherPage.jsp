@@ -8,12 +8,35 @@
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
 		.main {
-		    font-size: 20px; 
-		    #contents{
-		    font-size: 15px;}
+		    font-size: 20px;
 		}
-		.main {
-		    font-size: 20px; 
+		.profile {
+			width: 100px;
+			height: 100px;
+		}
+		
+		#heart{
+			margin-right: 30px;
+		 	width: 10px; 
+		 	height: 10px;
+		}
+		hr {
+		width: 100%; 
+		border: none; 
+		border-bottom: 1px solid black; 
+		margin-top: 5px;
+		}
+		.profile_s{
+		width: 100px;
+		}
+		button{
+		background-color:  #BEE6FF; 
+		color: black; border: none;
+		padding: 10px 20px;
+		text-align: center;
+		display: inline-block; 
+		font-size: 16px; margin: 4px 2px; 
+		cursor: pointer; border-radius: 4px;"
 		}
 </style>
 </head>
@@ -74,179 +97,93 @@
             </div>
             <form action="studentPage.do">
  			<div id="content">
-            <table style="width: 100%;">
-                <thead>
-   			 <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
+        <table style="width: 100%;">
+    <thead>
+        <tr> 
+            <td id="profile_s">
+                <c:if test="${userInfo.profile != null}">
+                    <img src="/photo/${userInfo.profile}" class="profile">
+                </c:if>
+                <c:if test="${userInfo.profile == null}">
+                    <img src="resources/img/basic_user.png" class="profile">
+                </c:if>
+            </td>
+            <td class="main">
+                <span style="width: 200px;">${userInfo.user_name} ${userInfo.user_type}</span><br><br>
+                ${userInfo.user_id}
+            </td>
+            <td style="width: 60%; min-width: 150px; text-align: right;">
+                <img src="resources/img/heart.png"  id="heart">${sessionScope.manner_variance}
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+        </tr>
+        <tr>
+            <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 
+                <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">
+                    ${userInfo.user_email}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+        </tr>
+        <tr>
+            <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 
+                <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">
+                    ${userInfo.user_phone}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+        </tr>
+        <tr>
+            <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;은행
+                <span class="contents" style="margin-left: 120px; width: 400px; display: inline-block;">
+                    ${userInfo.user_bank}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+        </tr>
+        <tr>
+            <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계좌번호 
+                <span class="contents" style="margin-left: 80px; width: 400px; display: inline-block;">
+                    ${userInfo.user_accountnumber}
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+        </tr>
+        <tr>
+            <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;잔여 포인트 
+                <span class="contents" style="margin-left: 60px; width: 200px; display: inline-block;">
+                    ${sessionScope.point} P
+                </span>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <button >출금</button>
+            </td>
+        </tr>
+    </tbody>    
+</table>
 
-                    <tr>
-                        &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png" style="margin-left: 30px;"  id="account"></td>
-                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}<span><br><br>${userInfo.user_id}</td>
-                        <td style="width: 60%; min-width: 150px; text-align: right;">
-                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">44.5
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">${userInfo.user_email}</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${userInfo.user_phone}</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    
-                      <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
-                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;은행
-                            <span class="contents" style="margin-left: 120px; width: 400px; display: inline-block;">${userInfo.user_bank}</span>
-                        </td>                   
-                    <tr>
-                    
-                      <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    
-                    
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
-                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계좌번호 
-                            <span class="contents" style="margin-left: 80px; width: 400px; display: inline-block;">${userInfo.user_accountnumber}</span>
-                        </td>                   
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
-                            <br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;잔여 포인트 
-                            <span class="contents" style="margin-left: 60px; width: 200px; display: inline-block;">55500</span>
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							<button style="background-color:  #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">충전</button> &nbsp;
-							<button style="background-color:  #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">출금</button>
-                        </td>
-                  </tr>
-                </tbody>
-                
-            </table>
-            <table style="width: 100%;">
-                <thead>
-                
-                  <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>  <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>  <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>  <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" style="text-align: left; font-weight: bold; font-size : 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;수강신청서</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-              
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-          
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ희망악기 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${userInfo.applyform_inst}</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                     <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ희망지역 <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">${userInfo.applyform_location}</span></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
-                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ희망요일 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
-					      <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					        <c:forEach items="${userInfo.applyform_days}" var="days">
-					            <div style="display: inline-block; background-color: #3498DB; color: white; padding: 2px 5px; margin-right: 5px;">
-					                ${days}
-					            </div>
-					        </c:forEach>
-                            <!-- 나머지 요일도 동일한 방식으로 추가 -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ희망 강의스타일</td>
-
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
-				                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				        <c:forEach items="${userInfo.applyform_style}" var="style">
-				            <div style="display: inline-block; background-color: #3498DB; color: white; padding: 2px 5px; margin-right: 5px;">
-				                ${style}
-				            </div>
-				        </c:forEach>
-                            <!-- 나머지 요일도 동일한 방식으로 추가 -->
-                        </td>
-                    </tr>
-               
-                    <tr>
-                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>
-                    <tr>
-                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
-						    <br>
-						    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ㆍ개인악기 유무 
-						    <span class="contents" style="margin-left: 50px; width: 200px; display: inline-block;">
-						        <c:choose>
-						            <c:when test="${userInfo.have_inst eq true}">
-						                O
-						            </c:when>
-						            <c:otherwise>
-						                X
-						            </c:otherwise>
-						        </c:choose>
-						    </span>
-						</td>						                        
-                     </tr>
-                </tbody>
-            </table>
         </div>
         </form>
         </div>
@@ -261,15 +198,6 @@
     <div id="slide">
         <table>
             <tr>
-<<<<<<< HEAD
-                <td colspan="2">${loginId} 회원님</td>
-                <td>&nbsp&nbsp&nbsp</td>
-                <td class="manner">♥ ${manner_variance}</td>
-            </tr>
-        </table>
-        <br/>
-        <div>보유 포인트 : <span>${point}</span></div>
-=======
                 <td colspan="2">${sessionScope.user_name} 회원님</td>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td class="manner">♥ ${sessionScope.manner_variance}</td>
@@ -277,7 +205,6 @@
         </table>
         <br/>
         <div>보유 포인트 : <span>${sessionScope.point}</span></div>
->>>>>>> origin/master
         <br/>
         <div>
            <c:if test="${sessionScope.user_type eq '수강생'}">
@@ -288,11 +215,7 @@
            </c:if>
         </div>
         <br/>
-<<<<<<< HEAD
-        <div><a href="studentPage.do">마이페이지</a></div>
-=======
         <div><a href="myPage.go">마이페이지</a></div>
->>>>>>> origin/master
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
     </div>

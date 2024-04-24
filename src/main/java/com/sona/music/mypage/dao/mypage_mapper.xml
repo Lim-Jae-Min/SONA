@@ -4,7 +4,7 @@
 >
 <mapper namespace="com.sona.music.mypage.dao.MyPageDAO">
 
-	   <select id="getUserInfo" parameterType="String" resultType="com.sona.music.mypage.dto.MyPageDTO">
+<select id="getUserInfo" parameterType="String" resultType="com.sona.music.mypage.dto.MyPageDTO">
     SELECT 
         u.user_name,
         u.user_type,
@@ -17,16 +17,16 @@
         af.applyform_location,
         af.applyform_days,
         af.applyform_style,
-        af.have_inst
+        af.have_inst,
+        (SELECT pb.NEW_FILENAME FROM PHOTO_BOARD pb WHERE u.USER_ID = pb.USER_ID
+        		 AND pb.PHOTO_CATEGORY='Profile' and pb.USER_ID=#{loginId}) as profile
     FROM USERS u
-    LEFT JOIN (
-        SELECT *
-        FROM APPLICATION_FORM
-        WHERE user_id = #{loginId}
-        LIMIT 1
-    ) af ON u.user_id = af.user_id
+    LEFT JOIN APPLICATION_FORM af ON u.user_id = af.user_id AND af.user_id = #{loginId}
     WHERE u.user_id = #{loginId}
 </select>
+    
+    
+    
     
     <update id="updateUserInfo" parameterType="map">
         UPDATE USERS u

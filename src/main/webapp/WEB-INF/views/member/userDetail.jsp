@@ -265,10 +265,10 @@ function drawList(list){
     for(item of list){
        console.log(item);
        content += '<tr class = "list-item">';
-       content += '<td>'+'인덱스 번호' +'</td>';
-       content += '<td>' + item.class_name + '</td>';
-       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.Count+'명' + '</td>';
-       content += '<td><span style="color: #FED000;">★</span>' + item.Score +'</td>';
+       content += '<td>&nbsp;&nbsp;'+item.index_order +'</td>';
+       content += '<td>&nbsp;&nbsp;' + item.class_name + '</td>';
+       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.count+'명' + '</td>';
+       content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
        var date = new Date(item.class_reg_date);
        var dateStr = date.toLocaleDateString("ko-KR");
        content += '<td>' + dateStr + '</td>';

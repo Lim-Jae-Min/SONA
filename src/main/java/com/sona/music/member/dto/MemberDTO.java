@@ -4,134 +4,93 @@ import java.sql.Date;
 
 public class MemberDTO {
 	
-	private String USER_ID;
-	private String USER_PASS;
-	private String USER_NAME;
-	private String USER_EMAIL;
-	private String USER_PHONE;
-	private int USER_ACCOUNTNUMBER;
-	private String USER_TYPE;
-	private int USER_DELETE;
-	private Date USER_REG_DATE;
-	private String MANNER;
-    private int POINT;
+	private String user_id;
+	private String user_pass;
+	private String user_name;
+	private String user_email;
+	private String user_phone;
+	private int user_accountnumber;
+	private String user_type;
+	private int user_delete;
+	private Date user_reg_date;
+	private String manner;
+    private int point;
     private int alarm_count;
-    private String REVIEW_TITLE;
-    private Date CLASS_REG_DATE;
-    private String SCORE;
-    private String COUNT;
-    private String CLASS_NAME;
-    private String APPLY_IDX;
-    private String TPHOTO;
-	
-	
-	public String getUSER_ID() {
-		return USER_ID;
+    private String review_title;
+    private Date class_reg_date;
+    private String score;
+    private String count;
+    private String class_name;
+    private String apply_idx;
+    private String tphoto;
+    
+    
+    
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setUSER_ID(String uSER_ID) {
-		USER_ID = uSER_ID;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	public String getUSER_PASS() {
-		return USER_PASS;
+	public String getUser_pass() {
+		return user_pass;
 	}
-	public void setUSER_PASS(String uSER_PASS) {
-		USER_PASS = uSER_PASS;
+	public void setUser_pass(String user_pass) {
+		this.user_pass = user_pass;
 	}
-	public String getUSER_NAME() {
-		return USER_NAME;
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setUSER_NAME(String uSER_NAME) {
-		USER_NAME = uSER_NAME;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
-	public String getUSER_EMAIL() {
-		return USER_EMAIL;
+	public String getUser_email() {
+		return user_email;
 	}
-	public void setUSER_EMAIL(String uSER_EMAIL) {
-		USER_EMAIL = uSER_EMAIL;
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
 	}
-	public String getUSER_PHONE() {
-		return USER_PHONE;
+	public String getUser_phone() {
+		return user_phone;
 	}
-	public void setUSER_PHONE(String uSER_PHONE) {
-		USER_PHONE = uSER_PHONE;
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
 	}
-	public int getUSER_ACCOUNTNUMBER() {
-		return USER_ACCOUNTNUMBER;
+	public int getUser_accountnumber() {
+		return user_accountnumber;
 	}
-	public void setUSER_ACCOUNTNUMBER(int uSER_ACCOUNTNUMBER) {
-		USER_ACCOUNTNUMBER = uSER_ACCOUNTNUMBER;
+	public void setUser_accountnumber(int user_accountnumber) {
+		this.user_accountnumber = user_accountnumber;
 	}
-	public String getUSER_TYPE() {
-		return USER_TYPE;
+	public String getUser_type() {
+		return user_type;
 	}
-	public void setUSER_TYPE(String uSER_TYPE) {
-		USER_TYPE = uSER_TYPE;
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
 	}
-	public int getUSER_DELETE() {
-		return USER_DELETE;
+	public int getUser_delete() {
+		return user_delete;
 	}
-	public void setUSER_DELETE(int uSER_DELETE) {
-		USER_DELETE = uSER_DELETE;
+	public void setUser_delete(int user_delete) {
+		this.user_delete = user_delete;
 	}
-	public Date getUSER_REG_DATE() {
-		return USER_REG_DATE;
+	public Date getUser_reg_date() {
+		return user_reg_date;
 	}
-	public void setUSER_REG_DATE(Date uSER_REG_DATE) {
-		USER_REG_DATE = uSER_REG_DATE;
+	public void setUser_reg_date(Date user_reg_date) {
+		this.user_reg_date = user_reg_date;
 	}
-	public String getMANNER() {
-		return MANNER;
+	public String getManner() {
+		return manner;
 	}
-	public void setMANNER(String mANNER) {
-		MANNER = mANNER;
+	public void setManner(String manner) {
+		this.manner = manner;
 	}
-	public int getPOINT() {
-		return POINT;
+	public int getPoint() {
+		return point;
 	}
-	public void setPOINT(int pOINT) {
-		POINT = pOINT;
-	}
-	public String getREVIEW_TITLE() {
-		return REVIEW_TITLE;
-	}
-	public void setREVIEW_TITLE(String rEVIEW_TITLE) {
-		REVIEW_TITLE = rEVIEW_TITLE;
-	}
-	public Date getCLASS_REG_DATE() {
-		return CLASS_REG_DATE;
-	}
-	public void setCLASS_REG_DATE(Date cLASS_REG_DATE) {
-		CLASS_REG_DATE = cLASS_REG_DATE;
-	}
-	public String getSCORE() {
-		return SCORE;
-	}
-	public void setSCORE(String sCORE) {
-		SCORE = sCORE;
-	}
-	public String getCOUNT() {
-		return COUNT;
-	}
-	public void setCOUNT(String cOUNT) {
-		COUNT = cOUNT;
-	}
-	public String getCLASS_NAME() {
-		return CLASS_NAME;
-	}
-	public void setCLASS_NAME(String cLASS_NAME) {
-		CLASS_NAME = cLASS_NAME;
-	}
-	public String getAPPLY_IDX() {
-		return APPLY_IDX;
-	}
-	public void setAPPLY_IDX(String aPPLY_IDX) {
-		APPLY_IDX = aPPLY_IDX;
-	}
-	public String getTPHOTO() {
-		return TPHOTO;
-	}
-	public void setTPHOTO(String tPHOTO) {
-		TPHOTO = tPHOTO;
+	public void setPoint(int point) {
+		this.point = point;
 	}
 	public int getAlarm_count() {
 		return alarm_count;
@@ -139,8 +98,50 @@ public class MemberDTO {
 	public void setAlarm_count(int alarm_count) {
 		this.alarm_count = alarm_count;
 	}
-
+	public String getReview_title() {
+		return review_title;
+	}
+	public void setReview_title(String review_title) {
+		this.review_title = review_title;
+	}
+	public Date getClass_reg_date() {
+		return class_reg_date;
+	}
+	public void setClass_reg_date(Date class_reg_date) {
+		this.class_reg_date = class_reg_date;
+	}
+	public String getScore() {
+		return score;
+	}
+	public void setScore(String score) {
+		this.score = score;
+	}
+	public String getCount() {
+		return count;
+	}
+	public void setCount(String count) {
+		this.count = count;
+	}
+	public String getClass_name() {
+		return class_name;
+	}
+	public void setClass_name(String class_name) {
+		this.class_name = class_name;
+	}
+	public String getApply_idx() {
+		return apply_idx;
+	}
+	public void setApply_idx(String apply_idx) {
+		this.apply_idx = apply_idx;
+	}
+	public String getTphoto() {
+		return tphoto;
+	}
+	public void setTphoto(String tphoto) {
+		this.tphoto = tphoto;
+	}
 	
+		
 	
 
 }

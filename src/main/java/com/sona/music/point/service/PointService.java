@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sona.music.lesson.dto.LessonDTO;
+import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.point.dao.PointDAO;
 
 @Service
@@ -64,6 +65,11 @@ public class PointService {
 	public int lessonPayApyHistory(Integer classIdx, String id, String applyState) {
 		int appResult= pointDAO.lessonPayApyHistory(classIdx,id,applyState);
 		return appResult;
+	}
+
+	public MemberDTO getUserInfo(String chargePointLoginId) {
+		
+		return pointDAO.getUserInfo(chargePointLoginId);
 	}
 
 //	public String getPhotoName(String user_id) {

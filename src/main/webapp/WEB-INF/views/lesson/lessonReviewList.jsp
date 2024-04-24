@@ -221,18 +221,20 @@
 </body>
 <script>
 var showPage =1;
+var classIdx = ${classIdx};
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 	listCall(showPage);
 });
 
-function listCall(page){
+function listCall(page, classIdx){
     $.ajax({
        type:'get',
        url:'./list.ajax',
        data:{
           'page':page,
-          'cnt':5
+          'cnt':5,
+          'classIdx':${classIdx}
        },
        dataType:'json',
        success:function(data){
@@ -249,7 +251,7 @@ function listCall(page){
         		  console.log(evt); // 이벤트 객체
         		  console.log(pg); //클릭한 페이지 번호
         		  showPage = pg;
-        		  listCall(pg);
+        		  listCall(pg, classIdx);
         	  }
         	  
           });

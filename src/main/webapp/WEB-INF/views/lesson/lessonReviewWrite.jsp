@@ -153,8 +153,8 @@
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>평가 강의명 : ${class_idx}<input type="hidden" name="class_idx" value="2"/>
-						피평가자: ${ratee_id}<input type="hidden" name="ratee_id" value=${ratee_id}/></th>
+						<th>평가 강의명 : ${class_idx}<input type="hidden" name="class_idx" value="${class_idx}"/>
+						피평가자: ${ratee_id}<input type="hidden" name="ratee_id" value="${ratee_id}"/></th>
 					</tr>
 					<tr>
 						<th style="font-size: 14px;">리뷰 제목</th>
@@ -196,7 +196,7 @@
 						</td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="location.href='./lessonReviewList.go'"
+						type="button" onclick="redirectToList(${classIdx})"
 						value="취소" />
 						<button>작성</button></td>
 					</tr>
@@ -246,6 +246,8 @@
 	</div>
 </body>
 <script>
+var classIdx = ${classIdx};
+
 var currentDateElement = document.getElementById('currentDate');
 var currentDate = new Date().toLocaleDateString('ko-KR');
 currentDateElement.innerText = currentDate;
@@ -271,6 +273,10 @@ function checkFileCount(input) {
         // 파일 선택 취소
         input.value = '';
     }
+}
+
+function redirectToList(classIdx) {
+    window.location.href = './lessonReviewList.go?class_idx=' + classIdx;
 }
 
 $('#userName').click(function slide() {

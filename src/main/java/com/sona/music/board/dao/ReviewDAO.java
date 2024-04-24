@@ -10,7 +10,7 @@ public interface ReviewDAO {
 	
 	int allCount(int pagePerCnt);
 
-	List<ReviewDTO> list(int pagePerCnt, int start);
+	List<ReviewDTO> list(int pagePerCnt, int start, Integer classIdx);
 
 	int write(ReviewDTO dto);
 

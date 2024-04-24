@@ -100,13 +100,15 @@ public class QnAController {
 	public String aWrite(@RequestParam Map<String, String> param, HttpSession session) {
 		logger.info("질문 idx ="+param.get("question_idx")+" Q&A 답변 작성 요청");
 		logger.info(param.get("class_idx"));
+		int class_idx =Integer.parseInt(param.get("class_idx"));
+		int question_idx = Integer.parseInt(param.get("question_idx"));
 		
-		String page = "redirect:/lessonQnAList.go?class_idx="+ param.get("class_idx");
+		String page = "redirect:/lessonQnAList.go?class_idx="+ class_idx;
 		if(session.getAttribute("loginId")!=null) {
 			int row = qnaService.reply(param);
 			
 			if(row<1) {
-				page = "lesson/lessonQnAReply.do?question_idx="+param.get("question_idx");
+				page = "lesson/lessonQnAReply.do?question_idx="+ question_idx;
 			}
 			
 		}
@@ -157,17 +159,17 @@ public class QnAController {
 		return "lesson/lessonQnAEdit";
 	}
 	
-	@RequestMapping(value="/questionEdit.do ")
+	@RequestMapping(value="/questionEdit.do")
 	public String questionEdit(@RequestParam Map<String, String> param, HttpSession session) {
 		logger.info(param.get("question_idx")+"질문 수정함");
-
+		int class_idx =Integer.parseInt(param.get("class_idx"));
 		String page = "redirect:/lessonQnAList.go?class_idx="+ param.get("class_idx");
 
 		if(session.getAttribute("loginId")!= null) {
 
 			qnaService.update(param);
 
-			page = "redirect:/lessonQnAList.go?class_idx="+param.get("class_idx");			
+			page = "redirect:/lessonQnAList.go?class_idx="+class_idx;			
 		}
 
 		return page;

@@ -25,45 +25,55 @@ public class ReviewController {
 	@Autowired ReviewService reviewService;
 
 	@RequestMapping(value="/lessonReviewList.go")
-	public String reviewlist(Model model) {
-		logger.info("리뷰 리스트 요청");
-
-
-		return "lesson/lessonReviewList";
+	public String reviewlist(Integer class_idx, Model model, HttpSession session) {
+		logger.info("idx="+class_idx+"리뷰 리스트 요청");
+		
+		String page = "redirect:/login.go";
+		
+		if (session.getAttribute("loginId")!=null) {
+			
+			model.addAttribute("classIdx", class_idx);
+			page = "lesson/lessonReviewList";
+		}
+		return page;
 	}
 
 	@RequestMapping(value="/list.ajax")
 	@ResponseBody
-	public Map<String , Object> listCall(String page, String cnt){
+	public Map<String , Object> listCall(String page, String cnt, @RequestParam(value="classIdx") Integer classIdx){
 		logger.info("listCall 요청");
 		logger.info("페이지당 보여줄 갯수:"+cnt);
 		logger.info("요청 페이지: "+page);
+		logger.info("classIDx{}",classIdx);
 
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 5;
-		Map<String, Object>map = reviewService.list(currPage,pagePerCnt);
+		Map<String, Object>map = reviewService.list(currPage,pagePerCnt,classIdx);
 
 		return map;
 	}
 
 	@RequestMapping(value="/lessonReviewWrite.go")
-	public String reviewWrite(Model model, HttpSession session) {
+	public String reviewWrite(Integer class_idx, String user_id, Model model, HttpSession session) {
 		logger.info("리뷰 작성 요청");
 
 		String page = "lesson/lessonReviewWrite";
+		model.addAttribute("classIdx", class_idx);
+		model.addAttribute("ratee_id", user_id);
 
 		return page;
 	}
 
 	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.POST)
-	public String write(MultipartFile photos, HttpSession session, @RequestParam Map<String,String>param) {
+	public String write(MultipartFile photos, Integer class_idx, HttpSession session, @RequestParam Map<String,String>param) {
 		logger.info("리뷰 작성함");
 		logger.info("params = {}", param);
-		String page = "redirect:/lessonReviewList.go";
+		String page = "redirect:/lessonReviewList.go?class_idx="+ class_idx;
 		if (session.getAttribute("loginId")!=null) {
 			int row = reviewService.write(photos, param);
+			
 			if(row<1) {
-				page = "lesson/lessonReviewWrite";
+				page = "redirect:/lessonReviewWrite.go?class_idx="+ class_idx;
 			}
 		}
 
@@ -89,7 +99,7 @@ public class ReviewController {
 			return "lesson/lessonReviewDetail"; 
 		} else {
 
-			return "redirect:/lessonReviewList.go"; 
+			return "redirect:/login.go"; 
 		}
 	}
 
@@ -132,14 +142,18 @@ public class ReviewController {
 	@RequestMapping(value="/reviewEdit.do")
 	public String edit(MultipartFile photos,@RequestParam Map<String, String>param, HttpSession session) {
 		logger.info(param.get("review_idx")+"리뷰 수정함");
+		int review_idx = Integer.parseInt(param.get("review_idx"));
+		int class_idx =Integer.parseInt(param.get("class_idx"));
+		logger.info("review_idx = "+review_idx+"class_idx ="+class_idx);
 
-		String page = "redirect:/lessonReviewList";
+		String page = "redirect:/login.go";
 
 		if(session.getAttribute("loginId")!= null) {
 
 			reviewService.update(photos, param);
-
-			page = "redirect:/lessonReviewDetail.go?idx="+param.get("review_idx");			
+			
+			page = "redirect:/lessonReviewDetail.go?review_idx="+review_idx;
+			logger.info(""+ review_idx);
 		}
 
 		return page;

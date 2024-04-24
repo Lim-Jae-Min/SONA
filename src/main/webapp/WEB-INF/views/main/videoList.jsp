@@ -7,34 +7,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
-    .main-title {
-    margin-top: 20px;
-    margin-left: 20px;
-}
-
-.main-title h1 {
-    font-size: 36px;
-    color: #6FA4FF;
-    font-weight: bold;
-}
-.container {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-}
-
-.box {
-    width: 376px;
-    height: 151px;
-    background-color: #6FA4FF;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 151px;
-    border-radius: 15px;
-    margin: 0 10px;
-}
+    
 </style>
 </head>
 <body>
@@ -79,18 +52,9 @@
             </c:if>
         </table>
     </header>
-    <div class="main-title">
-    <h1>누구나 배울 수 있는 악기!</h1>
-</div>
     <div>
-        <button class="button videoList"
-						onclick="redirectToReplyPage()">더보기</button>
+        ${msg}
     </div>
-    <div class="container">
-    <div class="box">1</div>
-    <div class="box">2</div>
-    <div class="box">3</div>
-</div>
     <div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>
@@ -130,10 +94,6 @@
 </body>
 
 <script>
-
-function redirectToReplyPage() {
-    window.location.href = './videoList.go';
-}
 
 $('#userName').click(function slide() {
 	var display = $('#slide').css('display');

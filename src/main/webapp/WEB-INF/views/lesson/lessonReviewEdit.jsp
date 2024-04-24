@@ -236,7 +236,8 @@ body {
 				onsubmit="return confirmWrite(event);">
 				<table>
 					<tr>
-						<th>평가 강의번호 : ${review.class_idx} 피평가자: ${review.ratee_id}</th>
+						<th>평가 강의번호 : ${review.class_idx} <input type="hidden" name="class_idx"
+							value="${review.class_idx}" />피평가자: ${review.ratee_id}</th>
 					</tr>
 					<tr>
 						<td><input type="hidden" name="review_idx"
@@ -282,7 +283,7 @@ body {
 								장의 사진만 첨부 가능합니다)</small></td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="location.href='./lessonReviewList.go'"
+						type="button" onclick="redirectToList(${review.class_idx})"
 						value="취소" />
 						<button>수정</button></td>
 					</tr>
@@ -333,7 +334,8 @@ body {
 	</div>
 </body>
 <script>
-
+var classIdx = ${review.class_idx};
+var reviewIdx = ${review.review_idx};
 
 function deletePhoto(postIdx, photoCategory, event) {
     event.preventDefault(); // 폼의 기본 동작 중지
@@ -385,6 +387,10 @@ function confirmWrite(event) {
     } else {
         return true; // 수정 버튼이 아닌 경우에는 그냥 제출을 허용합니다.
     }
+}
+
+function redirectToList(classIdx) {
+    window.location.href = './lessonReviewList.go?class_idx=' + classIdx;
 }
 
 $('#userName').click(function slide() {

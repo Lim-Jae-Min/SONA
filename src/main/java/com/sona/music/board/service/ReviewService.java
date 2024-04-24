@@ -28,12 +28,12 @@ public class ReviewService {
 
 	public String file_root = "C:/upload/";
 
-	public Map<String, Object> list(int currPage, int pagePerCnt) {
+	public Map<String, Object> list(int currPage, int pagePerCnt, Integer classIdx) {
 
 		int start = (currPage-1)*pagePerCnt;
 
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<ReviewDTO> list = reviewDAO.list(pagePerCnt,start);
+		List<ReviewDTO> list = reviewDAO.list(pagePerCnt,start,classIdx);
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);

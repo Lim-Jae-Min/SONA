@@ -60,4 +60,10 @@ public class MainController {
 		return "alarm/alarmList";
 	}
 	
+	@RequestMapping(value="/videoList.go")
+	public String videoList(Model model) {
+		model.addAttribute("msg", "강사 영상 리스트 이동");
+		return "main/videoList";
+	}
+	
 }

@@ -210,14 +210,7 @@ button {
 	                	</c:if>
                 	</c:if>
                 </th>
-                <th class="menu">
-                	<c:if test="${sessionScope.loginId eq null}">
-                		<a href="login.go">전체 강의</a>
-                	</c:if>
-                	<c:if test="${sessionScope.loginId ne null}">
-                		<a href="allList.go">전체 강의</a>
-                	</c:if>
-                </th>
+                <th class="menu"><a href="allList.go">전체 강의</a></th>
                 <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
@@ -477,7 +470,7 @@ button {
 	        	<tr>
 	        		<th class="BigInterval" colspan="2">
 	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state ne '신청 완료' and applyCheck.apply_state ne '수락 완료' and applyCheck.apply_state ne '결제 완료'}">
-		  	      			<button>수강신청</button>
+		  	      			<button id="lessonApplyButton">수강신청</button>
 	        			</c:if>
 	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '신청 완료'}">
 		  	      			수강 신청이 완료되었습니다!
@@ -485,16 +478,22 @@ button {
 	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '수락 완료'}">
 		  	      			수강 신청이 수락되었습니다. 결제를 진행해주세요!
 		  	      			<br/><br/>
-		  	      			<button id="paymentGo">바로가기</button>
+		  	      			<button id="paymentGoButton">바로가기</button>
 	        			</c:if>
 	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '결제 완료'}">
 		  	      			수강 진행중입니다.
 	        			</c:if>
-	  	      			<c:if test="${sessionScope.user_type eq '관리자'}">
+	  	      			<c:if test="${sessionScope.user_type eq '관리자' and lesson.class_delete eq 0}">
 		  	      			<button id="blindButton">블라인드</button>
 	        			</c:if>
-	  	      			<c:if test="${sessionScope.loginId eq lesson.user_id}">
+	        			<c:if test="${sessionScope.user_type eq '관리자' and lesson.class_delete eq 1}">
+		  	      			<button id="unBlindButton">블라인드 해제</button>
+	        			</c:if>
+	  	      			<c:if test="${sessionScope.loginId eq lesson.user_id and lesson.class_disable eq 0}">
 		  	      			<button id="editButton">강의수정</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="disableButton">비활성화</button>
+	        			</c:if>
+	        			<c:if test="${sessionScope.loginId eq lesson.user_id and lesson.class_disable eq 1}">
+		  	      			<button id="editButton">강의수정</button>&nbsp;&nbsp;&nbsp;&nbsp;<button id="unDisableButton">비활성화 해제</button>
 	        			</c:if>
 	        		</th>
 	        	</tr>
@@ -640,10 +639,61 @@ function closeModal() {
 console.log('${lesson.video_url}');
 
 $('#moreReview').click(function (){
-	location.href = 'lessonReviewList';
+	location.href = 'lessonReviewList?CLASS_IDX=${lesson.class_idx}';
 });
 $('#moreQnA').click(function (){
-	location.href = 'lessonQnAList';
+	location.href = 'lessonQnAList?CLASS_IDX=${lesson.class_idx}';
+});
+$('#lessonApplyButton').click(function (){
+	var result = confirm("수강 신청하시겠습니까?");
+	if (result) {
+        // 사용자가 "예"를 선택한 경우
+        alert("강의 신청이 완료되었습니다.");
+        // 여기에 작성 완료 후의 동작 추가 가능
+        location.href = 'lessonApply.do?class_idx=${lesson.class_idx}';
+    }
+});
+$('#paymentGoButton').click(function (){
+	location.href = 'lessonPayment?class_idx=${lesson.class_idx}';
+});
+$('#blindButton').click(function (){
+	var result = confirm("강의 블라인드 하시겠습니까?");
+	if (result) {
+        // 사용자가 "예"를 선택한 경우
+        alert("강의 블라인드가 완료되었습니다.");
+        // 여기에 작성 완료 후의 동작 추가 가능
+        location.href = 'lessonBlind.do?class_idx=${lesson.class_idx}';
+    }
+});
+$('#unBlindButton').click(function (){
+	var result = confirm("강의 블라인드 해제 하시겠습니까?");
+	if (result) {
+        // 사용자가 "예"를 선택한 경우
+        alert("강의 블라인드 해제가 완료되었습니다.");
+        // 여기에 작성 완료 후의 동작 추가 가능
+        location.href = 'lessonUnBlind.do?class_idx=${lesson.class_idx}';
+    }
+});
+$('#disableButton').click(function (){
+	var result = confirm("강의 비활성화 하시겠습니까?");
+	if (result) {
+        // 사용자가 "예"를 선택한 경우
+        alert("강의 비활성화가 완료되었습니다.");
+        // 여기에 작성 완료 후의 동작 추가 가능
+        location.href = 'lessonDisable.do?class_idx=${lesson.class_idx}';
+    }
+});
+$('#unDisableButton').click(function (){
+	var result = confirm("강의 비활성화 해제 하시겠습니까?");
+	if (result) {
+        // 사용자가 "예"를 선택한 경우
+        alert("강의 비활성화 해제가 완료되었습니다.");
+        // 여기에 작성 완료 후의 동작 추가 가능
+        location.href = 'lessonUnDisable.do?class_idx=${lesson.class_idx}';
+    }
+});
+$('#editButton').click(function (){
+	location.href = 'lessonEdit.go?class_idx=${lesson.class_idx}';
 });
 
 </script>

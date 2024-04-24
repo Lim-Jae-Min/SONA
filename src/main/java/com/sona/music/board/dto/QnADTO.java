@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class QnADTO {
 	
+<<<<<<< HEAD
 	private int question_idx;
 	private int class_idx;
 	private String user_id;
@@ -103,6 +104,22 @@ public class QnADTO {
 		this.a_reg_date = a_reg_date;
 	}
 
+=======
+	private int QUESTION_IDX;
+	private int CLASS_IDX;
+	private String USER_ID;
+	private String Q_TITLE;
+	private String Q_CONTENT;
+	private boolean ANONYMOUS_STATUS;
+	private Date Q_REG_DATE;
+	private boolean Q_DELETE;
+	private int Q_HIT;
+	private boolean REPLY_CHECK;
+	private String TEACHER_ID;
+	private int ANSWER_IDX;
+	private String A_CONTENT;
+	private Date A_REG_DATE;
+>>>>>>> origin/master
 	
 
 	

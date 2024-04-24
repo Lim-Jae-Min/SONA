@@ -1,5 +1,7 @@
 package com.sona.music.main.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,23 @@ public class MainController {
 	
 	
 	@RequestMapping(value="/recommendList.go")
-	public String recommendList(Model model) {
+	public String recommendList(Model model, HttpSession session) {
 		model.addAttribute("msg", "추천 강의 게시판");
-		return "lesson/recommendLessonList";
+		String page = "member/login";
+		String loginId = (String) session.getAttribute("loginId");
+		String inst = mainService.myInst(loginId);
+		
+		if (session.getAttribute("loginId") != null) {
+			if (inst == null) {
+				page = "redirect:/myPage.go";
+			}else {
+				model.addAttribute("inst", inst);
+				page = "lesson/recommendLessonList";
+			}
+			
+		}
+		
+		return page;
 	}
 	
 	@RequestMapping(value="/allList.go")
@@ -49,15 +65,31 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/myPage.go")
-	public String myPage(Model model) {
+	public String myPage(Model model, HttpSession session) {
 		model.addAttribute("msg", "마이페이지 이동");
-		return "studentMyPage/studentPage";
+		String page = "member/login";
+		
+		if (session.getAttribute("loginId") != null) {
+			if (session.getAttribute("user_type").equals("수강생")) {
+				page = "studentMyPage/studentPage";
+			}else {
+				page = "teacherMyPage/teacherPage";
+			}
+		}
+		
+		return page;
 	}
 	
 	@RequestMapping(value="/alarmList.go")
-	public String alarmList(Model model) {
+	public String alarmList(Model model, HttpSession session) {
 		model.addAttribute("msg", "알림 리스트 이동");
-		return "alarm/alarmList";
+		String page = "member/login";
+		
+		if (session.getAttribute("loginId") != null) {
+			page = "alarm/alarmList";
+		}
+		
+		return page;
 	}
 	
 	@RequestMapping(value="/videoList.go")

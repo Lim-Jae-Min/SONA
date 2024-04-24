@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,21 +62,24 @@ public class MyPageController {
 	}
 
 	
-	@RequestMapping(value = "/myQnA.go")
-	public String myQnA(HttpSession session, Model model) {
-	 logger.info("회원 수정 페이지 이동");
-	    String page = "member/login";
-	    String loginId = (String) session.getAttribute("loginId");
-	    if(loginId != null) {
-	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
-	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
-	        // 모델에 사용자 정보 추가
-	        model.addAttribute("userInfo", userInfo);
-	        logger.info("회원 수정 페이지 이동 성공 !");
-	        page = "studentMyPage/myQnA";
-	    }
-	    return page;
-	}
+	 @RequestMapping(value = "/myQnA.go")
+	 public String className(HttpSession session, Model model) {
+		 	String page = "member/login";
+		    String loginId = (String) session.getAttribute("loginId");
+			logger.info("idx="+loginId+"QnA 리스트 요청");
+			if (loginId != null) {
+				 List<String> classNames = myPageService.getClassNames(loginId);
+				 model.addAttribute("classNames", classNames);
+				    logger.info("클래스 이름 목록: " + classNames); 
+				model.addAttribute("loginId", loginId);
+				page = "studentMyPage/myQnA";
+			}
+
+		    return page;
+		    
+		}
+	
+
 	
 	
 	
@@ -112,13 +117,6 @@ public class MyPageController {
 	
 	
 	
-	 @RequestMapping(value = "/submitEdit.ajax", method = RequestMethod.POST)
-	 public String editUserInfo(@RequestBody MyPageDTO requestData) {
-	     // 서비스로 전달하여 처리
- 		logger.info("수강신청폼 수정 요청~ ");
-
-	     return myPageService.editUserInfo(requestData);
-	 }
 	 
 	 @RequestMapping(value = "/myTeacher.go")
 		public String myTeacher(HttpSession session, Model model) {
@@ -132,32 +130,65 @@ public class MyPageController {
 		    }
 		    return page;
 		}
-	 @RequestMapping(value = "/myQnA.do")
-	 public String qnaList(Model model, HttpSession session) {
-	        // Q&A 목록을 서비스로부터 가져와 모델에 추가
-		    String page = "member/login";
+ 
+	 
+	 
+
+
+	 
+	 @RequestMapping(value="/qnaList.ajax", method = RequestMethod.GET)
+	 @ResponseBody
+	 public Map<String , Object> qnaListCall(String page, String cnt, HttpSession session) {
+	     logger.info("listCall 요청");
+	     logger.info("페이지당 보여줄 갯수:" + cnt);
+	     logger.info("요청 페이지: " + page);
 		    String loginId = (String) session.getAttribute("loginId");
 
-		    if (loginId != null) {
-		        List<MyPageDTO> qnaList = myPageService.getAllQnA(); // 서비스를 통해 매퍼의 결과를 받아옴
-		        model.addAttribute("qnaList", qnaList); // 모델에 결과를 추가
-		        page = "studentMyPage/myQnA";
+	     int currPage = Integer.parseInt(page);
+	     int pagePerCnt = 10;
+	     logger.info(loginId);
+	     Map<String, Object> map = myPageService.qnaList(currPage, pagePerCnt, loginId);
+	     
+	     return map;
+	 }
+	 
+	 
+		@RequestMapping(value = "/myPoint.go")
+		public String myPoint(HttpSession session, Model model) {
+		 logger.info("회원 수정 페이지 이동");
+		    String page = "member/login";
+		    String loginId = (String) session.getAttribute("loginId");
+		    if(loginId != null) {
+		        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
+		    	 String point = myPageService.getPointAmount(loginId);
+		        // 모델에 사용자 정보 추가
+		        model.addAttribute("point", point);
+		        logger.info("회원 수정 페이지 이동 성공 !");
+		        page = "studentMyPage/myPoint";
 		    }
 		    return page;
 		}
 	 
-	 @RequestMapping(value="/studentWrittenList.go")
-	 public String studentWrittenListGo () {
-		 
-		 return "studentMyPage/studentWrittenList";
-	 }
-	 @RequestMapping(value="/teacherWrittenList.go")
-	 public String teacherWrittenListGo () {
-		 
-		 return "teacherMyPage/teacherWrittenList";
+	 @RequestMapping(value="/pointList.ajax", method = RequestMethod.GET)
+	 @ResponseBody
+	 public Map<String , Object> pointListCall(String page, String cnt, HttpSession session) {
+	     logger.info("listCall 요청");
+	     logger.info("페이지당 보여줄 갯수:" + cnt);
+	     logger.info("요청 페이지: " + page);
+		    String loginId = (String) session.getAttribute("loginId");
+
+	     int currPage = Integer.parseInt(page);
+	     int pagePerCnt = 10;
+	     logger.info(loginId);
+	     Map<String, Object> map = myPageService.pointList(currPage, pagePerCnt, loginId);
+	     
+	     return map;
 	 }
 	 
+
+
 	 
 	 
 }
+
 

@@ -9,11 +9,13 @@ public class MemberDTO {
 	private String user_name;
 	private String user_email;
 	private String user_phone;
-	private String user_accountnumber;
+
+	private int user_accountnumber;
 	private String user_type;
 	private int user_delete;
+	private Date user_reg_date;
+
 	private String user_bank;
-	private Date user_leg_date;
 	private String manner;
     private int point;
     private int alarm_count;
@@ -25,7 +27,6 @@ public class MemberDTO {
     private String apply_idx;
     private String profile;
     private String index_order;
-    
 	public String getUser_id() {
 		return user_id;
 	}
@@ -56,10 +57,10 @@ public class MemberDTO {
 	public void setUser_phone(String user_phone) {
 		this.user_phone = user_phone;
 	}
-	public String getUser_accountnumber() {
+	public int getUser_accountnumber() {
 		return user_accountnumber;
 	}
-	public void setUser_accountnumber(String user_accountnumber) {
+	public void setUser_accountnumber(int user_accountnumber) {
 		this.user_accountnumber = user_accountnumber;
 	}
 	public String getUser_type() {
@@ -74,11 +75,17 @@ public class MemberDTO {
 	public void setUser_delete(int user_delete) {
 		this.user_delete = user_delete;
 	}
-	public Date getUser_leg_date() {
-		return user_leg_date;
+	public Date getUser_reg_date() {
+		return user_reg_date;
 	}
-	public void setUser_leg_date(Date user_leg_date) {
-		this.user_leg_date = user_leg_date;
+	public void setUser_reg_date(Date user_reg_date) {
+		this.user_reg_date = user_reg_date;
+	}
+	public String getUser_bank() {
+		return user_bank;
+	}
+	public void setUser_bank(String user_bank) {
+		this.user_bank = user_bank;
 	}
 	public String getManner() {
 		return manner;
@@ -107,8 +114,8 @@ public class MemberDTO {
 	public Date getClass_reg_date() {
 		return class_reg_date;
 	}
-	public void setClass_reg_date(Date class_leg_date) {
-		this.class_reg_date = class_leg_date;
+	public void setClass_reg_date(Date class_reg_date) {
+		this.class_reg_date = class_reg_date;
 	}
 	public String getScore() {
 		return score;
@@ -146,14 +153,6 @@ public class MemberDTO {
 	public void setIndex_order(String index_order) {
 		this.index_order = index_order;
 	}
-	public String getUser_bank() {
-		return user_bank;
-	}
-	public void setUser_bank(String user_bank) {
-		this.user_bank = user_bank;
-	}
-	
-	
-	
 
+	
 }

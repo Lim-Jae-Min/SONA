@@ -5,23 +5,37 @@
 <mapper namespace="com.sona.music.point.dao.PointDAO">
 
 	<insert id="joinCreatePoint">
-		INSERT INTO USER_POINT(USER_ID, POINT_TYPE, POINT) 
-			VALUES(#{param1},"아이디생성",0)
+		INSERT INTO USER_POINT(user_id, point_type, point) 
+			VALUES(#{param1},"아이디생성",0);
 	</insert>
 
 	<select id="getHavePoint" resultType="Integer">
-		SELECT SUM(POINT) FROM USER_POINT where USER_ID = #{param1};
+		SELECT SUM(point) FROM USER_POINT where user_id = #{param1};
 	</select>
 	
 	<insert id="pointChange">
-		INSERT INTO USER_POINT(USER_ID, POINT_TYPE, POINT) 
+		INSERT INTO USER_POINT(user_id, point_type, point) 
 			VALUES(#{param1},#{param3},#{param2});
 	</insert>
 	
 	<select id="paymentGetLesson" resultType="com.sona.music.lesson.dto.LessonDTO">
 		SELECT *,
-			(SELECT USER_NAME FROM USERS WHERE USERS.USER_ID = CLASS_OPEN.USER_ID) 
-			AS USER_NAME FROM CLASS_OPEN
-			WHERE CLASS_IDX = #{param1};
+			(SELECT user_name FROM USERS WHERE USERS.user_id = CLASS_OPEN.user_id) 
+			AS user_name FROM CLASS_OPEN
+			WHERE class_idx = #{param1};
+	</select>
+	
+	<insert id="lessonPayApyHistory" >
+		INSERT INTO APPLY_HISTORY(class_idx,user_id,apply_state)
+			VALUES(#{param1},#{param2},#{param3});
+			
+	</insert>
+	
+	<select id="getPhotoName">
+		SELECT new_filename FROM PHOTO_BOARD WHERE user_id = #{param1} AND photo_category = #{param2} limit 1;
+	</select>
+	
+	<select id="getUserInfo" resultType="com.sona.music.member.dto.MemberDTO">
+		SELECT user_phone,user_accountnumber FROM USERS WHERE user_id = #{param1};
 	</select>
 </mapper>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sona.music.lesson.dto.LessonDTO;
+import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.point.dao.PointDAO;
 
 @Service
@@ -17,7 +18,7 @@ public class PointService {
 
 	public int getHavePoint(String chargePointLoginId) {
 		int havePoint = pointDAO.getHavePoint(chargePointLoginId);
-		logger.info("포인트 충전에서 가져온 포인트 보유 : "+havePoint );
+		logger.info(" 포인트 보유 : "+havePoint );
 		return havePoint;
 	}
 
@@ -34,7 +35,7 @@ public class PointService {
 
 	public int withdrawPoint(String id, Integer amount , String pointType) {
 		int row = pointDAO.pointChange(id,amount,pointType);
-		return 0;
+		return row;
 	}
 
 	public LessonDTO paymentGetLesson(Integer cLASS_IDX) {
@@ -54,5 +55,26 @@ public class PointService {
 		
 		return lessonInfo;
 	}
+
+	public int lessonPayment(String id, int amount, String pointType) {
+		int row = pointDAO.pointChange(id,amount,pointType);
+		
+		return row;
+	}
+
+	public int lessonPayApyHistory(Integer classIdx, String id, String applyState) {
+		int appResult= pointDAO.lessonPayApyHistory(classIdx,id,applyState);
+		return appResult;
+	}
+
+	public MemberDTO getUserInfo(String chargePointLoginId) {
+		
+		return pointDAO.getUserInfo(chargePointLoginId);
+	}
+
+//	public String getPhotoName(String user_id) {
+//		// TODO Auto-generated method stub
+//		return pointDAO.getPhotoName(user_id);
+//	}
 	
 }

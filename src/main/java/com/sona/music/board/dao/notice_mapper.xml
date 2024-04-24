@@ -3,5 +3,28 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <mapper namespace="com.sona.music.board.dao.NoticeDAO">
-
+	
+	<select id="showList" resultType="com.sona.music.board.dto.NoticeDTO">
+		SELECT * FROM NOTICE_BOARD WHERE notice_delete = #{param3}
+			ORDER BY notice_idx DESC LIMIT #{param1},#{param2};
+	</select> 
+	
+	<select id="allCount" resultType="int">
+		SELECT CEIL (COUNT(notice_idx)/#{param1}) AS pages FROM NOTICE_BOARD; 	
+	</select>
+	
+	<select id="showListSearchContent" resultType="com.sona.music.board.dto.NoticeDTO">
+		SELECT * FROM NOTICE_BOARD WHERE notice_delete = #{param3}
+			AND notice_content LIKE '%${param4}%' 
+			
+			ORDER BY notice_idx DESC LIMIT #{param1},#{param2};
+	</select> 
+	
+	<select id="showListSearchTitle" resultType="com.sona.music.board.dto.NoticeDTO">
+		SELECT * FROM NOTICE_BOARD WHERE notice_delete = #{param3}
+			AND notice_title LIKE '%${param4}%' 
+			
+			ORDER BY notice_idx DESC LIMIT #{param1},#{param2};
+	</select> 
+	
 </mapper>

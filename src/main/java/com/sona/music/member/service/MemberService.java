@@ -65,7 +65,37 @@ public class MemberService {
 
 	public int join(Map<String, String> param) {
 		logger.info("회원가입 param 값: " + param);
-		int row = memberDAO.join(param);
+		
+		
+		String ori_phone = param.get("user_phone");
+		String new_phone = ori_phone.substring(0, 3) + '-' + ori_phone.substring(3, 7) + '-' + ori_phone.substring(7, 11);
+		logger.info("new_phone = " + new_phone);
+		String email = param.get("user_email");
+		String id = param.get("user_id");
+		String pw = param.get("user_pass");
+		String bank = param.get("user_bank");
+		String accountnumber = param.get("user_accountnumber");
+		String usertype = param.get("user_type");
+		String name = param.get("user_name");
+		
+		
+		MemberDTO dto = new MemberDTO();
+		
+		dto.setUser_phone(new_phone);
+		dto.setUser_email(email);
+		dto.setUser_id(id);
+		dto.setUser_pass(pw);
+		dto.setUser_bank(bank);
+		
+		dto.setUser_accountnumber(Integer.parseInt(accountnumber));
+		dto.setUser_type(usertype);
+		dto.setUser_name(name);
+		
+		int row = memberDAO.join(dto);
+		
+		
+		
+		logger.info("row : "+ row);
 		return row;
 	}
 
@@ -79,13 +109,13 @@ public class MemberService {
 		result.put("list", list);
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
-		result.put("detail", memberDAO.detail(user_id));
+		
 		for (MemberDTO r : list) {
-//			logger.info(r.getCLASS_NAME()+"");
-//			logger.info(r.getCLASS_REG_DATE()+"");
-//			logger.info(r.getCOUNT()+"");
-//			logger.info(r.getSCORE()+"");
-//			logger.info(r.getAPPLY_IDX()+"");
+			logger.info(r.getClass_name()+"");
+			logger.info(r.getClass_reg_date() + "");
+			logger.info(r.getCount()+"");
+			logger.info(r.getScore()+"");
+			logger.info(r.getIndex_order()+"");
 		}
 		
 		return result;
@@ -102,13 +132,27 @@ public class MemberService {
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
 		for (ReviewDTO r : list) {
-			logger.info(r.getREVIEW_TITLE()+"");
-			logger.info(r.getRATER_ID()+"");
-			logger.info(r.getSCORE()+"");
-			logger.info(r.getREVIEW_REG_DATE()+"");
+//			logger.info(r.getREVIEW_TITLE()+"");
+//			logger.info(r.getRATER_ID()+"");
+//			logger.info(r.getSCORE()+"");
+//			logger.info(r.getREVIEW_REG_DATE()+"");
+//			logger.info(r.getIndex_order()+"");
 		}
 		
 		return result;
 	}
+
+
+	public MemberDTO userdetail(String user_id) {
+		logger.info("서비스");
+		MemberDTO detail = memberDAO.detail(user_id);
+		logger.info("회원 정보: "+ detail);
+		return memberDAO.detail(user_id);
+	}
+
+	
+
+	
+
 	
 }

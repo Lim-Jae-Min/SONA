@@ -9,7 +9,7 @@ public class MyPageDTO {
 	private String user_name;
 	private String user_email;
 	private String user_phone;
-	private int user_accountnumber;
+	private String user_accountnumber;
 	private String user_bank;
 	private String user_type;
 	private boolean user_delete;
@@ -30,6 +30,7 @@ public class MyPageDTO {
 	private String answer_idx;
 	private boolean anonymous_status;
 	private String answer_status;
+	private String profile;
 	private int point_idx;
 	private String point_type;
 	private int point;
@@ -70,10 +71,10 @@ public class MyPageDTO {
 	public void setUser_phone(String user_phone) {
 		this.user_phone = user_phone;
 	}
-	public int getUser_accountnumber() {
+	public String getUser_accountnumber() {
 		return user_accountnumber;
 	}
-	public void setUser_accountnumber(int user_accountnumber) {
+	public void setUser_accountnumber(String user_accountnumber) {
 		this.user_accountnumber = user_accountnumber;
 	}
 	public String getUser_bank() {
@@ -185,6 +186,12 @@ public class MyPageDTO {
 	}
 	public void setAnswer_status(String answer_status) {
 		this.answer_status = answer_status;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 	public String getApplyform_days() {
 		return applyform_days;

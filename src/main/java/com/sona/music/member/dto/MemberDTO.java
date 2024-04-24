@@ -9,10 +9,13 @@ public class MemberDTO {
 	private String user_name;
 	private String user_email;
 	private String user_phone;
+
 	private int user_accountnumber;
 	private String user_type;
 	private int user_delete;
 	private Date user_reg_date;
+
+	private String user_bank;
 	private String manner;
     private int point;
     private int alarm_count;
@@ -22,10 +25,8 @@ public class MemberDTO {
     private String count;
     private String class_name;
     private String apply_idx;
-    private String tphoto;
-    
-    
-    
+    private String profile;
+    private String index_order;
 	public String getUser_id() {
 		return user_id;
 	}
@@ -79,6 +80,12 @@ public class MemberDTO {
 	}
 	public void setUser_reg_date(Date user_reg_date) {
 		this.user_reg_date = user_reg_date;
+	}
+	public String getUser_bank() {
+		return user_bank;
+	}
+	public void setUser_bank(String user_bank) {
+		this.user_bank = user_bank;
 	}
 	public String getManner() {
 		return manner;
@@ -134,14 +141,18 @@ public class MemberDTO {
 	public void setApply_idx(String apply_idx) {
 		this.apply_idx = apply_idx;
 	}
-	public String getTphoto() {
-		return tphoto;
+	public String getProfile() {
+		return profile;
 	}
-	public void setTphoto(String tphoto) {
-		this.tphoto = tphoto;
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
-	
-		
-	
+	public String getIndex_order() {
+		return index_order;
+	}
+	public void setIndex_order(String index_order) {
+		this.index_order = index_order;
+	}
 
+	
 }

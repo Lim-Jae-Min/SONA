@@ -63,15 +63,15 @@
         </table>
     </header>
     <div id="wrapper">
-            <div id="sidemenu">
-                <h3>마이페이지</h3>
+            <div id="즐겨찾기 강사">
+                <h3>포인트내역</h3>
                 <hr/>
-                <a href="#">마이페이지</a>
+                <a href="studentPage.do">마이페이지</a>
                 <a href="studentPage.edit">개인 정보 수정</a>
-                <a href="#">즐겨찾기 강사</a>
+                <a href="myTeacher.go">즐겨찾기 강사</a>
                 <a href="#">숨김 강사</a>
-                <a href="#">내가 작성한 Q&A</a>
-                <a href="#">포인트 내역</a>
+                <a href="myQnA.go">내가 작성한 Q&A</a>
+                <a href="myPoint.go">포인트 내역</a>
                 <a href="#">내가 받은 리뷰</a>
                 <a href="#">내가 작성한 리뷰</a>
                 <a href="#">수강 이력</a>

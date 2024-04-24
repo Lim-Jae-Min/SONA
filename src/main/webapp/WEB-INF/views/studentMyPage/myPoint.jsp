@@ -86,16 +86,7 @@
 				   <div id="top">
 					    <br/>
 					    <br/><br/>
-					    <span id="searchbox">
-					        <label for="condition" style="margin-left: 60px;">강의명 :</label>
-						        <select name="condition" id="condition" style=" margin-left : 50px; width: 700px;"> <!-- 옵션의 너비를 200px로 지정 -->
-					            <option style = "margin-left : 50px; width: 700px" value="class_name">전체</option>
-						            <c:forEach items="${classNames}" var="class_name">
-						                <option value="${class_name}">${class_name}</option>
-						            </c:forEach>
-					        </select>
-					        <br><br>
-					    </span>
+					<td>user_name님의 잔여 포인트 point</td>
 					</div>
  			
                 <table style="width: 100%;">
@@ -104,10 +95,11 @@
                 <table style="border-collapse: collapse; width: 100%;">
                <thead style="background-color: #f2f2f2;">
 					    <tr>
-					        <th style=" padding: 8px; width: 20%">익명여부</th>
-					        <th style=" padding: 8px; width: 50%">제목</th>
-					        <th style=" padding: 8px;">답변 여부</th>
 					        <th style=" padding: 8px;">날짜</th>
+					        <th style=" padding: 8px;">구분</th>
+					        <th style=" padding: 8px;">금액</th>
+					        <th style=" padding: 8px;">잔액</th>
+					        <th style=" padding: 8px;">비고</th>
 					    </tr>
 					</thead>
                     <tbody id="list">
@@ -154,7 +146,7 @@ $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비�
 function qnaListCall(page, loginId) {
     $.ajax({
         type: 'get',
-        url: './qnaList.ajax',
+        url: './pointList.ajax',
         data: {
             'page': page,
             'cnt': 10,
@@ -191,14 +183,13 @@ function qnaListCall(page, loginId) {
 	function drawList(list) {
 	    var content = '';
 	    for (var i = 0; i < list.length; i++) {
-	        var qna = list[i];
-	        var lockIcon = qna.anonymous_status ? "resources/img/locked.png" : "resources/img/unlocked.png"; // 이미지 경로 설정
+	        var point = list[i];
 	
 	        content += '<tr style="border-bottom: 1px solid #ddd;">'; // 각 항목에 경계선 추가
-	        content += '<td><img src="' + lockIcon + '" class="locked-img"></td>'; // locked 이미지에 클래스 추가
-	        content += '<td>' + qna.q_title + '</td>'; // 질문 제목
-	        content += '<td>' + qna.answer_status + '</td>'; // 답변 여부
-	        content += '<td>' + qna.q_reg_date + '</td>'; // 날짜
+	        content += '<td>' + point.point_date + '</td>'; // 질문 제목
+	        content += '<td>' + point.point_type + '</td>'; // 질문 제목
+	        content += '<td>' + point.point + '</td>'; // 답변 여부
+	        content += '<td>' + point.balance + '</td>'; // 날짜
 	        content += '</tr>';
 	    }
 	    $('#list').html(content); // 리스트를 테이블에 추가

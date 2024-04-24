@@ -62,17 +62,16 @@
             <div id="sidemenu">
                 <h3>마이페이지</h3>
                 <hr/>
-                <a href="#">마이페이지</a>
+                <a href="studentPage.go">마이페이지</a>
                 <a href="editStudentPage.go">개인 정보 수정</a>
                 <a href="myTeacher.go">즐겨찾기 강사</a>
                 <a href="#">숨김 강사</a>
                 <a href="myQnA.go">내가 작성한 Q&A</a>
-                <a href="#">포인트 내역</a>
+                <a href="myPoint.go">포인트 내역</a>
                 <a href="#">내가 받은 리뷰</a>
                 <a href="#">내가 작성한 리뷰</a>
                 <a href="#">수강 이력</a>
             </div>
-            <form action="studentPage.do">
  			<div id="content">
             <table style="width: 100%;">
                 <thead>
@@ -80,9 +79,11 @@
 
                     <tr>
                         &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png" style="margin-left: 30px;"  id="account"></td>
-                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}<span><br><br>${userInfo.user_id}</td>
+                        <td class="main" style="padding-right: 800px; width : 200px;">
+                        <span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}<span>
+                        <br><br>${userInfo.user_id}</td>
                         <td style="width: 60%; min-width: 150px; text-align: right;">
-                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">44.5
+                        <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">44.5
                         </td>
                     </tr>
                 </thead>
@@ -103,14 +104,14 @@
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     
-                      <tr>
+                    <tr>
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;은행
                             <span class="contents" style="margin-left: 120px; width: 400px; display: inline-block;">${userInfo.user_bank}</span>
                         </td>                   
                     <tr>
                     
-                      <tr>
+                    <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     
@@ -139,14 +140,16 @@
             </table>
             <table style="width: 100%;">
                 <thead>
-                
-                  <tr>
+                	<tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>  <tr>
+                    </tr>  
+                    <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>  <tr>
+                    </tr>  
+                    <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-                    </tr>  <tr>
+                    </tr>  
+                    <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
@@ -176,7 +179,7 @@
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
-                     <tr>
+                    <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
                     <tr>
@@ -248,7 +251,6 @@
                 </tbody>
             </table>
         </div>
-        </form>
         </div>
  <div id="footer">
         <li>상호명 : SONA</li>

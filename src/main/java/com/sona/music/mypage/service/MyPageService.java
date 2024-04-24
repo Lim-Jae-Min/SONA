@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sona.music.board.dto.QnADTO;
 import com.sona.music.mypage.dao.MyPageDAO;
 import com.sona.music.mypage.dto.MyPageDTO;
 
@@ -45,14 +46,54 @@ public class MyPageService {
 		    return row;
 		}
 
-	public String editUserInfo(MyPageDTO requestData) {
-		return myPageDAO.editUserInfo(requestData);
+
+
+
+	public Map<String, Object> qnaList(int currPage, int pagePerCnt, String loginId) {
+		int start = (currPage-1)*pagePerCnt;
+		logger.info(loginId);
+		Map<String, Object> result = new HashMap<String, Object>();
+		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + pagePerCnt);
+		List<MyPageDTO> list = myPageDAO.qnaList(pagePerCnt,start,loginId);
+		logger.info("list size: "+list.size());
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", myPageDAO.allCount(pagePerCnt));
+		
+		
+		
+		return result;
 	}
 
-	public List<MyPageDTO> getAllQnA() {
-		// TODO Auto-generated method stub
-		return myPageDAO.getAllQnA();
+
+	 public List<String> getClassNames(String loginId) {
+	        return myPageDAO.getClassNames(loginId);
 	}
+
+	public String getPointAmount(String loginId) {
+		return myPageDAO.getPointAmount(loginId);
+	}
+
+	public Map<String, Object> pointList(int currPage, int pagePerCnt, String loginId) {
+		int start = (currPage-1)*pagePerCnt;
+		logger.info(loginId);
+		Map<String, Object> result = new HashMap<String, Object>();
+		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + pagePerCnt);
+		List<MyPageDTO> list = myPageDAO.pointList(pagePerCnt,start,loginId);
+		logger.info("list size: "+list.size());
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", myPageDAO.allCount(pagePerCnt));
+		
+		
+		
+		return result;
+	}
+
+
+
+
+
 
 
 

@@ -60,14 +60,14 @@
     </header>
     <div id="wrapper">
             <div id="sidemenu">
-                <h3>마이페이지</h3>
+                <h3>개인 정보 수정</h3>
                 <hr/>
                 <a href="studentPage.do">마이페이지</a>
-                <a href="#">개인 정보 수정</a>
+                <a href="studentPage.edit">개인 정보 수정</a>
                 <a href="myTeacher.go">즐겨찾기 강사</a>
                 <a href="#">숨김 강사</a>
-                <a href="#">내가 작성한 Q&A</a>
-                <a href="#">포인트 내역</a>
+                <a href="myQnA.go">내가 작성한 Q&A</a>
+                <a href="myPoint.go">포인트 내역</a>
                 <a href="#">내가 받은 리뷰</a>
                 <a href="#">내가 작성한 리뷰</a>
                 <a href="#">수강 이력</a>
@@ -97,7 +97,7 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;새 비밀번호 
                             <span class="contents" style="margin-left: 61px; width: 200px; display: inline-block;">
-                                <input type="password" value="" id="newPassword" style="width: 400px; height: 50px; font-size: 20px;">
+                            <input type="password" value="" id="newPassword" style="width: 400px; height: 50px; font-size: 20px;">
                             </span>
                         </td>
                     </tr>
@@ -108,13 +108,12 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 확인 
                             <span class="contents" style="margin-left: 42px; width: 200px; display: inline-block;">
-                                <input type="password" value="" id="user_pass" name="user_pass" style="width: 400px; height: 50px; font-size: 20px;">
+                            <input type="password" value="" id="user_pass" name="user_pass" style="width: 400px; height: 50px; font-size: 20px;">
                             </span>
-								<button type = "button" id="confirmation" onclick="confirmPw()" style="margin-left: 200px;">확인</button>
+							<button type = "button" id="confirmation" onclick="confirmPw()" style="margin-left: 200px;">확인</button>
                         </td>
                     </tr>
             
-                    </tr>
                     <tr>
                         <td class="trash" style="font-size: small; white-space: nowrap;">
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호는 8자 이상 포함되어야 합니다.
@@ -129,7 +128,7 @@
                         <td class="main" colspan="2" style="width: 50%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 
                             <span class="contents" style="margin-left: 109px; width: 200px; display: inline-block;">
-                                <input type="text" value="${userInfo.user_email}" name="user_email" style="width: 400px; height: 50px; font-size: 20px;">
+                            <input type="text" value="${userInfo.user_email}" name="user_email" style="width: 400px; height: 50px; font-size: 20px;">
                             </span>
                         </td>
                     </tr>            
@@ -140,7 +139,7 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 
                             <span class="contents" style="margin-left: 89px; width: 200px; display: inline-block;">
-                                <input type="text" value="${userInfo.user_phone}" name="user_phone" style="width: 400px; height: 50px; font-size: 20px;">
+                            <input type="text" value="${userInfo.user_phone}" name="user_phone" style="width: 400px; height: 50px; font-size: 20px;">
                             </span>
                         </td>
                     </tr>
@@ -151,9 +150,8 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                         
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계좌번호 
-                            
                             <span class="contents" style="margin-left: 89px; width: 200px; display: inline-block;">
-                                <input type="text" value="${userInfo.user_accountnumber}" name="user_accountnumber" style="width: 400px; height: 50px; font-size: 20px;">
+                            <input type="text" value="${userInfo.user_accountnumber}" name="user_accountnumber" style="width: 400px; height: 50px; font-size: 20px;">
                             </span>
                         </td>
                     </tr>
@@ -164,7 +162,8 @@
                     
                     <tr>
                         <td class="main" colspan="2" style="width: 50%; margin-left: 50px; text-align: left; margin-top : 50px; ">
-                    <span style = "margin-top : 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;은행 </span>&nbsp;&nbsp;&nbsp;<select style = "height : 30px; width : 200px; margin-left : 108px; margin-top : 10px;  "name="bank" id="user_bank" style="width: 50%; font-size : 20px;">
+                  		    <span style = "margin-top : 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;은행 </span>&nbsp;&nbsp;&nbsp;
+                    		<select style = "height : 30px; width : 200px; margin-left : 108px; margin-top : 10px;  "name="bank" id="user_bank" style="width: 50%; font-size : 20px;">
 		                        <option value="국민은행">국민은행</option>
 		                        <option value="신한은행">신한은행</option>
 		                        <option value="우리은행">우리은행</option>
@@ -173,54 +172,47 @@
 		                        <option value="농협은행">농협은행</option>
 		                        <option value="카카오뱅크">카카오뱅크</option>
                      		</select>
-                        
-                        </td>
-                    </tr>
-                                      
+                       </td>
+                    </tr>                          
                 </tbody>
             </table>
-         
- 	
-           
-				    <tr>
-				    <br><br><br><br>
+         			<tr>
+				   		<br><br><br><br>
 				        <td colspan="3">
-				            <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
+				      	  <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
 				        </td>
 				    </tr>
 				    <tr>
-				    		<td>
+				    	<td>
 				    </tr>
 				    <tr>
 				        <td style="text-align: left; font-weight: bold; font-size: 35px; width: 50%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;수강신청서</td>
 				    </tr>
 				    
-				   <tr>
-				    		<td>
-				    </tr>
-				      <tr> <br><br><br><br><br>
-				    		<td>
-				    </tr>
+				     <tr>
+				     	<td>
+				   	 </tr>
+				     <tr> 
+				      	<br><br><br><br><br>
+				    	<td>
+				   	 </tr>
 				    
-				    
-				    <tr>
-				     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;희망악기 :</td>
+					<tr>
+				    	<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;희망악기 :</td>
 				        <td>
 				            <select name="inst_category_idx" id="instCategory" style="width: 30%;">
 				                <option value="">악기 카테고리</option>
-                <option value="1">건반</option>
-                <option value="2">기타</option>
-                <option value="3">현악기</option>
-                <option value="4">관악기</option>
-                <option value="5">타악기</option>
-                <option value="6">그 외</option>
-             </select>
-             <select name="applyform_inst" id="inst" style="width: 30%;">
- 
-             </select>
-            </td>
-            </tr>
-            <br><br><br><br><br>
+			                <option value="1">건반</option>
+			                <option value="2">기타</option>
+			                <option value="3">현악기</option>
+			                <option value="4">관악기</option>
+			                <option value="5">타악기</option>
+			                <option value="6">그 외</option>
+				            </select>
+				            <select name="applyform_inst" id="inst" style="width: 30%;"></select>
+            			</td>
+            	  </tr>
+          			  <br><br><br><br><br>
             <tr>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;희망지역 :
                     <select name="applyform_location" id="location" style="width: 50%;">
@@ -251,23 +243,21 @@
                         <option value="서울특별시 중구">서울특별시 중구</option>
                         <option value="서울특별시 중랑구">서울특별시 중랑구</option>
                      </select>
-                </td>
-               
+                </td>           
             </tr>
-                            <br><br><br>
+            <br><br><br>
             
-            <tr>
-                
+            <tr>     
                 &nbsp;&nbsp; &nbsp;&nbsp;<td>희망요일(중복가능)</td>
                 <td class="main" colspan="2" style="width: 100%; text-align: left;">
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                <br>
-					   <button type = "button" id="mondayBtn" onclick="changeColor('monday')" style="margin-left: 50px; width: 110px; height: 40px">월요일</button>
-					<button type = "button" id="tuesdayBtn" onclick="changeColor('tuesday')" style="margin-left: 20px; width: 110px; height: 40px">화요일</button>
-					<button type = "button" id="wednesdayBtn" onclick="changeColor('wednesday')" style="margin-left: 20px; width: 110px; height: 40px">수요일</button>
-					<button type = "button" id="thursdayBtn" onclick="changeColor('thursday')" style="margin-left: 20px; width: 110px; height: 40px">목요일</button>
-					<button type = "button" id="fridayBtn" onclick="changeColor('friday')" style="margin-left: 20px; width: 110px; height: 40px">금요일</button>
-					<button type = "button" id="saturdayBtn" onclick="changeColor('saturday')" style="margin-left: 20px; width: 110px; height: 40px">토요일</button>
-					<button type = "button" id="sundayBtn" onclick="changeColor('sunday')" style="margin-left: 20px; width: 110px; height: 40px">일요일</button>
+				    <button type = "button" id="월요일Btn" onclick="changeColor('월요일')" style="margin-left: 50px; width: 110px; height: 40px">월요일</button>
+					<button type = "button" id="화요일Btn" onclick="changeColor('화요일')" style="margin-left: 20px; width: 110px; height: 40px">화요일</button>
+					<button type = "button" id="수요일Btn" onclick="changeColor('수요일')" style="margin-left: 20px; width: 110px; height: 40px">수요일</button>
+					<button type = "button" id="목요일Btn" onclick="changeColor('목요일')" style="margin-left: 20px; width: 110px; height: 40px">목요일</button>
+					<button type = "button" id="금요일Btn" onclick="changeColor('금요일')" style="margin-left: 20px; width: 110px; height: 40px">금요일</button>
+					<button type = "button" id="토요일Btn" onclick="changeColor('토요일')" style="margin-left: 20px; width: 110px; height: 40px">토요일</button>
+					<button type = "button" id="일요일Btn" onclick="changeColor('일요일')" style="margin-left: 20px; width: 110px; height: 40px">일요일</button>
 					
 					<!-- 선택한 요일 정보를 저장할 숨겨진 입력 필드 -->
 					<input type="hidden" id="applyform_days" name="applyform_days" value="">
@@ -282,19 +272,19 @@
                 &nbsp;&nbsp; &nbsp;&nbsp;<td>희망 강의스타일(중복가능)</td>
                 <td class="main" colspan="2" style="width: 100%; text-align: left;">
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                <br>
-                    <button type = "button" id="systematicBtn" onclick="changeColor1('systematic')" style="margin-left: 50px; width: 110px; height: 40px">체계적인</button>
-                    <button type = "button" id="globalBtn" onclick="changeColor1('global')"style="margin-left: 20px; width: 110px; height: 40px">글로벌한</button>
-                    <button type = "button" id="seriousBtn" onclick="changeColor1('serious')"style="margin-left: 20px; width: 110px; height: 40px">진지한</button>
-                    <button type = "button" id="freeBtn" onclick="changeColor1('free')"style="margin-left: 20px; width: 110px; height: 40px">자유로운</button>
-                    <button type = "button" id="practicalBtn" onclick="changeColor1('practical')"style="margin-left: 20px; width: 110px; height: 40px">실기 중심</button>
-                    <button type = "button" id="creativeBtn" onclick="changeColor1('creative')"style="margin-left: 20px; width: 110px; height: 40px">창의적인</button>
+                    <button type = "button" id="체계적인'Btn" onclick="changeColor1('체계적인')" style="margin-left: 50px; width: 110px; height: 40px">체계적인</button>
+                    <button type = "button" id="글로벌한Btn" onclick="changeColor1('글로벌한')"style="margin-left: 20px; width: 110px; height: 40px">글로벌한</button>
+                    <button type = "button" id="진지한Btn" onclick="changeColor1('진지한')"style="margin-left: 20px; width: 110px; height: 40px">진지한</button>
+                    <button type = "button" id="자유로운Btn" onclick="changeColor1('자유로운')"style="margin-left: 20px; width: 110px; height: 40px">자유로운</button>
+                    <button type = "button" id="실기 중심Btn" onclick="changeColor1('실기 중심')"style="margin-left: 20px; width: 110px; height: 40px">실기 중심</button>
+                    <button type = "button" id="창의적인Btn" onclick="changeColor1('창의적인')"style="margin-left: 20px; width: 110px; height: 40px">창의적인</button>
                     <br><br>
-                    <button type = "button" id="humorousBtn" onclick="changeColor1('humorous')"style="margin-left: 50px; width: 110px; height: 40px">유머러스한</button>
-                    <button type = "button" id="activeBtn" onclick="changeColor1('active')"style="margin-left: 20px; width: 110px; height: 40px">적극적인</button>
-                    <button type = "button" id="strictBtn" onclick="changeColor1('strict')"style="margin-left: 20px; width: 110px; height: 40px">엄격한</button>
-                    <button type = "button" id="sensibleBtn" onclick="changeColor1('sensible')"style="margin-left: 20px; width: 110px; height: 40px">센스있는</button>
-                    <button type = "button" id="kindBtn" onclick="changeColor1('kind')"style="margin-left: 20px; width: 110px; height: 40px">자상한</button>
-                    <button type = "button" id="diligentBtn" onclick="changeColor1('diligent')"style="margin-left: 20px; width: 110px; height: 40px">성실한</button>
+                    <button type = "button" id="유머러스한Btn" onclick="changeColor1('유머러스한')"style="margin-left: 50px; width: 110px; height: 40px">유머러스한</button>
+                    <button type = "button" id="적극적인Btn" onclick="changeColor1('적극적인')"style="margin-left: 20px; width: 110px; height: 40px">적극적인</button>
+                    <button type = "button" id="엄격한Btn" onclick="changeColor1('엄격한')"style="margin-left: 20px; width: 110px; height: 40px">엄격한</button>
+                    <button type = "button" id="센스있는Btn" onclick="changeColor1('센스있는')"style="margin-left: 20px; width: 110px; height: 40px">센스있는</button>
+                    <button type = "button" id="자상한Btn" onclick="changeColor1('자상한')"style="margin-left: 20px; width: 110px; height: 40px">자상한</button>
+                    <button type = "button" id="성실한Btn" onclick="changeColor1('성실한')"style="margin-left: 20px; width: 110px; height: 40px">성실한</button>
                     
                     <input type="hidden" id="applyform_style" name="applyform_style" value="">
                     <br><br><br>

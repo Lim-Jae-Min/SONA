@@ -146,12 +146,27 @@ public class QnAController {
 	public String qnaEdit(Integer question_idx, Model model) {
 		logger.info(question_idx+"질문 수정 요청 - 컨트롤러");
 		
-		model.addAttribute("question_idx",question_idx);
+		qnaService.qnaEdit(question_idx,model);
 		
 		
 		return "lesson/lessonQnAEdit";
 	}
 	
-	
+	@RequestMapping(value="/questionEdit")
+	public String questionEdit(@RequestParam Map<String, String> param, HttpSession session) {
+		logger.info(param.get("question_idx")+"질문 수정함");
+
+		String page = "redirect:/lessonQnAList?class_idx="+ param.get("class_idx");
+
+		if(session.getAttribute("loginId")!= null) {
+
+			qnaService.update(param);
+
+			page = "redirect:/lessonQnAList?class_idx="+param.get("class_idx");			
+		}
+
+		return page;
+
+	}
 	
 }

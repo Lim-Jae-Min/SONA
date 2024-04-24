@@ -1,6 +1,7 @@
 package com.sona.music.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.sona.music.board.dto.QnADTO;
 
@@ -12,11 +13,11 @@ public interface QnADAO {
 
 	List<QnADTO> list(int pagePerCnt, int start, Integer classIdx);
 
-	
 
-	
 
-	
+
+
+
 
 	int reply(QnADTO dto);
 
@@ -29,5 +30,9 @@ public interface QnADAO {
 	QnADTO adetail(Integer question_idx);
 
 	void deleteAnswer(int questionIdx);
+
+	int update(QnADTO dto);
+
+
 
 }

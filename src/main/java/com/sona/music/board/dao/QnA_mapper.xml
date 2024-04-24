@@ -88,5 +88,12 @@
 		DELETE FROM CLASS_ANSWER WHERE QUESTION_IDX = #{param1}
 	</delete>
 
+	<update id="update" parameterType="com.sona.music.board.dto.QnADTO">
+    UPDATE CLASS_QUESTION  
+    SET Q_TITLE = #{q_title}, 
+    Q_CONTENT = #{q_content},
+    ANONYMOUS_STATUS = #{anonymous_status}
+    WHERE QUESTION_IDX = #{question_idx}
+</update>
 
 </mapper>

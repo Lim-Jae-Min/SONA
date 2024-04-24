@@ -23,27 +23,27 @@ import com.sona.music.board.dto.ReviewDTO;
 public class ReviewService {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired ReviewDAO reviewDAO;
-	
+
 	public String file_root = "C:/upload/";
 
 	public Map<String, Object> list(int currPage, int pagePerCnt) {
-		
+
 		int start = (currPage-1)*pagePerCnt;
-		
+
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<ReviewDTO> list = reviewDAO.list(pagePerCnt,start);
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
 		result.put("totalPages", reviewDAO.allCount(pagePerCnt));
-		
+
 		logger.info("리뷰 리스트 페이지 이동");
-		
+
 		return result;
 	}
-	
+
 	public int write(MultipartFile photos, 
 			Map<String, String> param) {
 		int row = -1;
@@ -56,10 +56,10 @@ public class ReviewService {
 		dto.setScore(Double.parseDouble(param.get("score")));
 		dto.setReview_title(param.get("review_title"));
 		dto.setReview_content(param.get("review_content"));
-		
+
 		PhotoDTO pdto = new PhotoDTO();
 		pdto.setPhoto_category(param.get("photo_category"));
-		
+
 
 		row = reviewDAO.write(dto); //글쓰기 완료 후 
 
@@ -84,13 +84,13 @@ public class ReviewService {
 		logger.info(username);
 		logger.info(photoCategory);
 		logger.info(photos+"fileSave");
-		
+
 		if(photos != null) {
 			logger.info(idx+"fileSave");
 			logger.info(username);
 			logger.info(photoCategory);
 			logger.info(photos+"fileSave");
-			
+
 			//1. 업로드 할 파일명이 있는가?
 			String fileName = photos.getOriginalFilename();
 			logger.info("upload file Name : "+fileName);
@@ -109,7 +109,7 @@ public class ReviewService {
 					byte[] bytes = photos.getBytes(); //MultipartFile로 부터 바이너리 추출
 					Path path = Paths.get(file_root+newFileName); //저장 경로 지정
 					Files.write(path, bytes); //저장
-					
+
 					reviewDAO.fileWrite(fileName,newFileName,idx,username,photoCategory);
 					Thread.sleep(1);//파일명을 위해 강제 휴식 부여
 				} catch (Exception e) {
@@ -125,28 +125,28 @@ public class ReviewService {
 	public void detail(int review_idx,int post_idx, String photo_category, Model model) {
 		ReviewDTO dto = reviewDAO.detail(review_idx);
 		model.addAttribute("review", dto);
-		
+
 		List<PhotoDTO> list = reviewDAO.photos(post_idx, photo_category);
 		model.addAttribute("photos", list);
 	}
 
 	public void deleteReview(Integer reviewIdx) {
 		logger.info("리뷰 삭제 요청 - service");
-		 reviewDAO.deleteReview(reviewIdx);
+		reviewDAO.deleteReview(reviewIdx);
 	}
 
 	public void reviewEdit(Integer review_idx, Integer post_idx, String photo_category, Model model) {
-		
+
 		ReviewDTO dto = reviewDAO.detail(review_idx);
 		model.addAttribute("review", dto);
-		
+
 		List<PhotoDTO> list = reviewDAO.photos(post_idx, photo_category);
 		model.addAttribute("photos", list);
-		
+
 	}
 
 	public int update(MultipartFile photos, Map<String, String> param) {
-		
+
 		int row = reviewDAO.update(param);
 		logger.info("update count"+row);
 		if(row>0) {
@@ -159,16 +159,16 @@ public class ReviewService {
 	}
 
 	public void photoEdit(String postIdx, String photoCategory) {
-		
+
 		logger.info("photoEdit 서비스 :"+postIdx);
-    	logger.info("photoEdit 서비스 :"+photoCategory);
-	
+		logger.info("photoEdit 서비스 :"+photoCategory);
+
 		reviewDAO.photoEdit(postIdx, photoCategory);
 	}
 
-	
+
 
 
 }
-	
+
 

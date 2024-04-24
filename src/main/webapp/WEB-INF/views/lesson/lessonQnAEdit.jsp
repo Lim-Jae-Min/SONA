@@ -9,261 +9,175 @@
 <link rel="stylesheet" href="resources/css/common.css?after"
 	type="text/css">
 <style>
-body {
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-	background-color: #ffffff;
-}
-
-.container {
-	width: 900px;
-	margin: 20px auto;
-	background-color: #ffffff;
-	border: 1px solid #BEE6FF;
-	border-radius: 10px;
-	padding: 20px;
-	text-align: center;
-}
-
-#review {
-	width: 30px;
-	height: 30px;
-	margin-right: 20px;
-}
-
-.review-title {
-	font-size: 24px;
-	margin-bottom: 10px;
-}
-
-.author-info {
-	font-size: 14px;
-	color: #777777;
-	margin-bottom: 10px;
-}
-
-.satisfaction {
-	font-size: 20px;
-	color: #FED000;
-	float: right;
-	margin-left: 20px;
-}
-
-.content {
-	width: 100%; /* 컨텐츠 영역을 꽉 채우도록 설정 */
-	border: 1px solid #BEE6FF;
-	border-radius: 10px;
-	padding: 10px;
-	margin-bottom: 20px;
-	overflow: auto;
-}
-
-.button-container {
-	text-align: right; /* 버튼을 오른쪽으로 정렬 */
-	margin-top: 10px;
-}
-
-.button {
-	display: inline-block;
-	padding: 10px 20px;
-	border-radius: 5px;
-	cursor: pointer;
-	border: none;
-}
-
-.blind {
-	background-color: #ff0000;
-	color: #ffffff;
-	margin-right: auto; /* 왼쪽 여백 추가 */
-	text-align: left;
-}
-
-.report, .edit, .delete {
-	background-color: #ff0000;
-	color: #ffffff;
-	margin-left: auto; /* 오른쪽 여백 추가 */
-}
-
-.edit {
-	background-color: #BEE6FF;
-}
-
-.delete {
-	background-color: #cccccc;
-	color: #000000;
-}
-
-.return-btn {
-	margin-top: 20px;
-	text-align: center;
-}
 /* Header Container */
 .header {
-    background-color: #FFF;
-    padding: 20px;
-    display: flex;
-    align-items: flex-end;
+	background-color: #FFF;
+	padding: 20px;
+	display: flex;
+	align-items: flex-end;
 }
 
 /* Course Info */
 .course-info {
-    margin-right: auto;
+	margin-right: auto;
 }
 
 .course-name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 5px;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 
 .category {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 5px;
+	font-size: 16px;
+	color: #666;
+	margin-bottom: 5px;
 }
 
 .rating {
-    font-size: 14px;
-    color: black; 
+	font-size: 14px;
+	color: black;
 }
 
 /* Teacher Info */
 .teacher-info {
-    margin-left: auto;
-    text-align: right;
+	margin-left: auto;
+	text-align: right;
 }
 
 .teacher-name {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 
 .location {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 5px;
+	font-size: 16px;
+	color: #666;
+	margin-bottom: 5px;
 }
 
 .likes {
-    font-size: 16px;
-    color: black; 
+	font-size: 16px;
+	color: black;
 }
 
 .rounded-image {
-    background-color: #BEE6FF;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
+	background-color: #BEE6FF;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	overflow: hidden;
 }
 
 .rounded-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
-
 </style>
-</head>
 <body>
 	<header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                   <c:if test="${sessionScope.loginId eq null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="login.go">추천 강의</a>                   
-                      </c:if>
-                   </c:if>
-                   <c:if test="${sessionScope.loginId ne null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="recommendList.go">추천 강의</a>                   
-                      </c:if>
-                   </c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
-        </table>
-    </header>
-    
-	<body>
+		<table id="mainmenu">
+			<tr>
+				<th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+				<th class="menu"><c:if test="${sessionScope.loginId eq null}">
+						<c:if test="${sessionScope.user_type ne '강사'}">
+							<a href="login.go">추천 강의</a>
+						</c:if>
+					</c:if> <c:if test="${sessionScope.loginId ne null}">
+						<c:if test="${sessionScope.user_type ne '강사'}">
+							<a href="recommendList.go">추천 강의</a>
+						</c:if>
+					</c:if></th>
+				<th class="menu"><a href="allList.go">전체 강의</a></th>
+				<th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+			</tr>
+		</table>
+		<table id="mymenu">
+			<c:if test="${sessionScope.loginId ne null}">
+				<tr>
+					<c:if test="${sessionScope.alarm_count > 0}">
+						<th><img src="resources/img/alarm_on.png"
+							class="miniimg alarm"></th>
+					</c:if>
+					<c:if test="${sessionScope.alarm_count == 0}">
+						<th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+					</c:if>
+					<th><img src="resources/img/basic_user.png" class="miniimg"></th>
+					<th><div id="userName">${sessionScope.user_name}</div></th>
+				</tr>
+			</c:if>
+			<c:if test="${sessionScope.loginId eq null}">
+				<tr>
+					<th><a href="login.go">로그인</a></th>
+				</tr>
+			</c:if>
+		</table>
+	</header>
+
 	<div class="header">
-    <div class="course-info">
-        <div class="course-name">쉽게 배우는 기타</div>
-        <div class="category">- 기타, 어쿠스틱 기타</div>
-        <div class="rating">평균 만족도 : <span style="color: #FED000;">★4.7</span></div>
-    </div>
-    <div class="teacher-info">
-        <div class="teacher-name">ㅇㅇㅇ선생님</div>
-        <div class="location">📌서울 금천구</div>
-        <div class="likes"><span style="color: red;">♥</span>80.5</div>
-    </div>
-    <div class="rounded-image">
-        <img src="resources/img/basic_user.png" alt="Teacher Photo">
-    </div>
+		<div class="course-info">
+			<div class="course-name">쉽게 배우는 기타</div>
+			<div class="category">- 기타, 어쿠스틱 기타</div>
+			<div class="rating">
+				평균 만족도 : <span style="color: #FED000;">★4.7</span>
+			</div>
+		</div>
+		<div class="teacher-info">
+			<div class="teacher-name">ㅇㅇㅇ선생님</div>
+			<div class="location">📌서울 금천구</div>
+			<div class="likes">
+				<span style="color: red;">♥</span>80.5
+			</div>
+		</div>
+		<div class="rounded-image">
+			<img src="resources/img/basic_user.png" alt="Teacher Photo">
+		</div>
 	</div>
- 	<hr style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
+	<hr
+		style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
+
+
+	<img src="resources/img/QnA.png" id="QnA"> Q&A 수정
+	<br />
 
 	<div style="text-align: center;">
 		<div
 			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-			<form action="reviewEdit" method="post" enctype="multipart/form-data"
-				onsubmit="return confirmWrite(event);">
+			<form action="questionEdit" method="post"
+				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>평가 강의번호 :  평가 강사명: </th>
+						<th>질문 강의IDX: ${question.class_idx}<input type="hidden"
+							name="class_idx" value="${question.class_idx}" /> 글번호:
+							${question.question_idx}<input type="hidden" name="question_idx"
+							value="${question.question_idx}" />
+						</th>
 					</tr>
 					<tr>
-						<td><input type="hidden" name="REVIEW_IDX"
-							value="" /></td>
-						<th style="font-size: 14px;">리뷰 제목</th>
-						<td><input type="text" name="REVIEW_TITLE"
+						<th style="font-size: 14px;">Q&A 제목 :</th>
+						<td><input type="text" name="q_title"
 							style="width: 300px; font-size: 16px;"
-							value="" /></td>
-						<th style="font-size: 12px;">작성자 :<input
-							type="hidden" name="RATER_ID" value="" /></th>
-						<th style="font-size: 12px;">작성일 : </th>
+							value="${question.q_title}" /></td>
+						<th style="font-size: 12px;">작성자 : ${question.user_id} <input
+							type="hidden" name="user_id" value="${question.user_id}"></th>
+						<th style="font-size: 12px;">작성일 : ${question.q_reg_date}</th>
 					</tr>
 					<tr>
-						<td colspan="4"
-							style="color: #FED000; font-size: 22px; text-align: right;">★</td>
+						<th>Q&A 내용</th>
+						<td colspan="4"><textarea name="q_content"
+								style="width: 882px; height: 311px; resize: none;">${question.q_content}</textarea></td>
 					</tr>
 					<tr>
-						<td colspan="4"
-							style="font-size: 14px; text-align: right; color: #999;">만족도는
-							수정이 불가합니다.</td>
+						<th>공개 여부</th>
+						<td><input type="radio" id="public" name="anonymous_status"
+							value="false" checked> <label for="public">공개</label> <input
+							type="radio" id="private" name="anonymous_status" value="true">
+							<label for="private">비공개</label></td>
 					</tr>
-					<tr>
-						<th>리뷰 내용</th>
-						<td colspan="2"><textarea name="REVIEW_CONTENT"
-								style="width: 882px; height: 311px; resize: none;"> </textarea></td>
-					</tr>
-						
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="location.href='./lessonReviewList'"
+						type="button" onclick="redirectToList(${question.class_idx})"
 						value="취소" />
 						<button>수정</button></td>
 					</tr>
@@ -271,94 +185,65 @@ body {
 			</form>
 		</div>
 	</div>
-
 	<div id="footer">
-        <li>상호명 : SONA</li>
-        <li>대표자 : 김○○</li>
-        <li>전화 : 02-123-4567</li>
-        <li>팩스 : 02-123-4568</li>
-        <li>사업자등록번호 : 000-00-00000</li>
-        <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
-    </div>
-    <div id="slide">
-        <table>
-            <tr>
-                <td colspan="2">${sessionScope.user_name} 회원님</td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="manner">♥ ${sessionScope.manner_variance}</td>
-            </tr>
-        </table>
-        <br/>
-        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
-        <br/>
-        <div>
-           <c:if test="${sessionScope.user_type eq '수강생'}">
-              <a href="studentWrittenList.go">내가 쓴 리뷰</a>           
-           </c:if>
-           <c:if test="${sessionScope.user_type eq '강사'}">
-              <a href="teacherWrittenList.go">내가 쓴 리뷰</a>           
-           </c:if>
-        </div>
-        <br/>
-        <div><a href="myPage.go">마이페이지</a></div>
-        <br/><br/><br/>
-        <div><a href="logout.do">로그아웃</a></div>
-    </div>
+		<li>상호명 : SONA</li>
+		<li>대표자 : 김○○</li>
+		<li>전화 : 02-123-4567</li>
+		<li>팩스 : 02-123-4568</li>
+		<li>사업자등록번호 : 000-00-00000</li>
+		<li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
+	</div>
+	<div id="slide">
+		<table>
+			<tr>
+				<td colspan="2">${sessionScope.user_name}회원님</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="manner">♥ ${sessionScope.manner_variance}</td>
+			</tr>
+		</table>
+		<br />
+		<div>
+			보유 포인트 : <span>${sessionScope.point}</span>
+		</div>
+		<br />
+		<div>
+			<c:if test="${sessionScope.user_type eq '수강생'}">
+				<a href="studentWrittenList.go">내가 쓴 리뷰</a>
+			</c:if>
+			<c:if test="${sessionScope.user_type eq '강사'}">
+				<a href="teacherWrittenList.go">내가 쓴 리뷰</a>
+			</c:if>
+		</div>
+		<br />
+		<div>
+			<a href="myPage.go">마이페이지</a>
+		</div>
+		<br />
+		<br />
+		<br />
+		<div>
+			<a href="logout.do">로그아웃</a>
+		</div>
+	</div>
 </body>
 <script>
+var classIdx = ${question.class_idx};
 
-
-function deletePhoto(postIdx, photoCategory, event) {
-    event.preventDefault(); // 폼의 기본 동작 중지
-    // 사용자에게 삭제 여부를 묻는 확인 메시지 표시
-    var result = confirm('삭제 하시겠습니까?');
-    
-    // 확인 메시지에서 '확인'을 선택한 경우에만 삭제 요청을 보냄
+function confirmWrite() {
+    var result = confirm("Q&A 수정을 하시겠습니까?");
     if (result) {
-    	$.ajax({
-            url: './photoEdit.ajax',
-            method: 'POST',
-            data: { postIdx: postIdx, photoCategory: photoCategory },
-            complete: function() {
-                // 요청이 완료된 후에 실행되는 콜백에서 미리보기 삭제
-                $(event.target).parent().remove();
-                $('#fileList').empty();
-                alert('사진이 성공적으로 삭제되었습니다.');
-            }
-        });
+        // 사용자가 "예"를 선택한 경우
+        alert("질문 수정이 완료되었습니다.");
+        // 여기에 작성 완료 후의 동작 추가 가능
     }
+    return result; // 사용자가 "아니오"를 선택한 경우도 처리
 }
 
-function checkFileCountAndExistingPhoto(input) {
-    // 현재 첨부된 파일 개수 확인
-    var fileCount = input.files.length;
-    
-    // 기존에 사진이 있는지 확인
-    var existingPhotoCount = $('.photo-container').length;
-
-    // 첨부 파일이 1장을 초과하거나, 기존에 사진이 있는 경우
-    if (fileCount > 1 || existingPhotoCount > 0) {
-        // 경고창 표시
-        alert("기존 사진이 있거나, 첨부파일은 1장만 첨부할 수 있습니다.");
-        // 파일 선택 취소
-        input.value = '';
-    }
+function redirectToList(classIdx) {
+    window.location.href = './lessonQnAList?class_idx=' + classIdx;
 }
 
 
-function confirmWrite(event) {
-    // 수정 버튼을 클릭한 경우에만 알림 창을 띄우고 폼을 제출합니다.
-    var buttonClicked = $(event.target).find('button[type="submit"]').is(':focus');
-    if (buttonClicked) {
-        var result = confirm("수정을 하시겠습니까?");
-        if (result) {
-            alert("수정이 완료되었습니다.");
-        }
-        return result;
-    } else {
-        return true; // 수정 버튼이 아닌 경우에는 그냥 제출을 허용합니다.
-    }
-}
 
 $('#userName').click(function slide() {
 	var display = $('#slide').css('display');
@@ -373,8 +258,7 @@ $('#userName').click(function slide() {
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});
-
-
-
+	
+	
 </script>
 </html>

@@ -152,7 +152,7 @@
 						<th>평가 강의명 : 2<input type="hidden" name="class_idx" value="2"></th>
 					</tr>
 					<tr>
-						<th style="font-size: 14px;">Q&A 제목</th>
+						<th style="font-size: 14px;">리뷰 제목</th>
 						<td><input type="text" name="review_title"
 							style="width: 300px; font-size: 16px;" /></td>
 						<th style="font-size: 12px;">작성자 : ${sessionScope.loginId}<input

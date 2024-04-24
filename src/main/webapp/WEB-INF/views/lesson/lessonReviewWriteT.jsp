@@ -153,8 +153,8 @@
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>평가 강의명 : 2<input type="hidden" name="class_idx" value="2">평가
-							학생명: user1<input type="hidden" name="ratee_id" value="user1"></th>
+						<th>평가 강의명 : ${class_idx}<input type="hidden" name="class_idx" value="2"/>
+						피평가자: ${ratee_id}<input type="hidden" name="ratee_id" value=${ratee_id}/></th>
 					</tr>
 					<tr>
 						<th style="font-size: 14px;">리뷰 제목</th>

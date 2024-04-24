@@ -50,15 +50,7 @@ public class ReviewController {
 	public String reviewWrite(Model model, HttpSession session) {
 		logger.info("리뷰 작성 요청");
 
-		String page = "";
-		String type = (String) session.getAttribute("user_type");
-
-		if (type.equals("강사")) {
-			page = "lesson/lessonReviewWriteT";
-		} else if(type.equals("수강생")) {
-			page = "lesson/lessonReviewWriteS";
-		}
-		logger.info(type);
+		String page = "lesson/lessonReviewWrite";
 
 		return page;
 	}

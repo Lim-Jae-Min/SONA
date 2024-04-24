@@ -24,7 +24,7 @@ public class ReviewController {
 
 	@Autowired ReviewService reviewService;
 
-	@RequestMapping(value="/lessonReviewList")
+	@RequestMapping(value="/lessonReviewList.go")
 	public String reviewlist(Model model) {
 		logger.info("리뷰 리스트 요청");
 
@@ -46,7 +46,7 @@ public class ReviewController {
 		return map;
 	}
 
-	@RequestMapping(value="/lessonReviewWrite")
+	@RequestMapping(value="/lessonReviewWrite.go")
 	public String reviewWrite(Model model, HttpSession session) {
 		logger.info("리뷰 작성 요청");
 
@@ -55,11 +55,11 @@ public class ReviewController {
 		return page;
 	}
 
-	@RequestMapping(value="/reviewWrite", method = RequestMethod.POST)
+	@RequestMapping(value="/reviewWrite.do", method = RequestMethod.POST)
 	public String write(MultipartFile photos, HttpSession session, @RequestParam Map<String,String>param) {
 		logger.info("리뷰 작성함");
 		logger.info("params = {}", param);
-		String page = "redirect:/lessonReviewList";
+		String page = "redirect:/lessonReviewList.go";
 		if (session.getAttribute("loginId")!=null) {
 			int row = reviewService.write(photos, param);
 			if(row<1) {
@@ -71,7 +71,7 @@ public class ReviewController {
 	}
 
 
-	@RequestMapping(value="/lessonReviewDetail")
+	@RequestMapping(value="/lessonReviewDetail.go")
 	public String detail(Integer review_idx, HttpSession session, Model model) {
 		logger.info("idx="+review_idx+"리뷰 디테일 요청");
 
@@ -89,12 +89,12 @@ public class ReviewController {
 			return "lesson/lessonReviewDetail"; 
 		} else {
 
-			return "redirect:/lessonReviewList"; 
+			return "redirect:/lessonReviewList.go"; 
 		}
 	}
 
 
-	@RequestMapping(value = "/deleteReview", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteReview.ajax", method = RequestMethod.POST)
 	public String deleteReview(@RequestParam("reviewIdx") Integer reviewIdx) {
 		logger.info(reviewIdx+"리뷰 삭제 요청 - controller");
 
@@ -108,36 +108,28 @@ public class ReviewController {
 		reviewService.deleteReview(reviewIdx);
 		reviewService.photoEdit(postIdx, photoCategory);
 
-		return "redirect:/lessonReviewList"; 
+		return "redirect:/lessonReviewList.go"; 
 	}
 
 
 
-	@RequestMapping(value="/lessonReviewEdit")
+	@RequestMapping(value="/lessonReviewEdit.go")
 	public String reviewEdit(Integer idx, Model model, HttpSession session) {
 		logger.info("idx="+idx + "리뷰 수정 요청");
 
 
-		String page = "";
-		String type = (String) session.getAttribute("user_type");
+		String page = "lesson/lessonReviewEdit";
+
 		Integer post_idx = idx; // POST_IDX 값을 REVIEW_IDX로 설정
 		String photo_category = "Review"; // PHOTO_CATEGORY 값을 고정값으로 설정
 
-		if (type.equals("강사")) {
+		reviewService.reviewEdit(idx, post_idx, photo_category, model);
 
-			reviewService.reviewEdit(idx, post_idx, photo_category, model);
-			page = "lesson/lessonReviewEditT";
-		} else if(type.equals("수강생")) {
-
-			reviewService.reviewEdit(idx, post_idx, photo_category, model);
-			page = "lesson/lessonReviewEditS";
-		}
-		logger.info(type);
 
 		return page;
 	}
 
-	@RequestMapping(value="/reviewEdit")
+	@RequestMapping(value="/reviewEdit.do")
 	public String edit(MultipartFile photos,@RequestParam Map<String, String>param, HttpSession session) {
 		logger.info(param.get("review_idx")+"리뷰 수정함");
 
@@ -147,7 +139,7 @@ public class ReviewController {
 
 			reviewService.update(photos, param);
 
-			page = "redirect:/lessonReviewDetail?idx="+param.get("review_idx");			
+			page = "redirect:/lessonReviewDetail.go?idx="+param.get("review_idx");			
 		}
 
 		return page;

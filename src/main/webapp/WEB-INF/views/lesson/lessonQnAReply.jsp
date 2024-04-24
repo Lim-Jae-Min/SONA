@@ -149,9 +149,9 @@
 
 	<div style="text-align: center;">
     <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-        <form action="aWrite" method="post" enctype="multipart/form-data" onsubmit="return confirmWrite();">
+        <form action="aWrite.do" method="post" enctype="multipart/form-data" onsubmit="return confirmWrite();">
             <table>
-             <input type="hidden" name="class_idx" value="${question.class_idx}">
+             <input type="hidden" name="class_idx" value="${question.class_idx}"/>
                 <tr  style="text-align: left;">
                     <th>Q&A 번호 : ${question.question_idx}<input type="hidden" name="question_idx" value="${question.question_idx}"></th>
                 </tr>
@@ -159,7 +159,7 @@
                     <td>질문 내용: ${question.q_content}</td>
                 </tr>
                 <tr>
-                    <td>작성자: ${question.user_id} 작성일: ${question.Q_reg_date}</td>
+                    <td>작성자: ${question.user_id} 작성일: ${question.q_reg_date}</td>
                 </tr>
             </table>
             <div style="font-size: 12px; text-align: right;">
@@ -231,7 +231,7 @@ function confirmWrite() {
 }
 
 function redirectToList(classIdx) {
-    window.location.href = './lessonQnAList?class_idx=' + classIdx;
+    window.location.href = './lessonQnAList.go?class_idx=' + classIdx;
 }
 
 $('#userName').click(function slide() {

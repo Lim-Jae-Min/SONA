@@ -345,7 +345,7 @@ function confirmDelete(questionIdx) {
             success: function(response) {
             	alert("질문이 삭제되었습니다.");
             	console.log(classIdx);
-            	location.href = './lessonQnAList?class_idx=' + classIdx;
+            	location.href = './lessonQnAList.go?class_idx=' + classIdx;
             },
             error: function(error) {
                 console.log(error);
@@ -363,7 +363,7 @@ function confirmAllDelete(questionIdx) {
             success: function(response) {
             	alert("모두 삭제되었습니다.");
             	console.log(classIdx);
-            	location.href = './lessonQnAList?class_idx=' + classIdx;
+            	location.href = './lessonQnAList.go?class_idx=' + classIdx;
             },
             error: function(error) {
                 console.log(error);
@@ -381,7 +381,7 @@ function answerDelete(questionIdx) {
             success: function(response) {
             	alert("답변이 삭제되었습니다.");
             	console.log(classIdx);
-            	location.href = './lessonQnAList?class_idx=' + classIdx;
+            	location.href = './lessonQnAList.go?class_idx=' + classIdx;
             },
             error: function(error) {
                 console.log(error);
@@ -414,16 +414,16 @@ $(document).ready(function() {
 });
 
 function redirectToList(classIdx) {
-    window.location.href = './lessonQnAList?class_idx=' + classIdx;
+    window.location.href = './lessonQnAList.go?class_idx=' + classIdx;
 }
 
 
-function redirectToEditPage(qidx) {
-    window.location.href = './lessonQnAEdit?question_idx=' + questionIdx;
+function redirectToEditPage(questionIdx) {
+    window.location.href = './lessonQnAEdit.do?question_idx=' + questionIdx;
 }
 
-function redirectToReplyPage(qidx) {
-    window.location.href = './lessonQnAReply?question_idx=' + questionIdx;
+function redirectToReplyPage(questionIdx) {
+    window.location.href = './lessonQnAReply.do?question_idx=' + questionIdx;
 }
 
 $('.alarm').click(function alarmList() {

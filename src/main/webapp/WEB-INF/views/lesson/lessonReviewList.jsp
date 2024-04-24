@@ -288,7 +288,7 @@ function listCall(page){
         
         console.log('reviewIdx:', reviewIdx);
        
-        window.location.href = './lessonReviewDetail?review_idx=' + reviewIdx; // REVIEW_IDX를 파라미터로 lessonReviewDetail 페이지로 이동
+        window.location.href = './lessonReviewDetail.go?review_idx=' + reviewIdx; // REVIEW_IDX를 파라미터로 lessonReviewDetail 페이지로 이동
     });
 }
 	

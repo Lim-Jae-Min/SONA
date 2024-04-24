@@ -232,11 +232,11 @@ body {
 	<div style="text-align: center;">
 		<div
 			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-			<form action="reviewEdit" method="post" enctype="multipart/form-data"
+			<form action="reviewEdit.do" method="post" enctype="multipart/form-data"
 				onsubmit="return confirmWrite(event);">
 				<table>
 					<tr>
-						<th>평가 강의번호 : ${review.class_idx} 평가 학생명: ${review.ratee_id}</th>
+						<th>평가 강의번호 : ${review.class_idx} 피평가자: ${review.ratee_id}</th>
 					</tr>
 					<tr>
 						<td><input type="hidden" name="review_idx"
@@ -282,7 +282,7 @@ body {
 								장의 사진만 첨부 가능합니다)</small></td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="location.href='./lessonReviewList'"
+						type="button" onclick="location.href='./lessonReviewList.go'"
 						value="취소" />
 						<button>수정</button></td>
 					</tr>

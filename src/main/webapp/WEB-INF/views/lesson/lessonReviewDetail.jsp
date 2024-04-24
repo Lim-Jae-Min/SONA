@@ -261,7 +261,7 @@ body {
 				onclick="confirmDelete(${review.review_idx})">삭제</button>
 		</div>
 		<div class="button-container return-btn">
-			<button class="button" onclick="location.href='./lessonReviewList'">리스트로
+			<button class="button" onclick="location.href='./lessonReviewList.go'">리스트로
 				돌아가기</button>
 		</div>
 	</div>
@@ -312,11 +312,11 @@ function confirmBlind(reviewIdx) {
     if (confirm("블라인드 하시겠습니까?")) {
         $.ajax({
             type: "POST",
-            url: "./deleteReview",
+            url: "./deleteReview.ajax",
             data: { reviewIdx: reviewIdx },
             success: function(response) {
             	alert("블라인드 되었습니다.");
-            	location.href = './lessonReviewList';
+            	location.href = './lessonReviewList.go';
             },
             error: function(error) {
                 console.log(error);
@@ -331,7 +331,7 @@ function confirmReport() {
     var confirmation = confirm("신고 하시겠습니까?");
     if (confirmation) {
         alert("신고 처리 되었습니다.");
-        location.href = './lessonReviewList';
+        location.href = './lessonReviewList.go';
     }
 }
 
@@ -339,11 +339,11 @@ function confirmDelete(reviewIdx) {
     if (confirm("삭제 하시겠습니까?")) {
         $.ajax({
             type: "POST",
-            url: "./deleteReview",
+            url: "./deleteReview.ajax",
             data: { reviewIdx: reviewIdx },
             success: function(response) {
             	alert("삭제되었습니다.");
-            	location.href = './lessonReviewList';
+            	location.href = './lessonReviewList.go';
             },
             error: function(error) {
                 console.log(error);
@@ -375,7 +375,7 @@ $(document).ready(function() {
 });
 
 function redirectToEditPage(reviewIdx) {
-    window.location.href = './lessonReviewEdit?idx=' + reviewIdx;
+    window.location.href = './lessonReviewEdit.go?idx=' + reviewIdx;
 }
 
 $('.alarm').click(function alarmList() {

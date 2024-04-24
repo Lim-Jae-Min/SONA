@@ -156,7 +156,7 @@
 			<div style="float: right;">
 				<!-- Q&A 작성 버튼을 오른쪽으로 옮김 -->
 				<button class="button write"
-					onclick="location.href='./lessonQnAWrite'"
+					onclick="location.href='./lessonQnAWrite.go'"
 					style="background-color: #BEE6FF; color: black; border: none; padding: 8px 20px; border-radius: 10px;">Q&A
 					작성</button>
 				<!-- 테두리 없애고 padding 조절 -->
@@ -330,10 +330,10 @@ function listCall(page, classIdx){
 	    	    // 열람 권한 조건 확인
 	    	    if (anonymousStatus === true && (userType === "admin"  ||  loginId === userId || loginId === teacherId)) {
         		// 열람 권한이 있는 경우 해당 페이지로 이동
-       			 window.location.href = './lessonQnADetail?question_idx=' + questionIdx;
+       			 window.location.href = './lessonQnADetail.go?question_idx=' + questionIdx;
     			} else if (anonymousStatus === false) {
         		// ANONYMOUS_STATUS가 false이면 해당 페이지로 이동
-        		window.location.href = './lessonQnADetail?question_idx=' + questionIdx;
+        		window.location.href = './lessonQnADetail.go?question_idx=' + questionIdx;
     			} else {
         		// 그 외의 경우에는 열람 권한이 없음을 알림창으로 표시
         		alert("열람 권한이 없습니다.");
@@ -360,7 +360,7 @@ function listCall(page, classIdx){
 	        var classIdx = $('input[name="class_idx"]').val();
 
 	        // Q&A 작성 페이지로 이동할 URL
-	        var url = './lessonQnAWrite?class_idx=' + classIdx;
+	        var url = './lessonQnAWrite.go?class_idx=' + classIdx;
 
 	        // 해당 URL로 이동
 	        window.location.href = url;

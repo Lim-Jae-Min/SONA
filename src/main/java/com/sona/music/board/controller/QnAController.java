@@ -25,13 +25,18 @@ public class QnAController {
 	@Autowired QnAService qnaService;
 	
 	
-	@RequestMapping(value="/lessonQnAList")
-	public String qnalist(Integer class_idx, Model model) {
+	@RequestMapping(value="/lessonQnAList.go")
+	public String qnalist(Integer class_idx, Model model, HttpSession session) {
 		logger.info("idx="+class_idx+"QnA 리스트 요청");
 		
-		model.addAttribute("classIdx", class_idx);
+		String page = "redirect:/login.go";
 		
-		return "lesson/lessonQnAList";
+		if (session.getAttribute("loginId")!=null) {
+		
+		model.addAttribute("classIdx", class_idx);
+		page = "lesson/lessonQnAList";
+		}
+		return page;
 	}
 	
 	
@@ -50,7 +55,7 @@ public class QnAController {
 	}
 	
 	
-	@RequestMapping(value="/lessonQnAWrite")
+	@RequestMapping(value="/lessonQnAWrite.go")
 	public String qnaWrite(Integer class_idx, Model model, HttpSession session) {
 		logger.info("강의IDX"+class_idx+"QnA 작성 요청");
 		
@@ -59,21 +64,21 @@ public class QnAController {
 		return "lesson/lessonQnAWrite";
 	}
 	
-	@RequestMapping(value="/qWrite", method = RequestMethod.POST)
+	@RequestMapping(value="/qWrite.do", method = RequestMethod.POST)
 	public String qwrite(Integer class_idx, HttpSession session, @RequestParam Map<String,String>param) {
 		logger.info("리뷰 작성함");
 		logger.info("params = {}", param);
-		String page = "redirect:/lessonQnAList?class_idx="+ class_idx;
+		String page = "redirect:/lessonQnAList.go?class_idx="+ class_idx;
 		if (session.getAttribute("loginId")!=null) {
 			int row = qnaService.qwrite(param);
 			if(row<1) {
-				page = "lesson/lessonQnAWrite?class_idx="+ class_idx;
+				page = "lesson/lessonQnAWrite.go?class_idx="+ class_idx;
 			}
 		}
 		return page;
 	}
 	
-	@RequestMapping(value="/lessonQnADetail")
+	@RequestMapping(value="/lessonQnADetail.go")
 	public String qnaDetail(Integer question_idx, Model model) {
 		logger.info("idx="+question_idx+" Q&A 디테일 요청");
 		
@@ -82,7 +87,7 @@ public class QnAController {
 		return "lesson/lessonQnADetail";
 	}
 	
-	@RequestMapping(value="/lessonQnAReply")
+	@RequestMapping(value="/lessonQnAReply.do")
 	public String qnaReply(Integer question_idx, Model model) {
 		logger.info("질문 idx ="+question_idx+" Q&A 답변 작성 요청");
 		
@@ -91,17 +96,17 @@ public class QnAController {
 		return "lesson/lessonQnAReply";
 	}
 	
-	@RequestMapping(value="/aWrite")
+	@RequestMapping(value="/aWrite.do")
 	public String aWrite(@RequestParam Map<String, String> param, HttpSession session) {
 		logger.info("질문 idx ="+param.get("question_idx")+" Q&A 답변 작성 요청");
 		logger.info(param.get("class_idx"));
 		
-		String page = "redirect:/lessonQnAList?class_idx="+ param.get("class_idx");
+		String page = "redirect:/lessonQnAList.go?class_idx="+ param.get("class_idx");
 		if(session.getAttribute("loginId")!=null) {
 			int row = qnaService.reply(param);
 			
 			if(row<1) {
-				page = "lesson/lessonQnAReply?question_idx="+param.get("question_idx");
+				page = "lesson/lessonQnAReply.do?question_idx="+param.get("question_idx");
 			}
 			
 		}
@@ -142,7 +147,7 @@ public class QnAController {
 		return "redirect:/lessonReviewList";
 	}
 	
-	@RequestMapping(value = "/lessonQnAEdit")
+	@RequestMapping(value = "/lessonQnAEdit.do")
 	public String qnaEdit(Integer question_idx, Model model) {
 		logger.info(question_idx+"질문 수정 요청 - 컨트롤러");
 		
@@ -152,17 +157,17 @@ public class QnAController {
 		return "lesson/lessonQnAEdit";
 	}
 	
-	@RequestMapping(value="/questionEdit")
+	@RequestMapping(value="/questionEdit.do ")
 	public String questionEdit(@RequestParam Map<String, String> param, HttpSession session) {
 		logger.info(param.get("question_idx")+"질문 수정함");
 
-		String page = "redirect:/lessonQnAList?class_idx="+ param.get("class_idx");
+		String page = "redirect:/lessonQnAList.go?class_idx="+ param.get("class_idx");
 
 		if(session.getAttribute("loginId")!= null) {
 
 			qnaService.update(param);
 
-			page = "redirect:/lessonQnAList?class_idx="+param.get("class_idx");			
+			page = "redirect:/lessonQnAList.go?class_idx="+param.get("class_idx");			
 		}
 
 		return page;

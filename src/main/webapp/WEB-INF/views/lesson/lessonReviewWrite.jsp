@@ -149,7 +149,7 @@
 	<div style="text-align: center;">
 		<div
 			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-			<form action="reviewWrite" method="post"
+			<form action="reviewWrite.do" method="post"
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
@@ -196,7 +196,7 @@
 						</td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="location.href='./lessonReviewList'"
+						type="button" onclick="location.href='./lessonReviewList.go'"
 						value="취소" />
 						<button>작성</button></td>
 					</tr>

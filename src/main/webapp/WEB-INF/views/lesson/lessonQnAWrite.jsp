@@ -145,7 +145,7 @@
 	<div style="text-align: center;">
 		<div
 			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-			<form action="qWrite" method="post" enctype="multipart/form-data"
+			<form action="qWrite.do" method="post" enctype="multipart/form-data"
 				onsubmit="return confirmWrite();">
 				<table>
 					<tr>
@@ -239,7 +239,7 @@ function confirmWrite() {
 }
 
 function redirectToList(classIdx) {
-    window.location.href = './lessonQnAList?class_idx=' + classIdx;
+    window.location.href = './lessonQnAList.go?class_idx=' + classIdx;
 }
 
 

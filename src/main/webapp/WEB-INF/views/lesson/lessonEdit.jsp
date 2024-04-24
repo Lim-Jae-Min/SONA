@@ -192,22 +192,26 @@ button {
     </header>
     <div id="content">
         <div id="top">
-        	<img src="resources/img/lessonOpen.png" id="lessonWriteImg">&nbsp;&nbsp;&nbsp;<b>강의 개설</b>
+        	<img src="resources/img/lessonOpen.png" id="lessonWriteImg">&nbsp;&nbsp;&nbsp;<b>강의 수정</b>
         </div>
         <div id="middle">
-        	<form action="lessonOpen.do" method="post" enctype="multipart/form-data">
+        	<form action="lessonEdit.do?class_idx=${lesson.class_idx}" method="post" enctype="multipart/form-data">
 	        	<table id="lessonContent">
 	        		<tr>
 	        			<td colspan="3">
 	        				<div class="notice">
-		        				<span class="red">*</span> 은 필수 입력 사항입니다.	        				
+		        				<span class="red">*</span> 은 필수 입력 사항입니다.
+		        				<br/><br/>
+        						<span class="red">기존에 저장된 이미지는 삭제됩니다.</span>	        				
 	        				</div>
 	        			</td>
 	        		</tr>
 	        		<tr>
-	        			<th><img id="imgPreview" src="resources/img/basic_user.png"></th>
+	        			<th>
+	        				<img id="imgPreview" src="resources/img/basic_user.png">
+	        			</th>
 	        			<th>강의 제목<span class="red">*</span></th>
-	        			<th><input type="text" name="class_name" id="class_name"/></th>
+	        			<th><input type="text" name="class_name" id="class_name" value="${lesson.class_name}"/></th>
 	        		</tr>
 	        		<tr>
 	        			<td colspan="3">
@@ -227,6 +231,7 @@ button {
 	        			<td colspan="3">
 	        				강의 악기<span class="red">*</span>
 		        			<br/><br/>
+		        			
 		        			<select name="inst_category_idx" id="instCategory" class="inst">
 								<option value="">악기 카테고리</option>
 								<option value="1">건반</option>
@@ -243,7 +248,7 @@ button {
 	        			<td colspan="3">
 	        				강의 내용<span class="red">*</span>
 		        			<br/><br/>
-		        			<textarea name="class_content" placeholder="내용을 입력해주세요." id="classContent"></textarea>
+		        			<textarea name="class_content" placeholder="내용을 입력해주세요." id="classContent">${lesson.class_content}</textarea>
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -303,7 +308,7 @@ button {
 	        			<td colspan="3">
 	        				경력 사항<span class="red">*</span>
 		        			<br/><br/>
-		        			<textarea name="career_content" placeholder="내용을 입력해주세요."></textarea>
+		        			<textarea name="career_content" placeholder="내용을 입력해주세요.">${lesson.career_contents}</textarea>
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -319,16 +324,16 @@ button {
 		        			<br/><br/>
 		        			<button type="button" id="url" onclick="openModal()">URL 첨부</button>
 		        			<br/><br/>
-		        			<div id="receiveURL"></div>
-		        			<input type="text" class="multiclickresult" id="videoURL" name="video_url"/>
+		        			<div id="receiveURL">${lesson.video_url}</div>
+		        			<input type="text" class="multiclickresult" id="videoURL" name="video_url" value="${lesson.video_url}"/>
 	        			</td>
 	        		</tr>
 	        		<tr>
 	        			<td colspan="3">
 	        				개인 악기 필요 여부<span class="red">*</span>
 		        			<br/><br/>
-		        			<input type="radio" class="need_inst" name="need_inst" value="1" checked>필요&nbsp;&nbsp;&nbsp;
-		        			<input type="radio" class="need_inst" name="need_inst" value="0">필요X
+		        			<input type="radio" class="need_inst" name="need_inst" value="1">필요&nbsp;&nbsp;&nbsp;
+		        			<input type="radio" class="not_need_inst" name="need_inst" value="0">필요X
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -342,7 +347,7 @@ button {
 		        			<div class="multiclick days">금요일</div>&nbsp;&nbsp;
 		        			<div class="multiclick days">토요일</div>&nbsp;&nbsp;
 		        			<div class="multiclick days">일요일</div>&nbsp;&nbsp;
-		        			<input type="text" class="multiclickresult" id="classDays" name="class_days"/>
+		        			<input type="text" class="multiclickresult" id="classDays" name="class_days" value="${lesson.class_days}"/>
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -371,21 +376,21 @@ button {
 		        			<div class="multiclick style">센스있는</div>&nbsp;&nbsp;
 		        			<div class="multiclick style">엄격한</div>&nbsp;&nbsp;
 		        			<div class="multiclick style">성실한</div>&nbsp;&nbsp;
-		        			<input type="text" class="multiclickresult" id="classStyle" name="class_style"/>
+		        			<input type="text" class="multiclickresult" id="classStyle" name="class_style" value="${lesson.class_style}"/>
 	        			</td>
 	        		</tr>
 	        		<tr>
 	        			<td colspan="3">
 	        				강의 총 횟수<span class="red">*</span>&nbsp;<span class="gray">(숫자만 입력해주세요.)</span>
 	        				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        			<input type="text" name="class_times" id="classTimes"/>&nbsp;&nbsp;&nbsp;회
+		        			<input type="text" name="class_times" id="classTimes" value="${lesson.class_times}"/>&nbsp;&nbsp;&nbsp;회
 	        			</td>
 	        		</tr>
 	          		<tr>
 	        			<td colspan="3">
 	        				강의료<span class="red">*</span>&nbsp;<span class="gray">(숫자만 입력해주세요.)</span>
 	        				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		        			<input type="text" name="class_price" id="classPrice"/>&nbsp;&nbsp;&nbsp;원
+		        			<input type="text" name="class_price" id="classPrice" value="${lesson.class_price}"/>&nbsp;&nbsp;&nbsp;원
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -399,7 +404,7 @@ button {
 	        		</tr>
 	        		<tr>
 	        			<td colspan="3" style="text-align: center;">
-	        				<button type="button" id="open">강의 개설</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        				<button type="button" id="update">강의 개설</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	        				<button type="button" id="goBack">돌아가기</button>
 	        			</td>
 	        		</tr>
@@ -505,6 +510,59 @@ var category4 = ['클라리넷', '플룻', '오보에', '트럼펫', '트럼본'
 var category5 = ['드럼', '카혼'];
 var category6 = ['보컬', '작곡', '미디'];
 
+$('#instCategory').prop('selectedIndex', '${lesson.inst_category_idx}');
+
+var firstInstCategory = $('#instCategory').val();
+var firstInstOption = '';
+
+firstInstOption += '<option value=""></option>';
+if (firstInstCategory == 1) {
+	for (var value of category1) {
+		firstInstOption += '<option value="' + value + '">' + value + '</option>';
+	}
+}
+if (firstInstCategory == 2) {
+	for (var value of category2) {
+		firstInstOption += '<option value="' + value + '">' + value + '</option>';
+	}
+}
+if (firstInstCategory == 3) {
+	for (var value of category3) {
+		firstInstOption += '<option value="' + value + '">' + value + '</option>';
+	}
+}
+if (firstInstCategory == 4) {
+	for (var value of category4) {
+		firstInstOption += '<option value="' + value + '">' + value + '</option>';
+	}
+}
+if (firstInstCategory == 5) {
+	for (var value of category5) {
+		firstInstOption += '<option value="' + value + '">' + value + '</option>';
+	}
+}
+if (firstInstCategory == 6) {
+	for (var value of category6) {
+		firstInstOption += '<option value="' + value + '">' + value + '</option>';
+	}
+}
+$('#inst').html(firstInstOption);
+
+if ('${lesson.inst_category_idx}' == 1) {
+	$('#inst').prop('selectedIndex', category1.indexOf('${lesson.class_inst}') + 1);
+}else if ('${lesson.inst_category_idx}' == 2) {
+	$('#inst').prop('selectedIndex', category2.indexOf('${lesson.class_inst}') + 1);
+}else if ('${lesson.inst_category_idx}' == 3) {
+	$('#inst').prop('selectedIndex', category3.indexOf('${lesson.class_inst}') + 1);
+}else if ('${lesson.inst_category_idx}' == 4) {
+	$('#inst').prop('selectedIndex', category4.indexOf('${lesson.class_inst}') + 1);
+}else if ('${lesson.inst_category_idx}' == 5) {
+	$('#inst').prop('selectedIndex', category5.indexOf('${lesson.class_inst}') + 1);
+}else if ('${lesson.inst_category_idx}' == 6) {
+	$('#inst').prop('selectedIndex', category6.indexOf('${lesson.class_inst}') + 1);
+}
+
+
 $('#instCategory').change(function() {
 	console.log('값이 변경되었습니다.');
 	var selectedCategory = $('#instCategory').val();
@@ -562,6 +620,23 @@ $('#photos').change(function() {
     }
 });
 
+var locationArr = ['서울특별시 강남구', '서울특별시 강동구', '서울특별시 강북구', '서울특별시 강서구', '서울특별시 관악구', '서울특별시 광진구', 
+					'서울특별시 구로구', '서울특별시 금천구', '서울특별시 노원구', '서울특별시 도봉구', '서울특별시 동대문구', '서울특별시 동작구',
+					'서울특별시 마포구', '서울특별시 서대문구', '서울특별시 서초구', '서울특별시 성동구', '서울특별시 성북구', '서울특별시 송파구',
+					'서울특별시 양천구', '서울특별시 영등포구', '서울특별시 용산구', '서울특별시 은평구', '서울특별시 종로구', '서울특별시 중구', 
+					'서울특별시 중랑구']
+
+$('#location').prop('selectedIndex', locationArr.indexOf('${lesson.class_location}') + 1);
+
+var careerYearsArr = ['1년', '2년', '3년', '4년', '5년', '6년', '7년', '8년', '9년', '10년 이상'];
+console.log(careerYearsArr.indexOf('${lesson.career_years}') + 1);
+$('#careerYears').prop('selectedIndex', careerYearsArr.indexOf('${lesson.career_years}') + 1);
+
+if ('${lesson.video_url}' != '' ) {
+	$('#receiveURL').css('display', 'block');
+}
+
+
 //모달 창 열기
 function openModal() {
     var modal = document.getElementById("myModal");
@@ -588,10 +663,23 @@ function submitInput() {
 	}    
 }
 
-var days = [];
+if ('${lesson.need_inst}' == 1) {
+	$('.need_inst').prop('checked', true);
+}else if ('${lesson.need_inst}' == 0) {
+	$('.not_need_inst').prop('checked', true);
+}
+
+
+var daysArr = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
+var days = '${lesson.class_days}'.split(',');
+
+for (var i = 0; i < $('.days').length; i++) {
+	if (days.indexOf($('.days').eq(i).html()) != -1) {
+		$('.days').eq(i).css('background-color', '#0070b6');
+	}
+}
 
 $('.days').click(function (){
-	var arr = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
 	var index = 0; 
 	
     if ($(this).css('background-color') === 'rgb(128, 128, 128)') {
@@ -605,11 +693,12 @@ $('.days').click(function (){
     
     var daysResult = [];
     
-    for (var i = 0; i < arr.length; i++) {
-		if (days.indexOf(arr[i]) != -1) {
-			daysResult.push(arr[i]);
+    for (var i = 0; i < daysArr.length; i++) {
+		if (days.indexOf(daysArr[i]) != -1) {
+			daysResult.push(daysArr[i]);
 		}
 	}
+    // console.log(daysResult);
     $('#classDays').val(daysResult);
 });
 
@@ -630,6 +719,11 @@ for (var i = 1; i <= 11; i++) {
 }
 $('.hour').html(hourContent);
 
+var insertedHour = '${lesson.class_hours}'.split('~');
+
+$('#startHour').prop('selectedIndex', hourArr.indexOf(insertedHour[0]) + 1);
+$('#endHour').prop('selectedIndex', hourArr.indexOf(insertedHour[1]) + 1);
+
 $('#endHour').change(function (){
 	//console.log($('#endHour').val());
 	var start = $('#startHour').val();
@@ -643,10 +737,17 @@ $('#endHour').change(function (){
 	}
 });
 
-var styles = [];
+
+var styleArr = ['체계적인', '글로벌한', '진지한', '자유로운', '실기중심', '창의적인', '유머러스한', '적극적인', '자상한', '센스있는', '엄격한', '성실한'];
+
+var styles = '${lesson.class_style}'.split(',');
+for (var i = 0; i < $('.style').length; i++) {
+	if (styles.indexOf($('.style').eq(i).html()) != -1) {
+		$('.style').eq(i).css('background-color', '#0070b6');
+	}
+}
 
 $('.style').click(function (){
-	var arr = ['체계적인', '글로벌한', '진지한', '자유로운', '실기중심', '창의적인', '유머러스한', '적극적인', '자상한', '센스있는', '엄격한', '성실한'];
 	var index = 0; 
 	
     if ($(this).css('background-color') === 'rgb(128, 128, 128)') {
@@ -660,9 +761,9 @@ $('.style').click(function (){
     
     var stylesResult = [];
     
-    for (var i = 0; i < arr.length; i++) {
-		if (styles.indexOf(arr[i]) != -1) {
-			stylesResult.push(arr[i]);
+    for (var i = 0; i < styleArr.length; i++) {
+		if (styles.indexOf(styleArr[i]) != -1) {
+			stylesResult.push(styleArr[i]);
 		}
 	}
     // console.log(stylesResult);
@@ -673,8 +774,8 @@ $('#goBack').click(function() {
 	location.href = "./allList.go";
 });
 
-$('#open').click(function() {
-	var result = confirm("강의를 개설하시겠습니까?");
+$('#update').click(function() {
+	var result = confirm("강의를 수정하시겠습니까?");
 	var regExp = new RegExp('[^0-9]');
 	
 	var $className = $('input[name="class_name"]');

@@ -49,7 +49,7 @@
 	padding: 3px 10px;
 }
 .bottom-second-col {
-	width: 580px;
+	width: 500px;
 	padding: 3px 10px;
 }
 .bottom-third-col {
@@ -61,7 +61,7 @@
 	padding: 3px 10px;
 }
 .bottom-fifth-col {
-	width: 100px;
+	width: 200px;
 	padding: 3px 10px;
 }
 .bottom-normal-row {
@@ -97,6 +97,18 @@ button {
 }
 .lesson {
 	width: 100%
+}
+.stop {
+	background-color: red;
+}
+.bottom {
+	text-align: center;
+}
+.reviewWrite {
+	display: none;
+}
+.hidden {
+	display: none;
 }
 </style>
 </head>
@@ -146,58 +158,81 @@ button {
         <table class="topTable">
         	<tr class="topRow">
         		<th class="top-first-col">강의명</th>
-        		<td class="top-second-col"><b>어쿠스틱 기타 강의</b></td>
+        		<td class="top-second-col"><b>${lessonInfo.class_name}</b></td>
         		<th class="top-first-col">강의 시작일</th>
-        		<td class="top-second-col"><b>2024-05-20</b></td>
+        		<td class="top-second-col"><b>${lessonInfo.start_date}</b></td>
         	</tr>
         	<tr>
         		<th class="top-first-col">
         			<c:if test="false">
-        				<img src="/photo/" class="profileImg">
+        				<img src="/photo/${studentProfile.new_filename}" class="profileImg">
         			</c:if>
         			<c:if test="true">
         				<img src="resources/img/basic_user.png" class="profileImg">
         			</c:if>
         		</th>
         		<td class="top-second-col right-border">
-        			ㅇㅇㅇ 수강생
+        			${studentProfile.user_name} 수강생
         			<br/><br/>
-        			<small class="gray">수강생 ID</small>
+        			<small class="gray">${studentProfile.user_id}</small>
         		</td>
         		<th class="top-first-col">
         			<c:if test="false">
-        				<img src="/photo/" class="profileImg">
+        				<img src="/photo/${teacherProfile.new_filename}" class="profileImg">
         			</c:if>
         			<c:if test="true">
         				<img src="resources/img/basic_user.png" class="profileImg">
         			</c:if>
         		</th>
         		<td class="top-second-col">
-        			ㅇㅇㅇ 강사
+        			${teacherProfile.user_name} 강사
         			<br/><br/>
-        			<small class="gray">수강생 ID</small>
+        			<small class="gray">${teacherProfile.user_id}</small>
         		</td>
         	</tr>
         	<tr>
         		<th class="top-first-col">이메일</th>
-        		<td class="top-second-col right-border">수강생@email.com</td>
+        		<td class="top-second-col right-border">${studentProfile.user_email}</td>
         		<th class="top-first-col">이메일</th>
-        		<td class="top-second-col">강사@email.com</td>
+        		<td class="top-second-col">${teacherProfile.user_email}</td>
         	</tr>
         	<tr>
         		<th class="top-first-col">전화번호</th>
-        		<td class="top-second-col right-border">010-1234-1234</td>
+        		<td class="top-second-col right-border">${studentProfile.user_phone}</td>
         		<th class="top-first-col">전화번호</th>
-        		<td class="top-second-col">010-1234-1234</td>
+        		<td class="top-second-col">${teacherProfile.user_phone}</td>
         	</tr>
         </table>
         <br/><br/><br/>
         <form action="lessonLogWrite.do" method="post">
 	        <table id="bottomTable">
-	        	
+	        	<tr>
+					<td colspan="5">&nbsp;&nbsp;&nbsp;<b>강의 일지</b><br/><br/></td>
+				</tr>
+				<tr class="bottom-first-row">
+					<th class="bottom-first-col">회차</th>
+					<th class="bottom-second-col">내용</th>
+					<th class="bottom-third-col">수업일자</th>
+					<th class="bottom-fourth-col">작성일자</th>
+					<th class="bottom-fifth-col"></th>
+				</tr>
+				<c:forEach items="${logList}" var="log" varStatus="status">
+					<tr class="bottom-normal-row">
+						<td class="bottom-first-col">${status.index + 1}</td>
+						<td class="bottom-second-col">${log.ch_content}</td>
+						<td class="bottom-third-col">${log.ch_date}</td>
+						<td class="bottom-fourth-col">${log.ch_write_date}</td>
+						<th class="bottom-fifth-col"><button class="save" type="button">저장</button>&nbsp;<button class="edit" type="button">수정</button>&nbsp;<button class="editComplete" type="button">수정 완료</button>&nbsp;<button class="absent" type="button">결석</button>&nbsp;<button class="editCancel" type="button">수정 취소</button></th>
+					</tr>
+				</c:forEach>
 	        </table>
+        <input type="text" value="${lessonInfo.apply_idx}" name="apply_idx" class="hidden"/>
         </form>
-        
+        <br/><br/>
+        <div class="bottom">
+        	<button class="stop" type="button">강의 중단</button>
+        	<button class="reviewWrite" type="button">리뷰 작성</button>
+        </div>
         <br/><br/><br/><br/><br/><br/>
     </div>
     <div id="footer">
@@ -252,22 +287,25 @@ $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';
 });
 
-var content = '<tr>';
-content += '<td colspan="5">&nbsp;&nbsp;&nbsp;<b>강의 일지</b><br/><br/></td>';
-content += '</tr>';
-content += '<tr class="bottom-first-row">';
-content += '<th class="bottom-first-col">회차</th>';
-content += '<th class="bottom-second-col">내용</th>';
-content += '<th class="bottom-third-col">수업일자</th>';
-content += '<th class="bottom-fourth-col">작성일자</th>';
-content += '<th class="bottom-fifth-col"></th>';
-content += '</tr>';
-console.log(content);
+var content = '';
+content = $('#bottomTable').html();
+
+var total_times = parseInt('${lessonInfo.total_times}');
+var accumulate_times = parseInt('${lessonInfo.accumulate_times}');
+
+console.log(total_times);
+
+if ('${sessionScope.user_type}' == '수강생') {
+	$('.stop').css('display', 'none');
+}
+
+if (total_times == accumulate_times) {
+	$('.reviewWrite').css('display', 'inline-block');
+	$('.stop').css('display', 'none');
+}
 
 
-var total_times = 4;
-
-for (var i = 1; i <= total_times; i++) {
+for (var i = accumulate_times + 1; i <= total_times; i++) {
 	
 	content += '<tr class="bottom-normal-row">';
 	content += '<td class="bottom-first-col">' + i + '</td>';
@@ -282,16 +320,14 @@ for (var i = 1; i <= total_times; i++) {
 
 $('#bottomTable').html(content);
 
-var accumulate_times = 3;
-var list = '${list}';
-console.log(list);
+for (var i = i; i < total_times; i++) {
+	$('.bottom-first-col').eq(i).html(i);
+}
 
 for (var i = 0; i < accumulate_times; i++) {
-	$('.bottom-second-col').eq(i + 1).html('테스트');
-	$('.bottom-third-col').eq(i + 1).html('2024-04-01');
-	$('.bottom-fourth-col').eq(i + 1).html('2024-04-02');
-	if (total_times != accumulate_times) {
+	if (total_times != accumulate_times && '${sessionScope.user_type}' == '강사') {
 		$('.edit').eq(i).css('display', 'inline-block');
+		
 	}
 }
 
@@ -301,52 +337,60 @@ for (var i = 0; i < accumulate_times; i++) {
 // <button class="editComplete" type="button">수정 완료</button>&nbsp;<button class="absent" type="button">결석</button></br>
 // <button class="editCancel" type="button">수정 완료</button>
 
-if (total_times != accumulate_times) {
-	$('.bottom-second-col').eq(accumulate_times + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
-	$('.bottom-third-col').eq(accumulate_times + 1).html('<input type="date" class="lesson date" name="date"/>');
-	$('.save').eq(accumulate_times).css('display', 'inline-block');
-	$('.absent').eq(accumulate_times).css('display', 'inline-block');
-}
-
 var backUpData1 = [];
 var backUpData2 = [];
 
-$('.edit').click(function (){
-	var index = $('.edit').index(this);
-	// console.log(index);
-	$(this).css('display', 'none');
-	$('.save').eq(accumulate_times).css('display', 'none');
-	$('.absent').eq(accumulate_times).css('display', 'none');
+if ('${sessionScope.user_type}' == '강사') {
+	if (total_times != accumulate_times) {
+		
+		$('.bottom-second-col').eq(accumulate_times + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
+		$('.bottom-third-col').eq(accumulate_times + 1).html('<input type="date" class="lesson date" name="date"/>');
+		$('.save').eq(accumulate_times).css('display', 'inline-block');
+		$('.absent').eq(accumulate_times).css('display', 'inline-block');
+	}
 	
-	backUpData1[0] = index;
-	backUpData1[1] = $('.bottom-second-col').eq(index + 1).html();
-	backUpData2[0] = index;
-	backUpData2[1] = $('.bottom-third-col').eq(index + 1).html();
-	// console.log(backUpData1);
 	
-	$('.bottom-second-col').eq(index + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
-	$('.bottom-third-col').eq(index + 1).html('<input type="date" class="lesson date" name="date"/>');
-	$('.bottom-second-col').eq(accumulate_times + 1).html('');
-	$('.bottom-third-col').eq(accumulate_times + 1).html('');
-	$('.editComplete').eq(index).css('display', 'inline-block');
-	$('.editCancel').eq(index).css('display', 'inline-block');
-});
-
-$('.editCancel').click(function (){
-	var index = backUpData1[0];
-	console.log(backUpData1[1]);
+	$('.edit').click(function (){
+		var index = $('.edit').index(this);
+		// console.log(index);
+		$('.save').eq(accumulate_times).css('display', 'none');
+		$('.absent').eq(accumulate_times).css('display', 'none');
+		$('.edit').css('display', 'none');
+		
+		backUpData1[0] = index;
+		backUpData1[1] = $('.bottom-second-col').eq(index + 1).html();
+		backUpData2[0] = index;
+		backUpData2[1] = $('.bottom-third-col').eq(index + 1).html();
+		// console.log(backUpData1);
+		
+		$('.bottom-second-col').eq(index + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
+		$('.bottom-third-col').eq(index + 1).html('<input type="date" class="lesson date" name="date"/>');
+		$('.bottom-second-col').eq(accumulate_times + 1).html('');
+		$('.bottom-third-col').eq(accumulate_times + 1).html('');
+		$('.editComplete').eq(index).css('display', 'inline-block');
+		$('.editCancel').eq(index).css('display', 'inline-block');
+	});
 	
-	$(this).css('display', 'none');
-	$('.editComplete').eq(index).css('display', 'none');
-	// console.log(backUpData1);
-	$('.bottom-second-col').eq(index + 1).html(backUpData1[1]);
-	$('.bottom-third-col').eq(index + 1).html(backUpData2[1]);
-	$('.bottom-second-col').eq(accumulate_times + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
-	$('.bottom-third-col').eq(accumulate_times + 1).html('<input type="date" class="lesson date" name="date"/>');
-	$('.save').eq(accumulate_times).css('display', 'inline-block');
-	$('.absent').eq(accumulate_times).css('display', 'inline-block');
-	$('.edit').eq(index).css('display', 'inline-block');
-});
+	$('.editCancel').click(function (){
+		var index = backUpData1[0];
+		console.log(backUpData1[1]);
+		
+		$(this).css('display', 'none');
+		$('.editComplete').eq(index).css('display', 'none');
+		// console.log(backUpData1);
+		$('.bottom-second-col').eq(index + 1).html(backUpData1[1]);
+		$('.bottom-third-col').eq(index + 1).html(backUpData2[1]);
+		$('.bottom-second-col').eq(accumulate_times + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
+		$('.bottom-third-col').eq(accumulate_times + 1).html('<input type="date" class="lesson date" name="date"/>');
+		$('.save').eq(accumulate_times).css('display', 'inline-block');
+		$('.absent').eq(accumulate_times).css('display', 'inline-block');
+		
+		for (var i = 0; i < accumulate_times; i++) {
+			$('.edit').eq(i).css('display', 'inline-block');
+		}
+	});
+	
+}
 $('.editComplete').click(function (){
 	$('form').attr('action', 'lessonLogEdit.do');
 	var $contentBox = $('.contentBox');
@@ -383,11 +427,31 @@ $('.save').click(function (){
 	}
 });
 $('.absent').click(function (){
+	var $date = $('.date');
+	
 	var result = confirm("결석 처리하시겠습니까?");
 	if (result) {
-		location.href = 'lessonAbsent.do';
+		if ($date.val() == '') {
+			alert('날짜를 입력해주세요.');
+			$date.focus();
+		}else {
+			$('form').attr('action', 'lessonAbsent.do');
+			$('form').submit();
+		}
 	}
 });
+$('.stop').click(function (){
+	var result = confirm("강의 중단하시겠습니까?");
+	if (result) {
+		location.href = 'lessonStop.do';
+	}
+});
+
+$('.reviewWrite').click(function (){
+	location.href = 'lessonStop.do';
+});
+
+console.log('${lessonInfo.apply_idx}')
 
 </script>
 </html>

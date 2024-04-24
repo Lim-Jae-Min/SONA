@@ -10,9 +10,9 @@
 			, co.class_name
 			, u.user_name
 			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
-			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 				THEN 0
-				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
@@ -29,9 +29,9 @@
 			, co.class_name
 			, u.user_name
 			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
-			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 				THEN 0
-				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
@@ -137,9 +137,9 @@
 			, co.class_days
 			, co.class_hours
 			, co.need_inst
-			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 				THEN 0
-				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 				END AS accumulate_student
 			, co.class_times
 			, co.class_price

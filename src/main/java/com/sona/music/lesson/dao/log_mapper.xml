@@ -3,5 +3,60 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <mapper namespace="com.sona.music.lesson.dao.LogDAO">
+	
+	<select id="lessonInfo" resultType="com.sona.music.lesson.dto.LogDTO">
+		SELECT co.class_name
+			, ah.reg_date AS start_date
+			, co.class_idx
+			, co.class_times AS total_times
+			, (SELECT COUNT(ch.ch_idx) FROM CLASS_HISTORY ch WHERE ch.class_idx = co.class_idx AND ch.student_id = ah.user_id 
+				AND ch.ch_write_date >= ah.reg_date) AS accumulate_times
+			, ah.apply_idx
+			, ah.user_id
+		FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx
+		WHERE ah.apply_idx = #{param1}
+	</select>
+	
+	<select id="logProfile" resultType="com.sona.music.lesson.dto.LogDTO">
+		SELECT
+			u.user_id
+			, u.user_name
+			, u.user_email
+			, u.user_phone
+			, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = u.user_id AND pb.photo_category = 'Profile') AS new_filename
+		FROM USERS u join CLASS_OPEN co ON u.user_id = co.user_id
+		WHERE co.class_idx = (SELECT ah.class_idx FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
+			UNION ALL
+		SELECT 
+			u2.user_id
+			, u2.user_name
+			, u2.user_email
+			, u2.user_phone
+			, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = u2.user_id AND pb.photo_category = 'Profile') AS new_filename
+		FROM USERS u2 
+		WHERE u2.user_id = (SELECT ah.user_id FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
+	</select>
+	
+	<select id="lessonLogList" resultType="com.sona.music.lesson.dto.LogDTO">
+		SELECT 
+			ch.ch_content
+			, ch.ch_date
+			, ch.ch_write_date
+		FROM CLASS_HISTORY ch
+		WHERE ch.student_id = (SELECT ah.user_id FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
+			AND ch.class_idx = (SELECT ah.class_idx FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
+			AND ch.ch_write_date >= (SELECT ah.reg_date FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
+		ORDER BY ch.ch_idx ASC
+	</select>
+	
+	<insert id="lessonLogWrite" parameterType="com.sona.music.lesson.dto.LogDTO">
+		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result) 
+			VALUES(#{class_idx}, #{user_id}, #{ch_content}, #{ch_date}, #{ch_result})
+	</insert>
+	
+	<insert id="lessonAbsent" parameterType="com.sona.music.lesson.dto.LogDTO">
+		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result) 
+			VALUES(#{class_idx}, #{user_id}, #{ch_content}, #{ch_date}, #{ch_result})
+	</insert>
 
 </mapper>

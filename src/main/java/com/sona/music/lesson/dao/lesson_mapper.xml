@@ -10,13 +10,13 @@
 			, co.class_name
 			, u.user_name
 			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
-			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 				THEN 0
-				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
-		WHERE class_inst = '어쿠스틱 기타'
+		WHERE class_inst = #{param5} AND class_delete = 0 AND class_disable = 0
 		<if test="param4 != null">
 			AND ${param3} LIKE CONCAT('%', #{param4}, '%')
 		</if>
@@ -29,14 +29,15 @@
 			, co.class_name
 			, u.user_name
 			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
-			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 				THEN 0
-				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
+		WHERE class_delete = 0 AND class_disable = 0
 		<if test="param4 != '' || param5 != '지역 전체' || param6 != '' || param7 != ''">
-			WHERE
+			AND
 			<if test="param4 != ''">
 				${param3} LIKE CONCAT('%', #{param4}, '%')
 				<if test="param5 != '지역 전체' || param6 != '' || param7 != ''">
@@ -58,20 +59,19 @@
 			<if test="param7 != ''">
 				class_inst = #{param7}
 			</if>
-			
 		</if>
 		ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 
 	<select id="recommendListCount" resultType="Integer">
-		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = '어쿠스틱 기타'
+		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = #{param4} AND class_delete = 0 AND class_disable = 0
 		<if test="param3 != null">
 			AND ${param2} LIKE CONCAT('%', #{param3}, '%')
 		</if>
 	</select>
 	
 	<select id="allListCount" resultType="Integer">
-		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = '어쿠스틱 기타'
+		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_delete = 0 AND class_disable = 0
 		<if test="param3 != '' || param4 != '지역 전체' || param5 != '' || param6 != ''">
 			AND
 			<if test="param3 != ''">
@@ -104,14 +104,14 @@
 		keyColumn="class_idx"
 		keyProperty="class_idx"
 		parameterType="com.sona.music.lesson.dto.LessonDTO">
-		INSERT CLASS_OPEN(user_id, inst_category_idx, class_inst, class_location, class_days, class_hours, need_inst, class_style,
+		INSERT INTO CLASS_OPEN(user_id, inst_category_idx, class_inst, class_location, class_days, class_hours, need_inst, class_style,
 			class_name, class_content, class_times, class_price, career_years, career_contents)
 		values(#{user_id}, #{inst_category_idx}, #{class_inst}, #{class_location}, #{class_days}, #{class_hours}, #{need_inst}, #{class_style},
 			#{class_name}, #{class_content}, #{class_times}, #{class_price}, #{career_years}, #{career_contents})
 	</insert>
 	
 	<insert id="videoWrite">
-		INSERT CAREER_VIDEO(class_idx, video_url) values(#{param1}, #{param2})
+		INSERT INTO CAREER_VIDEO(class_idx, video_url) values(#{param1}, #{param2})
 	</insert>
 	
 	<insert id="photoWrite">
@@ -122,6 +122,7 @@
 	<select id="lessonDetail" resultType="com.sona.music.lesson.dto.LessonDTO">
 		SELECT
 			co.class_name
+			, co.inst_category_idx
 			, co.class_inst
 			, (SELECT u.user_name FROM USERS u WHERE u.user_id = co.user_id) AS user_name
 			, FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 2) AS class_score
@@ -136,15 +137,16 @@
 			, co.class_days
 			, co.class_hours
 			, co.need_inst
-			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id) IS NULL
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 				THEN 0
-				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx GROUP BY ah.user_id)
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 				END AS accumulate_student
 			, co.class_times
 			, co.class_price
 			, (SELECT video_url FROM CAREER_VIDEO cv WHERE cv.class_idx = #{param1}) AS video_url
 			, co.class_disable
 			, co.class_delete
+			, co.class_idx
 		FROM CLASS_OPEN co
 		WHERE co.class_idx = #{param1}
 	</select>
@@ -184,5 +186,46 @@
 		SELECT ah.apply_idx, ah.apply_state FROM APPLY_HISTORY ah WHERE ah.class_idx = #{param1} AND ah.user_id = #{param2} ORDER BY ah.class_idx DESC LIMIT 1
 	</select>
 	
+	<insert id="leesonApply">
+		INSERT INTO APPLY_HISTORY(class_idx, user_id, apply_state)
+			VALUES(#{param1}, #{param2}, '신청 완료')
+	</insert>
+	
+	<update id="lessonBlind">
+		UPDATE CLASS_OPEN SET class_delete = 1 WHERE class_idx = #{param1}
+	</update>
+	
+	<update id="lessonUnBlind">
+		UPDATE CLASS_OPEN SET class_delete = 0 WHERE class_idx = #{param1}
+	</update>
+	
+	<update id="lessonDisable">
+		UPDATE CLASS_OPEN SET class_disable = 1 WHERE class_idx = #{param1}
+	</update>
+	
+	<update id="lessonUnDisable">
+		UPDATE CLASS_OPEN SET class_disable = 0 WHERE class_idx = #{param1}
+	</update>
+	
+	<update id="lessonUpdate" parameterType="com.sona.music.lesson.dto.LessonDTO">
+		UPDATE CLASS_OPEN SET inst_category_idx = #{inst_category_idx}, class_inst = #{class_inst}, class_location = #{class_location}
+			, class_days = #{class_days}, class_hours = #{class_hours}, need_inst = #{need_inst}, class_style = #{class_style}
+			, class_name = #{class_name}, class_content = #{class_content}, class_times = #{class_times}, class_price = #{class_price}
+			, career_years = #{career_years}, career_contents = #{career_contents}
+		WHERE class_idx = #{class_idx}
+	</update>
+	
+	<insert id="videoUpsert">
+		INSERT INTO CAREER_VIDEO(class_idx, video_url) values(#{param1}, #{param2})
+		ON DUPLICATE KEY UPDATE video_url = #{param2}
+	</insert>
+	
+	<delete id="lessonLogoDel">
+		DELETE FROM PHOTO_BOARD WHERE post_idx = #{param1} AND photo_category = 'Lesson'
+	</delete>
+	
+	<delete id="lessonPhotosDel">
+		DELETE FROM PHOTO_BOARD WHERE post_idx = #{param1} AND photo_category = 'Career'
+	</delete>
 	
 </mapper>

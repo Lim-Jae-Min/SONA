@@ -96,9 +96,10 @@
     </div>
     
     <a href="apply.go">강의신청 test</a>
-    </br>
+    <br/>
     <a href="userdetail.go?user_id=user2">회원 상세보기</a>
-    
+    <br/>
+    <a href="lessonLog.go">강의일지 test</a>
 </body>
 
 <script>

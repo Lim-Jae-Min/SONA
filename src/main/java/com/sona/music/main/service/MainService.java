@@ -18,6 +18,13 @@ public class MainService {
 		
 		return mainDAO.id();
 	}
+
+	public String myInst(String loginId) {
+		
+		String inst = mainDAO.myInst(loginId);
+		
+		return inst;
+	}
 	
 	
 	

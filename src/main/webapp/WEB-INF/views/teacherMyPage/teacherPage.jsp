@@ -28,7 +28,7 @@
 		}
 		.profile_s{
 		width: 100px;
-		}
+		}	
 		button{
 		background-color:  #BEE6FF; 
 		color: black; border: none;

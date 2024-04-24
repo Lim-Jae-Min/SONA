@@ -15,6 +15,9 @@ public class ReviewDTO {
 	private boolean review_delete;
 	private int img_cnt;
 	private String study_date;
+
+    private String index_order;
+
 	private String rater_name;
 	private String profile_photoname;
 	public int getReview_idx() {
@@ -94,6 +97,12 @@ public class ReviewDTO {
 	}
 	public void setProfile_photoname(String profile_photoname) {
 		this.profile_photoname = profile_photoname;
+	}
+	public String getIndex_order() {
+		return index_order;
+	}
+	public void setIndex_order(String index_order) {
+		this.index_order = index_order;
 	}
 	
 	

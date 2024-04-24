@@ -119,7 +119,14 @@
         	</c:if>
         </div>
         <br/>
-        <div><a href="studentPage.do">마이페이지</a></div>
+        <div>
+        	<c:if test="${sessionScope.user_type eq '수강생'}">
+				<a href="studentPage.do">마이페이지</a>
+			</c:if>
+        	<c:if test="${sessionScope.user_type eq '강사'}">
+				<a href="teacherPage.go">마이페이지</a>
+        	</c:if>
+        </div>
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
     </div>

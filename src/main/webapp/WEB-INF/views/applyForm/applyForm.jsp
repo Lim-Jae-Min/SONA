@@ -262,9 +262,15 @@ p {
     
     <button  id=apply_button >강의 신청하기</button>
     </form> 
-    
-    
-     <div id="slide">
+<div id="footer">
+        <li>상호명 : SONA</li>
+        <li>대표자 : 김○○</li>
+        <li>전화 : 02-123-4567</li>
+        <li>팩스 : 02-123-4568</li>
+        <li>사업자등록번호 : 000-00-00000</li>
+        <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
+    </div>
+    <div id="slide">
         <table>
             <tr>
                 <td colspan="2">${sessionScope.user_name} 회원님</td>
@@ -294,6 +300,19 @@ $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});
 
+$('#userName').click(function slide() {
+	var display = $('#slide').css('display');
+    if (display == 'none') {
+        $('#slide').css('display', 'block');
+    }
+    if (display == 'block') {
+        $('#slide').css('display', 'none');
+    }
+});
+
+$('#logo').click(function main(){
+	   location.href = '/main';
+	});
 
 var category1 = ['클래식 피아노', '재즈 피아노', '피아노 반주'];
 var category2 = ['어쿠스틱 기타', '일렉 기타', '베이스 기타'];

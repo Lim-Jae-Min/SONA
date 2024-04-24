@@ -117,17 +117,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/apply.go")
-	public String applyForm(Model model) {
+	public String applyForm(Model model, HttpSession session) {
 		logger.info("강의신청 페이지 접근");
+		logger.info("session ID: "+session.getAttribute("loginId"));
 		
 		return "applyForm/applyForm";
 	}
 	
 	/*회원 상세보기*/
 	@RequestMapping(value="/userdetail.go")
-	public String userdetail(Model model) {
+	public String userdetail(Model model, HttpSession session, String user_id) {
 		logger.info("회원상세보기 페이지 접근");
-		
+		MemberDTO detail = memberService.userdetail(user_id);
+		model.addAttribute("detail" , detail);
 		return "member/userDetail";
 	}
 	
@@ -141,15 +143,13 @@ public class MemberController {
 		MemberDTO info = memberService.login(id, pw);
 		
 		
-//		logger.info("loginId : "+ info.getUSER_ID().toString());
-		
 		if(info != null) {
 //			page = "/main/main";
-			session.setAttribute("loginId", info.getUSER_ID());	
-			session.setAttribute("user_type", info.getUSER_TYPE());	
-			session.setAttribute("user_name", info.getUSER_NAME());
-			session.setAttribute("manner_variance", info.getMANNER());
-			session.setAttribute("point", info.getPOINT());
+			session.setAttribute("loginId", info.getUser_id());	
+			session.setAttribute("user_type", info.getUser_type());	
+			session.setAttribute("user_name", info.getUser_name());
+			session.setAttribute("manner_variance", info.getManner());
+			session.setAttribute("point", info.getPoint());
 			session.setAttribute("alarm_count", info.getAlarm_count());
 			
 			String test = (String) session.getAttribute("loginId");
@@ -158,11 +158,11 @@ public class MemberController {
 			logger.info("test : " + test);
 			logger.info("test1 : " + test1);
 			 // 수강생인 경우
-	        if ("수강생".equals(info.getUSER_TYPE())) {
+	        if ("수강생".equals(info.getUser_type())) {
 	            page = "/main/main"; // 수강생 메인 페이지로 리다이렉트
 	        }
 	        // 강사인 경우
-	        else if ("강사".equals(info.getUSER_TYPE())) {
+	        else if ("강사".equals(info.getUser_type())) {
 	            page = "/main/main"; // 강사 메인 페이지로 리다이렉트
 	        }
 	        
@@ -212,11 +212,11 @@ public class MemberController {
 	        }
 	        
 	        // 회원가입에 성공하면 user_id를 세션에 저장
-	        session.setAttribute("user_id", param.get("id"));
+	        session.setAttribute("user_id", param.get("user_id"));
 	        logger.info("session id: "+ session.getAttribute("user_id"));
 	        msg = "회원가입에 성공하였습니다.";
 	        // 포인트 아이디 생성
-	        String joinId =param.get("id");
+	        String joinId =param.get("user_id");
 	        pointService.joinCreatePoint(joinId);
 	        //
 		}
@@ -231,7 +231,7 @@ public class MemberController {
 //		logger.info("listCall 요청");
 //		logger.info("받아온 유저 user_id: "+user_id);
 //		logger.info("페이지당 보여줄 갯수:"+cnt);
-//		logger.info("요청 페이지: "+page);
+//		logger.info("요청 페이지: "+page); 
 //		
 		
 		int currPage = Integer.parseInt(page);

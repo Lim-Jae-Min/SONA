@@ -26,14 +26,16 @@ public interface MemberDAO {
 
 	Object overlay(String id);
 
-	int join(Map<String, String> param);
-
 	List<MemberDTO> list(String user_id, int pagePerCnt, int start);
 
 	int allCount(int pagePerCnt);
 
-	Object detail(String user_id);
 
 	List<ReviewDTO> list2(String user_id, int pagePerCnt, int start);
+
+	MemberDTO detail(String user_id);
+
+	int join(MemberDTO dto);
+
 
 }

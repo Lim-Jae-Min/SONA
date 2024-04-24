@@ -17,8 +17,8 @@ public class MyPageDTO {
 	private String applyform_inst;
 	private int inst_category_idx;
 	private String applyform_location;
-	private List<String> applyform_days;
-	private List<String> applyform_style;
+	private String applyform_days;
+	private String applyform_style;
 	private boolean have_inst;
 	private String manner;
 	private String new_filename;
@@ -30,7 +30,12 @@ public class MyPageDTO {
 	private String answer_idx;
 	private boolean anonymous_status;
 	private String answer_status;
-
+	private int point_idx;
+	private String point_type;
+	private int point;
+	private Date point_date;
+	private long balance;
+	private String note;
 	
 	
 	
@@ -144,18 +149,7 @@ public class MyPageDTO {
 	public void setClass_name(String class_name) {
 		this.class_name = class_name;
 	}
-	public List<String> getApplyform_days() {
-		return applyform_days;
-	}
-	public void setApplyform_days(List<String> applyform_days) {
-		this.applyform_days = applyform_days;
-	}
-	public List<String> getApplyform_style() {
-		return applyform_style;
-	}
-	public void setApplyform_style(List<String> applyform_style) {
-		this.applyform_style = applyform_style;
-	}
+
 	public String getQ_title() {
 		return q_title;
 	}
@@ -191,6 +185,54 @@ public class MyPageDTO {
 	}
 	public void setAnswer_status(String answer_status) {
 		this.answer_status = answer_status;
+	}
+	public String getApplyform_days() {
+		return applyform_days;
+	}
+	public void setApplyform_days(String applyform_days) {
+		this.applyform_days = applyform_days;
+	}
+	public String getApplyform_style() {
+		return applyform_style;
+	}
+	public void setApplyform_style(String applyform_style) {
+		this.applyform_style = applyform_style;
+	}
+	public int getPoint_idx() {
+		return point_idx;
+	}
+	public void setPoint_idx(int point_idx) {
+		this.point_idx = point_idx;
+	}
+	public String getPoint_type() {
+		return point_type;
+	}
+	public void setPoint_type(String point_type) {
+		this.point_type = point_type;
+	}
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	public Date getPoint_date() {
+		return point_date;
+	}
+	public void setPoint_date(Date point_date) {
+		this.point_date = point_date;
+	}
+	public long getBalance() {
+		return balance;
+	}
+	public void setBalance(long balance) {
+		this.balance = balance;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 

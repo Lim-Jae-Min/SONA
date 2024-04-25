@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.sona.music.board.dto.QnADTO;
 import com.sona.music.lesson.dto.LessonDTO;
+import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.mypage.dto.MyPageDTO;
 
 public interface MyPageDAO {
@@ -34,6 +35,9 @@ public interface MyPageDAO {
 
 
 	List<MyPageDTO> pointList(int pagePerCnt, int start, String loginId);
+
+
+	List<MemberDTO> lessonlist(String user_id, int pagePerCnt, int start);
 
 
 

@@ -16,9 +16,9 @@
 		}
 		
 		#heart{
-			margin-right: 30px;
-		 	width: 10px; 
-		 	height: 10px;
+			margin-right: 3px;
+		 	width: 20px; 
+		 	height: 20px;
 		}
 		hr {
 		width: 100%; 
@@ -37,6 +37,9 @@
 		display: inline-block; 
 		font-size: 16px; margin: 4px 2px; 
 		cursor: pointer; border-radius: 4px;"
+		}
+		.content{
+		width: 100%;
 		}
 </style>
 </head>
@@ -85,18 +88,16 @@
             <div id="sidemenu">
                 <h3>마이페이지</h3>
                 <hr/>
-                <a href="#">마이페이지</a>
-                <a href="editStudentPage.go">개인 정보 수정</a>
-                <a href="myTeacher.go">즐겨찾기 강사</a>
-                <a href="#">숨김 강사</a>
-                <a href="myQnA.go">내가 작성한 Q&A</a>
+                <a href="teacherPage.go">마이페이지</a>
+                <a href="teacherPageEdit.go">개인 정보 수정</a>
+                <a href="teacherLessonList.go">강의 관리</a>
+                <a href="#">수강생 관리</a>
+                <a href="#">강의 Q&A 관리</a>
                 <a href="#">포인트 내역</a>
                 <a href="#">내가 받은 리뷰</a>
                 <a href="#">내가 작성한 리뷰</a>
-                <a href="#">수강 이력</a>
             </div>
             <form action="studentPage.do">
- 			<div id="content">
         <table style="width: 100%;">
     <thead>
         <tr> 
@@ -113,7 +114,8 @@
                 ${userInfo.user_id}
             </td>
             <td style="width: 60%; min-width: 150px; text-align: right;">
-                <img src="resources/img/heart.png"  id="heart">${sessionScope.manner_variance}
+                <img src="resources/img/heart.png"  id="heart" style="vertical-align: middle;">
+                <span style="vertical-align: middle;">${sessionScope.manner_variance}</span>
             </td>
         </tr>
     </thead>
@@ -183,6 +185,7 @@
         </tr>
     </tbody>    
 </table>
+
 
         </div>
         </form>

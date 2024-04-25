@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sona.music.board.dto.QnADTO;
+import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.mypage.dao.MyPageDAO;
 import com.sona.music.mypage.dto.MyPageDTO;
 
@@ -86,6 +87,27 @@ public class MyPageService {
 		result.put("totalPages", myPageDAO.allCount(pagePerCnt));
 		
 		
+		
+		return result;
+	}
+
+	public Map<String, Object> lessonlist(int currPage, int pagePerCnt, String user_id) {
+
+		int start = (currPage-1)*pagePerCnt;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<MemberDTO> list = myPageDAO.lessonlist(user_id,pagePerCnt,start);
+		logger.info("list size: "+list.size());
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", myPageDAO.allCount(pagePerCnt));
+		
+		for (MemberDTO r : list) {
+			logger.info(r.getClass_name()+"");
+			logger.info(r.getClass_reg_date() + "");
+			logger.info(r.getCount()+"");
+			logger.info(r.getScore()+"");
+			logger.info(r.getIndex_order()+"");
+		}
 		
 		return result;
 	}

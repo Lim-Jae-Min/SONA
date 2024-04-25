@@ -47,27 +47,14 @@ public class MyPageController {
 		
 		return page;
 	}
-	@RequestMapping(value = "/editStudentPage.go")
-	public String editUserInfo(HttpSession session, Model model) {
-	 logger.info("회원 수정 페이지 이동");
-	    String page = "member/login";
-	    String loginId = (String) session.getAttribute("loginId");
-	    if(loginId != null) {
-	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
-	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
-	        // 모델에 사용자 정보 추가
-	        model.addAttribute("userInfo", userInfo);
-	        logger.info("회원 수정 페이지 이동 성공 !");
-	        page = "studentMyPage/editStudentPage";
-	    }
-	    return page;
-	}
+	
+	
 
 	
 	/*강사 마이페이지로 이동*/
 	@RequestMapping(value = "/teacherPage.go")
 	public String getUserInfo2(Model model, HttpSession session) {
-		logger.info("강사 마이페이지 이동 요청");
+		logger.info("강사 마이페이지 이동");
 		String page = "member/login";
 		String loginId = (String) session.getAttribute("loginId");
 		int point = (int) session.getAttribute("point");
@@ -81,6 +68,62 @@ public class MyPageController {
 		
 		return page;
 	}
+	
+	
+	@RequestMapping(value = "/teacherPageEdit.go")
+	public String editUserInfo2(HttpSession session, Model model) {
+	 logger.info("강사 회원 정보 수정 페이지 이동");
+	    String page = "member/login";
+	    String loginId = (String) session.getAttribute("loginId");
+	    if(loginId != null) {
+	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        // 모델에 사용자 정보 추가
+	        model.addAttribute("userInfo", userInfo);
+	        logger.info("회원 수정 페이지 이동 성공 !");
+	        page = "teacherMyPage/teacherPageEdit";
+	    }
+	    return page;
+	}
+	
+	
+	/*강의 관리 페이지로 이동*/
+	@RequestMapping(value = "/editStudentPage.go")
+	public String editUserInfo(HttpSession session, Model model) {
+		logger.info("회원 수정 페이지 이동");
+		String page = "member/login";
+		String loginId = (String) session.getAttribute("loginId");
+		if(loginId != null) {
+			// 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
+			MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+			// 모델에 사용자 정보 추가
+			model.addAttribute("userInfo", userInfo);
+			logger.info("회원 수정 페이지 이동 성공 !");
+			page = "studentMyPage/editStudentPage";
+		}
+		return page;
+	}
+	
+	
+	@RequestMapping(value="/lessonlist.ajax")
+	@ResponseBody
+	public Map<String , Object> listCall(String page, String cnt, String state, String user_id, HttpSession session ){
+		logger.info("lessonlist 요청");
+		logger.info("받아온 유저 user_id: "+user_id);
+		logger.info("페이지당 보여줄 갯수:"+cnt);
+		logger.info("요청 페이지: "+page); 
+		logger.info("진행 상태: "+ state );
+		String seid = (String) session.getAttribute("loginId");
+		logger.info("session id: " + seid);
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = 10;
+		Map<String, Object>map = myPageService.lessonlist(currPage, pagePerCnt, user_id);
+		logger.info("map : {}",map);
+		
+		return map;
+	}
+	
 	
 	 @RequestMapping(value = "/myQnA.go")
 	 public String className(HttpSession session, Model model) {
@@ -131,7 +174,18 @@ public class MyPageController {
 
 	
 	
-	
+	 @RequestMapping(value = "/teacherLessonList.go")
+		public String teacherLessonList(HttpSession session, Model model) {
+		 logger.info("강의 관리 이동");
+		    String page = "member/login";
+		    String loginId = (String) session.getAttribute("loginId");
+		    if(loginId != null) {
+		        // 모델에 사용자 정보 추가
+		        logger.info("강의 관리 페이지 이동 성공 !");
+		        page = "teacherMyPage/teacherLessonList";
+		    }
+		    return page;
+		}
 	
 	
 	 

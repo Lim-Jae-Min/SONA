@@ -92,7 +92,7 @@
                         
                         <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${detail.user_name} ${detail.user_type}</span><br><br>${detail.user_id}</td>
                         <td style="width: 60%; min-width: 150px; text-align: right;">
-                            <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${detail.manner}
+                            <img src="resources/img/heart.png" style="margin-right: 7px; width: 20px; height: 20px;" id="heart">${detail.manner}
                         </td>
                     </tr>
                 </thead>
@@ -319,10 +319,10 @@ function drawList2(list){
        console.log(item);
        content += '<tr class="list-item">';
        content += '<td>&nbsp;&nbsp;'+ item.index_order +'</td>';
-       content += '<td>'+ item.review_TITLE +'</td>';
-       content += '<td>&nbsp;&nbsp;&nbsp;' + item.rater_ID + '</td>';
+       content += '<td>'+ item.review_title +'</td>';
+       content += '<td>&nbsp;&nbsp;&nbsp;' + item.rater_id + '</td>';
        content += '<td>&nbsp;&nbsp;<span style="color: #FED000;">★</span>' + item.score +'</td>';
-       var date = new Date(item.review_REG_DATE);
+       var date = new Date(item.review_reg_date);
        var dateStr = date.toLocaleDateString("ko-KR");
        content += '<td>' + dateStr + '</td>';
        content += '</tr>';

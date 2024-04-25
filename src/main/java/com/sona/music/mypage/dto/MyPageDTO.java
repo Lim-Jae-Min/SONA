@@ -38,6 +38,8 @@ public class MyPageDTO {
 	private long balance;
 	private String note;
 	
+	private int accumulate_lesson;
+	
 	
 	
 	
@@ -240,6 +242,12 @@ public class MyPageDTO {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public int getAccumulate_lesson() {
+		return accumulate_lesson;
+	}
+	public void setAccumulate_lesson(int accumulate_lesson) {
+		this.accumulate_lesson = accumulate_lesson;
 	}
 
 

@@ -17,6 +17,10 @@ public interface LogDAO {
 
 	int lessonAbsent(LogDTO dto);
 
+	int lessonLogEdit(LogDTO dto);
+
+	int lessonStop(LogDTO dto);
+
 	
 
 	

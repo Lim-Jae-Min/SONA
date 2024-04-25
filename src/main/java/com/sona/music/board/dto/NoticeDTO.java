@@ -11,7 +11,6 @@ public class NoticeDTO {
 	private int notice_views;
 	private Date notice_reg_date;
 	private int notice_delete;
-	private int notice_bhit;
 	
 	
 	
@@ -58,12 +57,7 @@ public class NoticeDTO {
 	public void setNotice_delete(int notice_delete) {
 		this.notice_delete = notice_delete;
 	}
-	public int getNotice_bhit() {
-		return notice_bhit;
-	}
-	public void setNotice_bhit(int notice_bhit) {
-		this.notice_bhit = notice_bhit;
-	}
+	
 	
 
 }

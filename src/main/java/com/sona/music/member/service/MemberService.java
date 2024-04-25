@@ -85,8 +85,7 @@ public class MemberService {
 		dto.setUser_email(email);
 		dto.setUser_id(id);
 		dto.setUser_pass(pw);
-		dto.setUser_bank(bank);
-		
+		dto.setUser_bank(bank);		
 		dto.setUser_accountnumber(Integer.parseInt(accountnumber));
 		dto.setUser_type(usertype);
 		dto.setUser_name(name);
@@ -132,6 +131,7 @@ public class MemberService {
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
 		for (ReviewDTO r : list) {
+
 
 			logger.info(r.getReview_title()+"");
 			logger.info(r.getRater_id()+"");

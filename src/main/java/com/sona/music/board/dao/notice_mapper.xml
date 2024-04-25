@@ -9,22 +9,46 @@
 			ORDER BY notice_idx DESC LIMIT #{param1},#{param2};
 	</select> 
 	
-	<select id="allCount" resultType="int">
-		SELECT CEIL (COUNT(notice_idx)/#{param1}) AS pages FROM NOTICE_BOARD; 	
+  	<select id="allCount" resultType="int">
+		SELECT CEIL (COUNT(notice_idx)/#{param1}) AS pages FROM NOTICE_BOARD
+			WHERE notice_delete = #{param2}
+				<if test='param4 =! null'>
+					 AND
+					 <if test='param4 = "notice_content"'>
+					 	notice_content LIKE '%${param3}%' 
+					 </if>
+					<if test='param4 == "notice_title" '>
+						 notice_title LIKE '%${param3}%' 	
+					</if> 
+				</if>	
+
+	</select> 
+	
+	<select id="showListSearch" resultType="com.sona.music.board.dto.NoticeDTO">
+		SELECT * FROM NOTICE_BOARD WHERE notice_delete = #{param3}
+
+				<if test='param5 =! null'>
+					 AND
+					 <if test='param5 = "notice_content"'>
+					 	notice_content LIKE '%${param4}%' 
+					 </if>
+					<if test='param5 == "notice_title" '>
+						 notice_title LIKE '%${param4}%' 	
+					</if> 
+				</if>		
+			ORDER BY notice_idx DESC LIMIT #{param1},#{param2};
 	</select>
 	
-	<select id="showListSearchContent" resultType="com.sona.music.board.dto.NoticeDTO">
-		SELECT * FROM NOTICE_BOARD WHERE notice_delete = #{param3}
-			AND notice_content LIKE '%${param4}%' 
-			
-			ORDER BY notice_idx DESC LIMIT #{param1},#{param2};
-	</select> 
+	<select id="noticeDetailAdmin" resultType="com.sona.music.board.dto.NoticeDTO">
+		 SELECT * FROM NOTICE_BOARD WHERE notice_idx = #{param1}
+	</select>
 	
-	<select id="showListSearchTitle" resultType="com.sona.music.board.dto.NoticeDTO">
-		SELECT * FROM NOTICE_BOARD WHERE notice_delete = #{param3}
-			AND notice_title LIKE '%${param4}%' 
-			
-			ORDER BY notice_idx DESC LIMIT #{param1},#{param2};
-	</select> 
+	<select id="getNoticePhoto" resultType="com.sona.music.board.dto.PhotoDTO">
+		SELECT * FROM PHOTO_BOARD WHERE post_idx = #{param1} AND photo_category = "lesson"
+	</select>
+	
+	<update id="noticeViews">
+		UPDATE NOTICE_BOARD SET notice_views = notice_views+1 WHERE notice_idx = #{param1}
+	</update>
 	
 </mapper>

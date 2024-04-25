@@ -38,6 +38,14 @@ public interface MyPageDAO {
 
 	List<MemberDTO> lessonlist(String user_id, int pagePerCnt, int start);
 
+	List<MyPageDTO> receiveList(int pagePerCnt, int start, String loginId);
+
+
+	List<MyPageDTO> sendList(int pagePerCnt, int start, String loginId);
+
+
+	List<MyPageDTO> courseList(int pagePerCnt, int start, String loginId);
+
 	List<LessonDTO> favoriteListCall(int pagePerCnt, int start, String loginId);
 
 	Object favoriteListCount(int pagePerCnt, String loginId);

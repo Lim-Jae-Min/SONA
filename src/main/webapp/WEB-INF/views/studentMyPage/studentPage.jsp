@@ -63,28 +63,31 @@
                 <h3>마이페이지</h3>
                 <hr/>
                 <a href="studentPage.go">마이페이지</a>
-                <a href="editStudentPage.go">개인 정보 수정</a>
-                <a href="myTeacher.go">즐겨찾기 강사</a>
-                <a href="#">숨김 강사</a>
-                <a href="myQnA.go">내가 작성한 Q&A</a>
-                <a href="myPoint.go">포인트 내역</a>
-                <a href="#">내가 받은 리뷰</a>
-                <a href="#">내가 작성한 리뷰</a>
-                <a href="#">수강 이력</a>
+                <a href="studentPageEdit.go">개인 정보 수정</a>
+                <a href="favoriteList.go">즐겨찾기 강사</a>
+                <a href="blockList.go">숨김 강사</a>
+                <a href="studentQnAList.go">내가 작성한 Q&A</a>
+                <a href="studentPointList.go">포인트 내역</a>
+                <a href="studentReceivedList.go">내가 받은 리뷰</a>
+                <a href="studentWrittenList.go">내가 작성한 리뷰</a>
+                <a href="studentAttendedList.go">수강 이력</a>
             </div>
  			<div id="content">
             <table style="width: 100%;">
                 <thead>
-   			 <hr style="width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
-
+   			 		<hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
+   			 		
                     <tr>
-                        &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png" style="margin-left: 30px;"  id="account"></td>
-                        <td class="main" style="padding-right: 800px; width : 200px;">
-                        <span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}<span>
-                        <br><br>${userInfo.user_id}</td>
-                        <td style="width: 60%; min-width: 150px; text-align: right;">
-                        <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">44.5
-                        </td>
+                        &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png"
+                        		 style="margin-left: 30px;"  id="account">
+                        	  </td>
+                        	  <td class="main" style="padding-right: 750px; width : 200px;">
+			                  	<span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}</span>
+				                <br><br>${userInfo.user_id}
+				              </td>
+					           <td style="width: 60%; min-width: 150px; text-align: right;">
+						       	  <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${sessionScope.manner_variance}
+                       		   </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -252,7 +255,7 @@
             </table>
         </div>
         </div>
- <div id="footer">
+    <div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>
         <li>전화 : 02-123-4567</li>
@@ -263,15 +266,6 @@
     <div id="slide">
         <table>
             <tr>
-<<<<<<< HEAD
-                <td colspan="2">${loginId} 회원님</td>
-                <td>&nbsp&nbsp&nbsp</td>
-                <td class="manner">♥ ${manner_variance}</td>
-            </tr>
-        </table>
-        <br/>
-        <div>보유 포인트 : <span>${point}</span></div>
-=======
                 <td colspan="2">${sessionScope.user_name} 회원님</td>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td class="manner">♥ ${sessionScope.manner_variance}</td>
@@ -279,7 +273,6 @@
         </table>
         <br/>
         <div>보유 포인트 : <span>${sessionScope.point}</span></div>
->>>>>>> origin/master
         <br/>
         <div>
            <c:if test="${sessionScope.user_type eq '수강생'}">
@@ -290,16 +283,18 @@
            </c:if>
         </div>
         <br/>
-<<<<<<< HEAD
-        <div><a href="studentPage.do">마이페이지</a></div>
-=======
         <div><a href="myPage.go">마이페이지</a></div>
->>>>>>> origin/master
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
     </div>
 </body>
 <script>
+$('.alarm').click(function alarmList() {
+	   location.href = 'alarmList.go';
+	});
+
+
+
 $('#logo').click(function main(){
 	   location.href = '/main';
 	});

@@ -39,6 +39,12 @@ public interface MyPageDAO {
 	List<MyPageDTO> receiveList(int pagePerCnt, int start, String loginId);
 
 
+	List<MyPageDTO> sendList(int pagePerCnt, int start, String loginId);
+
+
+	List<MyPageDTO> courseList(int pagePerCnt, int start, String loginId);
+
+
 
 
 }

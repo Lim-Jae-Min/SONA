@@ -111,19 +111,26 @@
     <div id="slide">
         <table>
             <tr>
-                <td colspan="2">${loginName} 회원님</td>
-                <td>&nbsp&nbsp&nbsp</td>
-                <td class="manner">♥ ${manner}</td>
+                <td colspan="2">${sessionScope.user_name} 회원님</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td class="manner">♥ ${sessionScope.manner_variance}</td>
             </tr>
         </table>
         <br/>
-        <div>보유 포인트 : <span>${totalPoint}</span></div>
+        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
         <br/>
-        <div><a href="#">내가 쓴 리뷰</a></div>
+        <div>
+           <c:if test="${sessionScope.user_type eq '수강생'}">
+              <a href="studentWrittenList.go">내가 쓴 리뷰</a>           
+           </c:if>
+           <c:if test="${sessionScope.user_type eq '강사'}">
+              <a href="teacherWrittenList.go">내가 쓴 리뷰</a>           
+           </c:if>
+        </div>
         <br/>
-        <div><a href="#">마이페이지</a></div>
+        <div><a href="myPage.go">마이페이지</a></div>
         <br/><br/><br/>
-        <div><a href="#">로그아웃</a></div>
+        <div><a href="logout.do">로그아웃</a></div>
     </div>
 </body>
 <script>

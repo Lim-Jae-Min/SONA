@@ -21,6 +21,7 @@ public class LogDTO {
 	private String ch_write_date;
 	private String ch_content;
 	private String ch_result;
+	private int ch_idx;
 	
 	public String getUser_id() {
 		return user_id;
@@ -111,6 +112,12 @@ public class LogDTO {
 	}
 	public void setCh_write_date(String ch_write_date) {
 		this.ch_write_date = ch_write_date;
+	}
+	public int getCh_idx() {
+		return ch_idx;
+	}
+	public void setCh_idx(int ch_idx) {
+		this.ch_idx = ch_idx;
 	}
 	
 	

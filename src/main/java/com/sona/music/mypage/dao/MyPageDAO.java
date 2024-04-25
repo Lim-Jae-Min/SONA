@@ -36,6 +36,15 @@ public interface MyPageDAO {
 	List<MyPageDTO> pointList(int pagePerCnt, int start, String loginId);
 
 
+	List<LessonDTO> favoriteListCall(int pagePerCnt, int start, String loginId);
+
+
+	Object favoriteListCount(int pagePerCnt, String loginId);
+
+
+	int teacherListDel(String teacher_id, String loginId);
+
+
 
 
 }

@@ -371,9 +371,9 @@ function drawList(list){
 	 	for (var i = 0; i < list.length; i++) {
 			content += '<th><a href="lessonDetail.go?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></th>';
 		}
-		 content += '</tr>';
-		 content += '<tr class="smallFont">';
-		 for (var i = 0; i < list.length; i++) {
+		content += '</tr>';
+		content += '<tr class="smallFont">';
+		for (var i = 0; i < list.length; i++) {
 			content += '<th>' + list[i].user_name + ' 강사님</th>';
 		}
 	 	content += '</tr>';

@@ -110,6 +110,15 @@ button {
 .hidden {
 	display: none;
 }
+.red {
+	color: red;
+}
+.editNotice {
+	display: none;
+}
+.inputNotice {
+	display: none;
+}
 </style>
 </head>
 <body>
@@ -207,7 +216,9 @@ button {
         <form action="lessonLogWrite.do" method="post">
 	        <table id="bottomTable">
 	        	<tr>
-					<td colspan="5">&nbsp;&nbsp;&nbsp;<b>강의 일지</b><br/><br/></td>
+					<td colspan="5">
+						&nbsp;&nbsp;&nbsp;<b>강의 일지</b><br/><br/>
+					</td>
 				</tr>
 				<tr class="bottom-first-row">
 					<th class="bottom-first-col">회차</th>
@@ -217,18 +228,22 @@ button {
 					<th class="bottom-fifth-col"></th>
 				</tr>
 				<c:forEach items="${logList}" var="log" varStatus="status">
-					<tr class="bottom-normal-row">
-						<td class="bottom-first-col">${status.index + 1}</td>
-						<td class="bottom-second-col">${log.ch_content}</td>
-						<td class="bottom-third-col">${log.ch_date}</td>
-						<td class="bottom-fourth-col">${log.ch_write_date}</td>
-						<th class="bottom-fifth-col"><button class="save" type="button">저장</button>&nbsp;<button class="edit" type="button">수정</button>&nbsp;<button class="editComplete" type="button">수정 완료</button>&nbsp;<button class="absent" type="button">결석</button>&nbsp;<button class="editCancel" type="button">수정 취소</button></th>
-					</tr>
+					<c:if test="${log.ch_result ne '강의 종료'}">
+						<tr class="bottom-normal-row">
+							<td class="bottom-first-col">${status.index + 1}</td>
+							<td class="bottom-second-col">${log.ch_content}</td>
+							<td class="bottom-third-col">${log.ch_date}</td>
+							<td class="bottom-fourth-col">${log.ch_write_date}</td>
+							<th class="bottom-fifth-col"><button class="save" type="button">저장</button>&nbsp;<button class="edit" type="button">수정</button>&nbsp;<button class="editComplete" type="button">수정 완료</button>&nbsp;<button class="absent" type="button">결석</button>&nbsp;<button class="editCancel" type="button">수정 취소</button></th>
+						</tr>
+					</c:if>
 				</c:forEach>
 	        </table>
+	    &nbsp;&nbsp;&nbsp;<small class="red inputNotice">(입력한 강의일지는 삭제할 수 없습니다. 신중하게 입력해주세요.)</small>
+		&nbsp;&nbsp;&nbsp;<small class="red editNotice">(결석으로 수정할 경우 내용에 '결석' 이라고 입력해주세요.)</small>
         <input type="text" value="${lessonInfo.apply_idx}" name="apply_idx" class="hidden"/>
         </form>
-        <br/><br/>
+        <br/>
         <div class="bottom">
         	<button class="stop" type="button">강의 중단</button>
         	<button class="reviewWrite" type="button">리뷰 작성</button>
@@ -293,17 +308,16 @@ content = $('#bottomTable').html();
 var total_times = parseInt('${lessonInfo.total_times}');
 var accumulate_times = parseInt('${lessonInfo.accumulate_times}');
 
-console.log(total_times);
+if ('${check}' != '') {
+	accumulate_times -= 1;	
+}
+
+
+console.log(accumulate_times);
 
 if ('${sessionScope.user_type}' == '수강생') {
 	$('.stop').css('display', 'none');
 }
-
-if (total_times == accumulate_times) {
-	$('.reviewWrite').css('display', 'inline-block');
-	$('.stop').css('display', 'none');
-}
-
 
 for (var i = accumulate_times + 1; i <= total_times; i++) {
 	
@@ -325,9 +339,8 @@ for (var i = i; i < total_times; i++) {
 }
 
 for (var i = 0; i < accumulate_times; i++) {
-	if (total_times != accumulate_times && '${sessionScope.user_type}' == '강사') {
+	if ('${sessionScope.user_type}' == '강사') {
 		$('.edit').eq(i).css('display', 'inline-block');
-		
 	}
 }
 
@@ -341,6 +354,8 @@ var backUpData1 = [];
 var backUpData2 = [];
 
 if ('${sessionScope.user_type}' == '강사') {
+	$('.inputNotice').css('display', 'inline-block');
+	
 	if (total_times != accumulate_times) {
 		
 		$('.bottom-second-col').eq(accumulate_times + 1).html('<input type="text" class="lesson contentBox" name="content"/>');
@@ -352,6 +367,8 @@ if ('${sessionScope.user_type}' == '강사') {
 	
 	$('.edit').click(function (){
 		var index = $('.edit').index(this);
+		
+		$('.bottom-first-col').eq(index + 1).html(index + 1 + '<input type="text" value="' + index + '" name="index" class="hidden"/>');
 		// console.log(index);
 		$('.save').eq(accumulate_times).css('display', 'none');
 		$('.absent').eq(accumulate_times).css('display', 'none');
@@ -369,11 +386,15 @@ if ('${sessionScope.user_type}' == '강사') {
 		$('.bottom-third-col').eq(accumulate_times + 1).html('');
 		$('.editComplete').eq(index).css('display', 'inline-block');
 		$('.editCancel').eq(index).css('display', 'inline-block');
+		$('.editNotice').css('display', 'inline-block');
+		$('.inputNotice').css('display', 'none');
 	});
 	
 	$('.editCancel').click(function (){
 		var index = backUpData1[0];
 		console.log(backUpData1[1]);
+		
+		$('.bottom-first-col').eq(index + 1).html(index + 1);
 		
 		$(this).css('display', 'none');
 		$('.editComplete').eq(index).css('display', 'none');
@@ -384,6 +405,8 @@ if ('${sessionScope.user_type}' == '강사') {
 		$('.bottom-third-col').eq(accumulate_times + 1).html('<input type="date" class="lesson date" name="date"/>');
 		$('.save').eq(accumulate_times).css('display', 'inline-block');
 		$('.absent').eq(accumulate_times).css('display', 'inline-block');
+		$('.editNotice').css('display', 'none');
+		$('.inputNotice').css('display', 'inline-block');
 		
 		for (var i = 0; i < accumulate_times; i++) {
 			$('.edit').eq(i).css('display', 'inline-block');
@@ -391,8 +414,16 @@ if ('${sessionScope.user_type}' == '강사') {
 	});
 	
 }
+
+if ('${check}' != '') {
+	$('.reviewWrite').css('display', 'inline-block');
+	$('.stop').css('display', 'none');
+	$('.inputNotice').css('display', 'none');
+}
+
+
 $('.editComplete').click(function (){
-	$('form').attr('action', 'lessonLogEdit.do');
+	
 	var $contentBox = $('.contentBox');
 	var $date = $('.date');
 	
@@ -405,6 +436,7 @@ $('.editComplete').click(function (){
 			alert('날짜를 입력해주세요.');
 			$date.focus();
 		} else {
+			$('form').attr('action', 'lessonLogEdit.do');
 			$('form').submit();
 		}
 	}
@@ -443,15 +475,31 @@ $('.absent').click(function (){
 $('.stop').click(function (){
 	var result = confirm("강의 중단하시겠습니까?");
 	if (result) {
-		location.href = 'lessonStop.do';
+		$('form').attr('action', 'lessonStop.do');
+		$('form').submit();
 	}
 });
 
 $('.reviewWrite').click(function (){
-	location.href = 'lessonStop.do';
+	var class_idx = '${lessonInfo.class_idx}';
+	var ratee_id = '';
+	if ('${sessionScope.user_type}' == '수강생') {
+		ratee_id = '${teacherProfile.user_id}';
+	}else if ('${sessionScope.user_type}' == '강사') {
+		ratee_id = '${studentProfile.user_id}';
+	}
+	location.href = 'lessonReviewWrite.go?class_idx=' + class_idx + '&user_id=' + ratee_id;
+	
 });
 
-console.log('${lessonInfo.apply_idx}')
+if ('${check}' != '') {
+	$('.save').css('display', 'none');
+	$('.absent').css('display', 'none');
+	$('.edit').css('display', 'none');
+	$('.contentBox').css('display', 'none');
+	$('.date').css('display', 'none');
+}
+
 
 </script>
 </html>

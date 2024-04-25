@@ -36,6 +36,14 @@ public interface MyPageDAO {
 	List<MyPageDTO> pointList(int pagePerCnt, int start, String loginId);
 
 
+	List<MyPageDTO> receiveList(int pagePerCnt, int start, String loginId);
+
+
+	List<MyPageDTO> sendList(int pagePerCnt, int start, String loginId);
+
+
+	List<MyPageDTO> courseList(int pagePerCnt, int start, String loginId);
+
 	List<LessonDTO> favoriteListCall(int pagePerCnt, int start, String loginId);
 
 
@@ -43,6 +51,7 @@ public interface MyPageDAO {
 
 
 	int teacherListDel(String teacher_id, String loginId);
+
 
 
 

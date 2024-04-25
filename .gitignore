@@ -3,3 +3,4 @@
 .settings/
 target/
 src/test/resources/log4j.xml
+.springBeans

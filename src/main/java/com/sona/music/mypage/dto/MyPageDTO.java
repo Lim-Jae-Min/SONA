@@ -37,6 +37,20 @@ public class MyPageDTO {
 	private Date point_date;
 	private long balance;
 	private String note;
+	private Date review_reg_date;
+	private String review_title;
+	private String rater_id;
+	private long score;
+	private String ratee_id;
+	private String teacher_name;
+	private int class_price;
+	private String apply_state;
+	private String ch_result;
+	private int ch_idx;
+	private String student_id;
+	private String lesson_progress;
+	private String end_check;
+	private Date apply_date;
 	
 	private int accumulate_lesson;
 	
@@ -242,6 +256,90 @@ public class MyPageDTO {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public Date getReview_reg_date() {
+		return review_reg_date;
+	}
+	public void setReview_reg_date(Date review_reg_date) {
+		this.review_reg_date = review_reg_date;
+	}
+	public String getReview_title() {
+		return review_title;
+	}
+	public void setReview_title(String review_title) {
+		this.review_title = review_title;
+	}
+	public String getRater_id() {
+		return rater_id;
+	}
+	public void setRater_id(String rater_id) {
+		this.rater_id = rater_id;
+	}
+	public long getScore() {
+		return score;
+	}
+	public void setScore(long score) {
+		this.score = score;
+	}
+	public String getRatee_id() {
+		return ratee_id;
+	}
+	public void setRatee_id(String ratee_id) {
+		this.ratee_id = ratee_id;
+	}
+	public String getTeacher_name() {
+		return teacher_name;
+	}
+	public void setTeacher_name(String teacher_name) {
+		this.teacher_name = teacher_name;
+	}
+	public int getClass_price() {
+		return class_price;
+	}
+	public void setClass_price(int class_price) {
+		this.class_price = class_price;
+	}
+	public String getApply_state() {
+		return apply_state;
+	}
+	public void setApply_state(String apply_state) {
+		this.apply_state = apply_state;
+	}
+	public String getCh_result() {
+		return ch_result;
+	}
+	public void setCh_result(String ch_result) {
+		this.ch_result = ch_result;
+	}
+	public int getCh_idx() {
+		return ch_idx;
+	}
+	public void setCh_idx(int ch_idx) {
+		this.ch_idx = ch_idx;
+	}
+	public String getStudent_id() {
+		return student_id;
+	}
+	public void setStudent_id(String student_id) {
+		this.student_id = student_id;
+	}
+	public String getLesson_progress() {
+		return lesson_progress;
+	}
+	public void setLesson_progress(String lesson_progress) {
+		this.lesson_progress = lesson_progress;
+	}
+	public String getEnd_check() {
+		return end_check;
+	}
+	public void setEnd_check(String end_check) {
+		this.end_check = end_check;
+	}
+	public Date getApply_date() {
+		return apply_date;
+	}
+	public void setApply_date(Date apply_date) {
+		this.apply_date = apply_date;
 	}
 	public int getAccumulate_lesson() {
 		return accumulate_lesson;

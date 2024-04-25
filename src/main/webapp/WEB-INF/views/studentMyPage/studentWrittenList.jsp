@@ -10,6 +10,53 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+		#sidemenu {
+		    background-color: #F0FAFF;
+		    color: black;
+		    padding: 10px;
+		    text-align: center;
+		    width: 220px;
+		    height: 964px;
+		}
+
+		img {
+		    min-width: 50px;
+		    min-height: 50px;
+		    max-width: 70px;
+		    max-height: 70px;
+		}
+
+		#logo {
+		    width: 70px;
+		    height: 70px;
+		    cursor: pointer;
+		}
+
+		#usermain {
+		    background-color: #BEE6FF;
+		    color: #fff;
+		    padding: 10px;
+		    text-align: center;
+		    height: 96px;
+		}
+		.h3, h3 {
+		    font-size: 20px;
+		    margin-bottom: 20px;
+		    font-weight: bold;
+		}
+		hr {
+		    display: block;
+		    margin-top: 20px;
+		    margin-block-start: 0.5em;
+		    margin-block-end: 0.5em;
+		    margin-inline-start: auto;
+		    margin-inline-end: auto;
+		    unicode-bidi: isolate;
+		    overflow: hidden;
+		    border-style: inset;
+		    border-width: 1px;
+		    margin-bottom: 10px;
+		}
 		.main {
 		    font-size: 20px; 
 		    #contents{
@@ -18,11 +65,10 @@
 		.main {
 		    font-size: 20px; 
 		}
-		img {
-			min-width: 38px; /* 이미지의 최대 너비를 100px로 지정 */
-		    min-height: 38px; /* 이미지의 최대 높이를 100px로 지정 */
-		    max-width: 38px; /* 이미지의 최대 너비를 100px로 지정 */
-		    max-height: 38px; /* 이미지의 최대 높이를 100px로 지정 */
+		a {
+		    font-size: 16px;
+		    color: black;
+		    text-decoration: none;
 		}
 
 </style>
@@ -52,7 +98,7 @@
             <c:if test="${sessionScope.loginId ne null}">
                 <tr>
                     <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img st src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
                     </c:if>
                     <c:if test="${sessionScope.alarm_count == 0}">
                         <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
@@ -70,33 +116,21 @@
     </header>
     <div id="wrapper">
             <div id="sidemenu">
-                <h3>마이페이지</h3>
+                <h3>내가 작성한 리뷰</h3>
                 <hr/>
-                <a href="studentPage.do">마이페이지</a>
-                <a href="editStudentPage.go">개인 정보 수정</a>
-                <a href="myTeacher.go">즐겨찾기 강사</a>
-                <a href="#">숨김 강사</a>
-                <a href="myQnA.go">내가 작성한 Q&A</a>
-                <a href="myPoint.go">포인트 내역</a>
-                <a href="#">내가 받은 리뷰</a>
-                <a href="#">내가 작성한 리뷰</a>
-                <a href="#">수강 이력</a>
+                <a href="studentPage.go">마이페이지</a>
+                <a href="studentPageEdit.go">개인 정보 수정</a>
+                <a href="favoriteList.go">즐겨찾기 강사</a>
+                <a href="blockList.go">숨김 강사</a>
+                <a href="studentQnAList.go">내가 작성한 Q&A</a>
+                <a href="studentPointList.go">포인트 내역</a>
+                <a href="studentReceivedList.go">내가 받은 리뷰</a>
+                <a href="studentWrittenList.go">내가 작성한 리뷰</a>
+                <a href="studentAttendedList.go">수강 이력</a>
             </div>
- 			<div id="content">
-				   <div id="top">
-					    <br/>
-					    <br/><br/>
-					    <span id="searchbox">
-					        <label for="condition" style="margin-left: 60px;">강의명 :</label>
-						        <select name="condition" id="condition" style=" margin-left : 50px; width: 700px;"> <!-- 옵션의 너비를 200px로 지정 -->
-					            <option style = "margin-left : 50px; width: 700px" value="class_name">전체</option>
-						            <c:forEach items="${classNames}" var="class_name">
-						                <option value="${class_name}">${class_name}</option>
-						            </c:forEach>
-					        </select>
-					        <br><br>
-					    </span>
-					</div>
+ 			<div id="content" style="width : 1100px;margin-left : 50px;margin-right : 50px;
+				    margin-top : 50px;margin-bottom : 50px;">
+				   
  			
                 <table style="width: 100%;">
                     <!-- 검색 부분은 그대로 유지 -->
@@ -104,10 +138,10 @@
                 <table style="border-collapse: collapse; width: 100%;">
                <thead style="background-color: #f2f2f2;">
 					    <tr>
-					        <th style=" padding: 8px; width: 20%">익명여부</th>
-					        <th style=" padding: 8px; width: 50%">제목</th>
-					        <th style=" padding: 8px;">답변 여부</th>
-					        <th style=" padding: 8px;">날짜</th>
+					        <th style=" padding: 8px; text-align: center;">날짜</th>
+					        <th style=" padding: 8px; text-align: center;">제목</th>
+					        <th style=" padding: 8px; text-align: center;">대상자</th>
+					        <th style=" padding: 8px; text-align: center;">만족도</th>					        
 					    </tr>
 					</thead>
                     <tbody id="list">
@@ -121,7 +155,7 @@
                 </div>
         </div>
     </div>
- <div id="footer">
+   <div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>
         <li>전화 : 02-123-4567</li>
@@ -137,24 +171,52 @@
                 <td class="manner">♥ ${sessionScope.manner_variance}</td>
             </tr>
         </table>
-      
-        <br>
+        <br/>
+        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
+        <br/>
+        <div>
+           <c:if test="${sessionScope.user_type eq '수강생'}">
+              <a href="studentWrittenList.go">내가 쓴 리뷰</a>           
+           </c:if>
+           <c:if test="${sessionScope.user_type eq '강사'}">
+              <a href="teacherWrittenList.go">내가 쓴 리뷰</a>           
+           </c:if>
+        </div>
+        <br/>
         <div><a href="myPage.go">마이페이지</a></div>
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
     </div>
 </body>
 <script>
+$('#userName').click(function slide() {
+	var display = $('#slide').css('display');
+    if (display == 'none') {
+        $('#slide').css('display', 'block');
+    }
+    if (display == 'block') {
+        $('#slide').css('display', 'none');
+    }
+});
+
+$('.alarm').click(function alarmList() {
+	   location.href = 'alarmList.go';
+	});
+	
+$('#logo').click(function main(){
+	   location.href = '/main';
+	});
+
 var showPage =1;
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
-	qnaListCall(showPage);
+	sendListCall(showPage);
 });
 
-function qnaListCall(page, loginId) {
+function sendListCall(page, loginId) {
     $.ajax({
         type: 'get',
-        url: './qnaList.ajax',
+        url: './sendList.ajax',
         data: {
             'page': page,
             'cnt': 10,
@@ -170,12 +232,12 @@ function qnaListCall(page, loginId) {
             $('#pagination').twbsPagination({
                 startPage: startPage, // 시작페이지
                 totalPages: data.totalPages, // 총 페이지 갯수
-                visiblePages: 5, // 보여줄 페이지 수 [1][2][3][4][5]
+                visiblePages: 15, // 보여줄 페이지 수 [1][2][3][4][5]
                 onPageClick: function(evt, pg) { // 페이지 클릭시 실행 함수
                     console.log(evt); // 이벤트 객체
                     console.log(pg); // 클릭한 페이지 번호
                     showPage = pg;
-                    qnaListCall(pg, loginId); // 페이지 번호와 로그인된 사용자의 ID 전달
+                    sendListCall(pg, loginId); // 페이지 번호와 로그인된 사용자의 ID 전달
                 }
             });
         },
@@ -188,21 +250,35 @@ function qnaListCall(page, loginId) {
     });
 }
 
-	function drawList(list) {
-	    var content = '';
-	    for (var i = 0; i < list.length; i++) {
-	        var qna = list[i];
-	        var lockIcon = qna.anonymous_status ? "resources/img/locked.png" : "resources/img/unlocked.png"; // 이미지 경로 설정
-	
-	        content += '<tr style="border-bottom: 1px solid #ddd;">'; // 각 항목에 경계선 추가
-	        content += '<td><img src="' + lockIcon + '" class="locked-img"></td>'; // locked 이미지에 클래스 추가
-	        content += '<td>' + qna.q_title + '</td>'; // 질문 제목
-	        content += '<td>' + qna.answer_status + '</td>'; // 답변 여부
-	        content += '<td>' + qna.q_reg_date + '</td>'; // 날짜
-	        content += '</tr>';
-	    }
-	    $('#list').html(content); // 리스트를 테이블에 추가
-	}
+function drawList(list) {
+    var content = '';
+    for (var i = 0; i < list.length; i++) {
+        var send = list[i];
+        var satisfaction = parseFloat(send.score).toFixed(1); // 소수점 한 자리까지 표현
+        satisfaction = '★' + satisfaction;
+        
+        var firstLetter = send.ratee_id.charAt(0); // 첫 번째 글자
+        var otherLetters = send.ratee_id.substring(1); // 나머지 글자
+        
+        var maskedName = '';
+        if (send.ratee_id) {
+            var firstLetter = send.ratee_id.charAt(0); // 첫 번째 글자
+            var otherLetters = send.ratee_id.substring(1); // 나머지 글자
+            maskedName = firstLetter + "O".repeat(otherLetters.length);
+        } else {
+            maskedName = ''; // 빈 문자열 또는 다른 기본값으로 처리
+        }
+
+        
+        content += '<tr style="border-bottom: 1px solid #ddd; height: 50px;">'; // 각 항목에 경계선 추가
+        content += '<td style="text-align: center;">' + new Date(send.review_reg_date).toLocaleDateString() + '</td>'; // 날짜
+        content += '<td style="text-align: center;">' + send.review_title + '</td>'; // 제목
+        content += '<td style="text-align: center;">' + maskedName + '</td>'; // 대상자
+        content += '<td style="text-align: center; color: yellow;">' + satisfaction + '</td>'; // 만족도
+        content += '</tr>';
+    }
+    $('#list').html(content); // 리스트를 테이블에 추가
+}
 
 
 </script>

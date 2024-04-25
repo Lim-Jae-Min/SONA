@@ -69,7 +69,7 @@ public class MyPageService {
 	}
 
 
-	 public List<String> getClassNames(String loginId) {
+	public List<String> getClassNames(String loginId) {
 	        return myPageDAO.getClassNames(loginId);
 	}
 
@@ -81,14 +81,65 @@ public class MyPageService {
 		int start = (currPage-1)*pagePerCnt;
 		logger.info(loginId);
 		Map<String, Object> result = new HashMap<String, Object>();
+		
 		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + pagePerCnt);
 		List<MyPageDTO> list = myPageDAO.pointList(pagePerCnt,start,loginId);
 		logger.info("list size: "+list.size());
+		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.allCount(pagePerCnt));
+		result.put("totalPages", myPageDAO.allCount(pagePerCnt));				
 		
+		return result;
+	}
+
+	public Map<String, Object> receiveList(int currPage, int pagePerCnt, String loginId) {
 		
+		int start = (currPage-1)*pagePerCnt;
+		logger.info(loginId);
+		Map<String, Object> result = new HashMap<String, Object>();
+		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + pagePerCnt);
+		List<MyPageDTO> list = myPageDAO.receiveList(pagePerCnt,start,loginId);
+		
+		logger.info("list size: "+list.size());
+		
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", myPageDAO.allCount(pagePerCnt));				
+		
+		return result;
+	}
+
+	public Map<String, Object> sendList(int currPage, int pagePerCnt, String loginId) {
+		
+		int start = (currPage-1)*pagePerCnt;
+		logger.info(loginId);
+		Map<String, Object> result = new HashMap<String, Object>();
+		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + pagePerCnt);
+		List<MyPageDTO> list = myPageDAO.sendList(pagePerCnt,start,loginId);
+		
+		logger.info("list size: "+list.size());
+		
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", myPageDAO.allCount(pagePerCnt));				
+		
+		return result;
+	}
+
+	public Map<String, Object> courseList(int currPage, int pagePerCnt, String loginId) {
+		
+		int start = (currPage-1)*pagePerCnt;
+		logger.info(loginId);
+		Map<String, Object> result = new HashMap<String, Object>();
+		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + pagePerCnt);
+		List<MyPageDTO> list = myPageDAO.courseList(pagePerCnt,start,loginId);
+		
+		logger.info("list size: "+list.size());
+		
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", myPageDAO.allCount(pagePerCnt));				
 		
 		return result;
 	}

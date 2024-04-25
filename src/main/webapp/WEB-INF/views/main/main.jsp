@@ -133,7 +133,7 @@
     
     <a href="apply.go">강의신청 test</a>
     <br/>
-    <a href="userdetail.go?user_id=user2">회원 상세보기</a>
+    <a href="userDetail.go?user_id=user2">회원 상세보기</a>
 
     <a href="noticeManagement.go">공지사강관리</a>
 

@@ -110,11 +110,11 @@ public class MemberService {
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
 		
 		for (MemberDTO r : list) {
-			logger.info(r.getClass_name()+"");
-			logger.info(r.getClass_reg_date() + "");
-			logger.info(r.getCount()+"");
-			logger.info(r.getScore()+"");
-			logger.info(r.getIndex_order()+"");
+//			logger.info(r.getClass_name()+"");
+//			logger.info(r.getClass_reg_date() + "");
+//			logger.info(r.getCount()+"");
+//			logger.info(r.getScore()+"");
+//			logger.info(r.getIndex_order()+"");
 		}
 		
 		return result;
@@ -131,11 +131,14 @@ public class MemberService {
 		result.put("currPage",currPage);
 		result.put("totalPages", memberDAO.allCount(pagePerCnt));
 		for (ReviewDTO r : list) {
-//			logger.info(r.getREVIEW_TITLE()+"");
-//			logger.info(r.getRATER_ID()+"");
-//			logger.info(r.getSCORE()+"");
-//			logger.info(r.getREVIEW_REG_DATE()+"");
-//			logger.info(r.getIndex_order()+"");
+
+
+			logger.info(r.getReview_title()+"");
+			logger.info(r.getRater_id()+"");
+			logger.info(r.getScore()+"");
+			logger.info(r.getReview_reg_date()+"");
+			logger.info(r.getIndex_order()+"");
+
 		}
 		
 		return result;

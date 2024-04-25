@@ -125,7 +125,7 @@ public class MemberController {
 	}
 	
 	/*회원 상세보기*/
-	@RequestMapping(value="/userdetail.go")
+	@RequestMapping(value="/userDetail.go")
 	public String userdetail(Model model, HttpSession session, String user_id) {
 		logger.info("회원상세보기 페이지 접근");
 		MemberDTO detail = memberService.userdetail(user_id);

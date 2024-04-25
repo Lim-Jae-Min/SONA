@@ -37,6 +37,10 @@ public class MyPageDTO {
 	private Date point_date;
 	private long balance;
 	private String note;
+	private Date review_reg_date;
+	private String review_title;
+	private String rater_id;
+	private long score;
 	
 	
 	
@@ -240,6 +244,30 @@ public class MyPageDTO {
 	}
 	public void setNote(String note) {
 		this.note = note;
+	}
+	public Date getReview_reg_date() {
+		return review_reg_date;
+	}
+	public void setReview_reg_date(Date review_reg_date) {
+		this.review_reg_date = review_reg_date;
+	}
+	public String getReview_title() {
+		return review_title;
+	}
+	public void setReview_title(String review_title) {
+		this.review_title = review_title;
+	}
+	public String getRater_id() {
+		return rater_id;
+	}
+	public void setRater_id(String rater_id) {
+		this.rater_id = rater_id;
+	}
+	public long getScore() {
+		return score;
+	}
+	public void setScore(long score) {
+		this.score = score;
 	}
 
 

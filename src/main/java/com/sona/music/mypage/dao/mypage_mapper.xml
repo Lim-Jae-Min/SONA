@@ -102,6 +102,16 @@
 		    WHERE user_id = #{loginId}
 		</select>
 		
+	   <select id="receiveList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
+	   select r.review_reg_date, r.review_title, r.rater_id, r.score from REVIEW r 
+			join USERS u on u.user_id = r.ratee_id 
+				where u.user_id = #{param3}
+					ORDER BY 
+					    r.review_idx desc
+							LIMIT #{param2},#{param1}	   
+	   </select>
+		
+		
 		
 	    
 	    

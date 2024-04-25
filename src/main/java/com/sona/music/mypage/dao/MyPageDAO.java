@@ -36,6 +36,9 @@ public interface MyPageDAO {
 	List<MyPageDTO> pointList(int pagePerCnt, int start, String loginId);
 
 
+	List<MyPageDTO> receiveList(int pagePerCnt, int start, String loginId);
+
+
 
 
 }

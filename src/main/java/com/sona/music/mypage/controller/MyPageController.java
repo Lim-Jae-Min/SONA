@@ -202,10 +202,40 @@ public class MyPageController {
 	     return map;
 	 }
 	 
-
-
 	 
-	 
+		@RequestMapping(value = "/receiveReview.go")
+		public String receiveReview(HttpSession session, Model model) {
+		 logger.info("회원 수정 페이지 이동");
+		    String page = "member/login";
+		    String loginId = (String) session.getAttribute("loginId");
+		    if(loginId != null) {
+		        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
+		        // 모델에 사용자 정보 추가
+		        logger.info("내가 받은 리뷰 페이지 이동 성공 !");
+		        page = "studentMyPage/receiveReview";
+		    }
+		    return page;
+		}
+		
+		@RequestMapping(value="/receiveList.ajax", method = RequestMethod.GET)
+		 @ResponseBody
+		 public Map<String , Object> receiveListCall(String page, String cnt, HttpSession session) {
+		     logger.info("listCall 요청");
+		     logger.info("페이지당 보여줄 갯수:" + cnt);
+		     logger.info("요청 페이지: " + page);
+			    String loginId = (String) session.getAttribute("loginId");
+
+		     int currPage = Integer.parseInt(page);
+		     int pagePerCnt = 10;
+		     logger.info(loginId);
+		     Map<String, Object> map = myPageService.receiveList(currPage, pagePerCnt, loginId);
+		     
+		     
+		     return map;	
+		}
+		
+		
+		
 }
 
 

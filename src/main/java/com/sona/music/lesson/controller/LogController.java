@@ -52,10 +52,17 @@ public class LogController {
 	}
 	
 	@RequestMapping(value="/lessonLogEdit.do", method = RequestMethod.POST)
-	public String lessonLogEdit() {
+	public String lessonLogEdit(@RequestParam Map<String, String> map, HttpSession session) {
 		String page = "member/login";
-		page = "lesson/lessonLog";
 		logger.info("강의일지 수정 controller");
+		
+		int apply_idx = Integer.parseInt(map.get("apply_idx"));
+		
+		if (session.getAttribute("loginId") != null) {
+			page = "redirect:/lessonLog.go?apply_idx=" + apply_idx;
+			int row = logService.lessonLogEdit(map);
+			logger.info("수정된 row 수 = " + row);
+		}
 		
 		return page;
 	}
@@ -77,10 +84,17 @@ public class LogController {
 	}
 	
 	@RequestMapping(value="/lessonStop.do")
-	public String lessonStop() {
+	public String lessonStop(@RequestParam Map<String, String> map, HttpSession session) {
 		String page = "member/login";
-		page = "lesson/lessonLog";
 		logger.info("강의 중단 처리 controller");
+		
+		int apply_idx = Integer.parseInt(map.get("apply_idx"));
+		
+		if (session.getAttribute("loginId") != null) {
+			page = "redirect:/lessonLog.go?apply_idx=" + apply_idx;
+			int row = logService.lessonStop(map);
+			logger.info("입력된 row 수 = " + row);
+		}
 		
 		return page;
 	}

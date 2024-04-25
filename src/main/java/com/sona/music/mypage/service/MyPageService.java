@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sona.music.board.dto.QnADTO;
+import com.sona.music.lesson.dto.LessonDTO;
 import com.sona.music.mypage.dao.MyPageDAO;
 import com.sona.music.mypage.dto.MyPageDTO;
 
@@ -22,6 +23,8 @@ public class MyPageService {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired MyPageDAO myPageDAO;
+	
+	public String file_root = "C:/upload/";
 
 	public MyPageDTO getUserInfo(String loginId) {
 		MyPageDTO list = myPageDAO.getUserInfo(loginId);
@@ -88,6 +91,28 @@ public class MyPageService {
 		
 		
 		return result;
+	}
+
+	public Map<String, Object> favoriteListCall(int currPage, int pagePerCnt, String loginId) {
+		int start = (currPage-1) * pagePerCnt;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<LessonDTO> list = myPageDAO.favoriteListCall(pagePerCnt, start, loginId);
+		logger.info("list : {}", list);
+		logger.info("list size : "+list.size());
+		result.put("list", list);		
+		result.put("currPage", currPage);
+		result.put("totalPages", myPageDAO.favoriteListCount(pagePerCnt, loginId));
+		
+		return result;
+	}
+
+	public int teacherListDel(List<String> delList, String loginId) {
+		int cnt = 0;		
+		for (String teacher_id : delList) {
+			cnt += myPageDAO.teacherListDel(teacher_id, loginId);
+		}				
+		return cnt;
 	}
 
 

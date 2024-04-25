@@ -21,6 +21,7 @@
 }
 
 .container {
+
 	display: flex;
 	justify-content: center; /* 가로 방향 중앙 정렬 */
 	align-items: center; /* 세로 방향 중앙 정렬 */
@@ -28,7 +29,7 @@
 	margin-top: 20px;
 }
 
-.box {
+.box1 {
 	width: 400px;
 	height: 151px;
 	background-color: white;
@@ -39,12 +40,65 @@
 	line-height: 1.5em;
 	border-radius: 15px;
 	margin: 20px;
+	margin-top: 180px;
 	border: 2px solid #BEE6FF;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 	position: relative;
 }
 
-.box::before {
+.box1::before {
+	content: attr(data-number);
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.box2 {
+	width: 400px;
+	height: 151px;
+	background-color: white;
+	color: #BEE6FF;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1.5em;
+	border-radius: 15px;
+	margin: 20px;
+	margin-top: -180px;
+	border: 2px solid #BEE6FF;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+.box2::before {
+	content: attr(data-number);
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.box3 {
+	width: 400px;
+	height: 151px;
+	background-color: white;
+	color: #BEE6FF;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1.5em;
+	border-radius: 15px;
+	margin: 20px;
+	margin-top: 180px;
+	border: 2px solid #BEE6FF;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	position: relative;
+}
+
+.box3::before {
 	content: attr(data-number);
 	position: absolute;
 	top: 5px;
@@ -84,50 +138,94 @@
 	margin-top: 20px;
 	text-align: center;
 }
+
 .video-wrapper {
-    display: inline-block;
-    position: relative;
-    border-radius: 15px;
-    overflow: hidden;
-    margin-right: 5px; /* 각 동영상 간 간격 조정 */
-    text-align: center; 
-    margin-top: 20px;
-    margin-left: 108px; /* 동영상 컨테이너 간 간격 조정 */
+	display: inline-block;
+	position: relative;
+	border-radius: 15px;
+	overflow: hidden;
+	margin-right: 5px; /* 각 동영상 간 간격 조정 */
+	text-align: center;
+	margin-top: 20px;
+	margin-left: 108px; /* 동영상 컨테이너 간 간격 조정 */
 }
 
 .video-container {
 	width: 300px;
 	height: 151px;
-    background-color: #BEE6FF;
-     /* 오른쪽 상단 모서리의 테두리 */
-    /* 오른쪽 상단 모서리 둥근 정도 조정 */
-    border-bottom-left-radius: 15px; /* 테두리 둥근 정도 조정 */
-    padding: 20px;
-    text-align: center;
-   
+	background-color: #BEE6FF;
+
+	border-bottom-left-radius: 15px; /* 테두리 둥근 정도 조정 */
+	padding: 20px;
+	text-align: center;
 }
 
 .corner-label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #6FA4FF;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-bottom-right-radius: 10px;
-}
-.container .box:nth-child(odd) {
-    margin-top: -180px; /* 홀수 번째 컨테이너는 위로 이동 */
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #6FA4FF;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 5px 10px;
+	border-bottom-right-radius: 10px;
 }
 
-.container .box:nth-child(even) {
-    margin-top: 180px; /* 짝수 번째 컨테이너는 아래로 이동 */
+.spacer1 img {
+    top: 20px; /* container의 상단에서부터의 위치 */
+    left: 20px; /* container의 왼쪽에서부터의 위치 */
+}
+
+.spacer2 img {
+    top: 20px; /* container의 상단에서부터의 위치 */
+    left: calc(50% - 201.5px); /* container의 가로 중앙에서부터의 위치 */
+}
+
+.spacer3 img {
+    top: 20px; /* container의 상단에서부터의 위치 */
+    right: 20px; /* container의 오른쪽에서부터의 위치 */
+}
+.spacer1 img {
+	width: 403px; /* 이미지의 너비를 조절합니다. */
+	height: 151px; /* 높이는 자동으로 조절됩니다. */
+	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
+	margin-top: -355px;
+	margin-left: 308px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+.spacer2 img {
+	width: 403px; /* 이미지의 너비를 조절합니다. */
+	height: 151px; /* 높이는 자동으로 조절됩니다. */
+	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
+	margin-top: -172px;
+	margin-left: 750px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+.spacer3 img {
+	width: 403px; /* 이미지의 너비를 조절합니다. */
+	height: 151px; /* 높이는 자동으로 조절됩니다. */
+	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
+	margin-top: -355px;
+	margin-left: 1200px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.box1:hover,
+.box2:hover,
+.box3:hover,
+.spacer1:hover img,
+.spacer2:hover img,
+.spacer3:hover img {
+    transform: scale(1.1); /* 1.1배 크기로 확대됨 */
+    transition: transform 0.8s ease; /* 부드러운 전환 효과를 위한 transition 추가 */
 }
 </style>
 </head>
-<body>
 <body>
 	<header id="usermain">
 		<table id="mainmenu">
@@ -160,45 +258,57 @@
 					<th><div id="userName">${sessionScope.user_name}</div></th>
 				</tr>
 			</c:if>
+			<c:if test="${sessionScope.loginId eq null}">
+				<tr>
+					<th><a href="login.go">로그인</a></th>
+				</tr>
+			</c:if>
+		</table>
 	</header>
 	<div class="main-title">
 		<h1>누구나 배울 수 있는 악기!</h1>
 	</div>
 	<div></div>
-	<br/><br/>
+	<br />
+	<br />
 	<div class="container">
-		<div class="box" data-number="01">
+		<div class="box1" data-number="01">
 			<p>
-				음악에 특화된 플랫폼<br/> <br/> <span class="content">음악에 특화된 서비스 제공으로</br> 전문적인 강의를
-					수강 할 수 있어요.
+				음악에 특화된 플랫폼<br /> <br /> <span class="content">음악에 특화된 서비스
+					제공으로<br/> 전문적인 강의를 수강 할 수 있어요.
 				</span>
 			</p>
 		</div>
-		<div class="spacer">
-    		<img src="resources/img/music.png" alt="music">
-		</div>
-		<div class="box" data-number="02">
+
+		<div class="box2" data-number="02">
 			<p>
-				나만을 위한 맞춤 강의<br/> <br/> <span class="content">수강신청서 작성으로 회원에게 </br> 맞춤 서비스를
-					제공해 드려요.
+				나만을 위한 맞춤 강의<br /> <br /> <span class="content">수강신청서 작성으로
+					회원에게 <br/> 맞춤 서비스를 제공해 드려요.
 				</span>
 			</p>
 		</div>
-		<div class="spacer">
-    		<img src="resources/img/service.png" alt="service">
-		</div>
-		<div class="box" data-number="03">
+
+		<div class="box3" data-number="03">
 			<p>
-				상호 평가<br/> <br/> <span class="content">수강생과 강사 사이의 상호간 평가를 반영한 매너지수로 </br>
-					강의 및 학생 선택에 도움을 드려요.
+				상호 평가<br /> <br /> <span class="content">수강생과 강사 사이의 상호간 평가를
+					반영한 매너지수로 <br/> 강의 및 학생 선택에 도움을 드려요.
 				</span>
 			</p>
 		</div>
-		<div class="spacer">
-    		<img src="resources/img/feedback.png" alt="feedback">
-		</div>
+
 	</div>
-	<br/><br/><br/>
+	<div class="spacer1">
+		<img src="resources/img/music.jpg" alt="music">
+	</div>
+	<div class="spacer2">
+		<img src="resources/img/service.jpg" alt="service">
+	</div>
+	<div class="spacer3">
+		<img src="resources/img/feedback.jpg" alt="feedback">
+	</div>
+	<br />
+	<br />
+	<br />
 	<div class="video-wrapper">
 		<div class="video-container">
 			<!-- 동영상 콘텐츠 -->
@@ -223,12 +333,18 @@
 		</div>
 		<div class="corner-label">4</div>
 	</div>
-	<br/><br/><br/>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
 	<div class="button-container videoList">
 		<button class="button" onclick="redirectToReplyPage()">더보기</button>
 	</div>
-	
-	<br/><br/><br/>
+
+	<br />
+	<br />
+	<br />
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>
@@ -262,33 +378,60 @@
 		<div>
 			<a href="myPage.go">마이페이지</a>
 		</div>
-		<br /> <br /> <br />
+		<br />
+		<br />
+		<br />
 		<div>
 			<a href="logout.do">로그아웃</a>
 		</div>
 	</div>
-        	<c:if test="${sessionScope.user_type eq '강사'}">
-				<a href="teacherPage.go">마이페이지</a>
-        	</c:if>
-        </div>
-        <br/><br/><br/>
-        <div><a href="logout.do">로그아웃</a></div>
-    </div>
-    
-    <a href="apply.go">강의신청 test</a>
-    <br/>
-    <a href="userDetail.go?user_id=user2">회원 상세보기</a>
-
-    <a href="noticeManagement.go">공지사강관리</a>
-
-    <br/>
-    <a href="lessonLog.go">강의일지 test</a>
 </body>
 
 <script>
+var userId = "${sessionScope.loginId}";
+
+
+$(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
+	listCall(userId);
+});
+
+function listCall(userId){
+    $.ajax({
+       type:'get',
+       url:'./mainList.ajax',
+       data:{
+          'userId':${sessionScope.loginId}
+       },
+       dataType:'json',
+       success:function(data){
+          drawList(data.list);
+          console.log(data);
+          
+       },
+       error:function(error){
+          console.log(error)
+       }
+    });
+}
+
+function drawList(list) {
+    var content = '';
+    for (var i = 0; i < list.length; i++) {
+        var item = list[i];
+        content += '<div class="video-wrapper">';
+        content += '<div class="video-container">';
+        // 여기에 동영상 콘텐츠를 생성하는 코드 추가
+        content += '<iframe width="560" height="315" src="' + item.video_url + '" frameborder="0" allowfullscreen></iframe>';
+        content += '</div>';
+        content += '<div class="corner-label">' + (i + 1) + '</div>';
+        content += '</div>';
+    }
+    $('#videoWrapper').html(content);
+}
+
 
 function redirectToReplyPage() {
-    window.location.href = './videoList.go';
+    window.location.href = './loading.do';
 }
 
 $('#userName').click(function slide() {

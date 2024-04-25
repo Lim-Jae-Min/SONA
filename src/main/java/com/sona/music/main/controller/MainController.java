@@ -1,5 +1,8 @@
 package com.sona.music.main.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -8,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sona.music.main.dto.MainDTO;
 import com.sona.music.main.service.MainService;
 
 @Controller
@@ -92,10 +98,38 @@ public class MainController {
 		return page;
 	}
 	
+	@RequestMapping(value="/loading.do")
+	public String loading(Model model, HttpSession session) {
+		
+		String page = "member/login";
+		
+		if (session.getAttribute("loginId") != null) {
+			page = "main/loading";
+		}
+		
+		
+		return page;
+	}
+	
 	@RequestMapping(value="/videoList.go")
-	public String videoList(Model model) {
+	public String videoList(Model model, HttpSession session) {
 		model.addAttribute("msg", "강사 영상 리스트 이동");
-		return "main/videoList";
+		
+		String page = "member/login";
+		
+		if (session.getAttribute("loginId") != null) {
+			page = "main/videoList";
+		}
+		return page;
+	}
+	
+	
+	@RequestMapping(value="/mainList.ajax")
+	@ResponseBody
+	public List<MainDTO> listCall(@RequestParam(value="userId") String userId){
+	    logger.info("userId : "+ userId);
+	    List<MainDTO> list = mainService.list(userId);
+	    return list;
 	}
 	
 }

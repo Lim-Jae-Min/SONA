@@ -1,11 +1,16 @@
 package com.sona.music.main.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sona.music.main.dao.MainDAO;
+import com.sona.music.main.dto.MainDTO;
 
 @Service
 public class MainService {
@@ -24,6 +29,14 @@ public class MainService {
 		String inst = mainDAO.myInst(loginId);
 		
 		return inst;
+	}
+
+	public List<MainDTO> list(String userId) {
+		
+		List<MainDTO> list = mainDAO.list(userId);
+		
+		
+		return list;
 	}
 	
 	

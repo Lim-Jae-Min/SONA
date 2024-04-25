@@ -13,6 +13,7 @@ public class MainDTO {
 	String user_type;
 	boolean user_delete;
 	Date user_reg_date;
+	String video_url;
 	
 	
 	public String getUser_id() {
@@ -69,5 +70,13 @@ public class MainDTO {
 	public void setUser_reg_date(Date user_reg_date) {
 		this.user_reg_date = user_reg_date;
 	}
+	public String getVideo_url() {
+		return video_url;
+	}
+	public void setVideo_url(String video_url) {
+		this.video_url = video_url;
+	}
+	
+	
 	
 }

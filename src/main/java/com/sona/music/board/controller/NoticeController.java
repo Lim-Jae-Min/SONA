@@ -28,15 +28,8 @@ public class NoticeController {
 		logger.info("공지사항 검색에서 가져온 type : "+searchType);
 		Map<String, Object> map = null;
 		int currPage = Integer.parseInt(page);
-		if(searchType != null) {
 			
-			map = noticeService.showListSearch(currPage,searchType,serachText);
-			map.put("searchType", searchType);
-			map.put("serachText", serachText);
-		}else {
-			
-			map = noticeService.showList(currPage);
-		}
+			map = noticeService.showListSearch(currPage,searchType,serachText);	
 		
 		
 		return map;

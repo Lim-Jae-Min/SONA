@@ -15,7 +15,6 @@
 		position : relative;
 	    border-collapse: collapse;
 	    width: 100%; /* 테이블 셀 경계를 병합하여 구분선이 하나만 나타나도록 설정 */
-		max-width: 800px;
 	}
 	
 	#showList th, #showList td {
@@ -36,29 +35,39 @@
 	#divvv{
 		display: flex;
 		left: -400px;
-		width: 500px;
+		width: 100%;
 	}
 	.nidx{
-		width: 30px;
+		width: 8%;
 	}
 	.nid{
-		width: 100px;
+		width: 25%;
 	}
 	.nbhit{
-		width: 50px;
+		width: 16.6%;
 	}
 	.ndate{
-		width: 100px;
+		width: 20%;
 	}
 	.ntitle{
-		width: 100px;	
+		width: 20%;	
 	}
 	.nchb{
-		width: 100px;
+		width: 10%;
 	}
 	#container{
 		max-width: 600px;
 	}
+	#paaaa{
+		position: relative;
+		width: 80%;
+		margin-left: 2%;
+	}
+	
+	#wrapper1 {
+    display: flex;
+	}
+	
 </style>
 </head>
 <body>
@@ -99,7 +108,7 @@
     </header>
     
     <div id = "divvv">
-    <div id="wrapper">
+    <div id="wrapper1">
             <div id="adminside">
                 <h3>관리자 페이지</h3>
                 <hr/>
@@ -113,20 +122,17 @@
                 <a href="#">신고 관리</a>
                 <a href="#">회원 정지 이력</a>
             </div>
-            <div id="content">
-                ${msg}
-            </div>
         </div>
         
-     	<div>    	  
+     	<div id = "paaaa">    	  
 	     	<h3>공지사항 리스트 </h3> 
 	     	<!-- 검색기능  -->
 	     	<select id="searchType">
-			  <option value="title">제목</option>
-			  <option value="content">내용</option>
+			  <option value="notice_title">제목</option>
+			  <option value="notice_content">내용</option>
 			</select>
-	     	<input type="text" name = "searchText">
-	     	<button type="button" onclick="noticeSearch()">검색하기</button>
+	     	<input type="text" id ="searchText">
+	     	<button type="button" id="search">검색하기</button>
 	     	<!-- 검색기능 끝 -->
 		   <table id ="showlist">
 		   	<thead>
@@ -173,87 +179,33 @@
 		listCall(showPage);
 	});
 
-	$('#pagePerNum').on('change',function(){
-		//페이지당 보여줄 게시물의 숫자를 변경하면 전체 페이지 수의 변화가 생기므로
-		// 페이징 처리 객체를 파괴하고 다시 만들도록 해야 한다.
-		
-		$('#[pagination]').twbsPagination('destroy');
-		if(searchRemain){
-			noticeSearch(showPage);
-		}else{
-			listCall(showPage);
-			
-		}
+	$('#search').click(function (){
+		$('#pagination').twbsPagination('destroy');
+		listCall(showPage);
 	});
-	
-	function remainSearch(){
-		var searchType = $('select[id="searchType"]').val();
-		var serachText = $('input[name="searchText"]').val();
-	}
-	
-	function noticeSearch(showpage,serachText,searchType){
-		var searchType = $('select[id="searchType"]').val();
-		var serachText = $('input[name="searchText"]').val();
-		searchRemain = true;
-		console.log(searchType);
-		console.log(serachText);
-		
-		
-		$.ajax({
-		       type:'get',
-		       url:'noticeManagementlist.ajax',
-		       data:{
-		    	   'page':showPage,
-		    	   'searchType':searchType,
-		    	   'serachText':serachText
-		       },
-		       dataType:'json',
-		       success:function(data){
-		          drawList(data.list);
-		          
-		          
-		       // 플러그인 추가
-		       	$('#pagination').twbsPagination({
-		    		startPage:data.currPage, // 시작 페이지
-		    		totalPages:data.totalPages, // 총 페이지 갯수
-		    		visiblePages:5,  // 보여줄 페이지 수[1][2][3][4][5]
-		    		onPageClick:function(evt,pg){ // 페이지 클릭시 실행 함수
-		    			console.log(evt); // 이벤트 객체
-		    			console.log(pg); //클릭한 페이지 번호 의미
-		        		showPage = pg;
-		        		noticeSearch(pg,data.serachText,data.searchType);
-		    			
-		    		}
-		       	});
-		       
-		       },
-		       error:function(error){
-		          console.log(error)
-		       }
-		    });
-		
-		
-	}
-	
-	
-	
-	
+
 	
 	
 	
 	
 	function listCall(page){
+			var searchType = $('select[id="searchType"]').val();
+			var serachText = $('input[id="searchText"]').val();
+			console.log(searchType);
+			console.log(serachText);
 	    $.ajax({
 	       type:'get',
 	       url:'noticeManagementlist.ajax',
 	       data:{
-	    	   'page':page,
-	    	
+	    	    'page':page,
+	    		'searchType':searchType,
+	    		'serachText':serachText
 	       },
 	       dataType:'json',
 	       success:function(data){
 	          drawList(data.list);
 	          
+	          var startPage = 1;
 	          
 	       // 플러그인 추가
 	       	$('#pagination').twbsPagination({
@@ -283,7 +235,7 @@
 		    content += '<tr>';
 		    content += '<td class="nchb"><input type="checkbox" name="del" value="' + item.notice_idx +'"/></td>';
 		    content += '<td class="nidx">' + item.notice_idx + '</td>';
-		    content += '<td class="ntitle"><a href="게시물_페이지_주소?idx=' + item.notice_idx + '">' + item.notice_title + '</a></td>'
+		    content += '<td class="ntitle"><a href="noticeDetailAdmin.go?idx=' + item.notice_idx + '">' + item.notice_title + '</a></td>'
 		    content += '<td class="nid">' + item.admin_id + '</td>';
 		    
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
@@ -294,7 +246,7 @@
 		    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
 		    content += '<td class="ndate">' + dateStr + '</td>';
 		    
-		    content += '<td class="nbhit">' + item.notice_bhit +'</td>';
+		    content += '<td class="nbhit">' + item.notice_views +'</td>';
 
 		    content += '</tr>';
 
@@ -342,6 +294,29 @@
 			$chk.attr('checked',false);
 		}
 		
+	});
+	
+	
+	function redirectToReplyPage() {
+	    window.location.href = './videoList.go';
+	}
+
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	    if (display == 'none') {
+	        $('#slide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#slide').css('display', 'none');
+	    }
+	});
+
+	$('#logo').click(function main(){
+		location.href = '/main';
+	});
+
+	$('.alarm').click(function alarmList() {
+		location.href = 'alarmList.go';
 	});
 </script>
 </html>

@@ -4,4 +4,12 @@
 >
 <mapper namespace="com.sona.music.admin.dao.AdminDAO">
 
+
+	<update id="noticeDel" >
+		UPDATE NOTICE_BOARD set notice_delete = 1 WHERE notice_idx = #{param1}
+	</update>
+	
+	<select id="adminCheck" resultType="Integer">
+		SELECT COUNT(admin_id) FROM ADMIN WHERE admin_id = #{param1}
+	</select>
 </mapper>

@@ -42,6 +42,8 @@
 			ch.ch_content
 			, ch.ch_date
 			, ch.ch_write_date
+			, ch.ch_idx
+			, ch.ch_result
 		FROM CLASS_HISTORY ch
 		WHERE ch.student_id = (SELECT ah.user_id FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
 			AND ch.class_idx = (SELECT ah.class_idx FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
@@ -58,5 +60,20 @@
 		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result) 
 			VALUES(#{class_idx}, #{user_id}, #{ch_content}, #{ch_date}, #{ch_result})
 	</insert>
+
+	<update id="lessonLogEdit" parameterType="com.sona.music.lesson.dto.LogDTO">
+		UPDATE CLASS_HISTORY SET 
+			ch_content = #{ch_content}
+			, ch_date = #{ch_date}
+			, ch_write_date = curdate()
+			, ch_result = #{ch_result}
+		WHERE ch_idx = #{ch_idx}
+	</update>
+	
+	<insert id="lessonStop" parameterType="com.sona.music.lesson.dto.LogDTO">
+		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result) 
+			VALUES(#{class_idx}, #{user_id}, '강의 종료', curdate(), '강의 종료')
+	</insert>
+
 
 </mapper>

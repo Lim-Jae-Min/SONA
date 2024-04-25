@@ -52,6 +52,8 @@ public class MyPageDTO {
 	private String end_check;
 	private Date apply_date;
 	
+	private int accumulate_lesson;
+	
 	
 	
 	
@@ -338,6 +340,12 @@ public class MyPageDTO {
 	}
 	public void setApply_date(Date apply_date) {
 		this.apply_date = apply_date;
+	}
+	public int getAccumulate_lesson() {
+		return accumulate_lesson;
+	}
+	public void setAccumulate_lesson(int accumulate_lesson) {
+		this.accumulate_lesson = accumulate_lesson;
 	}
 
 

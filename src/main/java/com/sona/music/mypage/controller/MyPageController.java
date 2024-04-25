@@ -128,19 +128,7 @@ public class MyPageController {
 		return myPageService.confirmPw(newPassword, confirmPassword);
 	 }
 
-	 @RequestMapping(value = "/myTeacher.go")
-	 public String myTeacher(HttpSession session, Model model) {
-		 logger.info("회원 수정 페이지 이동");
-		 String page = "member/login";
-		 String loginId = (String) session.getAttribute("loginId");
-		 if(loginId != null) {
-			 // 모델에 사용자 정보 추가
-		     logger.info("즐겨찾기 강사 페이지 이동 성공 !");
-		     page = "studentMyPage/myTeacher";
-		 }
-		 return page;
-	 }
- 
+
 	 
 	 @RequestMapping(value="/qnaList.ajax", method = RequestMethod.GET)
 	 @ResponseBody
@@ -287,6 +275,59 @@ public class MyPageController {
 		
 		
 		
+	@RequestMapping(value="/favoriteList.go")
+	public String favoriteListGo(HttpSession session) {
+		String page = "member/login";
+		logger.info("즐겨찾기 강사 페이지 controller 접속");
+		 
+		if (session.getAttribute("loginId") != null) {
+			page = "studentMyPage/studentFavoriteList";
+		}
+		 
+		return page;
+	}
+	
+	@RequestMapping(value="/favoriteList.ajax")
+	@ResponseBody // response 객체로 반환
+	public Map<String, Object> favoriteListCall(String page, HttpSession session) {
+		logger.info("favoritelistCall 요청");
+		logger.info("요청 페이지 : "+ page);
+		String loginId = (String) session.getAttribute("loginId");
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = 8;
+		Map<String, Object> map = myPageService.favoriteListCall(currPage, pagePerCnt, loginId);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/blockList.go")
+	public String blockListGo(HttpSession session) {
+		String page = "member/login";
+		logger.info("숨김 강사 페이지 controller 접속");
+		 
+		if (session.getAttribute("loginId") != null) {
+			page = "studentMyPage/studentBlockList";
+		}
+		 
+		return page;
+	}
+	
+	@RequestMapping(value="/teacherListDel.ajax", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> teacherListDel(@RequestParam(value="delList[]") List<String> delList, HttpSession session){
+		logger.info("del list : {}",delList);
+		
+		String loginId = (String) session.getAttribute("loginId");
+		
+		int cnt = myPageService.teacherListDel(delList, loginId);		
+		logger.info("del count : "+cnt);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cnt", cnt);
+		
+		return map;
+	}
+
 }
 
 

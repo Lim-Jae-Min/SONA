@@ -32,17 +32,22 @@
 	
  
 	<select id="login" resultType="com.sona.music.member.dto.MemberDTO">
-		select 
-			u.USER_ID,
-			u.USER_NAME,
-			u.USER_TYPE,
-			CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) 
-				FROM MANNER_HISTORY mh), 2), '') AS manner,
-			(SELECT sum(up.POINT) 
-				FROM USER_POINT up WHERE up.user_id = u.user_id) as point,
-			(SELECT COUNT(ah.alarm_idx) FROM ALARM_HISTORY ah WHERE ah.user_id = #{param1} AND ALARM_VIEWS = 0) AS alarm_count
-		FROM USERS u WHERE u.USER_ID = #{param1} AND u.USER_PASS = #{param2}	
-	</select>
+		<![CDATA[
+			select 
+				u.USER_ID,
+				u.USER_NAME,
+				u.USER_TYPE,
+				CASE WHEN (SELECT COUNT(mh.manner_idx) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id) < 5
+			      THEN '신규 강사'
+			      ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 2), '')
+			      END AS manner,
+				(SELECT sum(up.POINT) 
+					FROM USER_POINT up WHERE up.user_id = u.user_id) as point,
+				(SELECT COUNT(ah.alarm_idx) FROM ALARM_HISTORY ah WHERE ah.user_id = #{param1} AND ALARM_VIEWS = 0) AS alarm_count
+			FROM USERS u WHERE u.USER_ID = #{param1} AND u.USER_PASS = #{param2}	
+		
+		]]>
+		</select>
 	
 	<select id="overlay" resultType="int">
 		SELECT COUNT(USER_ID) FROM USERS WHERE USER_ID = #{param1}
@@ -69,56 +74,15 @@
 	</select>
 	
 	<select id="list" resultType="com.sona.music.member.dto.MemberDTO">
-		SELECT 
-		    class_name,
-		    CASE 
-		        WHEN (
-		            SELECT COUNT(apply_state) 
-		            FROM APPLY_HISTORY ah  
-		            WHERE ah.apply_state = '결제 완료' AND ah.class_idx = review_with_total_reviews.class_idx 
-		            GROUP BY ah.user_id
-		        ) IS NULL
-		        THEN 0
-		        ELSE (
-		            SELECT COUNT(apply_state) 
-		            FROM APPLY_HISTORY ah 
-		            WHERE ah.apply_state = '결제 완료' AND ah.class_idx = review_with_total_reviews.class_idx 
-		            GROUP BY ah.user_id
-		        ) 	
-		    END AS count,
-		    FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = review_with_total_reviews.class_idx), 1) AS score,
-		    class_reg_date,
-		    total_class - ROW_NUMBER() OVER (ORDER BY CLASS_IDX DESC) + 1 AS index_order
-		FROM 
-		    (
-		        SELECT 
-		            co.class_name,
-		            co.class_idx,
-		            CASE 
-		                WHEN (
-		                    SELECT COUNT(apply_state) 
-		                    FROM APPLY_HISTORY ah 
-		                    WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx 
-		                    GROUP BY ah.user_id
-		                ) IS NULL
-		                THEN 0
-		                ELSE (
-		                    SELECT COUNT(apply_state) 
-		                    FROM APPLY_HISTORY ah 
-		                    WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx 
-		                    GROUP BY ah.user_id
-		                )
-		            END AS count,
-		            FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx), 1) AS score,
-		            co.class_reg_date,
-		            (SELECT COUNT(*) FROM CLASS_OPEN WHERE USER_ID = 'user2') AS total_class
-		        FROM 
-		            CLASS_OPEN co
-		        WHERE
-		            co.USER_ID = 'user2'
-		    ) AS review_with_total_reviews
-		ORDER BY 
-		    CLASS_IDX DESC
+		SELECT co.class_name
+		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
+		         THEN 0
+		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
+		         END AS count
+		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
+		   , co.class_reg_date
+		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2'
+		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>
 	

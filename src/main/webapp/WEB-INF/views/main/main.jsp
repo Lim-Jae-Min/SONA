@@ -160,12 +160,6 @@
 					<th><div id="userName">${sessionScope.user_name}</div></th>
 				</tr>
 			</c:if>
-			<c:if test="${sessionScope.loginId eq null}">
-				<tr>
-					<th><a href="login.go">로그인</a></th>
-				</tr>
-			</c:if>
-		</table>
 	</header>
 	<div class="main-title">
 		<h1>누구나 배울 수 있는 악기!</h1>
@@ -273,6 +267,22 @@
 			<a href="logout.do">로그아웃</a>
 		</div>
 	</div>
+        	<c:if test="${sessionScope.user_type eq '강사'}">
+				<a href="teacherPage.go">마이페이지</a>
+        	</c:if>
+        </div>
+        <br/><br/><br/>
+        <div><a href="logout.do">로그아웃</a></div>
+    </div>
+    
+    <a href="apply.go">강의신청 test</a>
+    <br/>
+    <a href="userDetail.go?user_id=user2">회원 상세보기</a>
+
+    <a href="noticeManagement.go">공지사강관리</a>
+
+    <br/>
+    <a href="lessonLog.go">강의일지 test</a>
 </body>
 
 <script>

@@ -72,5 +72,16 @@
 	</delete>
 	
 	
+	<insert id="manner"
+	useGeneratedKeys="true"
+	keyColumn = "MANNER_IDX"
+	keyProperty="MANNER_IDX"
+	parameterType="com.sona.music.board.dto.ReviewDTO"
+	>
+	INSERT INTO MANNER_HISTORY(USER_ID,MANNER_TYPE,MANNER_VARIANCE)
+			VALUES(#{user_id},#{manner_type},#{manner_variance})
+	
+	</insert>
+	
 
 </mapper>

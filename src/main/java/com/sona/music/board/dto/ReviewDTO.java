@@ -20,6 +20,11 @@ public class ReviewDTO {
 
 	private String rater_name;
 	private String profile_photoname;
+	
+	private String user_id;
+	private String manner_type;
+	private double manner_variance;
+	
 	public int getReview_idx() {
 		return review_idx;
 	}
@@ -86,6 +91,12 @@ public class ReviewDTO {
 	public void setStudy_date(String study_date) {
 		this.study_date = study_date;
 	}
+	public String getIndex_order() {
+		return index_order;
+	}
+	public void setIndex_order(String index_order) {
+		this.index_order = index_order;
+	}
 	public String getRater_name() {
 		return rater_name;
 	}
@@ -98,13 +109,24 @@ public class ReviewDTO {
 	public void setProfile_photoname(String profile_photoname) {
 		this.profile_photoname = profile_photoname;
 	}
-	public String getIndex_order() {
-		return index_order;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setIndex_order(String index_order) {
-		this.index_order = index_order;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	
+	public String getManner_type() {
+		return manner_type;
+	}
+	public void setManner_type(String manner_type) {
+		this.manner_type = manner_type;
+	}
+	public double getManner_variance() {
+		return manner_variance;
+	}
+	public void setManner_variance(double manner_variance) {
+		this.manner_variance = manner_variance;
+	}
 	
 	
 	

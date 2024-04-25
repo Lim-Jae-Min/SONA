@@ -166,6 +166,45 @@ public class ReviewService {
 		reviewDAO.photoEdit(postIdx, photoCategory);
 	}
 
+	public void manner(String ratee_id, int score) {
+		
+		String mannertype = "리뷰";
+		double mannerscore = 0.0;
+		
+		ReviewDTO dto = new ReviewDTO();
+		dto.setManner_type(mannertype);
+		dto.setUser_id(ratee_id);
+		
+		switch (score) {
+		case 1:
+			mannerscore = -0.5;
+			break;
+			
+		case 2:
+			mannerscore = -0.25;
+			break;
+			
+			
+		case 3:
+			mannerscore = 0.0;
+			break;
+			
+		case 4:
+			mannerscore = 0.25;
+			break;
+			
+		case 5:
+			mannerscore = 0.5;
+			break;	
+		}
+		
+		dto.setManner_variance(mannerscore);
+		
+		reviewDAO.manner(dto);
+		
+		
+	}
+
 
 
 

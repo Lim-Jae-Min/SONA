@@ -294,9 +294,12 @@ function listCall(page, classIdx){
     });
 }
 	
+	$('#logo').click(function main(){
+		location.href = '/main';
+	});
 	$('.alarm').click(function alarmList() {
-		   location.href = 'alarmList.go';
-		});
+		location.href = 'alarmList.go';
+	});
 	
 	$('#userName').click(function slide() {
 		var display = $('#slide').css('display');

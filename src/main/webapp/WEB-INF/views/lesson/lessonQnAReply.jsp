@@ -200,12 +200,12 @@
         <div>보유 포인트 : <span>${sessionScope.point}</span></div>
         <br/>
         <div>
-           <c:if test="${sessionScope.user_type eq '수강생'}">
-              <a href="studentWrittenList.go">내가 쓴 리뷰</a>           
-           </c:if>
-           <c:if test="${sessionScope.user_type eq '강사'}">
-              <a href="teacherWrittenList.go">내가 쓴 리뷰</a>           
-           </c:if>
+        	<c:if test="${sessionScope.user_type eq '수강생'}">
+	        	<a href="studentWrittenList.go">내가 쓴 리뷰</a>        	
+        	</c:if>
+        	<c:if test="${sessionScope.user_type eq '강사'}">
+	        	<a href="teacherWrittenList.go">내가 쓴 리뷰</a>        	
+        	</c:if>
         </div>
         <br/>
         <div><a href="myPage.go">마이페이지</a></div>
@@ -244,9 +244,12 @@ $('#userName').click(function slide() {
     }
 });
 
+$('#logo').click(function main(){
+	location.href = '/main';
+});
 $('.alarm').click(function alarmList() {
-	   location.href = 'alarmList.go';
-	});
+	location.href = 'alarmList.go';
+});
 	
 	
 </script>

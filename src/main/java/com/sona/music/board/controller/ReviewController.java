@@ -68,9 +68,14 @@ public class ReviewController {
 	public String write(MultipartFile photos, Integer class_idx, HttpSession session, @RequestParam Map<String,String>param) {
 		logger.info("리뷰 작성함");
 		logger.info("params = {}", param);
+		String ratee_id = param.get("ratee_id");
+		int score = Integer.parseInt(param.get("score")) ;
+		
+		
 		String page = "redirect:/lessonReviewList.go?class_idx="+ class_idx;
 		if (session.getAttribute("loginId")!=null) {
 			int row = reviewService.write(photos, param);
+			reviewService.manner(ratee_id, score);
 			
 			if(row<1) {
 				page = "redirect:/lessonReviewWrite.go?class_idx="+ class_idx;

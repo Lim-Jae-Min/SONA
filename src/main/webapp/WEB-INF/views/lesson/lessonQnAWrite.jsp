@@ -254,9 +254,12 @@ $('#userName').click(function slide() {
     }
 });
 
+$('#logo').click(function main(){
+	location.href = '/main';
+});
 $('.alarm').click(function alarmList() {
-	   location.href = 'alarmList.go';
-	});
+	location.href = 'alarmList.go';
+});
 	
 	
 </script>

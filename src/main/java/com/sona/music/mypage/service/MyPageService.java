@@ -162,15 +162,29 @@ public class MyPageService {
 		return result;
 	}
 
-	public Map<String, Object> lessonlist(int currPage, int pagePerCnt, String user_id) {
-
-		int start = (currPage-1)*pagePerCnt;
+	public Map<String, Object> lessonlist(String user_id, int cnt, int currPage, int state) {
+		logger.info("받아온 state 값 : " + state);
+		logger.info("받아온 cnt의 값: " +cnt);
+		logger.info("받아온 user_id의 값 : " + user_id);
+		int start = (currPage-1)*cnt;
+		logger.info("start페이지:" + start);
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<MemberDTO> list = myPageDAO.lessonlist(user_id,pagePerCnt,start);
+		
+		List<MemberDTO> list;
+	    if (state == 0 || state == 1) {
+	        // state가 0 또는 1이면 myPageDAO.lessonlist() 호출
+	        list = myPageDAO.lessonlist(user_id, cnt, start, state);
+	    } else {
+	        // 그 외의 경우에는 myPageDAO.lessonlistall() 호출
+	        list = myPageDAO.lessonlistall(user_id, cnt, start);
+	    }
+		
+		
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.pointAllCount(pagePerCnt));
+		result.put("totalPages", myPageDAO.lessonAllCount(cnt, user_id));
+
 		
 		for (MemberDTO r : list) {
 			logger.info(r.getClass_name()+"");
@@ -178,6 +192,7 @@ public class MyPageService {
 			logger.info(r.getCount()+"");
 			logger.info(r.getScore()+"");
 			logger.info(r.getIndex_order()+"");
+			logger.info(r.getClass_disable()+"");
 		}
 		
 	 return result;
@@ -210,23 +225,16 @@ public class MyPageService {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<LessonDTO> list = myPageDAO.blockListCall(pagePerCnt, start, loginId);
+
 		logger.info("list : {}", list);
 		logger.info("list size : "+list.size());
 		result.put("list", list);		
 		result.put("currPage", currPage);
+
 		result.put("totalPages", myPageDAO.blockListCount(pagePerCnt, loginId));
 		
 		return result;
 	}
-
-
-
-
-
-
-
-
-
 
 
 	

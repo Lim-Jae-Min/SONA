@@ -9,10 +9,10 @@
 			, ah.reg_date AS start_date
 			, co.class_idx
 			, co.class_times AS total_times
-			, (SELECT COUNT(ch.ch_idx) FROM CLASS_HISTORY ch WHERE ch.class_idx = co.class_idx AND ch.student_id = ah.user_id 
-				AND ch.ch_write_date >= ah.reg_date) AS accumulate_times
+			, (SELECT COUNT(ch.ch_idx) FROM CLASS_HISTORY ch WHERE ch.apply_detail = ah.apply_detail) AS accumulate_times
 			, ah.apply_idx
 			, ah.user_id
+			, ah.apply_detail
 		FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx
 		WHERE ah.apply_idx = #{param1}
 	</select>
@@ -45,20 +45,20 @@
 			, ch.ch_idx
 			, ch.ch_result
 		FROM CLASS_HISTORY ch
-		WHERE ch.student_id = (SELECT ah.user_id FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
-			AND ch.class_idx = (SELECT ah.class_idx FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
-			AND ch.ch_write_date >= (SELECT ah.reg_date FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
+		WHERE ch.apply_detail = #{param1}
 		ORDER BY ch.ch_idx ASC
 	</select>
 	
 	<insert id="lessonLogWrite" parameterType="com.sona.music.lesson.dto.LogDTO">
-		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result) 
-			VALUES(#{class_idx}, #{user_id}, #{ch_content}, #{ch_date}, #{ch_result})
+		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result, apply_detail) 
+			VALUES(#{class_idx}, #{user_id}, #{ch_content}, #{ch_date}, #{ch_result}, 
+			(SELECT ah.apply_detail FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{apply_idx}))
 	</insert>
 	
 	<insert id="lessonAbsent" parameterType="com.sona.music.lesson.dto.LogDTO">
-		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result) 
-			VALUES(#{class_idx}, #{user_id}, #{ch_content}, #{ch_date}, #{ch_result})
+		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result, apply_detail) 
+			VALUES(#{class_idx}, #{user_id}, #{ch_content}, #{ch_date}, #{ch_result}, 
+			(SELECT ah.apply_detail FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{apply_idx}))
 	</insert>
 
 	<update id="lessonLogEdit" parameterType="com.sona.music.lesson.dto.LogDTO">
@@ -71,8 +71,9 @@
 	</update>
 	
 	<insert id="lessonStop" parameterType="com.sona.music.lesson.dto.LogDTO">
-		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result) 
-			VALUES(#{class_idx}, #{user_id}, '강의 종료', curdate(), '강의 종료')
+		INSERT INTO CLASS_HISTORY(class_idx, student_id, ch_content, ch_date, ch_result, apply_detail) 
+			VALUES(#{class_idx}, #{user_id}, '강의 종료', curdate(), '강의 종료', 
+			(SELECT ah.apply_detail FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{apply_idx}))
 	</insert>
 
 

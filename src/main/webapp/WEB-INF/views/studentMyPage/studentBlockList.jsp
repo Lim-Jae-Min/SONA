@@ -100,7 +100,7 @@ input[type="checkBox"] {
     </header>
     <div id="wrapper">
 	    <div id="sidemenu">
-	        <h3>즐겨찾기 강사</h3>
+	        <h3>숨김 강사</h3>
 	        <hr/>
 	        <a href="studentPage.go">마이페이지</a>
             <a href="editStudentPage.go">개인 정보 수정</a>
@@ -201,7 +201,7 @@ $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비�
 function listCall(page){
     $.ajax({
        type:'get',
-       url:'./favoriteList.ajax',
+       url:'./blockList.ajax',
        data:{
     	   'page':page
        },
@@ -233,6 +233,7 @@ function listCall(page){
        }
 	});
 }
+
 function drawList(list){
 	var content = '';
 	

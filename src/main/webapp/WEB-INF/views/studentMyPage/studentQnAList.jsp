@@ -10,6 +10,17 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+		#searchButton{
+		    width: 20px;
+		    height: 20px;		
+		
+		}
+		#search{
+		    width: 20px;
+		    height: 20px;		
+		
+		}
+
 		#sidemenu {
 		    background-color: #F0FAFF;
 		    color: black;
@@ -20,8 +31,8 @@
 		}
 
 		img {
-		    min-width: 50px;
-		    min-height: 50px;
+		    min-width: 20px;
+		    min-height: 20px;
 		    max-width: 70px;
 		    max-height: 70px;
 		}
@@ -132,16 +143,19 @@
 				   <div id="top">
 					    <br/>
 					    <br/><br/>
-					    <span id="searchbox" style="margin-right :50px; margin-bottom : 130px; height : 50px;">
-					        <label for="condition" style="margin-left: 60px; margin-bottom :30px;">강의명 :</label>
-						        <select name="condition" id="condition" style=" margin-left : 50px; width: 850px;"> <!-- 옵션의 너비를 200px로 지정 -->
-					            <option style = "margin-left : 50px; width: 700px" value="class_name">전체</option>
-						            <c:forEach items="${classNames}" var="class_name">
-						                <option value="${class_name}">${class_name}</option>
-						            </c:forEach>
-					        </select>
+							<span id="searchbox" style="margin-right: 50px; margin-bottom: 130px; height: 50px; position: relative;">
+							    <label for="condition" style="margin-left: 60px; margin-bottom: 30px;">강의명 :</label>
+									<select name="condition" id="condition" style="margin-left: 50px; width: 850px;">
+									    <option style="margin-left: 50px; width: 700px" value="">전체</option>
+									    <c:forEach items="${classNames}" var="class_name">
+									        <option value="${class_name}" <c:if test="${selectedClass eq class_name}">selected</c:if>>${class_name}</option>
+									    </c:forEach>
+									</select>
+							    <button id="searchButton" style="position: absolute; top: 0; right: 0; padding: 5px;">
+							        <img src="resources/img/search.png" id = "search" alt="Search" style="width: 20px;height: 20px;margin-bottom : 20px; position : relative; margin-right:5px;">
+							    </button>
+							</span>
 					        <br><br>
-					    </span>
 					</div>
  			
                 <table style="width: 100%;">
@@ -206,7 +220,7 @@ $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});
 
-
+var selectedClass = "";
 
 $('#logo').click(function main(){
 	   location.href = '/main';
@@ -225,18 +239,26 @@ if (display == 'block') {
 
 var showPage =1;
 
-$(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
-	qnaListCall(showPage);
+$(document).ready(function(){ 
+    var loginId = "${sessionScope.loginId}"; 
+    qnaListCall(1, null, loginId); 
+    
+    // 검색 버튼 클릭 시
+    $('#search').click(function() {
+        var selectedClass = $('#condition').val(); // 이 부분 수정
+        qnaListCall(1, selectedClass, loginId); 
+    });
 });
 
-function qnaListCall(page, loginId) {
+function qnaListCall(page, selectedClass, loginId) {
     $.ajax({
         type: 'get',
         url: './qnaList.ajax',
         data: {
             'page': page,
             'cnt': 10,
-            'loginId': loginId // 사용자의 ID를 전달하여 필터링
+            'selectedClass': selectedClass, // 선택된 강의명을 전달하여 필터링
+            'loginId': loginId // 로그인 아이디 전달
         },
         dataType: 'json',
         success: function(data) {
@@ -252,8 +274,7 @@ function qnaListCall(page, loginId) {
                 onPageClick: function(evt, pg) { // 페이지 클릭시 실행 함수
                     console.log(evt); // 이벤트 객체
                     console.log(pg); // 클릭한 페이지 번호
-                    showPage = pg;
-                    qnaListCall(pg, loginId); // 페이지 번호와 로그인된 사용자의 ID 전달
+                    qnaListCall(pg, selectedClass, loginId); // 페이지 번호와 선택된 강의명, 로그인 아이디 전달
                 }
             });
         },
@@ -274,7 +295,9 @@ function qnaListCall(page, loginId) {
 
 	        content += '<tr style="border-bottom: 1px solid #ddd;">'; // 각 항목에 경계선 추가
 	        content += '<td style="text-align: center;"><img src="' + lockIcon + '" class="locked-img" width="38" height="38"></td>'; // locked 이미지에 클래스 추가 및 중앙 정렬
-	        content += '<td style="text-align: center;">' + qna.q_title + '</td>'; // 질문 제목
+	        content += '<td style="text-align: center;">' +
+	        '<a href="/qnaDetail?q_idx=' + qna.question_idx + '">' + qna.q_title + '</a>' +
+	        '</td>'; // 질문 제목
 	        content += '<td style="text-align: center;">' + qna.answer_status + '</td>'; // 답변 여부
 	        content += '<td style="text-align: center;">' + qna.q_reg_date + '</td>'; // 날짜
 	        content += '</tr>';

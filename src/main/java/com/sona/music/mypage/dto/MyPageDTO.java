@@ -51,6 +51,9 @@ public class MyPageDTO {
 	private String lesson_progress;
 	private String end_check;
 	private Date apply_date;
+	private int review_idx;
+	private String apply_detail;
+	private int apply_idx;
 	
 	private int accumulate_lesson;
 	
@@ -346,6 +349,24 @@ public class MyPageDTO {
 	}
 	public void setAccumulate_lesson(int accumulate_lesson) {
 		this.accumulate_lesson = accumulate_lesson;
+	}
+	public int getReview_idx() {
+		return review_idx;
+	}
+	public void setReview_idx(int review_idx) {
+		this.review_idx = review_idx;
+	}
+	public String getApply_detail() {
+		return apply_detail;
+	}
+	public void setApply_detail(String apply_detail) {
+		this.apply_detail = apply_detail;
+	}
+	public int getApply_idx() {
+		return apply_idx;
+	}
+	public void setApply_idx(int apply_idx) {
+		this.apply_idx = apply_idx;
 	}
 
 

@@ -93,9 +93,9 @@ public class MainController {
 		
 		if (session.getAttribute("loginId") != null) {
 			if (session.getAttribute("user_type").equals("수강생")) {
-				page = "studentMyPage/studentPage";
+				page = "redirect:/studentPage.go";
 			}else {
-				page = "teacherMyPage/teacherPage";
+				page = "redirect:/teacherPage.go";
 			}
 		}
 		

@@ -48,21 +48,38 @@ public class MyPageService {
 		    
 		    // 업데이트된 행 수 반환
 		    return row;
-		}
+	}
+	
+	public int updateApplyForm(Map<String, String> map) {
+	    // 전달된 데이터를 맵에 추가합니다.
+    	logger.info("회원 수정하기~ ", map);
+	    logger.info("전달된 데이터: {}", map);
+
+	    // DAO를 통해 업데이트 수행
+	    int row = myPageDAO.updateApplyForm(map);
+	    
+	    // 업데이트된 행 수 반환
+	    return row;
+	}
 
 
 
 
-	public Map<String, Object> qnaList(int currPage, int pagePerCnt, String loginId) {
+	public Map<String, Object> qnaList(int currPage, int pagePerCnt, String loginId, String selectedClass) {
 		int start = (currPage-1)*pagePerCnt;
 		logger.info(loginId);
 		Map<String, Object> result = new HashMap<String, Object>();
 		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + pagePerCnt);
-		List<MyPageDTO> list = myPageDAO.qnaList(pagePerCnt,start,loginId);
+		List<MyPageDTO> list = null;
+		 if (selectedClass != null && !selectedClass.isEmpty()) {
+			list = myPageDAO.qnaSelectedList(pagePerCnt,start,loginId,selectedClass);
+		 }else {
+			list = myPageDAO.qnaList(pagePerCnt,start,loginId); 
+		 }
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.allCount(pagePerCnt));
+		result.put("totalPages", myPageDAO.qnaAllCount(pagePerCnt));
 		
 		
 		
@@ -89,7 +106,7 @@ public class MyPageService {
 		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.allCount(pagePerCnt));				
+		result.put("totalPages", myPageDAO.pointAllCount(pagePerCnt));				
 		
 		return result;
 	}
@@ -106,7 +123,7 @@ public class MyPageService {
 		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.allCount(pagePerCnt));				
+		result.put("totalPages", myPageDAO.receiveAllCount(pagePerCnt));				
 		
 		return result;
 	}
@@ -123,7 +140,7 @@ public class MyPageService {
 		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.allCount(pagePerCnt));				
+		result.put("totalPages", myPageDAO.sendAllCount(pagePerCnt));				
 		
 		return result;
 	}
@@ -140,7 +157,7 @@ public class MyPageService {
 		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.allCount(pagePerCnt));				
+		result.put("totalPages", myPageDAO.courseAllCount(pagePerCnt));				
 		
 		return result;
 	}
@@ -153,7 +170,7 @@ public class MyPageService {
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.allCount(pagePerCnt));
+		result.put("totalPages", myPageDAO.pointAllCount(pagePerCnt));
 		
 		for (MemberDTO r : list) {
 			logger.info(r.getClass_name()+"");

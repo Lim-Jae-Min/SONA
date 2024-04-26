@@ -38,8 +38,8 @@ public class PointService {
 		return row;
 	}
 
-	public LessonDTO paymentGetLesson(Integer cLASS_IDX) {
-		LessonDTO lessonInfo= pointDAO.paymentGetLesson(cLASS_IDX);
+	public LessonDTO paymentGetLesson(Integer class_idx) {
+		LessonDTO lessonInfo= pointDAO.paymentGetLesson(class_idx);
 		String id = lessonInfo.getUser_id();
 		int Class_price = lessonInfo.getClass_price();
 		String User_name = lessonInfo.getUser_name();

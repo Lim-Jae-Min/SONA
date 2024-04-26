@@ -9,9 +9,9 @@ public interface NoticeDAO {
 
 	List<NoticeDTO> showList(int start,int pagePerCnt,int deleteStatus);
 
-	int allCount(int pagePerCnt, int deleteStatus, String serachText, String searchType);
+	int allCount(int pagePerCnt, int deleteStatus, String serachText, int searchType);
 
-	List<NoticeDTO> showListSearch(int start, int pagePerCnt, int deleteStatus, String searchText, String searchType);
+	List<NoticeDTO> showListSearch(int start, int pagePerCnt, int deleteStatus, String searchText, int searchType);
 
 
 	NoticeDTO noticeDetailAdmin(int idx);

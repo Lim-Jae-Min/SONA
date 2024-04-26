@@ -12,7 +12,7 @@ public interface PointDAO {
 	int pointChange(String id, Integer amount, String pointType);
 
 
-	LessonDTO paymentGetLesson(Integer cLASS_IDX);
+	LessonDTO paymentGetLesson(Integer class_idx);
 
 	int lessonPayApyHistory(Integer classIdx, String id, String applyState);
 

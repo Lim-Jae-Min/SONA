@@ -21,13 +21,13 @@ public class NoticeController {
 	
 	@RequestMapping(value = "noticeManagementlist.ajax")
 	@ResponseBody
-	public Map<String, Object> noticeManagementlist(String page , String searchType, String serachText) {
+	public Map<String, Object> noticeManagementlist(int page , int searchType, String serachText) {
 		logger.info("noticeManagementlist 요청");
 		logger.info("요청페이지 : " + page);
 		logger.info("공지사항 검색에서 가져온 text : "+serachText);
 		logger.info("공지사항 검색에서 가져온 type : "+searchType);
 		Map<String, Object> map = null;
-		int currPage = Integer.parseInt(page);
+		int currPage = page;
 			
 			map = noticeService.showListSearch(currPage,searchType,serachText);	
 		

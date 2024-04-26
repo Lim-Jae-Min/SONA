@@ -27,6 +27,7 @@ h1 {
 
 #boardDetail {
     margin-top: 20px;
+    margin: 1px;
 }
 
 #boardTitle {
@@ -117,40 +118,30 @@ hr{
     border-top: 3px solid #eee
 }
 #editButton{
-/* 	position : relative;
+	position : relative;
 	left: 48%;
-	background-color: rgba(0,0,0,0);
-	border: none;
-	font-size: 5px; */
-    position: relative;
-    /* position: absolute; */
-    left: 366px;
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    font-size: x-large;
-    top: 7px;
-    height: 0px;
 }
 p.editOption{
 	position : relative;
 }
 
 #editslide{
-	display : none;
 	border: 1px solid black;
 	position:absolute;
 	max-width: 50px;
 	left: 48%;
 	width: 45;
     text-align: center;
-    font-size : 15px;
-    top: 39px;
-
-    
 }
-#returnList{
-	left : 50%;
+.buttonA{
 	position: relative;
+	left: 87%;
+}
+.textA{
+	width: 700px;
+}
+#content{
+	width: 735px;
 }
 </style>
 </head>
@@ -199,34 +190,36 @@ p.editOption{
     <!-- 헤더영역 -->
     
     <!-- 게시판 영역 -->
-    <div class="container">
-        <h1>게시판 상세보기</h1>
-            <h2 id="boardTitle">${noticeDetail.notice_title}</h2>
-           	<div id = "editButton">
-           		<button id="editButton">⋮</button>
-	            <div id = "editslide">
-	             	<p class="editOption" id="" onclick="noticeDel()">삭제</p>
-	             	<p class="editOption" id="" onclick="noticeWrite()">수정</p>
-	            </div>
-             </div>
-        <div id="boardDetail">
-        작성자 : ${noticeDetail.admin_id}  작성일자 : ${noticeDetail.notice_reg_date} &nbsp;&nbsp;  조회수 : ${noticeDetail.notice_views}
-            <hr>
-            <div id="boardImageWrapper">
-				<c:if test="${photos.size()>0}">
-					<c:forEach items="${photos}" var="photo">
-						<img src="/photo/${photo.new_filename}" />
-					</c:forEach>
+    <form action="noticeEditAdmin.do" method="post" enctype="multipart/form-data">
+    	<input type="hidden" value="${noticeDetail.notice_content}">
+	    <div class="container">
+	        <h1>게시판 상세보기</h1>
+	        	<hr>
+	            <div>제목 <input name="title" class="textA" type="text" id="title"  value="${noticeDetail.notice_title}"> </div>    
+	        	<hr>
+	        	내용  
+	        <div id="boardDetail">
+				<input name="content" class="textA" type="text" id="content" value="${noticeDetail.notice_content}">           
+	        	<hr>
+	        </div>
+	        <div>
+	        	<input type="hidden" name="writer" value="${sessionScope.loginId}">
+	        	<input type="hidden" name="noticeIdx" value="${noticeDetail.notice_idx}">
+	        	<input type="file" name = "photos" multiple="multiple" placeholder="사진" value="">
+	        	<c:if test="${photos.size() > 0}">
+								<c:forEach items="${photos}" var="photo">
+									<div class="photo-container">
+									${photo.new_filename}
+										<button
+											onclick="deletePhoto('${photo.post_idx}', '${photo.photo_category}','${photo.new_filename}', event)">삭제</button>
+									</div>
+								</c:forEach>
 				</c:if>
-			</div>
-            <p id="boardContent">${noticeDetail.notice_content}</p>
-            <hr>
-
-            
-            <button id="returnList" onclick="backList()">목록</button>
-        </div>
-    </div>
-    
+	        </div>       
+	     	<button class="buttonA" type="submit">작성</button>
+	    	<button class="buttonA">취소</button>
+    	</div>
+    </form>
     <!-- 게시판 영역 -->
 
 
@@ -268,106 +261,36 @@ p.editOption{
     
 </body>
 <script>
-function redirectToReplyPage() {
-    window.location.href = './videoList.go';
+function deletePhoto(postIdx, photoCategory,photoName,event) {
+    event.preventDefault(); // 폼의 기본 동작 중지
+    // 사용자에게 삭제 여부를 묻는 확인 메시지 표시
+    var result = confirm('삭제 하시겠습니까?');
+    
+    // 확인 메시지에서 '확인'을 선택한 경우에만 삭제 요청을 보냄
+    if (result) {
+    	$.ajax({
+            url: './noticePhotoDel.ajax',
+            method: 'POST',
+            data: { postIdx: postIdx, 
+            	photoCategory: photoCategory,
+            	photoName : photoName	
+            },
+            complete: function(data) {
+                // 요청이 완료된 후에 실행되는 콜백에서 미리보기 삭제
+                	console.log(data.success);
+                if(data.success==1){
+                $(event.target).parent().remove();
+                	
+                $('#fileList').empty();
+                alert('사진이 성공적으로 삭제되었습니다.');
+                }
+                else{
+                	alert('사진삭제를 실패 하였습니다.');
+                }
+            }
+        });
+    }
 }
 
-$('#editButton').click(function slide() {
-	var display = $('#editslide').css('display');
-    if (display == 'none') {
-        $('#editslide').css('display', 'block');
-    }
-    if (display == 'block') {
-        $('#editslide').css('display', 'none');
-    }
-});
-
-$('#logo').click(function main(){
-	location.href = '/main';
-});
-
-$('.alarm').click(function alarmList() {
-	location.href = 'alarmList.go';
-});
-	
-	
-/* 	document.getElementById('deleteButton').addEventListener('click', function() {
-	    document.getElementById('confirmDelete').style.display = 'block';
-	});
-	
-    // 삭제 확인 모달에서 확인 버튼 클릭 시 게시글 삭제
-    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
-        // 여기에 게시글을 삭제하는 AJAX 요청을 보내는 로직을 작성합니다.
-        // 삭제 완료 후 페이지를 새로고침하거나, 삭제된 상태를 반영하는 등의 작업을 수행합니다.
-    });
-
-    // 삭제 확인 모달에서 취소 버튼 클릭 시 모달 닫기
-    document.getElementById('cancelDeleteButton').addEventListener('click', function() {
-        document.getElementById('confirmDelete').style.display = 'none';
-    });
-    
-    document.getElementById('editButton').addEventListener('click', function() {
-        // 여기에 수정 페이지로 이동하는 로직을 작성합니다.
-        // 실제로는 수정 페이지로 이동하는 URL로 리다이렉트하거나, SPA의 경우 페이지를 변경하는 등의 작업을 수행합니다.
-    }); */
-    
-    
-    
-    
-    /* 삭제 버튼 구현 */
-    
-    function noticeDel() {
-
-
-
-		var confirmationMessage = "정말로 공지사항를 삭제하시겠습니까?";
-
-		if (confirm(confirmationMessage)) {
-			$.ajax({
-				url : "noticeDel.ajax", 
-				method : "POST",
-				data : {
-					noticeIdx : ${noticeDetail.notice_idx},
-					
-				}, // 강의 ID와 결제 금액을 서버로 전송합니다.
-				success : function(response) {
-					if (response.success == 1) {
-						alert("삭제를 성공 했습니다.");
-						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
-						window.location.href = "noticeManagement.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
-					} else {
-						alert("삭제를 실패 했습니다.");
-/* 						var form = document.createElement('form'); // 폼객체 생성
-						form.setAttribute('method', 'post'); //get,post 가능
-						form.setAttribute('action', "chargePoint.go"); //보내는 url
-						document.body.appendChild(form);
-						form.submit(); */
-
-					}
-				},
-				error : function(xhr, status, error) {
-					alert("서버 오류로 인해 공지사항 삭제를 실퍃하였습니다..");
-				}
-			});
-		} else {
-			alert("강의 구매가 취소되었습니다.");
-		}
-	}
-    
-    /* 목록으로 가기 */
-	 function backList(){
-	    	location.href = "noticeManagement.go";
-	    	
-	    }
-    function noticeWrite(){
-    	console.log("수정버튼 클릭됨");
-    	location.href = 'noticeEditAdmin.go?idx=${noticeDetail.notice_idx}';
-/*     	var form = document.createElement('form'); // 폼객체 생성
-		form.setAttribute('method', 'post'); //get,post 가능
-		form.setAttribute('action', "chargePoint.go"); //보내는 url
-		document.body.appendChild(form);
-		form.submit();  */
-    }
-    /* 수정으로 가기 */
 </script>
 </html>

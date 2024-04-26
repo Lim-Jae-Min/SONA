@@ -26,8 +26,10 @@
 	</select>
 	
 	<insert id="lessonPayApyHistory" >
-		INSERT INTO APPLY_HISTORY(class_idx,user_id,apply_state)
-			VALUES(#{param1},#{param2},#{param3});
+		INSERT INTO APPLY_HISTORY(class_idx,user_id,apply_state,apply_detail)
+			VALUES(#{param1},#{param2},#{param3},(select ah.apply_detail FROM APPLY_HISTORY ah 
+				WHERE ah.user_id = #{param2} AND ah.class_idx = #{param1} AND ah.apply_state = '신청 완료'
+   				ORDER BY apply_idx DESC LIMIT 1));
 			
 	</insert>
 	

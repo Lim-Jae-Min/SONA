@@ -42,7 +42,7 @@ public class NoticeService {
 	}
 
 
-	public Map<String, Object> showListSearch(int currPage, String searchType, String serachText) {
+	public Map<String, Object> showListSearch(int currPage, int searchType, String serachText) {
 			int pagePerCnt = 10;
 			int start = (currPage-1)*pagePerCnt;
 			int deleteStatus = 0;
@@ -69,8 +69,11 @@ public class NoticeService {
 		NoticeDTO dto = noticeDAO.noticeDetailAdmin(idx);
 		noticeDAO.noticeViews(idx);
 		List<PhotoDTO> noticePhoto = noticeDAO.getNoticePhoto(idx,photo_category);
-		String photo = noticePhoto.get(0).getNew_filename();
-		logger.info(photo);
+		for (PhotoDTO photoDTO : noticePhoto) {
+			logger.info(photoDTO.getNew_filename());
+		}
+//		String photo = noticePhoto.get(0).getNew_filename();
+//		logger.info(photo);
 		String title = dto.getNotice_title();
 		logger.info("공지사항관리에서 들어간 공지사항 상세보기 : " + title);		
 		model.addAttribute("noticeDetail", dto);

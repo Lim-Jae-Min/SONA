@@ -12,4 +12,38 @@
 	<select id="adminCheck" resultType="Integer">
 		SELECT COUNT(admin_id) FROM ADMIN WHERE admin_id = #{param1}
 	</select>
+	
+	
+	<insert id = "noticeWrite"  
+	useGeneratedKeys="true" 
+	keyColumn="notice_idx"
+	keyProperty="notice_idx"
+	parameterType="com.sona.music.admin.dto.AdminDTO">
+		INSERT INTO NOTICE_BOARD(
+			admin_id, notice_title,notice_content,notice_delete
+			)values(
+			#{admin_id},#{notice_title},#{notice_content},0
+			)
+	</insert>
+	
+		<update id = "noticeUpdate"  
+	useGeneratedKeys="true" 
+	keyColumn="notice_idx"
+	keyProperty="notice_idx"
+	parameterType="com.sona.music.admin.dto.AdminDTO">
+		UPDATE NOTICE_BOARD SET
+			notice_title=#{notice_title},
+			notice_content=#{notice_content}
+			WHERE notice_idx = #{notice_idx}
+	</update>
+	
+	<insert id="noticePhotoWrite">
+		INSERT INTO PHOTO_BOARD (user_id,ori_filename,new_filename,post_idx,photo_category)
+			VALUES(#{param4},#{param1},#{param2},#{param3},#{param5})
+	</insert>
+	
+	<delete id="photoDel">
+    DELETE FROM PHOTO_BOARD WHERE post_idx = #{param1} AND photo_category = #{param2} AND new_filename = #{param3}
+	</delete>
+	
 </mapper>

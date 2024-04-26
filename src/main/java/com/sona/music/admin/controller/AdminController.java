@@ -38,16 +38,30 @@ public class AdminController {
 
 	@RequestMapping(value = "/noticeDetailAdmin.go")
 	public String noticeDetailAdminGo(int idx, Model model) {
-		idx = 2;
 		noticeService.noticeDetailAdmin(idx, model);
 
 		return "adminPage/noticeDetail";
 	}
+	
+	@RequestMapping(value = "/noticeEditAdmin.go")
+	public String noticeEditAdminGo(int idx, Model model) {
+		noticeService.noticeDetailAdmin(idx, model);
 
+		return "adminPage/noticeEdit";
+	}
+
+	
+	
 	@RequestMapping(value = "/noticeWrite.go")
 	public String noticeWrite() {
 
 		return "adminPage/noticeWrite";
+	}
+	
+	@RequestMapping(value = "faqManagement.go")
+	public String faqManagementGo() {
+		logger.info("faq관리 페이지 이동");
+		return "adminPage/faqManagement";
 	}
 
 	@RequestMapping(value = "/noticeDel.ajax", method = RequestMethod.POST)
@@ -80,7 +94,46 @@ public class AdminController {
 		logger.info("공지사항에서 받은 제목 : " + param.get("title"));
 		logger.info("공지사항에서 받은 내용 : " + param.get("content"));
 
-		return null;
+		return "adminPage/noticeWrite";
+	}
+	
+	@RequestMapping(value = "/noticeEditAdmin.do")
+	public String noticeEditAdminDo(MultipartFile[] photos, HttpSession session, @RequestParam Map<String, String> param) {
+		logger.info("공지사항 글작성 컨트롤러");
+		com.sona.music.admin.dto.PhotoDTO photoInfo = new com.sona.music.admin.dto.PhotoDTO();
+//		int adminIdRow = adminService.adminCheck(session.getAttribute("writer"));
+			int row = adminService.noticeUpdate(photos,param);
+		 
+			  for (MultipartFile p : photos) {
+				  p.getOriginalFilename();
+				  photoInfo.setOri_filename(p.getOriginalFilename());
+				  photoInfo.getOri_filename();
+				  logger.info("공지사항 포토 이름 : " + photoInfo.getOri_filename());
+			  }		  
+		  
+		 
+
+		logger.info("공지사항에서 받은 제목 : " + param.get("title"));
+		logger.info("공지사항에서 받은 내용 : " + param.get("content"));
+
+		return "adminPage/noticeEdit";
+	}
+	
+	@RequestMapping(value = "noticePhotoDel.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object>noticePhotoDel(@RequestParam Map<String, String> param){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int photoidx = Integer.parseInt(param.get("postIdx"));
+		String photoname = param.get("photoName");
+		String photocategory = param.get("photoCategory");
+		int row=adminService.photoDel(photoidx,photoname,photocategory);
+		logger.info("사진 삭제된 개수" + row);
+			
+		map.put("success", row);
+		logger.info("사진삭제에서 가져온거 : " + photoidx);
+		logger.info("사진삭제에서 가져온거 : " + photocategory);
+		logger.info("사진삭제에서 가져온거 : " + photoname);
+		return map;
 	}
 
 }

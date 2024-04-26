@@ -4,4 +4,113 @@
 >
 <mapper namespace="com.sona.music.board.dao.FAQDAO">
 
+	<select id="showListSearch" resultType="com.sona.music.board.dto.FAQDTO">
+		SELECT * FROM FAQ_BOARD WHERE faq_delete = #{param3}
+			<choose>
+				<when test="param6 == 1">
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	faq_answer LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 2">
+					AND faq_target = "수강생"
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	faq_answer LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 3">
+					AND faq_target = "강사"
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	faq_answer LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 ==4">
+					AND faq_target = "서비스"
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	faq_answer LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+			</choose>	
+			ORDER BY faq_idx DESC LIMIT #{param1},#{param2};
+	</select>
+	
+	<select id="allCount" resultType="int">
+		SELECT CEIL (COUNT(faq_idx)/#{param1}) AS pages FROM FAQ_BOARD
+			WHERE faq_delete = #{param2}
+			<choose>
+				<when test="param5 == 1">
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	faq_answer LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 == 2">
+					AND faq_target = "수강생"
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	faq_answer LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 == 3">
+					AND faq_target = "강사"
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	faq_answer LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 ==4">
+					AND faq_target = "서비스"
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	faq_answer LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+			</choose>	
+	</select> 
+	
+	
 </mapper>

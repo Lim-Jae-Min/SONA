@@ -136,17 +136,17 @@ public class PointController {
 	}
 	
 	@RequestMapping(value = "/lessonPayment.go" , method = RequestMethod.POST)
-	public String lessonPaymentGo(Model model,HttpSession session) {
+	public String lessonPaymentGo(Model model,HttpSession session ,int class_idx) {
 		int userPoint = (int) session.getAttribute("point");
 		logger.info(userPoint+"세션에서 가져온 포인트 값");
-		int CLASS_IDX = 2;
+		
 		//레슨정보를 가져오기
 		String chargePointLoginId =(String) session.getAttribute("loginId");
 		String page = "member/login";
 		if(chargePointLoginId != null) {
 		
 		int havePoint = pointService.getHavePoint(chargePointLoginId);
-		LessonDTO lessonInfo = pointService.paymentGetLesson(CLASS_IDX);
+		LessonDTO lessonInfo = pointService.paymentGetLesson(class_idx);
 //		String new_filename = pointService.getPhotoName(lessonInfo.getUser_id());
 		model.addAttribute("USER_NAME",lessonInfo.getUser_name());
 		model.addAttribute("Class_name",lessonInfo.getClass_name());

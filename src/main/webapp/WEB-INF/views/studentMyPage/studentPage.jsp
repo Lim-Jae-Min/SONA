@@ -81,11 +81,11 @@
                         &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png"
                         		 style="margin-left: 30px;"  id="account">
                         	  </td>
-                        	  <td class="main" style="padding-right: 750px; width : 200px;">
+                        	  <td class="main" style="padding-right: 600px; width : 200px;">
 			                  	<span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}</span>
 				                <br><br>${userInfo.user_id}
 				              </td>
-					           <td style="width: 60%; min-width: 150px; text-align: right;">
+					           <td style="width: 60%; min-width: 150px; text-align: left;">
 						       	  <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${sessionScope.manner_variance}
                        		   </td>
                     </tr>
@@ -131,11 +131,11 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;잔여 포인트 
-                            <span class="contents" style="margin-left: 60px; width: 200px; display: inline-block;">55500</span>
+                            <span class="contents" style="margin-left: 60px; width: 200px; display: inline-block;">${sessionScope.point}</span>
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							<button style="background-color:  #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">충전</button> &nbsp;
-							<button style="background-color:  #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">출금</button>
+							<button style="background-color: #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;" onclick="window.location.href='./chargePoint.go';">충전</button>
+							<button style="background-color: #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;" onclick="window.location.href='./withdrawPoint.go';">출금</button>
                         </td>
                   </tr>
                 </tbody>

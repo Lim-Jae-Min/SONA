@@ -63,6 +63,21 @@ public class MyPageController {
 	    }
 	    return page;
 	}
+	@RequestMapping(value = "/studentPageApplyEdit.go")
+	public String editUserApply(HttpSession session, Model model) {
+	 logger.info("회원 수정 페이지 이동");
+	    String page = "member/login";
+	    String loginId = (String) session.getAttribute("loginId");
+	    if(loginId != null) {
+	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        // 모델에 사용자 정보 추가
+	        model.addAttribute("userInfo", userInfo);
+	        logger.info("회원 수정 페이지 이동 성공 !");
+	        page = "studentMyPage/studentPageApplyEdit";
+	    }
+	    return page;
+	}
 	
 	/*강사 마이페이지로 이동*/
 	@RequestMapping(value = "/teacherPage.go")
@@ -162,6 +177,22 @@ public class MyPageController {
 	    return page;
 	}
 	
+	@RequestMapping(value = "/studentPageApply.edit", method = RequestMethod.POST)
+	public String updateApplyForm(@RequestParam Map<String, String> map, HttpSession session, Model model) {
+		String page = "member/login";
+	    logger.info("회원 수정하기 요청이요~ ");
+	    String loginId = (String) session.getAttribute("loginId");
+	    logger.info("전달된 데이터: {}", map);
+
+	    if (loginId != null) {
+	        logger.info("회원 수정하기~ ", map);
+	        map.put("loginId", loginId);
+	        myPageService.updateApplyForm(new HashMap<> (map)); // 로그인 ID를 전달
+	        page = "studentMyPage/studentPageApplyEdit";
+	    }
+	    return page;
+	}
+	
 	@RequestMapping(value = "/confirmPw.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean confirmPw(@RequestParam("newPassword") String newPassword, @RequestParam("user_pass") String confirmPassword) {
@@ -185,16 +216,17 @@ public class MyPageController {
 
 	 @RequestMapping(value="/qnaList.ajax", method = RequestMethod.GET)
 	 @ResponseBody
-	 public Map<String , Object> qnaListCall(String page, String cnt, HttpSession session) {
+	 public Map<String , Object> qnaListCall(String page, String cnt, String selectedClass, HttpSession session) {
 	     logger.info("listCall 요청");
 	     logger.info("페이지당 보여줄 갯수:" + cnt);
 	     logger.info("요청 페이지: " + page);
-		 String loginId = (String) session.getAttribute("loginId");
+	     logger.info("선택된 강의명: " + selectedClass);
+	     String loginId = (String) session.getAttribute("loginId");
 
 	     int currPage = Integer.parseInt(page);
 	     int pagePerCnt = 10;
 	     logger.info(loginId);
-	     Map<String, Object> map = myPageService.qnaList(currPage, pagePerCnt, loginId);
+	     Map<String, Object> map = myPageService.qnaList(currPage, pagePerCnt, loginId, selectedClass);
 	     
 	     return map;
 	 }

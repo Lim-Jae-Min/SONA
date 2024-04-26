@@ -26,7 +26,7 @@ public interface MyPageDAO {
 	List<MyPageDTO> qnaList(int pagePerCnt, int start, String loginId);
 
 
-	int allCount(int pagePerCnt);
+	int qnaAllCount(int pagePerCnt);
 
 	List<String> getClassNames(String loginId);
 
@@ -43,7 +43,6 @@ public interface MyPageDAO {
 
 	List<MyPageDTO> sendList(int pagePerCnt, int start, String loginId);
 
-
 	List<MyPageDTO> courseList(int pagePerCnt, int start, String loginId);
 
 	List<LessonDTO> favoriteListCall(int pagePerCnt, int start, String loginId);
@@ -55,6 +54,25 @@ public interface MyPageDAO {
 	List<LessonDTO> blockListCall(int pagePerCnt, int start, String loginId);
 
 	int blockListCount(int pagePerCnt, String loginId);
+
+
+	int updateApplyForm(Map<String, String> map);
+
+
+	int pointAllCount(int pagePerCnt);
+
+
+	int receiveAllCount(int pagePerCnt);
+
+
+	int sendAllCount(int pagePerCnt);
+
+
+	int courseAllCount(int pagePerCnt);
+
+
+	List<MyPageDTO> qnaSelectedList(int pagePerCnt, int start, String loginId, String selectedClass);
+
 
 
 

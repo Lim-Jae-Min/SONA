@@ -48,9 +48,13 @@ public interface MyPageDAO {
 
 	List<LessonDTO> favoriteListCall(int pagePerCnt, int start, String loginId);
 
-	Object favoriteListCount(int pagePerCnt, String loginId);
+	int favoriteListCount(int pagePerCnt, String loginId);
 
 	int teacherListDel(String teacher_id, String loginId);
+
+	List<LessonDTO> blockListCall(int pagePerCnt, int start, String loginId);
+
+	int blockListCount(int pagePerCnt, String loginId);
 
 
 

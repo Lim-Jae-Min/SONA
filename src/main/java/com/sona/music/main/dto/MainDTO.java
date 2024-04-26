@@ -14,8 +14,10 @@ public class MainDTO {
 	boolean user_delete;
 	Date user_reg_date;
 	String video_url;
-	
-	
+	String applyform_inst;
+	String teacher_id;
+	double manner_score;
+	int class_idx;
 	public String getUser_id() {
 		return user_id;
 	}
@@ -76,6 +78,32 @@ public class MainDTO {
 	public void setVideo_url(String video_url) {
 		this.video_url = video_url;
 	}
+	public String getApplyform_inst() {
+		return applyform_inst;
+	}
+	public void setApplyform_inst(String applyform_inst) {
+		this.applyform_inst = applyform_inst;
+	}
+	public String getTeacher_id() {
+		return teacher_id;
+	}
+	public void setTeacher_id(String teacher_id) {
+		this.teacher_id = teacher_id;
+	}
+	public double getManner_score() {
+		return manner_score;
+	}
+	public void setManner_score(double manner_score) {
+		this.manner_score = manner_score;
+	}
+	public int getClass_idx() {
+		return class_idx;
+	}
+	public void setClass_idx(int class_idx) {
+		this.class_idx = class_idx;
+	}
+	
+	
 	
 	
 	

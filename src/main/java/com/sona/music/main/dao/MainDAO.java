@@ -12,4 +12,6 @@ public interface MainDAO {
 
 	List<MainDTO> list(String userId);
 
+	List<MainDTO> nolist();
+
 }

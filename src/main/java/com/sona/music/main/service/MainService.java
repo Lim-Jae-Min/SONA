@@ -1,8 +1,6 @@
 package com.sona.music.main.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +33,14 @@ public class MainService {
 		
 		List<MainDTO> list = mainDAO.list(userId);
 		
-		
 		return list;
+	}
+
+	public List<MainDTO> nolist() {
+		
+		List<MainDTO> nolist = mainDAO.nolist();
+		
+		return nolist;
 	}
 	
 	

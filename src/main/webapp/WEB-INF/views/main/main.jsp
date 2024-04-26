@@ -9,9 +9,35 @@
 <link rel="stylesheet" href="resources/css/common.css?after"
 	type="text/css">
 <style>
+.el-text {
+	color: #BEE6FF; /* 원하는 색상 코드로 변경하세요 */
+	font-weight: bold;
+	font-size: 25px;
+}
+
+.des {
+	color: #999; /* 원하는 색상 코드로 변경하세요 */
+	font-weight: bold;
+	font-size: 17px;
+	margin-left: 100px;
+}
+
+.des1 {
+	color: #6FA4FF; /* 원하는 색상 코드로 변경하세요 */
+	font-weight: bold;
+	font-size: 17px;
+	margin-left: 830px;
+	margin-bottom: 20px;
+}
+
+.heart {
+	color: red; /* 원하는 색상 코드로 변경하세요 */
+	font-weight: bold;
+}
+
 .main-title {
 	margin-top: 20px;
-	margin-left: 20px;
+	margin-left: 30px;
 }
 
 .main-title h1 {
@@ -20,8 +46,12 @@
 	font-weight: bold;
 }
 
-.container {
+.main-title1 {
+	margin-top: 20px;
+	margin-left: 98px;
+}
 
+.container {
 	display: flex;
 	justify-content: center; /* 가로 방향 중앙 정렬 */
 	align-items: center; /* 세로 방향 중앙 정렬 */
@@ -31,7 +61,7 @@
 
 .box1 {
 	width: 400px;
-	height: 151px;
+	height: 180px;
 	background-color: white;
 	color: #BEE6FF;
 	font-size: 15px;
@@ -40,7 +70,7 @@
 	line-height: 1.5em;
 	border-radius: 15px;
 	margin: 20px;
-	margin-top: 180px;
+	margin-top: 220px;
 	border: 2px solid #BEE6FF;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 	position: relative;
@@ -57,7 +87,7 @@
 
 .box2 {
 	width: 400px;
-	height: 151px;
+	height: 180px;
 	background-color: white;
 	color: #BEE6FF;
 	font-size: 15px;
@@ -66,7 +96,7 @@
 	line-height: 1.5em;
 	border-radius: 15px;
 	margin: 20px;
-	margin-top: -180px;
+	margin-top: -213px;
 	border: 2px solid #BEE6FF;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 	position: relative;
@@ -83,7 +113,7 @@
 
 .box3 {
 	width: 400px;
-	height: 151px;
+	height: 180px;
 	background-color: white;
 	color: #BEE6FF;
 	font-size: 15px;
@@ -92,7 +122,7 @@
 	line-height: 1.5em;
 	border-radius: 15px;
 	margin: 20px;
-	margin-top: 180px;
+	margin-top: 220px;
 	border: 2px solid #BEE6FF;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 	position: relative;
@@ -112,6 +142,7 @@
 	padding: 10px;
 	font-size: 20px;
 	color: #6FA4FF;
+	font-weight: bold;
 }
 
 .content {
@@ -130,7 +161,22 @@
 	transition: background-color 0.3s ease;
 }
 
+.button-container.videoList1 button {
+	background-color: #6FA4FF;
+	color: white;
+	font-size: 18px; /* 폰트 크기 조정 */
+	padding: 12px 24px; /* 버튼 크기 조정 */
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
 .button-container.videoList button:hover {
+	background-color: #8DC1FF; /* 마우스 호버시 배경색 변경 */
+}
+
+.button-container.videoList1 button:hover {
 	background-color: #8DC1FF; /* 마우스 호버시 배경색 변경 */
 }
 
@@ -148,16 +194,18 @@
 	text-align: center;
 	margin-top: 20px;
 	margin-left: 108px; /* 동영상 컨테이너 간 간격 조정 */
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .video-container {
 	width: 300px;
-	height: 151px;
+	height: 270px;
 	background-color: #BEE6FF;
-
 	border-bottom-left-radius: 15px; /* 테두리 둥근 정도 조정 */
 	padding: 20px;
 	text-align: center;
+	font-weight: bold;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .corner-label {
@@ -173,56 +221,87 @@
 }
 
 .spacer1 img {
-    top: 20px; /* container의 상단에서부터의 위치 */
-    left: 20px; /* container의 왼쪽에서부터의 위치 */
+	top: 20px; /* container의 상단에서부터의 위치 */
+	left: 20px; /* container의 왼쪽에서부터의 위치 */
 }
 
 .spacer2 img {
-    top: 20px; /* container의 상단에서부터의 위치 */
-    left: calc(50% - 201.5px); /* container의 가로 중앙에서부터의 위치 */
+	top: 20px; /* container의 상단에서부터의 위치 */
+	left: calc(50% - 201.5px); /* container의 가로 중앙에서부터의 위치 */
 }
 
 .spacer3 img {
-    top: 20px; /* container의 상단에서부터의 위치 */
-    right: 20px; /* container의 오른쪽에서부터의 위치 */
+	top: 20px; /* container의 상단에서부터의 위치 */
+	right: 20px; /* container의 오른쪽에서부터의 위치 */
 }
+
 .spacer1 img {
-	width: 403px; /* 이미지의 너비를 조절합니다. */
-	height: 151px; /* 높이는 자동으로 조절됩니다. */
+	width: 400px; /* 이미지의 너비를 조절합니다. */
+	height: 190px; /* 높이는 자동으로 조절됩니다. */
 	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
-	margin-top: -355px;
+	margin-top: -420px;
 	margin-left: 308px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-
 .spacer2 img {
-	width: 403px; /* 이미지의 너비를 조절합니다. */
-	height: 151px; /* 높이는 자동으로 조절됩니다. */
+	width: 400px; /* 이미지의 너비를 조절합니다. */
+	height: 185px; /* 높이는 자동으로 조절됩니다. */
 	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
-	margin-top: -172px;
+	margin-top: -205px;
 	margin-left: 750px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-
 .spacer3 img {
-	width: 403px; /* 이미지의 너비를 조절합니다. */
-	height: 151px; /* 높이는 자동으로 조절됩니다. */
+	width: 400px; /* 이미지의 너비를 조절합니다. */
+	height: 190px; /* 높이는 자동으로 조절됩니다. */
 	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
-	margin-top: -355px;
+	margin-top: -420px;
 	margin-left: 1200px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.box1:hover,
-.box2:hover,
-.box3:hover,
-.spacer1:hover img,
-.spacer2:hover img,
-.spacer3:hover img {
-    transform: scale(1.1); /* 1.1배 크기로 확대됨 */
-    transition: transform 0.8s ease; /* 부드러운 전환 효과를 위한 transition 추가 */
+.box1:hover, .box2:hover, .box3:hover, .spacer1:hover img, .spacer2:hover img,
+	.spacer3:hover img {
+	transform: scale(1.1); /* 1.1배 크기로 확대됨 */
+	transition: transform 0.8s ease; /* 부드러운 전환 효과를 위한 transition 추가 */
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 15px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+	background-color: #BEE6FF;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	max-width: 800px;
+	text-align: center;
+	border-radius: 15px;
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -267,6 +346,7 @@
 	</header>
 	<div class="main-title">
 		<h1>누구나 배울 수 있는 악기!</h1>
+
 	</div>
 	<div></div>
 	<br />
@@ -275,7 +355,7 @@
 		<div class="box1" data-number="01">
 			<p>
 				음악에 특화된 플랫폼<br /> <br /> <span class="content">음악에 특화된 서비스
-					제공으로<br/> 전문적인 강의를 수강 할 수 있어요.
+					제공으로<br /> 전문적인 강의를 수강 할 수 있어요.
 				</span>
 			</p>
 		</div>
@@ -283,22 +363,22 @@
 		<div class="box2" data-number="02">
 			<p>
 				나만을 위한 맞춤 강의<br /> <br /> <span class="content">수강신청서 작성으로
-					회원에게 <br/> 맞춤 서비스를 제공해 드려요.
+					회원에게 <br /> 맞춤 서비스를 제공해 드려요.
 				</span>
 			</p>
 		</div>
 
 		<div class="box3" data-number="03">
 			<p>
-				상호 평가<br /> <br /> <span class="content">수강생과 강사 사이의 상호간 평가를
-					반영한 매너지수로 <br/> 강의 및 학생 선택에 도움을 드려요.
+				상호 평가<br /> <br /> <span class="content">수강생과 강사 사이의 상호간
+					평가를 반영한 매너지수로 <br /> 강의 및 학생 선택에 도움을 드려요.
 				</span>
 			</p>
 		</div>
 
 	</div>
 	<div class="spacer1">
-		<img src="resources/img/music.jpg" alt="music">
+		<img src="resources/img/spee.jpg" alt="music">
 	</div>
 	<div class="spacer2">
 		<img src="resources/img/service.jpg" alt="service">
@@ -306,45 +386,63 @@
 	<div class="spacer3">
 		<img src="resources/img/feedback.jpg" alt="feedback">
 	</div>
+	<span class="des1"><img src="resources/img/logo.png" id="logo"
+		style="width: 50px; height: 40px; margin-top: 20px;"> 와 함께
+		시작해보세요!</span>
 	<br />
 	<br />
 	<br />
-	<div class="video-wrapper">
-		<div class="video-container">
-			<!-- 동영상 콘텐츠 -->
+	<c:if test="${sessionScope.loginId != null}">
+		<div class="main-title1">
+			<h2>
+				<span class="el-text">${sessionScope.loginId}</span> 님을 위한 <span
+					class="el-text">${list[1].applyform_inst}</span> 추천 영상입니다.
+			</h2>
 		</div>
-		<div class="corner-label">1</div>
+	</c:if>
+	<div>
+		<span class="des">하늘색 박스를 클릭하면 크게 볼 수 있습니다.</span>
 	</div>
-	<div class="video-wrapper">
-		<div class="video-container">
-			<!-- 동영상 콘텐츠 -->
+	<c:forEach items="${list}" var="list" varStatus="loop">
+		<div class="video-wrapper" data-class-idx="${list.class_idx}">
+			<div class="video-container">
+				<iframe width='300' height='200' src="${list.video_url}"
+					frameborder='0' allowfullscreen></iframe>
+				<br />
+				<br /> ${list.teacher_id} 선생님 <br />
+				<br /> <span class="heart">♥</span>${list.manner_score} <input
+					type="hidden" name="class_idx" value="${list.class_idx}" />
+			</div>
+			<div class="corner-label">${loop.index + 1}</div>
 		</div>
-		<div class="corner-label">2</div>
-	</div>
-	<div class="video-wrapper">
-		<div class="video-container">
-			<!-- 동영상 콘텐츠 -->
-		</div>
-		<div class="corner-label">3</div>
-	</div>
-	<div class="video-wrapper">
-		<div class="video-container">
-			<!-- 동영상 콘텐츠 -->
-		</div>
-		<div class="corner-label">4</div>
-	</div>
+	</c:forEach>
+
 	<br />
 	<br />
 	<br />
 	<br />
 	<br />
 	<div class="button-container videoList">
-		<button class="button" onclick="redirectToReplyPage()">더보기</button>
+		<button class="button" onclick="redirectToReplyPage()">추천 영상
+			더보기</button>
+	</div>
+	<input type="hidden" value="${sessionScope.loginId}" />
+	<br />
+	<br />
+	<br />
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<iframe id="videoFrame" width="560" height="315" frameborder="0"
+				allowfullscreen></iframe>
+			<br />
+			<br />
+			<div class="button-container videoList1">
+				<button id="viewLectureBtn">해당 영상 강의보기</button>
+			</div>
+		</div>
 	</div>
 
-	<br />
-	<br />
-	<br />
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>
@@ -378,9 +476,7 @@
 		<div>
 			<a href="myPage.go">마이페이지</a>
 		</div>
-		<br />
-		<br />
-		<br />
+		<br /> <br /> <br />
 		<div>
 			<a href="logout.do">로그아웃</a>
 		</div>
@@ -388,47 +484,50 @@
 </body>
 
 <script>
-var userId = "${sessionScope.loginId}";
 
-
-$(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
-	listCall(userId);
-});
-
-function listCall(userId){
-    $.ajax({
-       type:'get',
-       url:'./mainList.ajax',
-       data:{
-          'userId':${sessionScope.loginId}
-       },
-       dataType:'json',
-       success:function(data){
-          drawList(data.list);
-          console.log(data);
-          
-       },
-       error:function(error){
-          console.log(error)
-       }
+$(document).ready(function() {
+    // 각 video-wrapper를 클릭했을 때
+    $('.video-wrapper').click(function() {
+        // 해당 video-wrapper의 class_idx 가져오기
+        var classIdx = $(this).data('class-idx');
+        var videoUrl = $(this).find('iframe').attr('src');
+        console.log(classIdx);
+        // 해당 강의 보기 버튼 클릭 시 이벤트 처리
+        $('#viewLectureBtn').click(function() {
+            // 가져온 class_idx를 사용하여 링크를 생성하고 이동
+            window.location.href = "./lessonDetail.go?class_idx=" + classIdx;
+        });
+        // 모달 열기
+        openModal(videoUrl);
     });
-}
 
-function drawList(list) {
-    var content = '';
-    for (var i = 0; i < list.length; i++) {
-        var item = list[i];
-        content += '<div class="video-wrapper">';
-        content += '<div class="video-container">';
-        // 여기에 동영상 콘텐츠를 생성하는 코드 추가
-        content += '<iframe width="560" height="315" src="' + item.video_url + '" frameborder="0" allowfullscreen></iframe>';
-        content += '</div>';
-        content += '<div class="corner-label">' + (i + 1) + '</div>';
-        content += '</div>';
+    // 모달 열기
+    function openModal(videoUrl) {
+        var modal = document.getElementById("modal");
+        var videoFrame = document.getElementById("videoFrame");
+        videoFrame.src = videoUrl; // 동영상 URL 설정
+        modal.style.display = "block";
     }
-    $('#videoWrapper').html(content);
-}
+    
+    // 모달 닫기 버튼 클릭 시 모달 닫기
+    $('.close').click(function() {
+        closeModal();
+    });
 
+    // 모달 영역 외의 다른 곳 클릭 시 모달 닫기
+    window.onclick = function(event) {
+        var modal = document.getElementById("modal");
+        if (event.target == modal) {
+            closeModal();
+        }
+    };
+
+    // 모달 닫기
+    function closeModal() {
+        var modal = document.getElementById("modal");
+        modal.style.display = "none";
+    }
+});
 
 function redirectToReplyPage() {
     window.location.href = './loading.do';

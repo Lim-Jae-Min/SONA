@@ -25,8 +25,24 @@ public class MainController {
 	@Autowired MainService mainService;
 	
 	@RequestMapping(value="/")
-	public String main(Model model) {
+	public String main(Model model, HttpSession session) {
 		logger.info("메인화면 접속");
+		
+			String userId = (String) session.getAttribute("loginId");
+			 logger.info("userId : "+ userId);
+			
+			 if (session.getAttribute("loginId") != null && session.getAttribute("user_type").equals("수강생") ) {
+				 
+			 List<MainDTO> list = mainService.list(userId);
+			 model.addAttribute("list",list);
+			 logger.info("list :" + list);
+			 
+			 } else {
+				 List<MainDTO> nolist = mainService.nolist();
+				 model.addAttribute("list",nolist);
+				 logger.info("list :"+ nolist);
+			 }
+		
 		
 		return "main/main";
 	}
@@ -124,12 +140,6 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value="/mainList.ajax")
-	@ResponseBody
-	public List<MainDTO> listCall(@RequestParam(value="userId") String userId){
-	    logger.info("userId : "+ userId);
-	    List<MainDTO> list = mainService.list(userId);
-	    return list;
-	}
+	
 	
 }

@@ -159,11 +159,11 @@ public class MemberController {
 			logger.info("test1 : " + test1);
 			 // 수강생인 경우
 	        if ("수강생".equals(info.getUser_type())) {
-	            page = "/main/main"; // 수강생 메인 페이지로 리다이렉트
+	            page = "redirect:/"; // 수강생 메인 페이지로 리다이렉트
 	        }
 	        // 강사인 경우
 	        else if ("강사".equals(info.getUser_type())) {
-	            page = "/main/main"; // 강사 메인 페이지로 리다이렉트
+	            page = "redirect:/"; // 강사 메인 페이지로 리다이렉트
 	        }
 	        
 		}else {
@@ -287,7 +287,7 @@ public class MemberController {
 		session.removeAttribute("point");
 		session.removeAttribute("alarm_count");
     	
-    	return "main/main";
+    	return "redirect:/";
     }
     
     

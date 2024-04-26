@@ -392,14 +392,16 @@
 	<br />
 	<br />
 	<br />
-	<c:if test="${sessionScope.loginId != null}">
-		<div class="main-title1">
-			<h2>
-				<span class="el-text">${sessionScope.loginId}</span> 님을 위한 <span
-					class="el-text">${list[1].applyform_inst}</span> 추천 영상입니다.
-			</h2>
-		</div>
-	</c:if>
+	<c:forEach items="${list}" var="item">
+    <c:if test="${sessionScope.loginId != null}">
+        <div class="main-title1">
+            <h2>
+                <span class="el-text">${sessionScope.loginId}</span> 님을 위한 
+                <span class="el-text">${item.applyform_inst}</span> 추천 영상입니다.
+            </h2>
+        </div>
+    </c:if>
+</c:forEach>
 	<div>
 		<span class="des">하늘색 박스를 클릭하면 크게 볼 수 있습니다.</span>
 	</div>

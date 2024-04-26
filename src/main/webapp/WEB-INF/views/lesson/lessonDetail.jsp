@@ -407,9 +407,9 @@ button {
 			        						</c:if>
 			        					</th>
 			        					<td class="smallInterval">
-			        						<span class="smallFontSize">${review.rater_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallFontSize yellow">★ ${review.SCORE}</span>
+			        						<span class="smallFontSize">${review.rater_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallFontSize yellow">★ ${review.score}</span>
 			        						<br/>
-			        						<span><a href="lessonReviewDetail?REVIEW_IDX=${review.REVIEW_IDX}">${review.REVIEW_TITLE}</a></span>
+			        						<span><a href="lessonReviewDetail?REVIEW_IDX=${review.review_idx}">${review.review_title}</a></span>
 			        					</td>
 		        					</tr>
 		        				</c:forEach>
@@ -428,11 +428,11 @@ button {
 		        				<c:forEach items="${QnAList}" var="QnA">
 		        					<tr>
 			        					<td class="smallInterval">
-			        						<c:if test="${QnA.ANONYMOUS_STATUS}">
+			        						<c:if test="${QnA.anonymous_status}">
 			        							비공개 Q&A 입니다. <img src="resources/img/locked.png" class="locked">
 			        						</c:if>
-			        						<c:if test="${!QnA.ANONYMOUS_STATUS}">
-				        						<span><a href="lessonQnADetail?QUESTION_IDX=${QnA.QUESTION_IDX}">${QnA.q_TITLE}</a></span>
+			        						<c:if test="${!QnA.anonymous_status}">
+				        						<span><a href="lessonQnADetail?QUESTION_IDX=${QnA.question_idx}">${QnA.q_title}</a></span>
 			        						</c:if>
 			        					</td>
 		        					</tr>

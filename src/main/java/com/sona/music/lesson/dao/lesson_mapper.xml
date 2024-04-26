@@ -187,8 +187,10 @@
 	</select>
 	
 	<insert id="leesonApply">
-		INSERT INTO APPLY_HISTORY(class_idx, user_id, apply_state)
-			VALUES(#{param1}, #{param2}, '신청 완료')
+		INSERT INTO APPLY_HISTORY(class_idx, user_id, apply_state, apply_detail)
+			VALUES(#{param1}, #{param2}, '신청 완료', (concat(substr(cast(curdate() as char), 1, 8), right(concat("00000" , 
+				(SELECT COUNT(ah.apply_idx) FROM APPLY_HISTORY ah WHERE YEAR(ah.REG_DATE) = YEAR(CURDATE()) 
+				AND MONTH(ah.REG_DATE) = MONTH(CURDATE()) AND ah.apply_state = '신청 완료')), 6))))
 	</insert>
 	
 	<update id="lessonBlind">

@@ -188,5 +188,29 @@
 	<delete id="teacherListDel">
 		DELETE FROM MY_TEACHER WHERE teacher_id = #{param1} AND user_id = #{param2}
 	</delete>
+	
+	<select id="blockListCall" resultType="com.sona.music.mypage.dto.MyPageDTO">
+		<![CDATA[
+			SELECT
+				mt.teacher_id AS user_id
+				, u.user_name
+				, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = mt.teacher_id AND pb.photo_category = 'Profile') AS new_filename
+				, CASE WHEN (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE co.user_id = mt.teacher_id) IS NULL
+					THEN 0
+					ELSE (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE co.user_id = mt.teacher_id)
+					END AS accumulate_lesson
+				, CASE WHEN (SELECT COUNT(mh.manner_idx) FROM MANNER_HISTORY mh WHERE mh.user_id = mt.teacher_id) < 5
+					THEN '신규 강사'
+					ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = mt.teacher_id), 2), '')
+					END AS manner
+			FROM MY_TEACHER mt JOIN USERS u ON mt.teacher_id = u.user_id
+			WHERE mt.user_id = #{param3} AND mt.category = 'block'
+			LIMIT #{param1} OFFSET #{param2}
+		]]>
+	</select>
+	
+	<select id="blockListCount" resultType="Integer">
+		SELECT CEIL(COUNT(user_id)/#{param1}) FROM MY_TEACHER WHERE user_id = #{param2} AND category = 'block'
+	</select>
 	    
 </mapper>

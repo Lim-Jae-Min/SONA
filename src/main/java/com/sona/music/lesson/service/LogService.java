@@ -38,7 +38,9 @@ public class LogService {
 		model.addAttribute("teacherProfile", teacherProfile);
 		model.addAttribute("studentProfile", studentProfile);
 		
-		List<LogDTO> logList = logDAO.lessonLogList(apply_idx);
+		String apply_detail = lessonInfo.getApply_detail();
+		
+		List<LogDTO> logList = logDAO.lessonLogList(apply_detail);
 		model.addAttribute("logList", logList);
 		if (lessonInfo.getAccumulate_times() != 0) {
 			if (logList.get(logList.size() - 1).getCh_result().equals("강의 종료")) {
@@ -99,8 +101,10 @@ public class LogService {
 
 		int apply_idx = Integer.parseInt(map.get("apply_idx"));
 		
-		List<LogDTO> logList = logDAO.lessonLogList(apply_idx);
 		LogDTO dto = logDAO.lessonInfo(apply_idx);
+		String apply_detail = dto.getApply_detail();
+		
+		List<LogDTO> logList = logDAO.lessonLogList(apply_detail);
 		
 		int ch_idx = logList.get(Integer.parseInt(map.get("index"))).getCh_idx();
 		logger.info("ch_idx = " + ch_idx);

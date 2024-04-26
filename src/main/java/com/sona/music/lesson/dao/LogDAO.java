@@ -11,7 +11,7 @@ public interface LogDAO {
 
 	List<LogDTO> logProfile(int apply_idx);
 
-	List<LogDTO> lessonLogList(int apply_idx);
+	List<LogDTO> lessonLogList(String apply_detail);
 
 	int lessonLogWrite(LogDTO dto);
 

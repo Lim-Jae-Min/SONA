@@ -16,6 +16,7 @@ public class LogDTO {
 	private String start_date;
 	private int total_times;
 	private int accumulate_times;
+	private String apply_detail;
 	
 	private String ch_date;
 	private String ch_write_date;
@@ -118,6 +119,12 @@ public class LogDTO {
 	}
 	public void setCh_idx(int ch_idx) {
 		this.ch_idx = ch_idx;
+	}
+	public String getApply_detail() {
+		return apply_detail;
+	}
+	public void setApply_detail(String apply_detail) {
+		this.apply_detail = apply_detail;
 	}
 	
 	

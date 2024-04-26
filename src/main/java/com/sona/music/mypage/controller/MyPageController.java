@@ -386,18 +386,6 @@ public class MyPageController {
 		return map;
 	}
 	
-	@RequestMapping(value="/blockList.go")
-	public String blockListGo(HttpSession session) {
-		String page = "member/login";
-		logger.info("숨김 강사 페이지 controller 접속");
-		 
-		if (session.getAttribute("loginId") != null) {
-			page = "studentMyPage/studentBlockList";
-		}
-		 
-		return page;
-	}
-	
 	@RequestMapping(value="/teacherListDel.ajax", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> teacherListDel(@RequestParam(value="delList[]") List<String> delList, HttpSession session){
@@ -412,7 +400,33 @@ public class MyPageController {
 		
 		return map;
 	}
+	
+	@RequestMapping(value="/blockList.go")
+	public String blockListGo(HttpSession session) {
+		String page = "member/login";
+		logger.info("숨김 강사 페이지 controller 접속");
+		 
+		if (session.getAttribute("loginId") != null) {
+			page = "studentMyPage/studentBlockList";
+		}
+		 
+		return page;
+	}
 
+	@RequestMapping(value="/blockList.ajax")
+	@ResponseBody // response 객체로 반환
+	public Map<String, Object> blockListCall(String page, HttpSession session) {
+		logger.info("favoritelistCall 요청");
+		logger.info("요청 페이지 : "+ page);
+		String loginId = (String) session.getAttribute("loginId");
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = 8;
+		Map<String, Object> map = myPageService.blockListCall(currPage, pagePerCnt, loginId);
+		
+		return map;
+	}
+	
 }
 
 

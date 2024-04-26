@@ -172,7 +172,6 @@
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
     </div>
->>>>>>> origin/master
 </body>
 <script>
 $('#userName').click(function slide() {

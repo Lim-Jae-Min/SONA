@@ -205,6 +205,20 @@ public class MyPageService {
 		return cnt;
 	}
 
+	public Map<String, Object> blockListCall(int currPage, int pagePerCnt, String loginId) {
+		int start = (currPage-1) * pagePerCnt;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<LessonDTO> list = myPageDAO.blockListCall(pagePerCnt, start, loginId);
+		logger.info("list : {}", list);
+		logger.info("list size : "+list.size());
+		result.put("list", list);		
+		result.put("currPage", currPage);
+		result.put("totalPages", myPageDAO.blockListCount(pagePerCnt, loginId));
+		
+		return result;
+	}
+
 
 
 

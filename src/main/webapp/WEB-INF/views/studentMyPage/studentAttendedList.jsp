@@ -10,6 +10,25 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+	  #progress {
+        position: relative;
+        appearance: none;
+      }
+      
+      #progress::-webkit-progress-bar {
+        background: #f0f0f0;
+        border-radius: 12px;
+        border: 1px solid #eeeeee;
+        overflow: hidden;
+      }
+
+      #progress::-webkit-progress-value {
+        background: #fdd4d6;
+        border-radius: 0px;
+      }
+
+
+
 		#sidemenu {
 		    background-color: #F0FAFF;
 		    color: black;
@@ -235,7 +254,7 @@ function courseListCall(page, loginId) {
             $('#pagination').twbsPagination({
                 startPage: startPage, // 시작페이지
                 totalPages: data.totalPages, // 총 페이지 갯수
-                visiblePages: 15, // 보여줄 페이지 수 [1][2][3][4][5]
+                visiblePages: 5, // 보여줄 페이지 수 [1][2][3][4][5]
                 onPageClick: function(evt, pg) { // 페이지 클릭시 실행 함수
                     console.log(evt); // 이벤트 객체
                     console.log(pg); // 클릭한 페이지 번호
@@ -255,15 +274,17 @@ function courseListCall(page, loginId) {
 
 function convertToPercentage(course) {
     // course.lesson_progress가 null이면 처리하지 않고 그대로 반환
-    if (!course || !course.lesson_progress) {
+    if (course == null || course.lesson_progress == null) {
         return '0'; // 데이터가 없는 경우 0% 반환
-    }
-
-    // "수업 완료"가 포함된 문자열인지 확인
-    if (course.lesson_progress.includes("수업 완료")) {
-        // "수업 완료"를 제거하고 남은 문자열에서 숫자 부분을 추출
-        var progressStr = course.lesson_progress.replace("수업 완료(", "").replace(")", "");
-        // "/"를 기준으로 분자와 분모로 나눔
+    } else {
+    	var index1 = course.lesson_progress.indexOf('(');
+    	var index2 = course.lesson_progress.indexOf(')');
+    	
+    	// "수업 완료"를 제거하고 남은 문자열에서 숫자 부분을 추출
+        // var progressStr = course.lesson_progress.replace("수업 완료(", "").replace(")", "");
+        var progressStr = course.lesson_progress.substring(index1 + 1, index2 + 1);
+    	
+    	// "/"를 기준으로 분자와 분모로 나눔
         var parts = progressStr.split("/");
         // 분자와 분모를 숫자로 변환하여 계산
         var numerator = parseFloat(parts[0]);
@@ -274,9 +295,6 @@ function convertToPercentage(course) {
         // 소수점 이하가 있는 경우에만 소수점을 제거하고, 그 외의 경우에는 그대로 출력
         var formattedPercentage = Number.isInteger(percentage) ? percentage.toFixed(0) : percentage.toFixed(2);
         return formattedPercentage;
-    } else {
-        // "수업 완료"가 포함되어 있지 않으면 그대로 반환
-        return course.lesson_progress;
     }
 }
 
@@ -287,7 +305,12 @@ function drawList(list) {
         var totalCount = list.length; // 리스트의 총 개수
 
         // 진행률 게이지 바 색상 설정
-        var gaugeColor = convertToPercentage(course) >= 90 ? "green" : "yellow";
+     	var gaugeColor = "white"; // 진행이 안된 바는 흰색으로 설정
+
+		if (convertToPercentage(course) !== '') {
+		    // 진행률이 있는 경우에만 회색으로 설정
+		    gaugeColor = "green";
+		}; 
         var firstLetter = course.teacher_name.charAt(0); // 첫 번째 글자
         var otherLetters = course.teacher_name.substring(1); // 나머지 글자
         var maskedName = '';
@@ -305,19 +328,35 @@ function drawList(list) {
         }
         
         if (course.end_check == null){
-        	course.end_check = '';
+			if (course.apply_state =="수락 완료"){
+		        course.apply_state ="결제 대기";
+		    }else if(course.apply_state =="신청 완료"){
+		        course.apply_state = "수락 대기";
+		    }
+            course.end_check = course.apply_state;
         }
+    
 
         content += '<tr style="border-bottom: 1px solid #ddd; height: 50px;">'; // 각 항목에 경계선 추가
         content += '<td style="text-align: center;">' + (totalCount - i) + '</td>'; // 총 개수에서 현재 인덱스를 뺀 번호를 출력
-        content += '<td style="text-align: center;">' + course.class_name + '</td>'; // 제목
+	     if (course.apply_state === '결제 완료') {
+	         content += '<td style="text-align: center;">' +
+	             '<a href="lessonLog.go?apply_idx=' + course.apply_idx + '">' + course.class_name + '</a>' +
+	             '</td>'; // 제목을 클릭하면 해당 강의일지의 세부 정보 페이지로 이동
+	     } else {
+	         content += '<td style="text-align: center;">' +
+	             '<a href="lessonPayment.go?class_idx=' + course.class_idx + '">' + course.class_name + '</a>' +
+	             '</td>'; // 제목을 클릭하면 해당 강의의 결제 페이지로 이동
+	     }
         content += '<td style="text-align: center;">' + maskedName + '</td>'; // 선생님 이름
         content += '<td style="text-align: center;">' + course.class_price + '</td>'; // 가격
         // 진행률 게이지 바 추가
-        content += '<td style="text-align: center;">' +
-            '<progress max="100" value="' + convertToPercentage(course) + '" style="background-color: ' + gaugeColor + ';"></progress><br>' +
-            convertToPercentage(course) + '%' +
-            '</td>'; // 진행률 및 퍼센트 표시
+		content += '<td style="text-align: center;">';
+		if (course.apply_state == '결제 완료') {
+		    content += '<progress max="100" value="' + convertToPercentage(course) + '" id = "progress";"></progress><br>' +
+		        convertToPercentage(course) + '%';
+		}
+		content += '</td>';
         if (course.end_check !== null) {
             content += '<td style="text-align: center;">' + course.end_check + '</td>'; // 상태
         }

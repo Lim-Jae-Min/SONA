@@ -140,7 +140,7 @@
 		.confirm-button {
 		    position: absolute;
 			top: 15px;
-			right: 6px;
+			right: 431px;
 			width: 100px;
 			height: 40px;
 		}

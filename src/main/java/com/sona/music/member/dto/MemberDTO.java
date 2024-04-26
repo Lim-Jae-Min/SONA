@@ -27,6 +27,7 @@ public class MemberDTO {
     private String apply_idx;
     private String profile;
     private String index_order;
+    private String class_disable;
 	public String getUser_id() {
 		return user_id;
 	}
@@ -152,6 +153,12 @@ public class MemberDTO {
 	}
 	public void setIndex_order(String index_order) {
 		this.index_order = index_order;
+	}
+	public String getClass_disable() {
+		return class_disable;
+	}
+	public void setClass_disable(String class_disable) {
+		this.class_disable = class_disable;
 	}
 
 	

@@ -122,7 +122,28 @@
 	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM APPLY_HISTORY
 	</select>
 	
+
+		<select id="lessonAllCount" resultType="Integer" parameterType="Integer">
+    		SELECT CEIL(COUNT(*) / #{cnt}) AS pages FROM CLASS_OPEN WHERE USER_ID ='user2'
+		</select>
 		
+		
+		<select id="pointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
+		SELECT 
+		    up.point_date,
+		    up.point_type,
+		    up.point,
+		    (SUM(point) OVER (ORDER BY up.point_idx)) AS balance
+		FROM 
+		    USER_POINT up 
+		WHERE 
+		    up.user_id = #{param3}
+		ORDER BY 
+		    up.point_idx desc
+		LIMIT #{param2},#{param1}
+		    
+	   </select>
+
 	<select id="pointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 	SELECT 
 	    up.point_date,
@@ -154,10 +175,27 @@
 		         END AS count
 		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
 		   , co.class_reg_date
+		   , co.class_disable
+		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2' AND co.CLASS_DISABLE = #{param4}
+		ORDER BY co.CLASS_IDX desc
+		LIMIT #{param2} OFFSET #{param3}
+	</select>
+	
+	
+	<select id="lessonlistall" resultType="com.sona.music.member.dto.MemberDTO">
+		SELECT co.class_name
+		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
+		         THEN 0
+		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
+		         END AS count
+		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
+		   , co.class_reg_date
+		   , co.class_disable
 		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2'
 		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>
+
 	
 	<select id="receiveList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 		select r.review_idx, r.review_reg_date, r.review_title, r.rater_id, r.score from REVIEW r 
@@ -166,7 +204,6 @@
 				ORDER BY 
 				    r.review_idx desc
 						LIMIT #{param2},#{param1}
-							   
 	</select>
 	   
 	<select id="sendList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">

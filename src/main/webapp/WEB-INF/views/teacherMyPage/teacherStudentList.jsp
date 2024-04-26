@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강의 관리</title>
+<title>수강생 관리</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
@@ -37,45 +37,12 @@
 		padding-top: 19px;
 		}
 		
-		th{
-		text-align:center;
-		}
+		  th {
+	        border-bottom: 2px solid #BEE6FF;
+	        padding: 8px;
+	    }
+	    
 		
-		button {
-		    background-color: #BEE6FF;
-		    color: black;
-		    border: none;
-		    padding: 10px 20px;
-		    text-align: center;
-		    display: inline-block;
-		    font-size: 16px;
-		    margin: 4px 2px;
-		    cursor: pointer;
-		    border-radius: 4px;
-		}
-		
-		.click {
-		   padding: 5px;
-		   background-color: gray;
-		   color: white;
-		   border-radius: 5px;
-		   display: inline-block;
-		   cursor: pointer;
-		   text-align: center;
-		}
-		.class {
-		   width: 77px;
-		   height: 31px;
-		}
-		.clickresult{
-		   display: none;
-		}
-		.style {
-		   width: 80px;
-		   height: 24px;
-		}
-		
-
 </style>
 </head>
 <body>
@@ -135,35 +102,32 @@
  		<!-- HTML 코드 -->
  		
  		<div style="text-align: center; margin-top: 30px;">
- 		<div style="margin-bottom: 10px; margin-left: 91px;">
- 				상태: <div class="click class">전체</div>&nbsp;&nbsp;
-			   <div class="click class">활성</div>&nbsp;&nbsp;
-			   <div class="click class">비활성</div>&nbsp;&nbsp;
-			   <input type="text" class="clickresult" id="classDays" name="class_days"/>
+ 		<div style="margin-bottom: 10px; margin-left: 52px;">
+ 				상태:  <select name="class_name"></select> 
  		</div>
-    <div id="tab"  style="display:inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
+    <div id="tab" >
         <table style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">No</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">강의명</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">누적 수강생 수</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">만족도</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">상태</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">개설 날짜</th>
+                    <th>No</th>
+					<th>이름</th>
+					<th>강의명</th>
+					<th>진행률</th>
+					<th>상태</th>
+					<th>시작일자</th>
+					<th>종료일자</th>
                 </tr>
             </thead>
-            <tbody id="list">
-		            <tr>
-		                <td colspan="6">
-		                    <div class="container">                           
-		                        <nav aria-label="Page navigation" style="text-align:center">
-		                            <ul class="pagination" id="pagination"></ul>
-		                        </nav>               
-		                    </div>
-		                </td>
-		            </tr>
-            </tbody>
+            <tbody id="list"></tbody>
+            <tr>
+                <td colspan="6">
+                    <div class="container">                           
+                        <nav aria-label="Page navigation" style="text-align:center">
+                            <ul class="pagination" id="pagination"></ul>
+                        </nav>               
+                    </div>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
@@ -220,47 +184,44 @@ $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비�
 
 
 
-
-//'전체', '활성', '비활성' 버튼 클릭 시 필터링
-$('.class').click(function() {
-  // 클릭된 버튼의 텍스트 가져오기
-  var selectedStyle = $(this).html();
-  // 필터링할 상태 값 설정
-  var filterValue = 2; //  '전체'를 의미하는 2으로 설정
-  if (selectedStyle === '활성') {
-      filterValue = 0;
-  } else if (selectedStyle === '비활성') {
-      filterValue = 1;
-  }
-
-  // 모든 요소의 배경색을 회색으로 변경
-  $('.class').css('background-color', 'gray');
-
-  // 클릭된 버튼의 배경색을 파란색으로 변경
-  $(this).css('background-color', '#0070b6');
-	console.log("click_value=", filterValue);
-  // 필터링된 데이터를 불러오기
-  listCall(showPage, filterValue); // listCall 함수에 필터링 값을 전달
+$(document).ready(function() {
+	String userId = ${sessionScope.user_Id};
+	classTitle(userId);
+	listCall(showPage);
 });
 
+function classTitle(userId)
+    // 강의 제목을 가져와서 드롭다운 박스에 추가
+    $.ajax({
+        type: 'GET',
+        url: '/classTitle.ajax',
+        user_id: userId // 현재 사용자의 아이디를 서버에 전달
+        dataType: 'json',
+        success: function(data) {
+            // 가져온 강의 제목을 이용하여 드롭다운 박스에 옵션을 추가
+            var dropdown = $('select[name=""]');
+            $.each(data, function(index, title) {
+                dropdown.append($('<option>').text(title));
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+        
+    });
 
 
-
-
-function listCall(page, filterValue){
-	
-	
+function listCall(page){
     $.ajax({
        type:'get',
-       url:'./lessonlist.ajax',
+       url:'./studentLesson.ajax',
        data:{
           'page':page,
-          'cnt':10,
-          'state': filterValue // 필터링 값을 서버에 전달
+          'cnt':10
        },
        dataType:'json',
        success:function(data){
-          drawList(data.list);
+          drawList2(data.list);
           console.log(data);
           //플러그인 추가
           var startPage = data.currPage > data.totalPages? data.totalPages : data.currPage;
@@ -273,7 +234,7 @@ function listCall(page, filterValue){
         		  console.log(evt); // 이벤트 객체
         		  console.log(pg); //클릭한 페이지 번호
         		  showPage = pg;
-        		  listCall(pg, filterValue);
+        		  listCall(pg);
         	  }
         	  
           });
@@ -284,7 +245,6 @@ function listCall(page, filterValue){
        }
     });
 }
-
 
 function drawList(list){
     var content = '';

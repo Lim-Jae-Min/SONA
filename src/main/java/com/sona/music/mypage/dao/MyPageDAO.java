@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 import com.sona.music.board.dto.QnADTO;
 import com.sona.music.lesson.dto.LessonDTO;
 import com.sona.music.member.dto.MemberDTO;
@@ -36,7 +39,7 @@ public interface MyPageDAO {
 
 	List<MyPageDTO> pointList(int pagePerCnt, int start, String loginId);
 
-	List<MemberDTO> lessonlist(String user_id, int pagePerCnt, int start);
+	List<MemberDTO> lessonlist(String user_id, int pagePerCnt, int start, int state);
 
 	List<MyPageDTO> receiveList(int pagePerCnt, int start, String loginId);
 
@@ -52,6 +55,11 @@ public interface MyPageDAO {
 
 	int teacherListDel(String teacher_id, String loginId);
 
+
+	List<MemberDTO> lessonlistall(String user_id, int pagePerCnt, int start);
+
+	@Mapper
+	Object lessonAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
 
 
 

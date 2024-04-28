@@ -29,13 +29,20 @@
 		    border-radius: 15px;
 		    padding: 10px;
 		    margin-bottom: 10px;
-		    margin-left: 500px;
-		    width: 700px;
+		    margin-left: 361px;
+		    width: 100%;
 		}
-		td{
-		text-align:center;
-		padding-top: 19px;
-		}
+		
+		#tab th,
+	    #tab td {
+	        padding: 8px; /* 각 셀의 패딩 조절 */
+	        width:auto;
+	        max-width: 200px; /* 각 셀의 최대 너비 설정 */
+	        overflow: hidden; /* 텍스트 넘침 처리 */
+	        text-overflow: ellipsis; /* 텍스트 넘침 시 생략 부호(...) 표시 */
+	        white-space: nowrap; /* 텍스트가 너무 길어도 줄바꿈 없이 한 줄에 표시 */
+	        text-align: center;
+	    }
 		
 		th{
 		text-align:center;
@@ -75,7 +82,10 @@
 		   height: 24px;
 		}
 		
-
+		#nav__bar{
+		 text-align:center;
+		 margin-left:-244px;
+		}
 </style>
 </head>
 <body>
@@ -127,8 +137,8 @@
                 <a href="teacherPageEdit.go">개인 정보 수정</a>
                 <a href="teacherLessonList.go">강의 관리</a>
                 <a href="teacherStudentList.go">수강생 관리</a>
-                <a href="#">강의 Q&A 관리</a>
-                <a href="#">포인트 내역</a>
+                <a href="teacherQnaList.go">강의 Q&A 관리</a>
+                <a href="teacherPointList.go">포인트 내역</a>
                 <a href="#">내가 받은 리뷰</a>
                 <a href="#">내가 작성한 리뷰</a>
             </div>
@@ -139,7 +149,7 @@
  				상태: <div class="click class">전체</div>&nbsp;&nbsp;
 			   <div class="click class">활성</div>&nbsp;&nbsp;
 			   <div class="click class">비활성</div>&nbsp;&nbsp;
-			   <input type="text" class="clickresult" id="classDays" name="class_days"/>
+			   <input type="text" class="clickresult" name="class_state"/>
  		</div>
     <div id="tab"  style="display:inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
         <table style="border-collapse: collapse; width: 100%;">
@@ -154,16 +164,17 @@
                 </tr>
             </thead>
             <tbody id="list">
+            
+            </tbody>
 		            <tr>
 		                <td colspan="6">
 		                    <div class="container">                           
-		                        <nav aria-label="Page navigation" style="text-align:center">
+		                        <nav aria-label="Page navigation"  id = "nav__bar">
 		                            <ul class="pagination" id="pagination"></ul>
 		                        </nav>               
 		                    </div>
 		                </td>
-		            </tr>
-            </tbody>
+		            </tr> 
         </table>
     </div>
 </div>
@@ -223,6 +234,7 @@ $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비�
 
 //'전체', '활성', '비활성' 버튼 클릭 시 필터링
 $('.class').click(function() {
+	$('#pagination').twbsPagination('destroy');
   // 클릭된 버튼의 텍스트 가져오기
   var selectedStyle = $(this).html();
   // 필터링할 상태 값 설정
@@ -272,15 +284,16 @@ function listCall(page, filterValue){
          	  onPageClick:function(evt, pg){//페이지 클릭시 실행 함수
         		  console.log(evt); // 이벤트 객체
         		  console.log(pg); //클릭한 페이지 번호
-        		  showPage = pg;
         		  listCall(pg, filterValue);
         	  }
         	  
           });
           
        },
-       error:function(error){
-          console.log(error)
+       error: function(request, status, error) {
+           console.log("code: " + request.status)
+           console.log("message: " + request.responseText)
+           console.log("error: " + error);
        }
     });
 }
@@ -295,7 +308,9 @@ function drawList(list){
        // 인덱스를 역순으로 부여
        var index = lastIndex--;
        content += '<td>'+ index +'</td>';
-       content += '<td>' + item.class_name + '</td>';
+       content += '<td>' +
+      		 '<a href="lessonDetail.go?class_idx=' + item.class_idx + '">' + item.class_name + '</a>' +
+    		  '</td>';
        content += '<td>'+ item.count+'명' + '</td>';
        content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
        // state 값에 따라 '활성' 또는 '비활성' 출력

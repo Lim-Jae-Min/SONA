@@ -63,6 +63,7 @@ public interface MyPageDAO {
 
 	@Mapper
 	Object lessonAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+	
 	int updateApplyForm(Map<String, String> map);
 
 
@@ -80,6 +81,24 @@ public interface MyPageDAO {
 
 	List<MyPageDTO> qnaSelectedList(int pagePerCnt, int start, String loginId, String selectedClass);
 
+
+	List<String> getClassNames2(String loginId);
+
+
+	List<MyPageDTO> teacherStudentList(String user_id, int cnt, int start);
+
+
+	List<MyPageDTO> teacherStudentListFilter(String user_id, int cnt, int start, String selectedClass);
+
+
+	List<MyPageDTO> teacherQnaListFilter(String user_id, int cnt, int start, String selectedClass);
+
+
+	List<MyPageDTO> teacherQnaList(String user_id, int cnt, int start);
+
+
+	@Mapper
+	Object studentLessonAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
 
 
 

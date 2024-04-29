@@ -30,6 +30,31 @@ public class AdminController {
 	@Autowired
 	NoticeService noticeService;
 
+	@RequestMapping(value="adminMain.go")
+	public String adminMainGo(HttpSession session) {
+//		String page = "main/main";
+		String page = "adminPage/adminMain";
+		
+		String user_type = (String) session.getAttribute("user_type");
+		
+//		if (user_type.equals("관리자")) {
+//			page = "adminPage/adminMain";
+//		}
+		
+    	return page;
+	}
+	
+	
+	@RequestMapping(value="adminLogout.do")
+	public String adminLogout(HttpSession session) {
+		
+		session.removeAttribute("loginId");
+		session.removeAttribute("user_type");
+    	
+    	return "redirect:/";
+	}
+	
+	
 	@RequestMapping(value = "/noticeManagement.go")
 	public String noticeManagementGo() {
 

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -291,6 +292,7 @@ public class AdminController {
 		return "adminPage/adminSuggestionsLIst";
 	}
 	
+
 	@RequestMapping(value = "adminReviewList.go")
 	public String adminReviewListGo() {
 		logger.info("리뷰관리 페이지 이동");
@@ -309,8 +311,90 @@ public class AdminController {
 		int currPage = page;
 			
 		map = adminService.showListSearchReview(currPage,searchType,serachText,categoryNum);	
+		return map;
+	}
+	@RequestMapping(value = "/adminReportManagement.go")
+	public String reportManagementGo() {
+
+		return "adminPage/adminReportList";
+	}
+	
+	@RequestMapping(value = "reportManagementlist.ajax")
+	@ResponseBody
+	public Map<String, Object> reportManagementlist(int page , int searchType, String serachText) {
+		logger.info("reportManagementlist 요청");
+		logger.info("요청페이지 : " + page);
+		logger.info("신고 검색에서 가져온 text : "+serachText);
+		logger.info("신고 검색에서 가져온 type : "+searchType);
+		Map<String, Object> map = null;
+		int currPage = page;
+			
+			map = adminService.showReportSearch(currPage,searchType,serachText);	
+
 		
 		
 		return map;
 	}
+
+	
+	@RequestMapping(value = "/reportDetailAdmin.go")
+	public String reportDetailAdminGo(int report_idx, Model model) {
+		adminService.reportDetailAdmin(report_idx, model);
+
+		return "adminPage/adminReportDetail";
+	}
+
+    @RequestMapping(value = "/updateReportState", method = RequestMethod.POST)
+    @ResponseBody
+    public String updateReportState(@RequestParam int report_idx, @RequestParam String new_state) {
+    	logger.info(report_idx + new_state);
+        adminService.updateReportState(report_idx, new_state);
+        return "Success";
+    }
+	@RequestMapping(value = "/adminActionWrite.go")
+	public String actionWriteGo(int report_idx,Model model) {
+		adminService.reportDetailAdmin(report_idx, model);
+		return "adminPage/adminActionDetailWrite";
+	}
+	
+	@RequestMapping(value = "/adminActionWrite.do", method = RequestMethod.POST)
+	public String adminActionWriteDo(HttpSession session, Model model , @RequestParam Map<String,String> param) {
+		int reportIdx = Integer.parseInt(param.get("report_idx"));
+		String admin = param.get("admin_id");
+		String content = param.get("action_content");
+		logger.info("조치내역 작성에서 받은 값 : "+reportIdx);
+		logger.info("조치내역 작성에서 받은 값 : "+admin);
+		logger.info("조치내역 작성에서 받은 값 : "+content);
+		
+		
+		
+		int row = adminService.adminActionWriteDo(reportIdx, admin, content);
+			
+		
+		return "adminPage/adminReportList";
+	}
+	
+	@RequestMapping(value = "/userSuspensionHistory.go")
+	public String userSuspensionHistoryGo() {
+
+		return "adminPage/userSuspensionHistory";
+	}
+	
+	@RequestMapping(value = "suspensionlist.ajax")
+	@ResponseBody
+	public Map<String, Object> suspensionlist(int page , int searchType, String serachText) {
+		logger.info("reportManagementlist 요청");
+		logger.info("요청페이지 : " + page);
+		logger.info("신고 검색에서 가져온 text : "+serachText);
+		logger.info("신고 검색에서 가져온 type : "+searchType);
+		Map<String, Object> map = null;
+		int currPage = page;
+			
+			map = adminService.showSuspensionSearch(currPage,searchType,serachText);	
+		
+		
+		return map;
+	}
+
+
 }

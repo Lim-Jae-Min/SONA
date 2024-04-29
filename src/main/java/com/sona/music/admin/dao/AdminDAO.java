@@ -3,7 +3,11 @@ package com.sona.music.admin.dao;
 import java.util.List;
 
 import com.sona.music.admin.dto.AdminDTO;
+
 import com.sona.music.board.dto.FAQDTO;
+
+import com.sona.music.board.dto.NoticeDTO;
+
 
 public interface AdminDAO {
 
@@ -28,10 +32,26 @@ public interface AdminDAO {
 	int faqDel(int faqIdx);
 
 
+
 	List<AdminDTO> showListSearchReview(int start, int pagePerCnt, int deleteStatus, String serachText, int searchType,
 			int categoryNum);
 
 	int allCountReview(int pagePerCnt, int deleteStatus, String serachText, int searchType, int categoryNum);
+
+	List<AdminDTO> showReportSearch(int start, int pagePerCnt,String serachText, int searchType);
+
+	Object reportAllCount(int pagePerCnt, String serachText, int searchType);
+
+	AdminDTO reportDetailAdmin(int report_idx);
+
+	void updateReportState(int report_idx, String new_state);
+
+	int adminActionWriteDo(int reportIdx, String admin, String content);
+
+	List<AdminDTO> showSuspensionSearch(int start, int pagePerCnt, String serachText, int searchType);
+
+	Object suspensionAllCount(int pagePerCnt, String serachText, int searchType);
+
 
 	AdminDTO adminData();
 
@@ -44,5 +64,6 @@ public interface AdminDAO {
 	int userCount(String condition, String searchContent);
 
 	AdminDTO adminUserDetail(String user_id);
+
 
 }

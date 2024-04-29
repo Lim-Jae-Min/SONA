@@ -176,7 +176,7 @@ p.editOption{
     <!-- 게시판 영역 -->
     <div class="container">
         <h1>게시판 상세보기</h1>
-            <h2 id="boardTitle">${noticeDetail.notice_title}</h2>
+            <h2 id="boardTitle">${reportDetail.report_content}</h2>
            	<div id = "editButton">
            		<button id="editButton">⋮</button>
 	            <div id = "editslide">
@@ -289,54 +289,16 @@ $('.alarm').click(function alarmList() {
     
     
     
-    /* 삭제 버튼 구현 */
-    
-    function noticeDel() {
 
-
-
-		var confirmationMessage = "정말로 공지사항를 삭제하시겠습니까?";
-
-		if (confirm(confirmationMessage)) {
-			$.ajax({
-				url : "noticeDel.ajax", 
-				method : "POST",
-				data : {
-					noticeIdx : ${noticeDetail.notice_idx},
-					
-				}, // 강의 ID와 결제 금액을 서버로 전송합니다.
-				success : function(response) {
-					if (response.success == 1) {
-						alert("삭제를 성공 했습니다.");
-						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
-						window.location.href = "noticeManagement.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
-					} else {
-						alert("삭제를 실패 했습니다.");
-/* 						var form = document.createElement('form'); // 폼객체 생성
-						form.setAttribute('method', 'post'); //get,post 가능
-						form.setAttribute('action', "chargePoint.go"); //보내는 url
-						document.body.appendChild(form);
-						form.submit(); */
-
-					}
-				},
-				error : function(xhr, status, error) {
-					alert("서버 오류로 인해 공지사항 삭제를 실퍃하였습니다..");
-				}
-			});
-		} else {
-			alert("강의 구매가 취소되었습니다.");
-		}
-	}
     
     /* 목록으로 가기 */
 	 function backList(){
-	    	location.href = "noticeManagement.go";
+	    	location.href = "reportManagement.go";
 	    	
 	    }
-    function noticeWrite(){
+    function actionWrite(){
     	console.log("수정버튼 클릭됨");
-    	location.href = 'noticeEditAdmin.go?idx=${noticeDetail.notice_idx}';
+    	location.href = 'actionEditAdmin.go?idx=${noticeDetail.notice_idx}';
 /*     	var form = document.createElement('form'); // 폼객체 생성
 		form.setAttribute('method', 'post'); //get,post 가능
 		form.setAttribute('action', "chargePoint.go"); //보내는 url

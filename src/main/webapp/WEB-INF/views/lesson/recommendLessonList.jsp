@@ -6,14 +6,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common.css" type="text/css">
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script src="resources/js/jquery.twbsPagination.js"
-	type="text/javascript"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
 #content {
 	padding-bottom: 100px;
@@ -21,7 +16,7 @@
 
 #top {
 	height: 100px;
-	padding-left: 200px;
+	padding-left: 300px;
 	border-bottom: solid 5px #BEE6FF;
 }
 
@@ -57,7 +52,8 @@
 }
 
 #searchBox {
-	float: right;
+	margin-right: 20%;
+	margin-left: 15%;
 }
 
 #condition {

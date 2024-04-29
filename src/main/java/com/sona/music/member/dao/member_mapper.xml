@@ -41,8 +41,8 @@
 			      THEN '신규 강사'
 			      ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 2), '')
 			      END AS manner,
-				(SELECT sum(up.POINT) 
-					FROM USER_POINT up WHERE up.user_id = u.user_id) as point,
+				CASE WHEN (SELECT sum(up.POINT) FROM USER_POINT up WHERE up.user_id = u.user_id) IS NULL THEN 0
+					ELSE (SELECT sum(up.POINT) FROM USER_POINT up WHERE up.user_id = u.user_id) END AS point,
 				(SELECT COUNT(ah.alarm_idx) FROM ALARM_HISTORY ah WHERE ah.user_id = #{param1} AND ALARM_VIEWS = 0) AS alarm_count
 			FROM USERS u WHERE u.USER_ID = #{param1} AND u.USER_PASS = #{param2}	
 		

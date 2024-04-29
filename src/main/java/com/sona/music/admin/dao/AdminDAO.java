@@ -1,5 +1,7 @@
 package com.sona.music.admin.dao;
 
+import java.util.List;
+
 import com.sona.music.admin.dto.AdminDTO;
 
 public interface AdminDAO {
@@ -23,5 +25,17 @@ public interface AdminDAO {
 	int faqEdit(AdminDTO faqEditDto);
 
 	int faqDel(int faqIdx);
+
+	AdminDTO adminData();
+
+	List<AdminDTO> userData(int currentMonth, int oneMonthAgo, int twoMonthAgo);
+
+	List<AdminDTO> adminUserListCall(int pagePerCnt, int start, String condition, String searchContent);
+
+	int adminUserListCount(int pagePerCnt, String condition, String searchContent);
+
+	int userCount(String condition, String searchContent);
+
+	AdminDTO adminUserDetail(String user_id);
 
 }

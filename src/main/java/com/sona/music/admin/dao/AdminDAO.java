@@ -27,9 +27,22 @@ public interface AdminDAO {
 
 	int faqDel(int faqIdx);
 
+
 	List<AdminDTO> showListSearchReview(int start, int pagePerCnt, int deleteStatus, String serachText, int searchType,
 			int categoryNum);
 
 	int allCountReview(int pagePerCnt, int deleteStatus, String serachText, int searchType, int categoryNum);
+
+	AdminDTO adminData();
+
+	List<AdminDTO> userData(int currentMonth, int oneMonthAgo, int twoMonthAgo);
+
+	List<AdminDTO> adminUserListCall(int pagePerCnt, int start, String condition, String searchContent);
+
+	int adminUserListCount(int pagePerCnt, String condition, String searchContent);
+
+	int userCount(String condition, String searchContent);
+
+	AdminDTO adminUserDetail(String user_id);
 
 }

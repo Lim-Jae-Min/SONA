@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.admin.service.AdminService;
 import com.sona.music.board.service.FAQService;
 import com.sona.music.board.service.NoticeService;
@@ -35,11 +36,13 @@ public class AdminController {
 	@Autowired ReviewService reviewService;
 
 	@RequestMapping(value="adminMain.go")
-	public String adminMainGo(HttpSession session) {
+	public String adminMainGo(HttpSession session, Model model) {
 //		String page = "main/main";
 		String page = "adminPage/adminMain";
 		
 		String user_type = (String) session.getAttribute("user_type");
+		
+		adminService.adminMainGO(model);
 		
 //		if (user_type.equals("관리자")) {
 //			page = "adminPage/adminMain";
@@ -48,6 +51,58 @@ public class AdminController {
     	return page;
 	}
 	
+	@RequestMapping(value="/adminMain.ajax")
+	@ResponseBody
+	public Map<String, Object> adminMainAjax() {
+		
+		Map<String, Object> map = adminService.adminMainAjax();
+		
+		return map;
+	}
+	
+	@RequestMapping(value="adminUserList.go")
+	public String adminUserListGo(HttpSession session) {
+//		String page = "main/main";
+		String page = "adminPage/adminUserList";
+		
+		String user_type = (String) session.getAttribute("user_type");
+		
+		
+//		if (user_type.equals("관리자")) {
+//			page = "adminPage/adminUserList";
+//		}
+		
+    	return page;
+		
+	}
+	
+	@RequestMapping(value="/adminUserList.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> adminUserListCall(String page, String condition, String searchContent) {
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = 10;
+		
+		Map<String, Object> map = adminService.adminUserListCall(currPage, pagePerCnt, condition, searchContent);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/adminUserDetail.go")
+	public String adminUserDetailGo(String user_id, HttpSession session, Model model) {
+//		String page = "main/main";
+		String page = "adminPage/adminUserDetail";
+		
+		String user_type = (String) session.getAttribute("user_type");
+		
+		adminService.adminUserDetailGo(user_id, model);
+		
+//		if (user_type.equals("관리자")) {
+//			page = "adminPage/adminUserList";
+//		}
+		
+    	return page;
+	}
 	
 	@RequestMapping(value="adminLogout.do")
 	public String adminLogout(HttpSession session) {

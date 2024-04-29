@@ -67,7 +67,10 @@
 	#wrapper1 {
     display: flex;
 	}
-	
+	#faqWriteButton{
+		position: relative;
+		left: 880px;
+	}
 </style>
 </head>
 <body>
@@ -105,9 +108,14 @@
         </div>
         
      	<div id = "paaaa">    	  
-	     	<h3>공지사항 리스트 </h3> 
-	     	<!-- 검색기능  -->
-	     	<select id="searchType">
+	     	<h3>리뷰 관리 페이지 </h3> 
+	     	<!-- 구분기능  -->
+			<div>
+				<button value="1" onclick="setCategory(1)">전체</button> 
+				<button value="2" onclick="setCategory(2)">수강생</button>
+				<button value="3" onclick="setCategory(3)">강사</button>
+			</div>
+			<select id="searchType">
 			  <option value="1">제목</option>
 			  <option value="2">내용</option>
 			</select>
@@ -118,9 +126,10 @@
 		   	<thead>
 		      <tr class="listhead">
 		         <th class="nchb"><input type="checkbox" id="all"/></th>
-		         <th class="nidx">글번호</th>
-		         <th class="ntitle">제목</th>
+		         <th class="nidx">리뷰번호</th>
+		         <th class="ntitle">리뷰 제목</th>
 		         <th class="nid">작성자</th>
+		          <th class="nid">회원유형</th>
 		         <th class="ndate">날짜</th>
 		         <th class="nbhit">조회수</th>
 		        
@@ -151,7 +160,7 @@
 
 </body>
 <script>
-
+	var category = 1;
 	var showPage =1;
 	var searchRemain = false;
 	
@@ -161,10 +170,17 @@
 
 	$('#search').click(function (){
 		$('#pagination').twbsPagination('destroy');
+		showPage =1;
 		listCall(showPage);
 	});
 
-	
+	function setCategory(num){
+		console.log(num);
+		category = num;
+		$('#pagination').twbsPagination('destroy');
+		showPage =1;
+		listCall(showPage);
+	}
 	
 	
 	
@@ -175,11 +191,12 @@
 			console.log(serachText);
 	    $.ajax({
 	       type:'get',
-	       url:'noticeManagementlist.ajax',
+	       url:'adminReviewList.ajax',
 	       data:{
 	    	    'page':page,
 	    		'searchType':searchType,
-	    		'serachText':serachText
+	    		'serachText':serachText,
+	    		'categoryNum' : category
 	       },
 	       dataType:'json',
 	       success:function(data){
@@ -213,20 +230,21 @@
 		for(item of list){
 		    console.log(item);
 		    content += '<tr>';
-		    content += '<td class="nchb"><input type="checkbox" name="del" value="' + item.notice_idx +'"/></td>';
-		    content += '<td class="nidx">' + item.notice_idx + '</td>';
-		    content += '<td class="ntitle"><a href="noticeDetailAdmin.go?idx=' + item.notice_idx + '">' + item.notice_title + '</a></td>'
-		    content += '<td class="nid">' + item.admin_id + '</td>';
+		    content += '<td class="nchb"><input type="checkbox" name="del" value="' + item.review_idx +'"/></td>';
+		    content += '<td class="nidx">' + item.review_idx + '</td>';
+		    content += '<td class="ntitle"><a href="faqDetailAdmin.go?idx=' + item.reivew_idx + '">' + item.reivew_title + '</a></td>'
+		    content += '<td class="nid">' + item.radet_id + '</td>';
+		    content += '<td class="nid">' + item.user_type + '</td>';
 		    
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
 		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
 		    //content += '<td>' + item.reg_date + '</td>';
 		    //방법 2. Front-end : js에서 직접 변환
-		    var date = new Date(item.notice_reg_date);
+		    var date = new Date(item.review_reg_date);
 		    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
 		    content += '<td class="ndate">' + dateStr + '</td>';
 		    
-		    content += '<td class="nbhit">' + item.notice_views +'</td>';
+		    content += '<td class="nbhit">' + item.faq_views +'</td>';
 
 		    content += '</tr>';
 
@@ -298,5 +316,10 @@
 	$('.alarm').click(function alarmList() {
 		location.href = 'alarmList.go';
 	});
+	
+	function faqWriteGo(){
+		location.href = "adminFaqWrite.go";
+		
+	}
 </script>
 </html>

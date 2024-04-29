@@ -1,6 +1,9 @@
 package com.sona.music.admin.dao;
 
+import java.util.List;
+
 import com.sona.music.admin.dto.AdminDTO;
+import com.sona.music.board.dto.FAQDTO;
 
 public interface AdminDAO {
 
@@ -23,5 +26,10 @@ public interface AdminDAO {
 	int faqEdit(AdminDTO faqEditDto);
 
 	int faqDel(int faqIdx);
+
+	List<AdminDTO> showListSearchReview(int start, int pagePerCnt, int deleteStatus, String serachText, int searchType,
+			int categoryNum);
+
+	int allCountReview(int pagePerCnt, int deleteStatus, String serachText, int searchType, int categoryNum);
 
 }

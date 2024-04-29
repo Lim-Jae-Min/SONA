@@ -63,4 +63,93 @@
 		UPDATE FAQ_BOARD set faq_delete = 1 WHERE faq_idx = #{param1}
 	</update>
 	
+	
+	
+	<!-- admin Review List -->
+	<select id="showListSearchReview" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT R.*,U.user_type FROM REVIEW R left join USERS U ON R.rater_id  = U.user_id 
+			WHERE review_delete = #{param3}
+			<choose>
+				<when test="param6 == 1">
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	R.review_content LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 2">
+					AND U.user_type = "수강생"
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	R.review_content LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 3">
+					AND U.user_type = "강사"
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	R.review_content LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+			</choose>	
+			ORDER BY review_idx DESC LIMIT #{param1},#{param2};
+	</select>
+	
+	<select id="allCountReview" resultType="int">
+		SELECT CEIL (COUNT(faq_idx)/#{param1}) AS pages FROM FAQ_BOARD
+			WHERE faq_delete = #{param2}
+			<choose>
+				<when test="param5 == 1">
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	R.review_content LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 == 2">
+					AND faq_target = "수강생"
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	R.review_content LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 == 3">
+					AND faq_target = "강사"
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	R.review_content LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>			
+			</choose>	
+	</select>
+	
+	
 </mapper>

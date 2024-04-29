@@ -74,42 +74,23 @@
 </style>
 </head>
 <body>
-<header id="adminmain">
-	<table id="mainmenu">
-		<tr>
-			<th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-			<th class="menu"></th>
-			<th class="menu"></th>
-			<th class="menu"></th>
-        </tr>
-    </table>
-    <table id="mymenu">
-            <c:if test="${loginName != null}">
-                <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
-                    </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div>${loginName}</div></th>
-                </tr>
-            </c:if>
-			<c:if test="${loginName == null}">
-				<tr>
-					<c:if test="${alarmCount > 0}">
-						<th><img src="resources/img/alarm_on.png" class="miniimg"></th>
-					</c:if>
-					<c:if test="${alarmCount == 0}">
-						<th><img src="resources/img/alarm.png" class="miniimg"></th>
-					</c:if>
-					<th><a href="#">로그인</a></th>
-				</tr>
-			</c:if>
-		</table>
+	<!-- 헤더 -->
+	<header id="adminmain">
+        <table id="mainmenu">
+            <tr>
+                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                <th class="menu"></th>
+                <th class="menu"></th>
+                <th class="menu"></th>
+            </tr>
+        </table>
+        <table id="mymenu">
+           <tr>
+              <td><a href="adminLogout.do">로그아웃</a></td>
+           </tr>
+        </table>
     </header>
-    
+    <!-- 헤더 -->
     <div id = "divvv">
     <div id="wrapper1">
             <div id="adminside">
@@ -190,6 +171,7 @@
 
 	$('#search').click(function (){
 		$('#pagination').twbsPagination('destroy');
+		showPage =1;
 		listCall(showPage);
 	});
 
@@ -197,6 +179,7 @@
 		console.log(num);
 		category = num;
 		$('#pagination').twbsPagination('destroy');
+		showPage =1;
 		listCall(showPage);
 	}
 	
@@ -252,7 +235,7 @@
 		    content += '<td class="nchb"><input type="checkbox" name="del" value="' + item.sug_idx +'"/></td>';
 		    content += '<td class="nidx">' + item.sug_idx + '</td>';
 		    content += '<td class="ntitle">'+item.sug_secret +'<a href="faqDetailAdmin.go?idx=' + item.sug_idx + '">' + item.sug_title + '</a></td>'
-		    content += '<td class="nid">' + item.admin_id + '</td>';
+		    content += '<td class="nid">' + item.user_id + '</td>';
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
 		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
 		    //content += '<td>' + item.reg_date + '</td>';
@@ -261,9 +244,12 @@
 		    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
 		    content += '<td class="ndate">' + dateStr + '</td>';
 		    
-		    
-		    content += '<td class="nid">' + item.answer_count + '</td>';
-		    
+		    if (item.sug_answerCount >0) {
+		    content += '<td class="nid">' + 'Y' + '</td>';	
+			}else{
+		    content += '<td class="nid">' + 'N' + '</td>';				
+			};
+		    //content += '<td class="nid">' + item.sug_answerCount + '</td>';
 		    
 
 		    content += '</tr>';

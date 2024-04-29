@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sona.music.admin.dao.AdminDAO;
 import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.admin.dto.PhotoDTO;
+import com.sona.music.board.dto.FAQDTO;
 	
 
 @Service
@@ -176,6 +177,29 @@ public class AdminService {
 		logger.info("faq 삭제에 대한 값 : 1이면 삭제 완료" + row);
 		return row;
 	}
+
+	public Map<String, Object> showListSearchReview(int currPage, int searchType, String serachText, int categoryNum) {
+		int pagePerCnt = 10;
+		int start = (currPage-1)*pagePerCnt;
+		int deleteStatus = 0;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> resultList = null;
+//		if(categoryNum == )
+		
+		resultList = adminDAO.showListSearchReview(start,pagePerCnt,deleteStatus,serachText,searchType,categoryNum);
+		logger.info(serachText + "텍스트");
+
+		for (AdminDTO reivew : resultList) {
+			logger.info(reivew.getReview_idx() + " : 리뷰 idx admin");
+			logger.info(reivew.getUser_type());
+		}
+	
+		result.put("list", resultList);
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.allCountReview(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.allCountReview(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+	return result;
+}
 
 	
 }

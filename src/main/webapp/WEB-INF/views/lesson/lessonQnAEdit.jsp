@@ -75,6 +75,9 @@
 	height: 100%;
 	object-fit: cover;
 }
+.title{
+	margin-left: 20px;
+}
 </style>
 <body>
 	<header id="usermain">
@@ -138,8 +141,9 @@
 	<hr
 		style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
 
-
-	<img src="resources/img/QnA.png" id="QnA"> Q&A 수정
+	<br/>
+	<div class="title">
+	<img src="resources/img/QnA.png" id="QnA"> Q&A 수정 </div>
 	<br />
 
 	<div style="text-align: center;">
@@ -149,9 +153,8 @@
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>질문 강의IDX: ${question.class_idx}<input type="hidden"
-							name="class_idx" value="${question.class_idx}" /> 글번호:
-							${question.question_idx}<input type="hidden" name="question_idx"
+						<th><input type="hidden"
+							name="class_idx" value="${question.class_idx}" /> <input type="hidden" name="question_idx"
 							value="${question.question_idx}" />
 						</th>
 					</tr>
@@ -185,6 +188,7 @@
 			</form>
 		</div>
 	</div>
+	<br/><br/>
 	<div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>

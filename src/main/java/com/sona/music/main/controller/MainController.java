@@ -129,18 +129,38 @@ public class MainController {
 	
 	@RequestMapping(value="/videoList.go")
 	public String videoList(Model model, HttpSession session) {
-		model.addAttribute("msg", "강사 영상 리스트 이동");
+		model.addAttribute("msg", "추천 영상 리스트 이동");
 		
-		String page = "member/login";
+		String page = "main/login";
 		
 		if (session.getAttribute("loginId") != null) {
 			page = "main/videoList";
-			
-			
+		
 		}
 		return page;
 	}
 	
+	
+	@RequestMapping(value="/videoList.ajax")
+	@ResponseBody
+	public Map<String, Object> listCall(HttpSession session,  String page, String cnt,@RequestParam(value="userId") String userId){
+		logger.info("listCall 요청");
+		logger.info("페이지당 보여줄 갯수:"+cnt);
+		logger.info("요청 페이지: "+page);
+		logger.info("userId{}",userId);
+		Map<String, Object> map = null;
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = 8;
+		if (session.getAttribute("user_type").equals("수강생")) {
+			map = mainService.videoList(currPage,pagePerCnt,userId);
+		}else {
+			map = mainService.videoAllList(currPage,pagePerCnt);
+		}
+		
+		
+		return map;
+	}
 	
 	
 	

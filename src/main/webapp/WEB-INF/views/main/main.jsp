@@ -36,9 +36,11 @@
 }
 
 .main-title {
-	position: absolute;
-	margin-top: 20px;
+	height: 0px;
+	position: fixed;
 	margin-left: 52px;
+	right: 61%;
+	top: -30%;
 }
 
 .main-title h1 {
@@ -47,12 +49,16 @@
 	font-weight: bold;
 	margin-left: 80px;
 	margin-top: 50px;
+	position: fixed;
+	right: 61%;
 }
 
 .main-title1 {
 	position: absolute;
 	margin-top: 35px;
 	margin-left: 143px;
+	left: 185px;
+    top: 777px;
 }
 
 .container {
@@ -60,9 +66,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-     position: relative; /* 부모 요소(container)를 상대 위치로 설정 */
+    position: relative; /* 부모 요소(container)를 상대 위치로 설정 */
     top: 50%; /* 화면 상단에서 수직으로 중앙에 위치하도록 설정 */
     transform: translateY(-50%);
+    margin-top: 0px;
 }
 
 .row {
@@ -107,6 +114,7 @@
     right: 5px;
     font-size: 24px;
     font-weight: bold;
+    color: #BEE6FF;
 }
 
 .button-container.videoList button {
@@ -118,6 +126,7 @@
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background-color 0.3s ease;
+	margin-top: 50px;
 }
 
 .button-container.videoList1 button {
@@ -137,6 +146,13 @@
 
 .button-container.videoList1 button:hover {
 	background-color: #8DC1FF; /* 마우스 호버시 배경색 변경 */
+}
+
+.video{
+	position: relative;
+	left: 190px;
+	top: 130px;
+	display: inline-flex;
 }
 
 .videoList {
@@ -264,14 +280,10 @@
 			</c:if>
 		</table>
 	</header>
+	<div class="container">
 	<div class="main-title">
 		<h1>누구나 배울 수 있는 악기!</h1>
 	</div>
-	<div></div>
-	<br/>
-	<br/>
-	<br/>
-	<div class="container">
     <div class="row">
         <div class="img">
             <img src="resources/img/spee.jpg" alt="music" style="width: 400px;">
@@ -308,15 +320,23 @@
 	<br />
 	<br />
 	<br />
-	
-    <c:if test="${sessionScope.loginId != null}">
-        <div class="main-title1">
+	<div class="main-title1">
+    <c:choose>
+    <c:when test="${sessionScope.loginId != null && sessionScope.user_type eq '수강생'}">
             <h2>
                 <span class="el-text">${sessionScope.loginId}</span> 님을 위한 
                 <span class="el-text">${list[2].applyform_inst}</span> 추천 영상입니다.
             </h2>
-        </div>
-    </c:if>
+    </c:when>
+    <c:otherwise>
+     <h2>
+        <span class="el-text">SONA</span> 인기 영상입니다.
+        </h2>
+    </c:otherwise>
+</c:choose>
+     </div>
+    
+    <div class = "video">
 	<c:forEach items="${list}" var="list" varStatus="loop">
 		<div class="video-wrapper" data-class-idx="${list.class_idx}">
 			<div class="video-container">
@@ -330,7 +350,7 @@
 			<div class="corner-label">${loop.index + 1}</div>
 		</div>
 	</c:forEach>
-
+	</div>
 	<br />
 	<br />
 	<br />
@@ -359,7 +379,7 @@
 			</div>
 		</div>
 	</div>
-
+	<br/><br/>
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>
@@ -401,6 +421,8 @@
 </body>
 
 <script>
+
+var inst = "${list[1].applyform_inst}";
 
 $(document).ready(function() {
     // 각 video-wrapper를 클릭했을 때

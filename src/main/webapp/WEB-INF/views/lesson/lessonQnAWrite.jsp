@@ -75,6 +75,9 @@
 	height: 100%;
 	object-fit: cover;
 }
+.title{
+	margin-left: 20px;
+}
 </style>
 <body>
 	<header id="usermain">
@@ -138,8 +141,9 @@
 	<hr
 		style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
 
-
+	<div class="title">
 	<img src="resources/img/QnA.png" id="review"> Q&A 작성
+	</div>
 	<br />
 
 	<div style="text-align: center;">
@@ -180,6 +184,8 @@
 			</form>
 		</div>
 	</div>
+	
+	<br/><br/>
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>

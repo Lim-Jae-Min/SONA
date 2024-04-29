@@ -236,16 +236,16 @@ body {
 				onsubmit="return confirmWrite(event);">
 				<table>
 					<tr>
-						<th>평가 강의번호 : ${review.class_idx} <input type="hidden" name="class_idx"
-							value="${review.class_idx}" />피평가자: ${review.ratee_id}</th>
+						<th><input type="hidden" name="class_idx"
+							value="${review.class_idx}" /></th>
 					</tr>
 					<tr>
 						<td><input type="hidden" name="review_idx"
 							value="${review.review_idx}" /></td>
-						<th style="font-size: 14px;">리뷰 제목</th>
-						<td><input type="text" name="review_title"
+						<th style="font-size: 14px;  text-align: left;">리뷰 제목
+						<input type="text" name="review_title"
 							style="width: 300px; font-size: 16px;"
-							value="${review.review_title}" /></td>
+							value="${review.review_title}" /></th>
 						<th style="font-size: 12px;">작성자 : ${review.rater_id}<input
 							type="hidden" name="rater_id" value="${review.rater_id}" /></th>
 						<th style="font-size: 12px;">작성일 : ${review.review_reg_date}</th>
@@ -256,7 +256,7 @@ body {
 					</tr>
 					<tr>
 						<td colspan="4"
-							style="font-size: 14px; text-align: right; color: #999;">만족도는
+							style="font-size: 14px; text-align: right; color: #999;">   만족도는
 							수정이 불가합니다.</td>
 					</tr>
 					<tr>
@@ -291,7 +291,7 @@ body {
 			</form>
 		</div>
 	</div>
-
+	<br/><br/>
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>

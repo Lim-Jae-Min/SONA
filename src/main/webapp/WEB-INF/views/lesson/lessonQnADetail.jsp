@@ -289,7 +289,7 @@ body {
 		</div>
 	</div>
 
-
+	<br/><br/>
 	<div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>

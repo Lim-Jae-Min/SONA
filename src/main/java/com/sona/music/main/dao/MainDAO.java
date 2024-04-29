@@ -14,4 +14,12 @@ public interface MainDAO {
 
 	List<MainDTO> nolist();
 
+	List<MainDTO> videoList(int pagePerCnt, int start, String userId);
+
+	int allCount(int pagePerCnt, String userId);
+
+	List<MainDTO> videoAllList(int pagePerCnt, int start);
+
+	int allCount1(int pagePerCnt);
+
 }

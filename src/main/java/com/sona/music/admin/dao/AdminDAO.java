@@ -41,4 +41,17 @@ public interface AdminDAO {
 
 	Object suspensionAllCount(int pagePerCnt, String serachText, int searchType);
 
+	AdminDTO adminData();
+
+	List<AdminDTO> userData(int currentMonth, int oneMonthAgo, int twoMonthAgo);
+
+	List<AdminDTO> adminUserListCall(int pagePerCnt, int start, String condition, String searchContent);
+
+	int adminUserListCount(int pagePerCnt, String condition, String searchContent);
+
+	int userCount(String condition, String searchContent);
+
+	AdminDTO adminUserDetail(String user_id);
+
+
 }

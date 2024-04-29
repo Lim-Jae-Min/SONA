@@ -87,7 +87,6 @@
 </style>
 </head>
 <body>
-<body>
     <header id="adminmain">
         <table id="mainmenu">
             <tr>
@@ -108,7 +107,7 @@
                 <h3>관리자 페이지</h3>
                 <hr/>
                 <a href="adminMain.go">관리자 페이지</a>
-                <a href="#">회원 관리</a>
+                <a href="adminUserList.go">회원 관리</a>
                 <a href="#">강의 관리</a>
                 <a href="#">공지사항 관리</a>
                 <a href="#">FAQ 관리</a>
@@ -123,14 +122,14 @@
                 	<tr>
                 		<th>건의사항 답변 대기</th>
                 		<th>신고 조치 대기</th>
-                		<th>누적 회원 수</th>
+                		<th>총 회원 수</th>
                 		<th>누적 수익금</th>
                 	</tr>
                 	<tr>
-                		<th class="topTableContent">2 건</th>
-                		<th class="topTableContent">2 건</th>
-                		<th class="topTableContent">2 명</th>
-                		<th class="topTableContent">2 원</th>
+                		<th class="topTableContent">${maindto.waiting_suggestions} 건</th>
+                		<th class="topTableContent">${maindto.waiting_report} 건</th>
+                		<th class="topTableContent">${maindto.user_count} 명</th>
+                		<th class="topTableContent">${maindto.profit} 원</th>
                 	</tr>
                 </table>
                 <br/><br/><br/><br/><br/><br/>
@@ -148,110 +147,80 @@
 	                			<table class="innerTable">
 	                				<tr>
 	                					<th class="grayBackGround"></th>
-	                					<th class="grayBackGround">2월</th>
-	                					<th class="grayBackGround">3월</th>
-	                					<th class="grayBackGround">4월</th>
+	                					<th class="grayBackGround">${twoMonthAgo} 월</th>
+	                					<th class="grayBackGround">${oneMonthAgo} 월</th>
+	                					<th class="grayBackGround">${currentMonth} 월</th>
 	                				</tr>
 	                				<tr>
 	                					<th class="grayBackGround">신규 수강생</th>
-	                					<th>10</th>
-	                					<th>20</th>
-	                					<th>30</th>
+	                					<th class="newStudent"></th>
+	                					<th class="newStudent"></th>
+	                					<th class="newStudent"></th>
 	                				</tr>
 	                				<tr>
 	                					<th class="grayBackGround">신규 강사</th>
-	                					<th>10</th>
-	                					<th>20</th>
-	                					<th>30</th>
+	                					<th class="newTeacher"></th>
+	                					<th class="newTeacher"></th>
+	                					<th class="newTeacher"></th>
 	                				</tr>
 	                				<tr>
 	                					<th class="grayBackGround">신규 강의</th>
-	                					<th>10</th>
-	                					<th>20</th>
-	                					<th>30</th>
+	                					<th class="newLesson"></th>
+	                					<th class="newLesson"></th>
+	                					<th class="newLesson"></th>
 	                				</tr>
 	                			</table>
 	                		</th>
 	                		<th class="bottomTable-th">
-	                			<!-- <table class="innerTable" id="innerGraph">
-	                				<thead>
-		                				<tr>
-		                					<td></td>
-		                					<th>2월</th>
-		                					<th>3월</th>
-		                					<th>4월</th>
-		                				</tr>
-	                				</thead>
-	                				<tbody>
-		                				<tr>
-		                					<th>신규 수강생</th>
-		                					<td>10</td>
-		                					<td>20</td>
-		                					<td>30</td>
-		                				</tr>
-		                				<tr>
-		                					<th>신규 강사</th>
-		                					<td>10</td>
-		                					<td>20</td>
-		                					<td>30</td>
-		                				</tr>
-		                				<tr>
-		                					<th>신규 강의</th>
-		                					<td>10</td>
-		                					<td>20</td>
-		                					<td>30</td>
-		                				</tr>
-	                				</tbody>
-	                			</table> -->
 	                			<table class="innerGraph">
 	                				<tr>
 	                					<th class="topGraph">
 	                						<div class="inline">
-		                						<div class="barWidth">10</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth redBackGround"></div>
 	                						</div>
 	                						<div class="inline">
-		                						<div class="barWidth">10</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth blueBackGround"></div>
 	                						</div>
 	                						<div class="inline">
-		                						<div class="barWidth">10</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth yellowBackGround"></div>
 	                						</div>
 	                					</th>
 	                					<th class="topGraph">
 	                						<div class="inline">
-		                						<div class="barWidth">20</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth redBackGround"></div>
 	                						</div>
 	                						<div class="inline">
-		                						<div class="barWidth">20</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth blueBackGround"></div>
 	                						</div>
 	                						<div class="inline">
-		                						<div class="barWidth">20</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth yellowBackGround"></div>
 	                						</div>
 	                					</th>
 	                					<th class="topGraph">
 	                						<div class="inline">
-		                						<div class="barWidth">30</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth redBackGround"></div>
 	                						</div>
 	                						<div class="inline">
-		                						<div class="barWidth">30</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth blueBackGround"></div>
 	                						</div>
 	                						<div class="inline">
-		                						<div class="barWidth">30</div>
+		                						<div class="barWidth number"></div>
 		                						<div class="bar barWidth yellowBackGround"></div>
 	                						</div>
 	                					</th>
 	                				</tr>
 	                				<tr>
-	                					<th class="middleGraph">2월</th>
-	                					<th class="middleGraph">3월</th>
-	                					<th class="middleGraph">4월</th>
+	                					<th class="middleGraph">${twoMonthAgo} 월</th>
+	                					<th class="middleGraph">${oneMonthAgo} 월</th>
+	                					<th class="middleGraph">${currentMonth} 월</th>
 	                				</tr>
 	                				<tr>
 	                					<th colspan="3" class="bottomGraph">
@@ -281,7 +250,48 @@ $('#logo').click(function main(){
 	location.href = 'adminMain.go';
 });
 
-/* $('#innerGraph').visualize({type: 'bar'}); */
+$.ajax({
+	type: 'get',
+    url: './adminMain.ajax',
+    dataType:'json',
+    success: function(data) {
+        // console.log(data);
+        drawTable(data.list);
+    },
+    error: function(request, status, error) {
+    	console.log("code: " + request.status)
+        console.log("message: " + request.responseText)
+        console.log("error: " + error);
+    }
+});
+
+function drawTable(list) {
+	var arr = [];
+	
+	for (var i = 0; i < list.length; i++) {
+		$('.newStudent').eq(i).html(list[i].amount_student);
+		$('.newTeacher').eq(i).html(list[i].amount_teacher);
+		$('.newLesson').eq(i).html(list[i].amount_lesson);
+		arr.push(list[i].amount_student);
+		arr.push(list[i].amount_teacher);
+		arr.push(list[i].amount_lesson);
+	}
+	
+	// console.log(arr);
+	var max = Math.max(arr);
+	// console.log(max);
+	var height = 0;
+	
+	for (var i = 0; i < arr.length; i++) {
+		
+		height = (70 * arr[i] / 45) + 10;
+		
+		$('.bar').eq(i).css('height', height + '%');
+		$('.number').eq(i).html(arr[i]);
+	}
+	
+}
+
 
 </script>
 </html>

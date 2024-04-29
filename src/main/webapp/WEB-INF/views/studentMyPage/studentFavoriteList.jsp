@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
@@ -54,6 +53,10 @@ input[type="checkBox"] {
     height: 15px;
     width: 15px;
 } 
+.first-line {
+	width: 1100px;
+}
+
 </style>
 </head>
 <body>
@@ -117,7 +120,7 @@ input[type="checkBox"] {
 	        <table id="teacherTable">
 	        	<thead>
 	        		<tr>
-	        			<td colspan="4">
+	        			<td colspan="4" class="first-line">
 	        				<input type="checkBox" id="all"/>
 	        				<button id="del" onclick="del()">선택 삭제</button>
 	        				<hr class="line"/>

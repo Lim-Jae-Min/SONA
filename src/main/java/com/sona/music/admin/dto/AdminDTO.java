@@ -25,6 +25,37 @@ public class AdminDTO {
 	private int faq_views;
 	private int faq_delete;
 	
+	// report DTO
+	private int report_idx;
+	private int board_idx;
+	private String board_category;
+	private String reporter_id;
+	private String report_content;
+	private Date report_date;
+	private String report_state;
+	private String review_title;
+	private String class_name;
+	
+	
+	// action DTO
+	private int action_idx;
+	private String action_content;
+	private Date action_date;
+	private String user_name;
+	
+	// Suspension DTO
+	private int banned_idx;
+	private String action_category;
+	private Date start_date;
+	private Date end_date;
+
+	
+
+	
+
+	
+	
+	
 	// 어드민 아이디 게터/ 세터
 	public String getAdmin_id() {
 		return admin_id;
@@ -119,6 +150,111 @@ public class AdminDTO {
 	}
 	public void setFaq_delete(int faq_delete) {
 		this.faq_delete = faq_delete;
+	}
+	
+	// Report 게터 섹터
+	public int getReport_idx() {
+		return report_idx;
+	}
+	public void setReport_idx(int report_idx) {
+		this.report_idx = report_idx;
+	}
+	public int getBoard_idx() {
+		return board_idx;
+	}
+	public void setBoard_idx(int board_idx) {
+		this.board_idx = board_idx;
+	}
+	public String getBoard_category() {
+		return board_category;
+	}
+	public void setBoard_category(String board_category) {
+		this.board_category = board_category;
+	}
+	public String getReporter_id() {
+		return reporter_id;
+	}
+	public void setReporter_id(String reporter_id) {
+		this.reporter_id = reporter_id;
+	}
+	public String getReport_content() {
+		return report_content;
+	}
+	public void setReport_content(String report_content) {
+		this.report_content = report_content;
+	}
+	public Date getReport_date() {
+		return report_date;
+	}
+	public void setReport_date(Date report_date) {
+		this.report_date = report_date;
+	}
+	public String getReport_state() {
+		return report_state;
+	}
+	public void setReport_state(String report_state) {
+		this.report_state = report_state;
+	}
+	public int getAction_idx() {
+		return action_idx;
+	}
+	public void setAction_idx(int action_idx) {
+		this.action_idx = action_idx;
+	}
+	public String getAction_content() {
+		return action_content;
+	}
+	public void setAction_content(String action_content) {
+		this.action_content = action_content;
+	}
+	public Date getAction_date() {
+		return action_date;
+	}
+	public void setAction_date(Date action_date) {
+		this.action_date = action_date;
+	}
+	public String getReview_title() {
+		return review_title;
+	}
+	public void setReview_title(String review_title) {
+		this.review_title = review_title;
+	}
+	public String getClass_name() {
+		return class_name;
+	}
+	public void setClass_name(String class_name) {
+		this.class_name = class_name;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	// Suspesion Hisory 게터 섹터
+	public int getBanned_idx() {
+		return banned_idx;
+	}
+	public void setBanned_idx(int banned_idx) {
+		this.banned_idx = banned_idx;
+	}
+	public String getAction_category() {
+		return action_category;
+	}
+	public void setAction_category(String action_category) {
+		this.action_category = action_category;
+	}
+	public Date getStart_date() {
+		return start_date;
+	}
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+	public Date getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
 	}
 	
 }

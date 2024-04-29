@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.mypage.dto.MyPageDTO;
@@ -38,7 +39,7 @@ public class MyPageController {
 		String page = "member/login";
 		String loginId = (String) session.getAttribute("loginId");
 		if (loginId != null) {
-			MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+			MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 			model.addAttribute("userInfo",userInfo);
 			logger.info("회원 정보 페이지 이동 성공 !");
 
@@ -55,7 +56,7 @@ public class MyPageController {
 	    String loginId = (String) session.getAttribute("loginId");
 	    if(loginId != null) {
 	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
-	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 	        // 모델에 사용자 정보 추가
 	        model.addAttribute("userInfo", userInfo);
 	        logger.info("회원 수정 페이지 이동 성공 !");
@@ -70,7 +71,7 @@ public class MyPageController {
 	    String loginId = (String) session.getAttribute("loginId");
 	    if(loginId != null) {
 	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
-	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 	        // 모델에 사용자 정보 추가
 	        model.addAttribute("userInfo", userInfo);
 	        logger.info("회원 수정 페이지 이동 성공 !");
@@ -88,7 +89,7 @@ public class MyPageController {
 		int point = (int) session.getAttribute("point");
 	    logger.info("point : "+ point);
 		if (loginId != null) {
-			MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+			MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 			model.addAttribute("userInfo",userInfo);
 			logger.info("강사 회원 정보 페이지 이동 성공 !");
 			page = "teacherMyPage/teacherPage";
@@ -108,7 +109,7 @@ public class MyPageController {
 		 String loginId = (String) session.getAttribute("loginId");
 		 logger.info("idx=  "+loginId);
 		 if (loginId != null) {
-			 List<String> classNames = myPageService.getClassNames(loginId);
+			 List<String> classNames = myPageService.getClassNames2(loginId);
 			 model.addAttribute("classNames", classNames);
 			 logger.info("클래스 이름 목록: " + classNames);
 			 page = "teacherMyPage/teacherStudentList";
@@ -119,21 +120,56 @@ public class MyPageController {
 	}
 	
 	
-	/*
-	//수강생 관리에서 강의 제목 아작스 요청
-	@RequestMapping(value="/studentLesson.ajax")
-	@ResponseBody
-	public String classTitle(String page, int cnt, String user_id, HttpSession session ){
+	/*강사 QnA 페이지 이동*/
+	@RequestMapping(value = "/teacherQnaList.go")
+	 public String teacherQnaList(HttpSession session, Model model) {
+		logger.info("강사 QnA 페이지 이동");
+		 String page = "member/login";
+		 String loginId = (String) session.getAttribute("loginId");
+		 logger.info("idx=  "+loginId);
+		 if (loginId != null) {
+			 List<String> classNames = myPageService.getClassNames2(loginId);
+			 model.addAttribute("classNames", classNames);
+			 logger.info("클래스 이름 목록: " + classNames);
+			 page = "teacherMyPage/teacherQnAList";
+		 }
+
+		 return page;
+		    
+	}
+	
+	
+	// 강사 qna 리스트 아작스 요청
+		@RequestMapping(value="/teacherQnaList.ajax")
+		@ResponseBody	
+		public Map<String, Object> teacherQnaList(String page, int cnt, String selectedClass, HttpSession session ){
+			logger.info("수강생관리 강의제목 요청");
+			String user_id = (String) session.getAttribute("loginId");
+			logger.info("받아온 유저 user_id: "+ user_id);
+			
+			int currPage = Integer.parseInt(page);
+			Map<String, Object>map = myPageService.teacherQnaList(user_id, cnt,selectedClass, currPage);
+			logger.info("map : {}",map);
+			
+			return map;
+		}
+	
+	
+	//수강생 관리 리스트 아작스 요청
+	@RequestMapping(value="/studentLessonList.ajax")
+	@ResponseBody	
+	public Map<String, Object> studentLessonList(String page, int cnt, String selectedClass, HttpSession session ){
 		logger.info("수강생관리 강의제목 요청");
+		String user_id = (String) session.getAttribute("loginId");
 		logger.info("받아온 유저 user_id: "+ user_id);
 		
 		int currPage = Integer.parseInt(page);
-		Map<String, Object>map = myPageService.studentLesson(user_id, cnt, currPage);
+		Map<String, Object>map = myPageService.studentLessonList(user_id, cnt,selectedClass, currPage);
 		logger.info("map : {}",map);
 		
 		return map;
 	}
-*/
+
 	
 	
 	
@@ -144,7 +180,7 @@ public class MyPageController {
 	    String loginId = (String) session.getAttribute("loginId");
 	    if(loginId != null) {
 	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
-	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 	        // 모델에 사용자 정보 추가
 	        model.addAttribute("userInfo", userInfo);
 	        logger.info("회원 수정 페이지 이동 성공 !");
@@ -187,6 +223,25 @@ public class MyPageController {
 		return map;
 	}
 	
+	/* 강사 포인트 이력 이동*/
+	@RequestMapping(value = "/teacherPointList.go")
+	 public String teacherPointList(HttpSession session, Model model) {
+		 String page = "member/login";
+		 String loginId = (String) session.getAttribute("loginId");
+		 logger.info("idx="+loginId+"포인트 이력 페이지로 이동");
+		 if (loginId != null) {
+			 // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
+			 String point = myPageService.getPointAmount(loginId);
+		     // 모델에 사용자 정보 추가
+		     model.addAttribute("point", point);
+		     logger.info("포인트 내역 페이지 이동 성공 !");
+			 page = "teacherMyPage/teacherPointList";
+		 }
+
+		 return page;
+		    
+	}
+	
 	
 
 	 @RequestMapping(value = "/studentQnAList.go")
@@ -207,26 +262,26 @@ public class MyPageController {
 		    
 	}
 	
+	 
 	
 	
 	
 	
-	
-	@RequestMapping(value = "/studentPage.edit", method = RequestMethod.POST)
-	public String updateUserInfo(@RequestParam Map<String, String> map, HttpSession session, Model model) {
-		String page = "member/login";
-	    logger.info("회원 수정하기 요청이요~ ");
-	    String loginId = (String) session.getAttribute("loginId");
-	    logger.info("전달된 데이터: {}", map);
+	 @RequestMapping(value = "/studentPage.edit", method = RequestMethod.POST)
+	 public String updateUserInfo(MultipartFile[] photos, @RequestParam Map<String, String> map, HttpSession session, Model model) {
+	     String page = "member/login";
+	     logger.info("회원 수정하기 요청이요~ ");
+	     String loginId = (String) session.getAttribute("loginId");
+	     logger.info("전달된 데이터: {}", map);
 
-	    if (loginId != null) {
-	        logger.info("회원 수정하기~ ", map);
-	        map.put("loginId", loginId);
-	        myPageService.updateUserInfo(new HashMap<> (map)); // 로그인 ID를 전달
-	        page = "studentMyPage/studentPageEdit";
-	    }
-	    return page;
-	}
+	     if (loginId != null) {
+	         logger.info("회원 수정하기~ ", map);
+	         map.put("loginId", loginId);
+	         myPageService.updateUserInfo(photos, new HashMap<>(map), session); // 로그인 ID를 전달
+	         page = "studentMyPage/studentPageEdit";
+	     }
+	     return page;
+	 }
 	
 	@RequestMapping(value = "/studentPageApply.edit", method = RequestMethod.POST)
 	public String updateApplyForm(@RequestParam Map<String, String> map, HttpSession session, Model model) {

@@ -13,6 +13,7 @@ import com.sona.music.board.dto.QnADTO;
 import com.sona.music.lesson.dto.LessonDTO;
 import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.mypage.dto.MyPageDTO;
+import com.sona.music.mypage.dto.PhotoDTO;
 
 public interface MyPageDAO {
 
@@ -63,6 +64,7 @@ public interface MyPageDAO {
 
 	@Mapper
 	Object lessonAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+	
 	int updateApplyForm(Map<String, String> map);
 
 
@@ -80,6 +82,29 @@ public interface MyPageDAO {
 
 	List<MyPageDTO> qnaSelectedList(int pagePerCnt, int start, String loginId, String selectedClass);
 
+
+	List<String> getClassNames2(String loginId);
+
+
+	List<MyPageDTO> teacherStudentList(String user_id, int cnt, int start);
+
+
+	List<MyPageDTO> teacherStudentListFilter(String user_id, int cnt, int start, String selectedClass);
+
+
+	List<MyPageDTO> teacherQnaListFilter(String user_id, int cnt, int start, String selectedClass);
+
+
+	List<MyPageDTO> teacherQnaList(String user_id, int cnt, int start);
+
+
+	@Mapper
+	Object teacherStudentAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+
+	void fileWrite(String loginId, String fileName, String newFileName, String loginId2, String photoCategory);
+
+
+	List<PhotoDTO> UserPhotosLoad(String loginId);
 
 
 

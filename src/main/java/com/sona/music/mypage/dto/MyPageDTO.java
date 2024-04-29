@@ -48,13 +48,15 @@ public class MyPageDTO {
 	private String ch_result;
 	private int ch_idx;
 	private String student_id;
+	private String student_name;
 	private String lesson_progress;
 	private String end_check;
 	private Date apply_date;
 	private int review_idx;
 	private String apply_detail;
 	private int apply_idx;
-	
+	private Date start_date;
+	private Date end_date;
 	private int accumulate_lesson;
 	
 	
@@ -367,6 +369,24 @@ public class MyPageDTO {
 	}
 	public void setApply_idx(int apply_idx) {
 		this.apply_idx = apply_idx;
+	}
+	public String getStudent_name() {
+		return student_name;
+	}
+	public void setStudent_name(String student_name) {
+		this.student_name = student_name;
+	}
+	public Date getStart_date() {
+		return start_date;
+	}
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+	public Date getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
 	}
 
 

@@ -77,20 +77,36 @@
                 <a href="studentAttendedList.go">수강 이력</a>
             </div>
  		<div id="content">
-		<form action="./studentPage.edit" method="POST">
+		<form action="./studentPage.edit" method="POST"  enctype="multipart/form-data">
             <table style="width: 100%;">           
                 <thead>
                     <tr>
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
-                    <tr style="width: 100%;">
-                        <td style="width: 60%; text-align: left;">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="resources/img/account_box.png" style="display: inline-block; vertical-align: middle;">
-                            <div style="display: inline-block; vertical-align: middle; margin-left:30px;"">
-                                <input type="text" name="user_name" value="${userInfo.user_name}" style="margin-left: 10px; display: block; width: 550px; height: 45px; font-size:20px"> <!-- 텍스트 입력란 -->
-                                &nbsp;&nbsp;${userInfo.user_id}
-                            </div>
-                        </td>    
+                    <tr>
+						<input type="hidden" name="photo_category" value="userInfo">
+	        		<td colspan="1" id="imgRow" style="width:15%;, height :20%; margin-right : 50px;">
+	        			<c:if test="${photos.size() < 1}">
+	        				등록된 사진이 없습니다.
+	        			</c:if>
+	        			<c:forEach items="${photos}" var="photo">
+	        				<img class="myPageImg" style="width: 200px; height:200px; margin-left : 30px;" src="/photo/${photo.new_filename}">
+	        			</c:forEach>
+ 	        			<td colspan="1">
+	        				<input type="file" name="photos" id="imgUpload"/>
+	        			</td>  	        			
+	        			
+	                   
+	        		</td>
+	        		</tr>
+					<tr>
+                        <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                    </tr>
+	        		<tr>
+	        		<td>
+                      <input type="text" name="user_name" value="${userInfo.user_name}" style="margin-left: 30px; display: block; width: 550px; height: 45px; font-size:20px">
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${userInfo.user_id}</span>   
+                   </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -297,7 +313,34 @@ var overChk = false;
 	    }
 	});
 	
-
+	$('#imgUpload').change(function (){
+		var count = $(this)[0].files.length;
+		var files = this.files;
+		var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+		/* console.log(count); */
+		if (count > 1) {
+			alert("이미지 파일 첨부는 1개까지 가능합니다.");
+			$('#imgPreview').attr('src', 'resources/img/basic_user.png');
+			this.value = '';
+		}
+	    for (var i = 0; i < files.length; i++) {
+	        var file = files[i];
+	        if (!allowedExtensions.exec(file.name)) {
+	            alert("이미지 파일 첨부만 가능합니다.");
+	            this.value = '';
+	            $('#imgPreview').attr('src', 'resources/img/basic_user.png');
+	            return;
+	        }
+	    }
+		
+	    if (file) {
+	    var reader = new FileReader();
+	        reader.onload = function (){
+	            $('#imgPreview').attr('src', reader.result);
+	        };
+	        reader.readAsDataURL(file);
+	    }
+	});
 	
 	function studentEdit() {
 	    var $name = $('input[name="user_name"]');

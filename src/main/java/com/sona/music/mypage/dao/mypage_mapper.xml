@@ -35,8 +35,18 @@
 	        user_phone = #{user_phone},
 	        user_accountnumber = #{user_accountnumber},
 	        user_bank = #{user_bank}
-	    WHERE user_id = #{loginId}
+	    WHERE user_id = #{loginId} 
 	</update>
+	
+	<insert id="fileWrite">
+		INSERT INTO PHOTO_BOARD(user_id, ori_filename, new_filename, post_idx, photo_category) 
+			VALUES(#{param1}, #{param2}, #{param3}, #{param4}, #{param5})
+	</insert>
+	
+	<select id="UserPhotosLoad" resultType="com.sona.music.mypage.dto.PhotoDTO">
+		SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = #{param1} AND pb.photo_category = 'userInfo'
+			ORDER BY pb.photo_idx desc limit 1
+	</select>
 	
 	<update id="updateApplyForm" parameterType="java.util.Map">
 	    UPDATE APPLICATION_FORM
@@ -57,6 +67,12 @@
 	    WHERE cq.user_id = #{param1}
 	</select>
 		
+		<select id="getClassNames2" parameterType="String" resultType="String">
+	    SELECT DISTINCT co.class_name
+     	FROM CLASS_OPEN co 
+     	JOIN APPLY_HISTORY ah ON co.CLASS_IDX = ah.CLASS_IDX 
+     	WHERE co.USER_ID = #{param1}
+		</select>
 	    
 		
 	<select id="qnaList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
@@ -126,6 +142,18 @@
 	<select id="lessonAllCount" resultType="Integer" parameterType="Integer">
     	SELECT CEIL(COUNT(*) / #{cnt}) AS pages FROM CLASS_OPEN WHERE USER_ID ='user2'
 	</select>
+	
+	<select id="teacherStudentAllCount" resultType="Integer" parameterType="Integer">
+    	SELECT CEIL(COUNT(*)/#{cnt}) AS pages
+			FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx 
+			WHERE ah.APPLY_IDX IN (
+			    SELECT MAX(apply_idx)
+			    FROM APPLY_HISTORY
+			    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = 'user2')
+			    GROUP BY APPLY_DETAIL
+			)
+	</select>
+	
 
 	<select id="pointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 	SELECT 
@@ -150,14 +178,16 @@
 		
 		
 	<select id="lessonlist" resultType="com.sona.music.member.dto.MemberDTO">
-		SELECT co.class_name
-		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
+		SELECT 
+			 co.class_name
+			,co.class_idx
+		  	,CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 		         THEN 0
 		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 		         END AS count
-		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
-		   , co.class_reg_date
-		   , co.class_disable
+		    ,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
+		    ,co.class_reg_date
+		    ,co.class_disable
 		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2' AND co.CLASS_DISABLE = #{param4}
 		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
@@ -165,19 +195,120 @@
 	
 	
 	<select id="lessonlistall" resultType="com.sona.music.member.dto.MemberDTO">
-		SELECT co.class_name
-		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
+		SELECT
+			 co.class_name
+			,co.class_idx
+		   	,CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 		         THEN 0
 		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 		         END AS count
-		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
-		   , co.class_reg_date
-		   , co.class_disable
+		   	,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
+		  	,co.class_reg_date
+		   	,co.class_disable
 		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2'
 		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>
 
+	
+	<select id="teacherStudentList" resultType="com.sona.music.mypage.dto.MyPageDTO">
+		SELECT 
+			ah.apply_idx
+		   , (SELECT u.user_name FROM USERS u WHERE u.user_id = ah.user_id) as student_name
+		   , co.class_name
+		   , ah.apply_state
+		   , (SELECT ch.ch_result FROM CLASS_HISTORY ch 
+		      WHERE ch.ch_idx = (SELECT MAX(ch_idx) FROM CLASS_HISTORY WHERE student_id = ah.user_id
+		      AND apply_detail = ah.apply_detail AND ch_result NOT IN ('강의 종료'))) AS lesson_progress
+		   , (SELECT ch2.ch_result FROM CLASS_HISTORY ch2 WHERE ch2.student_id = ah.user_id 
+		      AND ch2.apply_detail = ah.apply_detail AND ch2.ch_result = '강의 종료') AS end_check
+		   , (SELECT ah2.reg_date FROM APPLY_HISTORY ah2 WHERE ah2.user_id = ah.user_id 
+		      AND ah2.apply_state = '결제 완료' AND ah2.apply_detail = ah.apply_detail) AS start_date
+		   , (SELECT ch3.ch_date FROM CLASS_HISTORY ch3 WHERE ch3.ch_result = '강의 종료' 
+		      AND ch3.apply_detail = ah.apply_detail AND ch3.class_idx = ah.class_idx) AS end_date
+	FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx 
+	WHERE ah.APPLY_IDX IN (
+	    SELECT MAX(apply_idx)
+	    FROM APPLY_HISTORY
+	    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{param1})
+	    GROUP BY APPLY_DETAIL
+)
+ORDER BY ah.APPLY_IDX DESC
+LIMIT #{param2} OFFSET #{param3}
+	</select>
+	
+	
+	
+	<select id="teacherStudentListFilter" resultType="com.sona.music.mypage.dto.MyPageDTO">
+		SELECT 
+			ah.apply_idx
+		   , (SELECT u.user_name FROM USERS u WHERE u.user_id = ah.user_id) as student_name
+		   , co.class_name
+		   , ah.apply_state
+		   , (SELECT ch.ch_result FROM CLASS_HISTORY ch 
+		      WHERE ch.ch_idx = (SELECT MAX(ch_idx) FROM CLASS_HISTORY WHERE student_id = ah.user_id
+		      AND apply_detail = ah.apply_detail AND ch_result NOT IN ('강의 종료'))) AS lesson_progress
+		   , (SELECT ch2.ch_result FROM CLASS_HISTORY ch2 WHERE ch2.student_id = ah.user_id 
+		      AND ch2.apply_detail = ah.apply_detail AND ch2.ch_result = '강의 종료') AS end_check
+		   , (SELECT ah2.reg_date FROM APPLY_HISTORY ah2 WHERE ah2.user_id = ah.user_id 
+		      AND ah2.apply_state = '결제 완료' AND ah2.apply_detail = ah.apply_detail) AS start_date
+		   , (SELECT ch3.ch_date FROM CLASS_HISTORY ch3 WHERE ch3.ch_result = '강의 종료' 
+		      AND ch3.apply_detail = ah.apply_detail AND ch3.class_idx = ah.class_idx) AS end_date
+	FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx 
+	WHERE ah.APPLY_IDX IN (
+	    SELECT MAX(apply_idx)
+	    FROM APPLY_HISTORY
+	    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{param1})
+	    GROUP BY APPLY_DETAIL
+)
+AND co.class_name = #{param4}
+ORDER BY ah.APPLY_IDX DESC
+LIMIT #{param2} OFFSET #{param3}
+	</select>
+	
+	<select id="teacherQnaList" resultType="com.sona.music.mypage.dto.MyPageDTO">
+		SELECT 
+			    	cq.question_idx,
+			        cq.q_title,
+			        (select u.user_name from USERS u WHERE u.user_id = cq.user_id) as user_name,
+			        CASE WHEN cq.question_idx = ca.answer_idx THEN 'Y' ELSE 'N' END AS answer_status,
+			        cq.q_reg_date,
+			        cq.user_id,
+			        co.class_name
+			    FROM 
+			        CLASS_QUESTION cq
+			    LEFT JOIN 
+			        CLASS_ANSWER ca ON cq.question_idx = ca.answer_idx
+			    JOIN 
+			        CLASS_OPEN co ON cq.class_idx = co.class_idx
+			    WHERE
+		       		 co.user_id = #{param1} 
+			    ORDER BY
+			        cq.question_idx DESC
+				LIMIT #{param2} OFFSET #{param3}
+	</select>
+
+	<select id="teacherQnaListFilter" resultType="com.sona.music.mypage.dto.MyPageDTO">
+		SELECT 
+			    	cq.question_idx,
+			        cq.q_title,
+			        (select u.user_name from USERS u WHERE u.user_id = cq.user_id) as user_name,
+			        CASE WHEN cq.question_idx = ca.answer_idx THEN 'Y' ELSE 'N' END AS answer_status,
+			        cq.q_reg_date,
+			        cq.user_id,
+			        co.class_name
+			    FROM 
+			        CLASS_QUESTION cq
+			    LEFT JOIN 
+			        CLASS_ANSWER ca ON cq.question_idx = ca.answer_idx
+			    JOIN 
+			        CLASS_OPEN co ON cq.class_idx = co.class_idx
+			    WHERE
+		        co.user_id = #{param1} AND co.class_name = #{param4}
+			    ORDER BY
+			        cq.question_idx DESC
+				LIMIT #{param2} OFFSET #{param3}
+	</select>
 	
 	<select id="receiveList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 		select r.review_idx, r.review_reg_date, r.review_title, r.rater_id, r.score from REVIEW r 

@@ -78,9 +78,16 @@
    			 		<hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
    			 		
                     <tr>
-                        &nbsp;<td rowspan="2" style="width: 70px;"><img src="resources/img/account_box.png"
-                        		 style="margin-left: 30px;"  id="account">
-                        	  </td>
+						<input type="hidden" name="photo_category" value="userInfo">
+	        		<td colspan="1" id="imgRow" style="width:15%;, height :20%; margin-right : 50px;">
+	        			<c:if test="${photos.size() < 1}">
+	        				등록된 사진이 없습니다.
+	        			</c:if>
+	        			<c:forEach items="${photos}" var="photo">
+	        				<img class="myPageImg" style="width: 200px; height:200px;" src="/photo/${photo.new_filename}">
+	        			</c:forEach>
+	        		</td>
+
                         	  <td class="main" style="padding-right: 600px; width : 200px;">
 			                  	<span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}</span>
 				                <br><br>${userInfo.user_id}

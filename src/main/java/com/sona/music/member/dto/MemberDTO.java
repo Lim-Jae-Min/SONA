@@ -28,6 +28,7 @@ public class MemberDTO {
     private String profile;
     private String index_order;
     private String class_disable;
+    private int class_idx;
 	public String getUser_id() {
 		return user_id;
 	}
@@ -159,6 +160,12 @@ public class MemberDTO {
 	}
 	public void setClass_disable(String class_disable) {
 		this.class_disable = class_disable;
+	}
+	public int getClass_idx() {
+		return class_idx;
+	}
+	public void setClass_idx(int class_idx) {
+		this.class_idx = class_idx;
 	}
 
 	

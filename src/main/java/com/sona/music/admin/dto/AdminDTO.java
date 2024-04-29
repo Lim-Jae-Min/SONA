@@ -8,6 +8,31 @@ public class AdminDTO {
 	private String admin_id;
 	private String admin_pass;
 	
+	// adminMain dto
+	private int waiting_suggestions;
+	private int waiting_report;
+	private int user_count;
+	private int profit;
+	private int amount_student;
+	private int amount_teacher;
+	private int amount_lesson;
+	
+	// 회원관리 dto
+	private String user_id;
+	private String user_name;
+	private String user_type;
+	private Date user_reg_date;
+	private String user_pass;
+	private String user_email;
+	private String user_phone;
+	private int user_accountnumber;
+	private String user_bank;
+	private int point;
+	private String manner;
+	private Date banned_start_date;
+	private Date banned_end_date;
+	private String new_filename;
+	
 	//공지사항 dto
 	private int notice_idx;
 	private String notice_title;
@@ -119,6 +144,132 @@ public class AdminDTO {
 	}
 	public void setFaq_delete(int faq_delete) {
 		this.faq_delete = faq_delete;
+	}
+	public int getWaiting_suggestions() {
+		return waiting_suggestions;
+	}
+	public int getWaiting_report() {
+		return waiting_report;
+	}
+	public int getUser_count() {
+		return user_count;
+	}
+	public int getProfit() {
+		return profit;
+	}
+	public int getAmount_student() {
+		return amount_student;
+	}
+	public int getAmount_teacher() {
+		return amount_teacher;
+	}
+	public int getAmount_lesson() {
+		return amount_lesson;
+	}
+	public void setWaiting_suggestions(int waiting_suggestions) {
+		this.waiting_suggestions = waiting_suggestions;
+	}
+	public void setWaiting_report(int waiting_report) {
+		this.waiting_report = waiting_report;
+	}
+	public void setUser_count(int user_count) {
+		this.user_count = user_count;
+	}
+	public void setProfit(int profit) {
+		this.profit = profit;
+	}
+	public void setAmount_student(int amount_student) {
+		this.amount_student = amount_student;
+	}
+	public void setAmount_teacher(int amount_teacher) {
+		this.amount_teacher = amount_teacher;
+	}
+	public void setAmount_lesson(int amount_lesson) {
+		this.amount_lesson = amount_lesson;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public String getUser_type() {
+		return user_type;
+	}
+	public Date getUser_reg_date() {
+		return user_reg_date;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
+	}
+	public void setUser_reg_date(Date user_reg_date) {
+		this.user_reg_date = user_reg_date;
+	}
+	public String getUser_pass() {
+		return user_pass;
+	}
+	public String getUser_email() {
+		return user_email;
+	}
+	public String getUser_phone() {
+		return user_phone;
+	}
+	public int getUser_accountnumber() {
+		return user_accountnumber;
+	}
+	public String getUser_bank() {
+		return user_bank;
+	}
+	public int getPoint() {
+		return point;
+	}
+	public String getManner() {
+		return manner;
+	}
+	public Date getBanned_start_date() {
+		return banned_start_date;
+	}
+	public Date getBanned_end_date() {
+		return banned_end_date;
+	}
+	public void setUser_pass(String user_pass) {
+		this.user_pass = user_pass;
+	}
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
+	}
+	public void setUser_phone(String user_phone) {
+		this.user_phone = user_phone;
+	}
+	public void setUser_accountnumber(int user_accountnumber) {
+		this.user_accountnumber = user_accountnumber;
+	}
+	public void setUser_bank(String user_bank) {
+		this.user_bank = user_bank;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	public void setManner(String manner) {
+		this.manner = manner;
+	}
+	public void setBanned_start_date(Date banned_start_date) {
+		this.banned_start_date = banned_start_date;
+	}
+	public void setBanned_end_date(Date banned_end_date) {
+		this.banned_end_date = banned_end_date;
+	}
+	public String getNew_filename() {
+		return new_filename;
+	}
+	public void setNew_filename(String new_filename) {
+		this.new_filename = new_filename;
 	}
 	
 }

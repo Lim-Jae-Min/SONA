@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sona.music.admin.dao.AdminDAO;
@@ -176,6 +178,79 @@ public class AdminService {
 		logger.info("faq 삭제에 대한 값 : 1이면 삭제 완료" + row);
 		return row;
 	}
+
+	public void adminMainGO(Model model) {
+		LocalDate currentDate = LocalDate.now();
+		int currentMonth = currentDate.getMonthValue();
+		int oneMonthAgo = currentMonth - 1;
+		int twoMonthAgo = currentMonth - 2;
+		
+		if (oneMonthAgo < 1) {
+			oneMonthAgo = 12 - oneMonthAgo;
+		}
+		if (twoMonthAgo < 1) {
+			twoMonthAgo = 12 - twoMonthAgo;
+		}
+		
+		model.addAttribute("currentMonth", currentMonth);
+		model.addAttribute("oneMonthAgo", oneMonthAgo);
+		model.addAttribute("twoMonthAgo", twoMonthAgo);
+		
+		
+		AdminDTO maindto = adminDAO.adminData();
+		
+		model.addAttribute("maindto", maindto);
+		
+		
+	}
+
+	public Map<String, Object> adminMainAjax() {
+		LocalDate currentDate = LocalDate.now();
+		int currentMonth = currentDate.getMonthValue();
+		int oneMonthAgo = currentMonth - 1;
+		int twoMonthAgo = currentMonth - 2;
+		
+		if (oneMonthAgo < 1) {
+			oneMonthAgo = 12 - oneMonthAgo;
+		}
+		if (twoMonthAgo < 1) {
+			twoMonthAgo = 12 - twoMonthAgo;
+		}
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		List<AdminDTO> userdto = adminDAO.userData(currentMonth, oneMonthAgo, twoMonthAgo);
+		
+		result.put("list", userdto);
+		
+		return result;
+	}
+
+	public Map<String, Object> adminUserListCall(int currPage, int pagePerCnt, String condition, String searchContent) {
+		int start = (currPage-1) * pagePerCnt;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> list = adminDAO.adminUserListCall(pagePerCnt, start, condition, searchContent);
+		logger.info("list : {}", list);
+		logger.info("list size : "+list.size());
+		logger.info("condition = " + condition);
+		logger.info("content = " + searchContent);
+		result.put("list", list);		
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.adminUserListCount(pagePerCnt, condition, searchContent));
+		result.put("userCount", adminDAO.userCount(condition, searchContent));
+		
+		return result;
+	}
+
+	public void adminUserDetailGo(String user_id, Model model) {
+		
+		AdminDTO dto = adminDAO.adminUserDetail(user_id);
+		model.addAttribute("dto", dto);
+		
+	}
+
+	
 
 	
 }

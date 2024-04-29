@@ -1,5 +1,8 @@
 package com.sona.music.mypage.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sona.music.board.dto.QnADTO;
 import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.lesson.dto.LessonDTO;
 import com.sona.music.mypage.dao.MyPageDAO;
 import com.sona.music.mypage.dto.MyPageDTO;
+import com.sona.music.mypage.dto.PhotoDTO;
 
 @Service
 public class MyPageService {
@@ -27,9 +33,11 @@ public class MyPageService {
 	
 	public String file_root = "C:/upload/";
 
-	public MyPageDTO getUserInfo(String loginId) {
+	public MyPageDTO getUserInfo(String loginId, Model model) {
 		MyPageDTO list = myPageDAO.getUserInfo(loginId);
 		logger.info("userInfo list: {} ", list);
+		List<PhotoDTO> photos = myPageDAO.UserPhotosLoad(loginId);
+		model.addAttribute("photos", photos);
 		return myPageDAO.getUserInfo(loginId);
 	}
 
@@ -38,18 +46,73 @@ public class MyPageService {
 		
 	}
 	
-	public int updateUserInfo(Map<String, String> map) {
-		    // 전달된 데이터를 맵에 추가합니다.
-        	logger.info("회원 수정하기~ ", map);
-		    logger.info("전달된 데이터: {}", map);
+	public int updateUserInfo(MultipartFile[] photos, Map<String, String> map, HttpSession session) {
+	    // 전달된 데이터를 맵에 추가합니다.
+	    logger.info("회원 수정하기~ ", map);
+	    logger.info("전달된 데이터: {}", map);
+	    MyPageDTO dto = new MyPageDTO();
+	    dto.setUser_name(map.get("user_name"));
+	    dto.setUser_pass(map.get("user_pass"));
+	    dto.setUser_email(map.get("user_email"));
+	    dto.setUser_phone(map.get("user_phone"));
+	    dto.setUser_accountnumber(map.get("user_accountnumber"));
+	    dto.setUser_bank(map.get("user_bank"));
 
-		    // DAO를 통해 업데이트 수행
-		    int row = myPageDAO.updateUserInfo(map);
-		    
-		    // 업데이트된 행 수 반환
-		    return row;
+	    PhotoDTO pdto = new PhotoDTO();
+	    pdto.setPhoto_category(map.get("photo_category"));
+
+	    // DAO를 통해 업데이트 수행
+	    int row = myPageDAO.updateUserInfo(map);
+	    
+	    // 업데이트된 행 수 반환
+	    //조건3. 이후 dto에서 저장된 키 값을 받아온다.
+	    String loginId = (String) session.getAttribute("loginId");
+	    String username = dto.getUser_name();
+	    String photoCategory = pdto.getPhoto_category();
+	    logger.info("loginId=" + loginId);
+	    logger.info("photoCategory=" + photoCategory);
+	    logger.info("username=" + username);
+	    logger.info("photos=" + photos);
+
+
+	    if (row > 0 && photos != null) {
+	        fileSave(loginId, photoCategory, username, photos); // 파일 저장
+	    }
+
+	    return row;
 	}
 	
+	private void fileSave(String loginId, String photoCategory, String username, MultipartFile[] photos) {
+	    for (MultipartFile photo : photos) {
+	        // 1. 업로드할 파일명이 있는가?
+	    	logger.info("loginId = " + loginId + "photoCategory = " + photoCategory + "username = " + username);
+	        String fileName = photo.getOriginalFilename();
+	        logger.info("upload file name : " + fileName);
+	        if (!fileName.equals("")) {//파일명이 있다면 == 업로드 파일이 있다면
+	            // 1. 기존 파일명에서 확장자 추출(high.gif)
+	            /* 1-1. split 활용 방법
+	            String arr[] = fileName.split("\\.");            
+	            String ext = "." + arr[arr.length-1];
+	            */
+	            //1-2. subString 활용 방법
+	            String ext = fileName.substring(fileName.lastIndexOf("."));
+	            // 2. 새파일명 생성
+	            String newFileName = System.currentTimeMillis() + ext;
+	            logger.info(fileName + " -> " + newFileName);
+	            //3. 파일 저장
+	            try {
+	                byte[] bytes = photo.getBytes(); // MultipartFile 로 부터 바이너리 추출
+	                Path path = Paths.get(file_root + newFileName);//저장경로지정
+	                Files.write(path, bytes);//저장
+	                myPageDAO.fileWrite(loginId, fileName, newFileName, username, photoCategory);
+	                Thread.sleep(1);//파일명을 위해 강제 휴식 부여
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    }
+	}
+
 	public int updateApplyForm(Map<String, String> map) {
 	    // 전달된 데이터를 맵에 추가합니다.
     	logger.info("회원 수정하기~ ", map);

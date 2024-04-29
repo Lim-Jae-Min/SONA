@@ -35,8 +35,18 @@
 	        user_phone = #{user_phone},
 	        user_accountnumber = #{user_accountnumber},
 	        user_bank = #{user_bank}
-	    WHERE user_id = #{loginId}
+	    WHERE user_id = #{loginId} 
 	</update>
+	
+	<insert id="fileWrite">
+		INSERT INTO PHOTO_BOARD(user_id, ori_filename, new_filename, post_idx, photo_category) 
+			VALUES(#{param1}, #{param2}, #{param3}, #{param4}, #{param5})
+	</insert>
+	
+	<select id="UserPhotosLoad" resultType="com.sona.music.mypage.dto.PhotoDTO">
+		SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = #{param1} AND pb.photo_category = 'userInfo'
+			ORDER BY pb.photo_idx desc limit 1
+	</select>
 	
 	<update id="updateApplyForm" parameterType="java.util.Map">
 	    UPDATE APPLICATION_FORM

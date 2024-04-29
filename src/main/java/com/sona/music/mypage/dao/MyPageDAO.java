@@ -13,6 +13,7 @@ import com.sona.music.board.dto.QnADTO;
 import com.sona.music.lesson.dto.LessonDTO;
 import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.mypage.dto.MyPageDTO;
+import com.sona.music.mypage.dto.PhotoDTO;
 
 public interface MyPageDAO {
 
@@ -79,6 +80,17 @@ public interface MyPageDAO {
 
 
 	List<MyPageDTO> qnaSelectedList(int pagePerCnt, int start, String loginId, String selectedClass);
+
+
+	void fileWrite(String loginId, String fileName, String newFileName, String loginId2, String photoCategory);
+
+
+	List<PhotoDTO> UserPhotosLoad(String loginId);
+
+
+
+
+
 
 
 

@@ -31,7 +31,7 @@
 	AF.USER_ID = #{param1}
 	ORDER BY
 	MANNER_SCORE DESC
-	LIMIT 4
+	LIMIT 3
 	</select>
 	
 	<select id="nolist" resultType="com.sona.music.main.dto.MainDTO">
@@ -58,7 +58,7 @@
 	CO.USER_ID
 	ORDER BY
 	MANNER_SCORE DESC
-	LIMIT 4;
+	LIMIT 3
 	</select>
 
 </mapper>

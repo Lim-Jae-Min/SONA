@@ -19,7 +19,7 @@
 	color: #999; /* 원하는 색상 코드로 변경하세요 */
 	font-weight: bold;
 	font-size: 17px;
-	margin-left: 100px;
+	text-align: center;
 }
 
 .des1 {
@@ -36,118 +36,77 @@
 }
 
 .main-title {
+	position: absolute;
 	margin-top: 20px;
-	margin-left: 30px;
+	margin-left: 52px;
 }
 
 .main-title h1 {
 	font-size: 36px;
 	color: #6FA4FF;
 	font-weight: bold;
+	margin-left: 80px;
+	margin-top: 50px;
 }
 
 .main-title1 {
-	margin-top: 20px;
-	margin-left: 98px;
+	position: absolute;
+	margin-top: 35px;
+	margin-left: 143px;
 }
 
 .container {
-	display: flex;
-	justify-content: center; /* 가로 방향 중앙 정렬 */
-	align-items: center; /* 세로 방향 중앙 정렬 */
-	text-align: center;
-	margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+     position: relative; /* 부모 요소(container)를 상대 위치로 설정 */
+    top: 50%; /* 화면 상단에서 수직으로 중앙에 위치하도록 설정 */
+    transform: translateY(-50%);
 }
 
-.box1 {
-	width: 400px;
-	height: 180px;
-	background-color: white;
-	color: #BEE6FF;
-	font-size: 15px;
-	font-weight: bold;
-	text-align: center;
-	line-height: 1.5em;
-	border-radius: 15px;
-	margin: 20px;
-	margin-top: 220px;
-	border: 2px solid #BEE6FF;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-	position: relative;
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* 각 줄 사이의 간격 조정 */
 }
 
-.box1::before {
-	content: attr(data-number);
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	font-size: 24px;
-	font-weight: bold;
+.img, .box1, .box2, .box3 {
+    width: 400px; /* 각 요소의 고정된 너비 */
+    margin: 0 10px; /* 요소 간 간격 조정 */
+    text-align: center;
 }
 
-.box2 {
-	width: 400px;
-	height: 180px;
-	background-color: white;
-	color: #BEE6FF;
-	font-size: 15px;
-	font-weight: bold;
-	text-align: center;
-	line-height: 1.5em;
-	border-radius: 15px;
-	margin: 20px;
-	margin-top: -213px;
-	border: 2px solid #BEE6FF;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-	position: relative;
-}
-
-.box2::before {
-	content: attr(data-number);
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	font-size: 24px;
-	font-weight: bold;
-}
-
-.box3 {
-	width: 400px;
-	height: 180px;
-	background-color: white;
-	color: #BEE6FF;
-	font-size: 15px;
-	font-weight: bold;
-	text-align: center;
-	line-height: 1.5em;
-	border-radius: 15px;
-	margin: 20px;
-	margin-top: 220px;
-	border: 2px solid #BEE6FF;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-	position: relative;
-}
-
-.box3::before {
-	content: attr(data-number);
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	font-size: 24px;
-	font-weight: bold;
-}
-
-.box p {
-	margin: 0;
-	padding: 10px;
-	font-size: 20px;
-	color: #6FA4FF;
-	font-weight: bold;
-}
 
 .content {
 	font-size: 15px;
 	color: #999;
+}
+
+.img img {
+    width: 100%; /* 이미지 너비를 부모 요소(.img)의 100%로 설정 */
+    height: 200px; /* 이미지 높이를 자동으로 조절하여 비율 유지 */
+    border-radius: 15px;
+}
+.box1, .box2, .box3 {
+    width: 400px; /* 각 요소의 고정된 너비 */
+    height: 200px;
+    margin: 0 10px; /* 요소 간 간격 조정 */
+    text-align: center;
+    position: relative; /* 상대 위치 지정 */
+    border: 2px solid #BEE6FF; /* 테두리 스타일 지정 */
+    border-radius: 15px; /* 테두리 둥근 정도 지정 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+}
+.box1::before, .box2::before, .box3::before {
+    content: attr(data-number); /* 숫자 내용을 속성 값으로 지정 */
+    position: absolute; /* 절대 위치 지정 */
+    top: 5px;
+    right: 5px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .button-container.videoList button {
@@ -181,85 +140,46 @@
 }
 
 .videoList {
-	margin-top: 20px;
-	text-align: center;
+    margin-top: 50px;
+    text-align: center;
 }
 
 .video-wrapper {
-	display: inline-block;
-	position: relative;
-	border-radius: 15px;
-	overflow: hidden;
-	margin-right: 5px; /* 각 동영상 간 간격 조정 */
-	text-align: center;
-	margin-top: 20px;
-	margin-left: 108px; /* 동영상 컨테이너 간 간격 조정 */
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    left: 70px;
+    margin-right: 40px;
+    margin-left: 68px;
+    margin-top: 100px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    
+    
 }
 
 .video-container {
-	width: 300px;
-	height: 270px;
-	background-color: #BEE6FF;
-	border-bottom-left-radius: 15px; /* 테두리 둥근 정도 조정 */
-	padding: 20px;
-	text-align: center;
-	font-weight: bold;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    height: 270px;
+    background-color: #BEE6FF;
+    border-bottom-left-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .corner-label {
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-color: #6FA4FF;
-	color: white;
-	font-size: 16px;
-	font-weight: bold;
-	padding: 5px 10px;
-	border-bottom-right-radius: 10px;
-}
-
-.spacer1 img {
-	top: 20px; /* container의 상단에서부터의 위치 */
-	left: 20px; /* container의 왼쪽에서부터의 위치 */
-}
-
-.spacer2 img {
-	top: 20px; /* container의 상단에서부터의 위치 */
-	left: calc(50% - 201.5px); /* container의 가로 중앙에서부터의 위치 */
-}
-
-.spacer3 img {
-	top: 20px; /* container의 상단에서부터의 위치 */
-	right: 20px; /* container의 오른쪽에서부터의 위치 */
-}
-
-.spacer1 img {
-	width: 400px; /* 이미지의 너비를 조절합니다. */
-	height: 190px; /* 높이는 자동으로 조절됩니다. */
-	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
-	margin-top: -420px;
-	margin-left: 308px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.spacer2 img {
-	width: 400px; /* 이미지의 너비를 조절합니다. */
-	height: 185px; /* 높이는 자동으로 조절됩니다. */
-	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
-	margin-top: -205px;
-	margin-left: 750px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.spacer3 img {
-	width: 400px; /* 이미지의 너비를 조절합니다. */
-	height: 190px; /* 높이는 자동으로 조절됩니다. */
-	border-radius: 15px; /* 이미지를 원하는 만큼 둥글게 조절하세요 */
-	margin-top: -420px;
-	margin-left: 1200px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #6FA4FF;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .box1:hover, .box2:hover, .box3:hover, .spacer1:hover img, .spacer2:hover img,
@@ -346,65 +266,57 @@
 	</header>
 	<div class="main-title">
 		<h1>누구나 배울 수 있는 악기!</h1>
-
 	</div>
 	<div></div>
-	<br />
-	<br />
+	<br/>
+	<br/>
+	<br/>
 	<div class="container">
-		<div class="box1" data-number="01">
-			<p>
-				음악에 특화된 플랫폼<br /> <br /> <span class="content">음악에 특화된 서비스
-					제공으로<br /> 전문적인 강의를 수강 할 수 있어요.
-				</span>
-			</p>
-		</div>
+    <div class="row">
+        <div class="img">
+            <img src="resources/img/spee.jpg" alt="music" style="width: 400px;">
+        </div>
+        <div class="box1" data-number="02">
+            <p>나만을 위한 맞춤 강의</p>
+            <br/>
+            <p><span class="content">수강신청서 작성으로 회원에게<br>맞춤 서비스를 제공해 드려요.</span></p>
+        </div>
+        <div class="img">
+            <img src="resources/img/feedback.jpg" alt="service" style="width: 400px;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="box2" data-number="01">
+            <p>음악에 특화된 플랫폼</p>
+            <br/>
+            <p><span class="content">음악에 특화된 서비스 제공으로<br>전문적인 강의를 수강 할 수 있어요.</span></p>
+        </div>
+        <div class="img">
+            <img src="resources/img/service.jpg" alt="feedback" style="width: 400px;">
+        </div>
+        <div class="box3" data-number="03">
+            <p>상호 평가</p>
+            <br/>
+            <p><span class="content">수강생과 강사 사이의 상호간 평가를<br>반영한 매너지수로 강의 및 학생 선택에 도움을 드려요.</span></p>
+        </div>
+    </div>
+</div>
 
-		<div class="box2" data-number="02">
-			<p>
-				나만을 위한 맞춤 강의<br /> <br /> <span class="content">수강신청서 작성으로
-					회원에게 <br /> 맞춤 서비스를 제공해 드려요.
-				</span>
-			</p>
-		</div>
-
-		<div class="box3" data-number="03">
-			<p>
-				상호 평가<br /> <br /> <span class="content">수강생과 강사 사이의 상호간
-					평가를 반영한 매너지수로 <br /> 강의 및 학생 선택에 도움을 드려요.
-				</span>
-			</p>
-		</div>
-
-	</div>
-	<div class="spacer1">
-		<img src="resources/img/spee.jpg" alt="music">
-	</div>
-	<div class="spacer2">
-		<img src="resources/img/service.jpg" alt="service">
-	</div>
-	<div class="spacer3">
-		<img src="resources/img/feedback.jpg" alt="feedback">
-	</div>
-	<span class="des1"><img src="resources/img/logo.png" id="logo"
-		style="width: 50px; height: 40px; margin-top: 20px;"> 와 함께
-		시작해보세요!</span>
 	<br />
 	<br />
 	<br />
-	<c:forEach items="${list}" var="item">
+	<br />
+	<br />
+	<br />
+	
     <c:if test="${sessionScope.loginId != null}">
         <div class="main-title1">
             <h2>
                 <span class="el-text">${sessionScope.loginId}</span> 님을 위한 
-                <span class="el-text">${item.applyform_inst}</span> 추천 영상입니다.
+                <span class="el-text">${list[2].applyform_inst}</span> 추천 영상입니다.
             </h2>
         </div>
     </c:if>
-</c:forEach>
-	<div>
-		<span class="des">하늘색 박스를 클릭하면 크게 볼 수 있습니다.</span>
-	</div>
 	<c:forEach items="${list}" var="list" varStatus="loop">
 		<div class="video-wrapper" data-class-idx="${list.class_idx}">
 			<div class="video-container">
@@ -423,6 +335,9 @@
 	<br />
 	<br />
 	<br />
+	<!-- <div>
+		<span class="des">하늘색 박스를 클릭하면 크게 볼 수 있습니다.</span>
+	</div> -->
 	<br />
 	<div class="button-container videoList">
 		<button class="button" onclick="redirectToReplyPage()">추천 영상

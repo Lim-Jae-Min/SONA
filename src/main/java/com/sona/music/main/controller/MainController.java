@@ -135,6 +135,8 @@ public class MainController {
 		
 		if (session.getAttribute("loginId") != null) {
 			page = "main/videoList";
+			
+			
 		}
 		return page;
 	}

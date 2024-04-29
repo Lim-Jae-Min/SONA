@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sona.music.admin.dao.AdminDAO;
 import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.admin.dto.PhotoDTO;
+import com.sona.music.board.dto.NoticeDTO;
 	
 
 @Service
@@ -179,6 +180,25 @@ public class AdminService {
 		return row;
 	}
 
+
+	public Map<String, Object> showReportSearch(int currPage, int searchType, String serachText) {
+		int pagePerCnt = 10;
+		int start = (currPage-1)*pagePerCnt;
+		int deleteStatus = 0;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> resultList = null;
+		
+		
+		resultList = adminDAO.showReportSearch(start,pagePerCnt,serachText,searchType);
+		logger.info(serachText);
+		
+		result.put("list", resultList);
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.reportAllCount(pagePerCnt,serachText,searchType));
+		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.reportAllCount(pagePerCnt,serachText,searchType));
+		return result;
+	}
+
 	public void adminMainGO(Model model) {
 		LocalDate currentDate = LocalDate.now();
 		int currentMonth = currentDate.getMonthValue();
@@ -253,4 +273,47 @@ public class AdminService {
 	
 
 	
-}
+
+
+	public void reportDetailAdmin(int report_idx, Model model) {
+		AdminDTO dto = adminDAO.reportDetailAdmin(report_idx);
+
+		String title = dto.getReport_content();
+		logger.info("신고에서 들어간 신고사항 상세보기 : " + title);		
+		model.addAttribute("reportDetail", dto);
+		
+	}
+
+	public void updateReportState(int report_idx, String new_state) {
+		logger.info(report_idx+new_state);
+        adminDAO.updateReportState(report_idx, new_state);
+    }
+
+
+
+	public int adminActionWriteDo(int reportIdx, String admin, String content) {
+		return adminDAO.adminActionWriteDo(reportIdx,admin,content);
+	}
+
+	public Map<String, Object> showSuspensionSearch(int currPage, int searchType, String serachText) {
+		int pagePerCnt = 10;
+		int start = (currPage-1)*pagePerCnt;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> resultList = null;
+		
+		
+		resultList = adminDAO.showSuspensionSearch(start,pagePerCnt,serachText,searchType);
+		logger.info(serachText);
+
+
+	
+		result.put("list", resultList);
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.suspensionAllCount(pagePerCnt,serachText,searchType));
+		logger.info("정지 이력 에서 받아온 allCount"+adminDAO.suspensionAllCount(pagePerCnt,serachText,searchType));
+		return result;
+	}
+	
+	}
+
+

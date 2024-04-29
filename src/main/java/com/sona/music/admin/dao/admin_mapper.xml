@@ -62,7 +62,100 @@
 		<update id="faqDel" >
 		UPDATE FAQ_BOARD set faq_delete = 1 WHERE faq_idx = #{param1}
 	</update>
+		
+  	<select id="reportAllCount" resultType="int">
+		SELECT CEIL (COUNT(report_idx)/#{param1}) AS pages FROM REPORT_BOARD Where
+				<if test='param3 != null'>					 
+					 <if test='param3 == 2'>
+					 	report_state LIKE '%${param3}%' 
+					 </if>
+					<if test='param3 == 1'>
+						 board_category LIKE '%${param3}%' 	
+					</if> 
+				</if>	
+
+	</select> 
 	
+	<select id="showReportSearch" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT * FROM REPORT_BOARD Where
+
+				<if test='param4 != null'>
+					 
+					 <if test='param4 == 2'>
+					 	report_state LIKE '%${param3}%' 
+					 </if>
+					<if test='param4 == 1'>
+						 board_category LIKE '%${param3}%' 	
+					</if> 
+				</if>		
+			ORDER BY report_idx DESC LIMIT #{param1},#{param2};
+	</select>	
+	
+	<select id="reportDetailAdmin" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT
+		    rb.board_idx,
+		    rb.report_idx,
+		    r.review_title AS review_title,
+		    co.class_name AS class_name,
+		    rb.report_state,
+		    rb.report_content,
+		    rb.board_category,
+		    rb.report_date,
+		    u.user_name,
+		    a.ADMIN_ID
+		FROM
+		    REPORT_BOARD rb
+		LEFT JOIN
+		    REVIEW r ON rb.board_idx = r.review_idx
+		LEFT JOIN
+		    CLASS_OPEN co ON rb.board_idx = co.class_idx
+		    	join USERS u on u.USER_ID = co.USER_ID
+		    	join ADMIN a
+		    	  where rb.report_idx = #{param1}
+	</select>
+	
+    <update id="updateReportState">
+        UPDATE REPORT_BOARD
+        SET report_state = #{param2}
+        WHERE report_idx = #{param1}
+    </update>
+    
+    
+	<insert id="adminActionWriteDo">
+		INSERT INTO ACTION_HISTORY (report_idx,admin_id,action_content)
+			VALUES(#{param1},#{param2},#{param3})
+	</insert>
+	
+	<select id="showSuspensionSearch" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT bu.banned_idx, bu.action_category, u.user_name, bu.start_date, bu.end_date FROM BANNED_USER bu
+			 join USERS u on bu.user_id = u.user_id 
+				 Where
+				<if test='param4 != null'>
+					 
+					 <if test='param4 == 2'>
+					 	bu.action_category LIKE '%${param3}%' 
+					 </if>
+					<if test='param4 == 1'>
+						 u.user_name LIKE '%${param3}%' 	
+					</if> 
+				</if>		
+			ORDER BY bu.banned_idx DESC LIMIT #{param1},#{param2};
+	</select>
+	
+	<select id="suspensionAllCount" resultType="int">
+		SELECT CEIL (COUNT(banned_idx)/#{param1}) AS pages FROM BANNED_USER bu
+			join USERS u on bu.user_id = u.user_id  Where
+				<if test='param3 != null'>					 
+					 <if test='param3 == 2'>
+					 	bu.action_category LIKE '%${param3}%' 
+					 </if>
+					<if test='param3 == 1'>
+						 u.user_name LIKE '%${param3}%' 	
+					</if> 
+				</if>	
+
+	</select> 
+		  
 	<select id="adminData" resultType="com.sona.music.admin.dto.AdminDTO">
 		SELECT
 			((SELECT COUNT(sb.sug_idx) FROM SUG_BOARD sb) - (SELECT COUNT(sa.sug_idx) FROM SUG_ANSWER sa)) AS waiting_suggestions

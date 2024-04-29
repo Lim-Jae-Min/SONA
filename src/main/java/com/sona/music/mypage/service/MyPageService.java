@@ -354,28 +354,84 @@ public class MyPageService {
 		logger.info("start페이지:" + start);
 		logger.info("받아온 cnt의 값: " +cnt);
 		logger.info("받아온 user_id의 값 : " + user_id);
+		logger.info("선택한 강의 제목: "+ selectedClass);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<MyPageDTO> list;
-		 if (selectedClass.equals("전체") && selectedClass != null) {
-			 list = myPageDAO.teacherQnaList(user_id,cnt,start);
-		 }else {
-			 list = myPageDAO.teacherQnaListFilter(user_id,cnt,start,selectedClass);
-		 }
+	    if (selectedClass.equals("전체") && selectedClass != null) {
+	        list = myPageDAO.teacherQnaList(user_id, cnt, start);
+	        // 전체를 선택했을 때는 전체 강의의 갯수를 가져옴
+	        result.put("totalPages", myPageDAO.QnaAllCount(cnt, user_id));
+	    } else {
+	        list = myPageDAO.teacherQnaListFilter(user_id, cnt, start, selectedClass);
+	        // 전체가 아닌 특정 강의를 선택했을 때는 해당 강의의 갯수를 가져옴
+	        result.put("totalPages", myPageDAO.QnaAllCountFilter(cnt, user_id, selectedClass));
+	    }
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.lessonAllCount(cnt, user_id));
+		
+		return result;
+	}
+
+	public Map<String, Object> teacherPointList(int currPage, int cnt, String user_id) {
+		int start = (currPage-1)*cnt;
+		logger.info(user_id);
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		List<MyPageDTO> list = myPageDAO.teacherPointList(cnt,start,user_id);
+		logger.info("list size: "+list.size());
+		
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", myPageDAO.teacherPointAllCount(cnt, user_id));	
+		
+		for (MyPageDTO r : list) {
+			logger.info(r.getPoint_date()+"");
+			logger.info(r.getPoint_type() + "");
+			logger.info(r.getPoint()+"");
+			logger.info(r.getBalance()+"");
+		}
+		
 		
 		return result;
 	}
 
 
-	
-	
-	
-	
-	
+	public Map<String, Object> teacherReceiveList(int currPage, int cnt, String user_id, String selectedClass) {
+		int start = (currPage-1)*cnt;
+		logger.info("(서비스)받아온 user_id: " + user_id);
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		List<MyPageDTO> list;
+		if (selectedClass.equals("전체") && selectedClass != null) {
+	        list = myPageDAO.teacherReceiveList(user_id,cnt,start);
+	        // 전체를 선택했을 때는 전체 강의의 갯수를 가져옴
+	        result.put("totalPages", myPageDAO.teacherReceiveAllCount(cnt, user_id));
+	    } else {
+	        list = myPageDAO.teacherReceiveListFilter(user_id, cnt, start, selectedClass);
+	        // 전체가 아닌 특정 강의를 선택했을 때는 해당 강의의 갯수를 가져옴
+	        result.put("totalPages", myPageDAO.teacherReceiveAllCountFilter(cnt, user_id, selectedClass));
+	    }
+		
+		
+		logger.info("list size: "+list.size());
+		
+		result.put("list", list);
+		result.put("currPage",currPage);	
+		
+		for (MyPageDTO r : list) {
+			logger.info(r.getReview_idx()+"");
+			logger.info(r.getReview_reg_date()+"");
+			logger.info(r.getReview_title() + "");
+			logger.info(r.getRater_id()+"");
+			logger.info(r.getScore()+"");
+		}
+		
+		return result;
+	}
+
+
 
 	
 }

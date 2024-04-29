@@ -143,7 +143,7 @@ public class MyPageController {
 		@RequestMapping(value="/teacherQnaList.ajax")
 		@ResponseBody	
 		public Map<String, Object> teacherQnaList(String page, int cnt, String selectedClass, HttpSession session ){
-			logger.info("수강생관리 강의제목 요청");
+			logger.info("강사 QnA 요청");
 			String user_id = (String) session.getAttribute("loginId");
 			logger.info("받아온 유저 user_id: "+ user_id);
 			
@@ -241,6 +241,57 @@ public class MyPageController {
 		 return page;
 		    
 	}
+	
+	/*강사 포인트 아작스 요청*/
+	@RequestMapping(value="/teacherPointList.ajax", method = RequestMethod.GET)
+	 @ResponseBody
+	 public Map<String , Object> teacherPointListCall(String page, int cnt, HttpSession session) {
+	     logger.info("-------------강사 포인트 리스트 요청----------");
+	     logger.info("페이지당 보여줄 갯수:" + cnt);
+	     logger.info("요청 페이지: " + page);
+		 String user_id = (String) session.getAttribute("loginId");
+
+	     int currPage = Integer.parseInt(page);
+	     logger.info(user_id);
+	     Map<String, Object> map = myPageService.teacherPointList(currPage, cnt, user_id);
+	     
+	     return map;
+	 }
+	
+	/*강사가 받은 리뷰 페이지 이동*/
+	@RequestMapping(value = "/teacherReceivedList.go")
+	 public String teacherReceivedList(HttpSession session, Model model) {
+		logger.info("강사가 받은 리뷰 페이지 이동");
+		 String page = "member/login";
+		 String loginId = (String) session.getAttribute("loginId");
+		 logger.info("idx=  "+loginId);
+		 if (loginId != null) {
+			 List<String> classNames = myPageService.getClassNames2(loginId);
+			 model.addAttribute("classNames", classNames);
+			 logger.info("클래스 이름 목록: " + classNames);
+			 page = "teacherMyPage/teacherReceivedList";
+		 }
+
+		 return page;
+		    
+	}
+	
+	/*강사가 받은 리뷰 아작스 요청*/
+	@RequestMapping(value="/teacherReceivedList.ajax", method = RequestMethod.GET)
+	 @ResponseBody
+	 public Map<String , Object> teacherQnaList(String page, int cnt, HttpSession session, String selectedClass ) {
+		 logger.info("------------------ 강사 리뷰 리스트 요청 -------------");
+		 logger.info("페이지당 보여줄 갯수:" + cnt);
+		 logger.info("요청 페이지: " + page);
+		 logger.info("선택된 강의명: " + selectedClass);
+		 String user_id = (String) session.getAttribute("loginId");
+
+		 int currPage = Integer.parseInt(page);
+		 logger.info(user_id);
+		 Map<String, Object> map = myPageService.teacherReceiveList(currPage, cnt, user_id, selectedClass);
+		 
+		 return map;	
+	 }
 	
 	
 

@@ -114,7 +114,7 @@
                 		<th class="first-col">신고 조치내역</th>
                 		<td class="second-col">
                 			<div class="actionLog">
-                			
+                				
                 			</div>
                 		</td>
                 		<th class="third-col"></th>

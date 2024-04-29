@@ -330,46 +330,46 @@ LIMIT #{param2} OFFSET #{param3}
 	</select>
 	
 	<select id="teacherQnaList" resultType="com.sona.music.mypage.dto.MyPageDTO">
-		SELECT 
-			    	cq.question_idx,
-			        cq.q_title,
-			        (select u.user_name from USERS u WHERE u.user_id = cq.user_id) as user_name,
-			        CASE WHEN cq.question_idx = ca.answer_idx THEN 'Y' ELSE 'N' END AS answer_status,
-			        cq.q_reg_date,
-			        cq.user_id,
-			        co.class_name
-			    FROM 
-			        CLASS_QUESTION cq
-			    LEFT JOIN 
-			        CLASS_ANSWER ca ON cq.question_idx = ca.answer_idx
-			    JOIN 
-			        CLASS_OPEN co ON cq.class_idx = co.class_idx
-			    WHERE
-		       		 co.user_id = #{param1} 
-			    ORDER BY
-			        cq.question_idx DESC
+			    	SELECT 
+					    	cq.question_idx,
+					        cq.q_title,
+					        cq.user_id,
+					        (select u.user_name from USERS u WHERE u.user_id = cq.user_id) as user_name,
+					        CASE WHEN cq.question_idx = ca.QUESTION_IDX  THEN 'Y' ELSE 'N' END AS answer_status,
+					        cq.q_reg_date,
+					        co.class_name
+					    FROM 
+					        CLASS_QUESTION cq
+					    LEFT JOIN 
+					        CLASS_ANSWER ca ON cq.question_idx = ca.QUESTION_IDX 
+					    JOIN 
+					        CLASS_OPEN co ON cq.class_idx = co.class_idx
+					    WHERE
+					        co.user_id = #{param1}
+					    ORDER BY
+					        cq.question_idx DESC
 				LIMIT #{param2} OFFSET #{param3}
 	</select>
 
 	<select id="teacherQnaListFilter" resultType="com.sona.music.mypage.dto.MyPageDTO">
 		SELECT 
-			    	cq.question_idx,
-			        cq.q_title,
-			        (select u.user_name from USERS u WHERE u.user_id = cq.user_id) as user_name,
-			        CASE WHEN cq.question_idx = ca.answer_idx THEN 'Y' ELSE 'N' END AS answer_status,
-			        cq.q_reg_date,
-			        cq.user_id,
-			        co.class_name
-			    FROM 
-			        CLASS_QUESTION cq
-			    LEFT JOIN 
-			        CLASS_ANSWER ca ON cq.question_idx = ca.answer_idx
-			    JOIN 
-			        CLASS_OPEN co ON cq.class_idx = co.class_idx
-			    WHERE
-		        co.user_id = #{param1} AND co.class_name = #{param4}
-			    ORDER BY
-			        cq.question_idx DESC
+	    	cq.question_idx,
+	        cq.q_title,
+	        cq.user_id,
+	        (select u.user_name from USERS u WHERE u.user_id = cq.user_id) as user_name,
+	        CASE WHEN cq.question_idx = ca.QUESTION_IDX  THEN 'Y' ELSE 'N' END AS answer_status,
+	        cq.q_reg_date,
+	        co.class_name
+	    FROM 
+	        CLASS_QUESTION cq
+	    LEFT JOIN 
+	        CLASS_ANSWER ca ON cq.question_idx = ca.QUESTION_IDX 
+	    JOIN 
+	        CLASS_OPEN co ON cq.class_idx = co.class_idx
+	    WHERE
+	        co.user_id = #{param1} AND co.class_name = #{param4}
+	    ORDER BY
+	        cq.question_idx DESC
 				LIMIT #{param2} OFFSET #{param3}
 	</select>
 	

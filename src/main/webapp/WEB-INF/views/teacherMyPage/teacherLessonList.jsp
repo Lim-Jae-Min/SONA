@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title>강의 관리</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
@@ -71,8 +71,8 @@
 		   text-align: center;
 		}
 		.class {
-		   width: 77px;
-		   height: 31px;
+		   width: 67px;
+  		   height: 24px;
 		}
 		.clickresult{
 		   display: none;
@@ -84,7 +84,7 @@
 		
 		#nav__bar{
 		 text-align:center;
-		 margin-left:-369px;
+		 margin-left:34px;
 		}
 </style>
 </head>

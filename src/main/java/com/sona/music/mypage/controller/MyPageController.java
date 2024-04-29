@@ -265,6 +265,8 @@ public class MyPageController {
 		 String page = "member/login";
 		 String loginId = (String) session.getAttribute("loginId");
 		 logger.info("idx=  "+loginId);
+		 String manner = (String) session.getAttribute("manner_variance");
+		 logger.info("매너지수 : "+manner);
 		 if (loginId != null) {
 			 List<String> classNames = myPageService.getClassNames2(loginId);
 			 model.addAttribute("classNames", classNames);

@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>수강생 관리</title>
+<title>강의 QnA 관리</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -146,13 +146,10 @@
 	        <table style="border-collapse: collapse; width: 100%;">
 	            <thead>
 	                <tr>
-	                    <th>No</th>
-						<th>이름</th>
-						<th>강의명</th>
-						<th>진행률</th>
-						<th>상태</th>
-						<th>시작일자</th>
-						<th>종료일자</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>답변 여부</th>
+						<th>날짜</th>
 	                </tr>
 	            </thead>
 	            <tbody id="list">
@@ -249,8 +246,6 @@ var showPage =1;
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 	// listCall(showPage);
 	
-	//$('#condition').val('전체').change();
-		
 	// select 요소의 첫 번째 옵션을 선택하여 클릭 이벤트를 발생시킴
     $('#condition option:first').prop('selected', true).click();
 });
@@ -259,7 +254,7 @@ $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비�
 function listCall(page, selectedClass){
     $.ajax({
        type:'get',
-       url:'./studentLessonList.ajax',
+       url:'./teacherQnaList.ajax',
        data:{
           'page':page,
           'cnt':10,
@@ -294,33 +289,7 @@ function listCall(page, selectedClass){
     });
 }
 
-function convertToPercentage(item) {
-    // item.lesson_progress가 null이면 처리하지 않고 그대로 반환
-    if (item == null || item.lesson_progress == null) {
-        return '0'; // 데이터가 없는 경우 0% 반환
-    } else {
-    	var index1 = item.lesson_progress.indexOf('(');
-    	var index2 = item.lesson_progress.indexOf(')');
-    	
-    	// "수업 완료"를 제거하고 남은 문자열에서 숫자 부분을 추출
-        // var progressStr = course.lesson_progress.replace("수업 완료(", "").replace(")", "");
-        var progressStr = item.lesson_progress.substring(index1 + 1, index2 + 1);
-    	
-    	// "/"를 기준으로 분자와 분모로 나눔
-        var parts = progressStr.split("/");
-        // 분자와 분모를 숫자로 변환하여 계산
-        var numerator = parseFloat(parts[0]);
-        var denominator = parseFloat(parts[1]);
-        // 백분율 계산
-        var percentage = (numerator / denominator) * 100;
 
-        console.log("percentage: ",percentage);
-        // 소수점 이하가 있는 경우에만 소수점을 제거하고, 그 외의 경우에는 그대로 출력
-        var formattedPercentage = Number.isInteger(percentage) ? percentage.toFixed(0) : percentage.toFixed(2);
-        console.log("formattedPercentage: ", formattedPercentage);
-        return formattedPercentage;
-    }
-}
 
 
 function drawList(list){
@@ -328,54 +297,16 @@ function drawList(list){
     var lastIndex = list.length; // 마지막 인덱스
     
  	
-    /*
-    
-    if (main.end_check == null){
-		if (main.apply_state ==""){
-	        main.apply_state ="결제 대기";
-	    }else if(course.apply_state =="신청 완료"){
-	        course.apply_state = "수락 대기";
-	    }
-        course.end_check = course.apply_state;
-    }
-    */
-
-    
-    
     for(item of list){
        console.log(item);
-    	// 진행률 게이지 바 색상 설정
-     	var gaugeColor = "white"; // 진행이 안된 바는 흰색으로 설정
-
-     	if (convertToPercentage(item) !== '') {
-    	    // 진행률이 있는 경우에만 회색으로 설정
-    	    gaugeColor = "green";
-    	}; 
     	
-        if (convertToPercentage(item) === '') {
-          //  continue; // 다음 반복으로 넘어감
-        }
-        
-        
-        
        content += '<tr class = "list-item">';
-       // 인덱스를 역순으로 부여
-       var index = lastIndex--;
-       content += '<td>'+ index +'</td>';
-       content += '<td>' + item.student_name + '</td>';
        content += '<td>'+ 
-      		 '<a href="lessonLog.go?apply_idx=' + item.apply_idx + '">' + item.class_name + '</a>' +
+      		 '<a href="lessonQnADetail.go?question_idx=' + item.question_idx + '">' + item.q_title + '</a>' +
       			 '</td>'; // 제목을 클릭하면 해당 강의일지의 세부 정보 페이지로 이동
+       content += '<td>' + item.user_name + '</td>';
+       content += '<td>' + item.answer_status + '</td>';
        
-       content += '<td>';
-       if (item.apply_state == '결제 완료' || item.apply_state == '신청 완료') {
-		    content += '<progress max="100" value="' + convertToPercentage(item) + '" id = "progress";"></progress><br>' +
-	        convertToPercentage(item) + '%';
-		}
-		content +=   '</td>';
-       
-       	
-       content += '<td>' + item.end_check +'</td>';
        function formatDate(dateString) {
     	    var date = new Date(dateString);
     	    if (dateString === null) {
@@ -383,13 +314,9 @@ function drawList(list){
     	    }
     	    return date.toLocaleDateString("ko-KR");
     	}
-
-    	var sdate = formatDate(item.start_date);
-    	content += '<td>' + sdate + '</td>';
-    	var edate = formatDate(item.end_date);
-    	content += '<td>' + edate + '</td>';
-
-       content += '</tr>';
+    	var qdate = formatDate(item.q_reg_date);
+    	content += '<td>' + qdate + '</td>';
+      	content += '</tr>';
     }
     $('#list').html(content);
 }

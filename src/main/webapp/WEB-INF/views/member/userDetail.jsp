@@ -109,7 +109,7 @@
         
         <hr style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
 	
-	<div style="text-align: center;">
+<div style="text-align: center;">
     <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px; margin-top: 43px;">
         <img src="resources/img/review.png" id="review">강의 목록
         <table style="border-collapse: collapse; width: 100%;">
@@ -124,17 +124,18 @@
             </thead>
             <tbody id="list"></tbody>
             <tr>
-      		<td colspan="6" >
-      	     <div class="container">                           
-             <nav aria-label="Page navigation" style="text-align:center">
-             <ul class="pagination" id="pagination"></ul>
-             </nav>               
-            </div>
-      	</td>
-      </tr>
+                <td colspan="6">
+                    <div class="container">                           
+                        <nav aria-label="Page navigation" style="text-align:center">
+                            <ul class="pagination" id="pagination"></ul>
+                        </nav>               
+                    </div>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
+
 
   <hr style="flex: 1; margin-top: 10px; border: 0; border-top: 4px solid #BEE6FF;">
 	

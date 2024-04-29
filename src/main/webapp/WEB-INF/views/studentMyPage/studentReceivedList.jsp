@@ -274,7 +274,7 @@ function receiveListCall(page, loginId) {
 	        content += '<tr style="border-bottom: 1px solid #ddd; height: 50px;">'; // 각 항목에 경계선 추가
 	        content += '<td style="text-align: center;">' + new Date(receive.review_reg_date).toLocaleDateString() + '</td>'; // 날짜
 	        content += '<td style="text-align: center;">' +
-	        '<a href="/reviewDetail?review_idx=' + receive.review_idx + '">' + receive.review_title + '</a>' +
+	        '<a href="./lessonReviewDetail.go?review_idx=' + receive.review_idx + '">' + receive.review_title + '</a>' +
 	        '</td>'; // 리뷰 제목
 	        content += '<td style="text-align: center;">' + maskedName + '</td>'; // 작성자
 	        content += '<td style="text-align: center; color: yellow;">' + satisfaction + '</td>'; // 만족도

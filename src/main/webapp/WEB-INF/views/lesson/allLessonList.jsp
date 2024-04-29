@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
@@ -48,6 +47,7 @@
 }
 #searchBox {
 	margin-right: 20%;
+	margin-left: 20%;
 }
 #condition {
     width: 150px;
@@ -129,9 +129,6 @@
 				<tr>
 					<th><img src="resources/img/logo.png" id="smallLogo"></th>
 					<th>의 전체 강의</th>
-					<th class="blank"></th>
-					<th class="blank"></th>
-					<th class="blank"></th>
 				</tr>
 			</table>
             <span id="searchbox">

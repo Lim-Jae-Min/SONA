@@ -63,4 +63,107 @@
 		UPDATE FAQ_BOARD set faq_delete = 1 WHERE faq_idx = #{param1}
 	</update>
 	
+	<select id="adminData" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT
+			((SELECT COUNT(sb.sug_idx) FROM SUG_BOARD sb) - (SELECT COUNT(sa.sug_idx) FROM SUG_ANSWER sa)) AS waiting_suggestions
+			, ((SELECT COUNT(rb.report_idx) FROM REPORT_BOARD rb) - (SELECT COUNT(ah.action_idx) FROM ACTION_HISTORY ah)) AS waiting_report
+			, (SELECT COUNT(u.user_id) FROM USERS u) AS user_count
+			, ((SELECT CASE WHEN (SUM(up.POINT) * 0.05) IS NULL THEN 0
+					ELSE (SUM(up.POINT) * 0.05) END FROM USER_POINT up WHERE up.point_type = '충전') + 
+				(SELECT CASE WHEN (SUM(pc.p_cal_amount) - SUM(pc.p_actual_amount)) IS NULL THEN 0
+					ELSE (SUM(pc.p_cal_amount) - SUM(pc.p_actual_amount)) END FROM POINT_CALCULATION pc)) AS profit
+	</select>
+	
+	<select id="userData" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT 
+			(SELECT COUNT(u.user_id) FROM USERS u WHERE MONTH(u.user_reg_date) = #{param3} AND u.user_type = '수강생') AS amount_student
+			, (SELECT COUNT(u.user_id) FROM USERS u WHERE MONTH(u.user_reg_date) = #{param3} AND u.user_type = '강사') AS amount_teacher
+			, (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE MONTH(co.class_reg_date) = #{param3}) AS amount_lesson
+			UNION ALL
+		SELECT 
+			(SELECT COUNT(u.user_id) FROM USERS u WHERE MONTH(u.user_reg_date) = #{param2} AND u.user_type = '수강생') AS amount_student
+			, (SELECT COUNT(u.user_id) FROM USERS u WHERE MONTH(u.user_reg_date) = #{param2} AND u.user_type = '강사') AS amount_teacher
+			, (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE MONTH(co.class_reg_date) = #{param2}) AS amount_lesson
+			UNION ALL
+		SELECT 
+			(SELECT COUNT(u.user_id) FROM USERS u WHERE MONTH(u.user_reg_date) = #{param1} AND u.user_type = '수강생') AS amount_student
+			, (SELECT COUNT(u.user_id) FROM USERS u WHERE MONTH(u.user_reg_date) = #{param1} AND u.user_type = '강사') AS amount_teacher
+			, (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE MONTH(co.class_reg_date) = #{param1}) AS amount_lesson
+	</select>
+	
+	<select id="adminUserListCall" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT 
+			u.user_id
+			, u.user_name
+			, u.user_type
+			, u.user_reg_date
+		FROM USERS u
+		<if test="param4 != ''">
+			WHERE
+			<if test="param3 == 'name'">
+				u.user_name LIKE CONCAT('%', #{param4}, '%')
+			</if>
+			<if test="param3 == 'id'">
+				u.user_id LIKE CONCAT('%', #{param4}, '%')
+			</if>
+			<if test="param3 == 'type'">
+				u.user_type LIKE CONCAT('%', #{param4}, '%')
+			</if>
+		</if>
+		ORDER BY u.user_reg_date DESC LIMIT #{param1} OFFSET #{param2}
+	</select>
+	
+	<select id="adminUserListCount" resultType="Integer">
+		SELECT CEIL(COUNT(user_id)/#{param1}) FROM USERS
+		<if test="param3 != ''">
+			WHERE
+			<if test="param2 == 'name'">
+				user_name LIKE CONCAT('%', #{param3}, '%')
+			</if>
+			<if test="param2 == 'id'">
+				user_id LIKE CONCAT('%', #{param3}, '%')
+			</if>
+			<if test="param2 == 'type'">
+				user_type LIKE CONCAT('%', #{param3}, '%')
+			</if>
+		</if>
+	</select>
+	
+	<select id="userCount" resultType="Integer">
+		SELECT COUNT(user_id) FROM USERS
+		<if test="param2 != ''">
+			WHERE
+			<if test="param1 == 'name'">
+				user_name LIKE CONCAT('%', #{param2}, '%')
+			</if>
+			<if test="param1 == 'id'">
+				user_id LIKE CONCAT('%', #{param2}, '%')
+			</if>
+			<if test="param1 == 'type'">
+				user_type LIKE CONCAT('%', #{param2}, '%')
+			</if>
+		</if>
+	</select>
+	
+	<select id="adminUserDetail" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT
+			(SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = u.user_id AND pb.photo_category = 'userinfo'
+				ORDER BY pb.photo_idx DESC LIMIT 1) AS new_filename
+			, u.user_name
+			, u.user_type
+			, u.user_id
+			, FORMAT((36.5 + COALESCE((SELECT SUM(mh.manner_variance) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 0)), 2) AS manner
+			, u.user_pass
+			, u.user_email
+			, u.user_phone
+			, u.user_accountnumber 
+			, u.user_bank
+			, CASE WHEN (SELECT sum(up.POINT) FROM USER_POINT up WHERE up.user_id = u.user_id) IS NULL THEN 0
+				ELSE (SELECT sum(up.POINT) FROM USER_POINT up WHERE up.user_id = u.user_id) END AS point
+			, (SELECT MAX(bu.start_date) FROM BANNED_USER bu WHERE bu.user_id = u.user_id) AS banned_start_date
+			, (SELECT MAX(bu.end_date) FROM BANNED_USER bu WHERE bu.user_id = u.user_id) AS banned_end_date
+		FROM USERS u
+		WHERE u.user_id = #{param1}
+	</select>
+	
 </mapper>

@@ -10,7 +10,6 @@
 </style>
 </head>
 <body>
-<body>
     <header id="adminmain">
         <table id="mainmenu">
             <tr>
@@ -21,29 +20,9 @@
             </tr>
         </table>
         <table id="mymenu">
-            <c:if test="${loginName != null}">
-                <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
-                    </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div>${loginName}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${loginName == null}">
-                <tr>
-                    <c:if test="${alarmCount > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg"></th>
-                    </c:if>
-                    <c:if test="${alarmCount == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg"></th>
-                    </c:if>
-                    <th><a href="#">로그인</a></th>
-                </tr>
-            </c:if>
+        	<tr>
+        		<td><a href="adminLogout.do">로그아웃</a></td>
+        	</tr>
         </table>
     </header>
     <div id="wrapper">
@@ -74,5 +53,8 @@
     </div>
 </body>
 <script>
+$('#logo').click(function main(){
+	location.href = 'adminMain.go';
+});
 </script>
 </html>

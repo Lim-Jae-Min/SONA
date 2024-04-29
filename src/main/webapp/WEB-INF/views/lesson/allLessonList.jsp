@@ -46,6 +46,9 @@
     height: 100px;
     width: 150px;
 }
+#searchBox {
+	margin-right: 20%;
+}
 #condition {
     width: 150px;
     height: 24px;
@@ -60,6 +63,7 @@
 #location {
 	width: 200px;
 	height: 24px;
+	margin-bottom: 10px;
 }
 .inst {
 	width: 120px;
@@ -170,7 +174,7 @@
 					<option value="6">그 외</option>
 				</select>
 				<select name="inst" id="inst" class="inst"></select>
-				<br/><br/>
+				<br/>
                 <select name="condition" id="condition">
                     <option value="class_name">강의명</option>
                     <option value="user_name">강사명</option>

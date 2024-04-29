@@ -55,7 +55,7 @@ public class PointController {
 		Integer.parseInt( param.get("amount"));
 		String id = (String) session.getAttribute("loginId");
 		String page = "redirect:/";
-		String pointType = "입금";
+		String pointType = "충전";
 		String chargePointLoginId = (String) session.getAttribute("loginId");
 		// 포인트 충전을 위한 세션 체크
 		Map<String, Object> map = new HashMap<String, Object>();

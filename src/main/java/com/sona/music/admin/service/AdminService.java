@@ -19,7 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sona.music.admin.dao.AdminDAO;
 import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.admin.dto.PhotoDTO;
+
+import com.sona.music.board.dto.FAQDTO;
+
 import com.sona.music.board.dto.NoticeDTO;
+
 	
 
 @Service
@@ -181,14 +185,41 @@ public class AdminService {
 	}
 
 
-	public Map<String, Object> showReportSearch(int currPage, int searchType, String serachText) {
+
+
+	
+
+		public Map<String, Object> showListSearchReview(int currPage, int searchType, String serachText, int categoryNum) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
 		int deleteStatus = 0;
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<AdminDTO> resultList = null;
+
 		
+		resultList = adminDAO.showListSearchReview(start,pagePerCnt,deleteStatus,serachText,searchType,categoryNum);
+		logger.info(serachText + "텍스트");
+
+		for (AdminDTO reivew : resultList) {
+			logger.info(reivew.getReview_idx() + " : 리뷰 idx admin");
+			logger.info(reivew.getUser_type());
+		}
+	
+		result.put("list", resultList);
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.allCountReview(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.allCountReview(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		return result;
+		}
+	
+
 		
+	public Map<String, Object> showReportSearch(int currPage, int searchType, String serachText) {
+		int pagePerCnt = 10;
+		int start = (currPage-1)*pagePerCnt;
+		int deleteStatus = 0;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> resultList = null;	
 		resultList = adminDAO.showReportSearch(start,pagePerCnt,serachText,searchType);
 		logger.info(serachText);
 		
@@ -196,8 +227,10 @@ public class AdminService {
 		result.put("currPage", currPage);
 		result.put("totalPages", adminDAO.reportAllCount(pagePerCnt,serachText,searchType));
 		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.reportAllCount(pagePerCnt,serachText,searchType));
+		
 		return result;
 	}
+
 
 	public void adminMainGO(Model model) {
 		LocalDate currentDate = LocalDate.now();

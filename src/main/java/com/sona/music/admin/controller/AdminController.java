@@ -22,6 +22,7 @@ import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.admin.service.AdminService;
 import com.sona.music.board.service.FAQService;
 import com.sona.music.board.service.NoticeService;
+import com.sona.music.board.service.ReviewService;
 
 @Controller
 public class AdminController {
@@ -33,6 +34,7 @@ public class AdminController {
 	@Autowired
 	NoticeService noticeService;
 	@Autowired FAQService faqService;
+	@Autowired ReviewService reviewService;
 
 	@RequestMapping(value="adminMain.go")
 	public String adminMainGo(HttpSession session, Model model) {
@@ -290,6 +292,27 @@ public class AdminController {
 		return "adminPage/adminSuggestionsLIst";
 	}
 	
+
+	@RequestMapping(value = "adminReviewList.go")
+	public String adminReviewListGo() {
+		logger.info("리뷰관리 페이지 이동");
+		return "adminPage/adminReviewList";
+	}
+	
+	@RequestMapping(value = "adminReviewList.ajax")
+	@ResponseBody
+	public Map<String, Object> adminReviewList(int page , int searchType, String serachText, int categoryNum) {
+		logger.info("noticeManagementlist 요청");
+		logger.info("요청페이지 : " + page);
+		logger.info("faq 검색에서 가져온 text : "+serachText);
+		logger.info("faq 검색에서 가져온 type : "+searchType);
+		logger.info("faq 검색에서 가져온 category num : " + categoryNum);
+		Map<String, Object> map = null;
+		int currPage = page;
+			
+		map = adminService.showListSearchReview(currPage,searchType,serachText,categoryNum);	
+		return map;
+	}
 	@RequestMapping(value = "/adminReportManagement.go")
 	public String reportManagementGo() {
 
@@ -307,10 +330,12 @@ public class AdminController {
 		int currPage = page;
 			
 			map = adminService.showReportSearch(currPage,searchType,serachText);	
+
 		
 		
 		return map;
 	}
+
 	
 	@RequestMapping(value = "/reportDetailAdmin.go")
 	public String reportDetailAdminGo(int report_idx, Model model) {
@@ -371,5 +396,5 @@ public class AdminController {
 		return map;
 	}
 
-	
+
 }

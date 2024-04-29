@@ -50,6 +50,18 @@ public class AdminDTO {
 	private int faq_views;
 	private int faq_delete;
 	
+
+	// review DTO
+	private int review_idx;
+	private int class_idx;
+	private String rater_id;
+	private String ratee_id;
+	private double score;
+	private String review_title;
+	private String review_content;
+	private Date review_reg_date;
+	private int review_delete;
+
 	// report DTO
 	private int report_idx;
 	private int board_idx;
@@ -58,7 +70,6 @@ public class AdminDTO {
 	private String report_content;
 	private Date report_date;
 	private String report_state;
-	private String review_title;
 	private String class_name;
 	
 	
@@ -79,6 +90,7 @@ public class AdminDTO {
 
 	
 	
+
 	
 	// 어드민 아이디 게터/ 세터
 	public String getAdmin_id() {
@@ -301,7 +313,40 @@ public class AdminDTO {
 	public void setNew_filename(String new_filename) {
 		this.new_filename = new_filename;
 	}
+
 	
+	
+	// 리뷰 게터 세터
+	public int getReview_idx() {
+		return review_idx;
+	}
+	public void setReview_idx(int review_idx) {
+		this.review_idx = review_idx;
+	}
+	public int getClass_idx() {
+		return class_idx;
+	}
+	public void setClass_idx(int class_idx) {
+		this.class_idx = class_idx;
+	}
+	public String getRater_id() {
+		return rater_id;
+	}
+	public void setRater_id(String rater_id) {
+		this.rater_id = rater_id;
+	}
+	public String getRatee_id() {
+		return ratee_id;
+	}
+	public void setRatee_id(String ratee_id) {
+		this.ratee_id = ratee_id;
+	}
+	public double getScore() {
+		return score;
+	}
+	public void setScore(double score) {
+		this.score = score;
+	}
 	// Report 게터 섹터
 	public int getReport_idx() {
 		return report_idx;
@@ -369,6 +414,31 @@ public class AdminDTO {
 	public void setReview_title(String review_title) {
 		this.review_title = review_title;
 	}
+	public String getReview_content() {
+		return review_content;
+	}
+	public void setReview_content(String review_content) {
+		this.review_content = review_content;
+	}
+	public Date getReview_reg_date() {
+		return review_reg_date;
+	}
+	public void setReview_reg_date(Date review_reg_date) {
+		this.review_reg_date = review_reg_date;
+	}
+	public int getReview_delete() {
+		return review_delete;
+	}
+	public void setReview_delete(int review_delete) {
+		this.review_delete = review_delete;
+	}
+
+	
+	
+	
+	
+	// 리뷰 게터 세터
+
 	public String getClass_name() {
 		return class_name;
 	}

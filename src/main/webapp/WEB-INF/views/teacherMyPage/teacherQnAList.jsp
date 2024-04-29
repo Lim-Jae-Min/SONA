@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>강의 QnA 관리</title>
+<title>qna</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +30,7 @@
 		    padding: 10px;
 		    margin-bottom: 10px;
 		    margin-left: 98px;
-		    width: 100%;
+		    width: 93%;
 		}
 		
 		#tab th,
@@ -127,7 +127,7 @@
                 <a href="teacherStudentList.go">수강생 관리</a>
                 <a href="teacherQnaList.go">강의 Q&A 관리</a>
                 <a href="teacherPointList.go">포인트 내역</a>
-                <a href="#">내가 받은 리뷰</a>
+                <a href="teacherReceivedList.go">내가 받은 리뷰</a>
                 <a href="#">내가 작성한 리뷰</a>
             </div>
  		<!-- HTML 코드 -->
@@ -299,12 +299,16 @@ function drawList(list){
  	
     for(item of list){
        console.log(item);
+       
+       var firstLetter = item.user_id.charAt(0); // 첫 번째 글자
+       var otherLetters = item.user_id.substring(1); // 나머지 글자
+       var maskedName = firstLetter + "O".repeat(otherLetters.length);
     	
        content += '<tr class = "list-item">';
        content += '<td>'+ 
       		 '<a href="lessonQnADetail.go?question_idx=' + item.question_idx + '">' + item.q_title + '</a>' +
       			 '</td>'; // 제목을 클릭하면 해당 강의일지의 세부 정보 페이지로 이동
-       content += '<td>' + item.user_name + '</td>';
+       content += '<td>' + maskedName + '</td>';
        content += '<td>' + item.answer_status + '</td>';
        
        function formatDate(dateString) {

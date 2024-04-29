@@ -58,6 +58,7 @@ public class MyPageDTO {
 	private Date start_date;
 	private Date end_date;
 	private int accumulate_lesson;
+	private int manner_variance;
 	
 	
 	
@@ -387,6 +388,12 @@ public class MyPageDTO {
 	}
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
+	}
+	public int getManner_variance() {
+		return manner_variance;
+	}
+	public void setManner_variance(int manner_variance) {
+		this.manner_variance = manner_variance;
 	}
 
 

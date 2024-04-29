@@ -29,8 +29,8 @@
 		    border-radius: 15px;
 		    padding: 10px;
 		    margin-bottom: 10px;
-		    margin-left: 98px;
-		    width: 100%;
+		    margin-left: 49px;
+		    width: 84%;
 		}
 		
 		#tab th,
@@ -144,7 +144,7 @@
                 <a href="teacherStudentList.go">수강생 관리</a>
                 <a href="teacherQnaList.go">강의 Q&A 관리</a>
                 <a href="teacherPointList.go">포인트 내역</a>
-                <a href="#">내가 받은 리뷰</a>
+                <a href="teacherReceivedList.go">내가 받은 리뷰</a>
                 <a href="#">내가 작성한 리뷰</a>
             </div>
  		<!-- HTML 코드 -->
@@ -162,7 +162,6 @@
 	            <thead>
 	                <tr>
 						<th>날짜</th>
-						<th>시간</th>
 						<th>구분</th>
 						<th>금액</th>
 						<th>잔액</th>
@@ -306,12 +305,6 @@ function drawList(list){
        console.log(item);
     	
        content += '<tr class = "list-item">';
-       content += '<td>'+ 
-      		 '<a href="lessonQnADetail.go?question_idx=' + item.question_idx + '">' + item.q_title + '</a>' +
-      			 '</td>'; // 제목을 클릭하면 해당 강의일지의 세부 정보 페이지로 이동
-       content += '<td>' + item.user_name + '</td>';
-       content += '<td>' + item.answer_status + '</td>';
-       
        function formatDate(dateString) {
     	    var date = new Date(dateString);
     	    if (dateString === null) {
@@ -319,8 +312,11 @@ function drawList(list){
     	    }
     	    return date.toLocaleDateString("ko-KR");
     	}
-    	var qdate = formatDate(item.q_reg_date);
-    	content += '<td>' + qdate + '</td>';
+    	var pdate = formatDate(item.point_date);
+    	content += '<td>' + pdate + '</td>';
+       	content += '<td>'+ item.point_type + '</td>'; 
+       content += '<td>' + item.point + '</td>';
+       content += '<td>' + item.balance+ '</td>';
       	content += '</tr>';
     }
     $('#list').html(content);

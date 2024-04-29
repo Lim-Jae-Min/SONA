@@ -139,11 +139,11 @@
 	</select>
 	
 
-	<select id="lessonAllCount" resultType="Integer" parameterType="Integer">
+	<select id="lessonAllCount" resultType="Integer" parameterType="map">
     	SELECT CEIL(COUNT(*) / #{cnt}) AS pages FROM CLASS_OPEN WHERE USER_ID ='user2'
 	</select>
 	
-	<select id="teacherStudentAllCount" resultType="Integer" parameterType="Integer">
+	<select id="teacherStudentAllCount" resultType="Integer" parameterType="map">
     	SELECT CEIL(COUNT(*)/#{cnt}) AS pages
 			FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx 
 			WHERE ah.APPLY_IDX IN (
@@ -154,6 +154,69 @@
 			)
 	</select>
 	
+	<select id="teacherReceiveAllCount" resultType="Integer" parameterType="map">
+    	SELECT
+		   CEIL(COUNT(*)/#{cnt}) AS pages
+	  FROM REVIEW r JOIN CLASS_OPEN co ON r.class_idx = co.class_idx 
+	 	WHERE r.RATEE_ID = #{user_id}
+	</select>
+	
+	<select id="teacherReceiveAllCountFilter" resultType="Integer" parameterType="map">
+    	SELECT
+		   CEIL(COUNT(*)/#{cnt}) AS pages
+	  FROM REVIEW r JOIN CLASS_OPEN co ON r.class_idx = co.class_idx 
+	 	WHERE r.RATEE_ID = #{user_id} and co.CLASS_NAME = #{selectedClass}
+	</select>
+	
+	<select id="QnaAllCount" resultType="Integer" parameterType="map">
+    	SELECT 	CEIL(COUNT(*) /#{cnt}) AS pages
+	    FROM 
+	        CLASS_QUESTION cq
+	    LEFT JOIN 	
+	        CLASS_ANSWER ca ON cq.question_idx = ca.answer_idx
+	    JOIN 
+	        CLASS_OPEN co ON cq.class_idx = co.class_idx
+	    WHERE
+	        co.user_id = #{user_id}
+	</select>
+	
+	<select id="teacherPointAllCount" resultType="Integer" parameterType="map">
+	   	SELECT 
+			CEIL(COUNT(*)/#{cnt}) AS pages
+			FROM 
+			    USER_POINT up 
+			WHERE 
+			    up.user_id = #{user_id}
+			ORDER BY 
+			    up.point_idx desc
+	</select>	
+	
+	<select id="teacherPointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
+	SELECT 
+	    up.point_date,
+	    up.point_type,
+	    up.point,
+	    (SUM(point) OVER (ORDER BY up.point_idx)) AS balance
+	FROM 
+	    USER_POINT up 
+	WHERE 
+	    up.user_id = #{param3}
+	ORDER BY 
+	    up.point_idx desc
+	LIMIT #{param2},#{param1}
+	</select>
+	
+	<select id="QnaAllCountFilter" resultType="Integer" parameterType="map">
+    	SELECT 	CEIL(COUNT(*) /#{cnt}) AS pages
+	    FROM 
+	        CLASS_QUESTION cq
+	    LEFT JOIN 	
+	        CLASS_ANSWER ca ON cq.question_idx = ca.answer_idx
+	    JOIN 
+	        CLASS_OPEN co ON cq.class_idx = co.class_idx
+	    WHERE
+	        co.user_id = #{user_id} AND  co.class_name = #{selectedClass}
+	</select>
 
 	<select id="pointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 	SELECT 
@@ -408,5 +471,30 @@ LIMIT #{param2} OFFSET #{param3}
 	<select id="blockListCount" resultType="Integer">
 		SELECT CEIL(COUNT(user_id)/#{param1}) FROM MY_TEACHER WHERE user_id = #{param2} AND category = 'block'
 	</select>
+	
+	<select id="teacherReceiveList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
+		SELECT
+		   r.review_idx
+		   , r.review_reg_date 
+		   , r.review_title 
+		   , r.rater_id 
+		   , r.score 
+		   , FORMAT(((r.score - 3) * 0.25), 2) AS manner_variance
+	  FROM REVIEW r JOIN CLASS_OPEN co ON r.class_idx = co.class_idx 
+	 	WHERE r.RATEE_ID = #{param1}
+	 	LIMIT #{param2} OFFSET #{param3}
+	</select>
 	    
+	<select id="teacherReceiveListFilter" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
+		SELECT
+		   r.review_idx
+		   , r.review_reg_date 
+		   , r.review_title 
+		   , r.rater_id 
+		   , r.score 
+		   , FORMAT(((r.score - 3) * 0.25), 2) AS manner_variance
+	  FROM REVIEW r JOIN CLASS_OPEN co ON r.class_idx = co.class_idx 
+	 	WHERE r.RATEE_ID = #{param1} and co.CLASS_NAME = #{param4}
+			LIMIT #{param2} OFFSET #{param3}
+	</select>
 </mapper>

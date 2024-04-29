@@ -106,6 +106,30 @@ public interface MyPageDAO {
 
 	List<PhotoDTO> UserPhotosLoad(String loginId);
 
+	@Mapper
+	Object QnaAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+
+	@Mapper
+	Object QnaAllCountFilter(@Param("cnt") int cnt, @Param("user_id") String user_id, @Param("selectedClass") String selectedClass);
+
+	@Mapper
+	Object teacherPointAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+
+
+	List<MyPageDTO> teacherPointList(int cnt, int start, String user_id);
+
+
+	List<MyPageDTO> teacherReceiveList(String user_id, int cnt, int start);
+
+
+	List<MyPageDTO> teacherReceiveListFilter(String user_id, int cnt, int start, String selectedClass);
+
+	@Mapper
+	Object teacherReceiveAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+
+	@Mapper
+	Object teacherReceiveAllCountFilter(@Param("cnt") int cnt, @Param("user_id") String user_id, @Param("selectedClass") String selectedClass);
+
 
 
 

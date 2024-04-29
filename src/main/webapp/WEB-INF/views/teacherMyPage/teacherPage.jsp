@@ -85,111 +85,110 @@
         </table>
     </header>
     <div id="wrapper">
-            <div id="sidemenu">
-                <h3>마이페이지</h3>
-                <hr/>
-                <a href="teacherPage.go">마이페이지</a>
-                <a href="teacherPageEdit.go">개인 정보 수정</a>
-                <a href="teacherLessonList.go">강의 관리</a>
-                <a href="teacherStudentList.go">수강생 관리</a>
-                <a href="teacherQnaList.go">강의 Q&A 관리</a>
-                <a href="#">포인트 내역</a>
-                <a href="#">내가 받은 리뷰</a>
-                <a href="#">내가 작성한 리뷰</a>
-            </div>
-            <form action="studentPage.do">
+    <div id="sidemenu">
+        <h3>마이페이지</h3>
+        <hr/>
+        <a href="teacherPage.go">마이페이지</a>
+        <a href="teacherPageEdit.go">개인 정보 수정</a>
+        <a href="teacherLessonList.go">강의 관리</a>
+        <a href="teacherStudentList.go">수강생 관리</a>
+        <a href="teacherQnaList.go">강의 Q&A 관리</a>
+        <a href="teacherPointList.go">포인트 내역</a>
+        <a href="teacherReceivedList.go">내가 받은 리뷰</a>
+        <a href="#">내가 작성한 리뷰</a>
+    </div>
+            
+    <div>     
         <table style="width: 100%;">
-    <thead>
-        <tr> 
-            <td id="profile_s">
-                <c:if test="${userInfo.profile != null}">
-                    <img src="/photo/${userInfo.profile}" class="profile">
-                </c:if>
-                <c:if test="${userInfo.profile == null}">
-                    <img src="resources/img/basic_user.png" class="profile">
-                </c:if>
-            </td>
-            <td class="main">
-                <span style="width: 200px;">${userInfo.user_name} ${userInfo.user_type}</span><br><br>
-                ${userInfo.user_id}
-            </td>
-            <td style="width: 60%; min-width: 150px; text-align: right;">
-                <img src="resources/img/heart.png"  id="heart" style="vertical-align: middle;">
-                <span style="vertical-align: middle;">${sessionScope.manner_variance}</span>
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-        </tr>
-        <tr>
-            <td class="main" colspan="3" style="width: 100%; text-align: left;">
-                <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 
-                <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">
-                    ${userInfo.user_email}
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-        </tr>
-        <tr>
-            <td class="main" colspan="3" style="width: 100%; text-align: left;">
-                <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 
-                <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">
-                    ${userInfo.user_phone}
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-        </tr>
-        <tr>
-            <td class="main" colspan="3" style="width: 100%; text-align: left;">
-                <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;은행
-                <span class="contents" style="margin-left: 120px; width: 400px; display: inline-block;">
-                    ${userInfo.user_bank}
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-        </tr>
-        <tr>
-            <td class="main" colspan="3" style="width: 100%; text-align: left;">
-                <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계좌번호 
-                <span class="contents" style="margin-left: 80px; width: 400px; display: inline-block;">
-                    ${userInfo.user_accountnumber}
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
-        </tr>
-        <tr>
-            <td class="main" colspan="3" style="width: 100%; text-align: left;">
-                <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;잔여 포인트 
-                <span class="contents" style="margin-left: 60px; width: 200px; display: inline-block;">
-                    ${sessionScope.point} P
-                </span>
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                <button >출금</button>
-            </td>
-        </tr>
-    </tbody>    
-</table>
+            <thead>
+                <tr> 
+                    <td id="profile_s">
+                        <c:if test="${userInfo.profile != null}">
+                            <img src="/photo/${userInfo.profile}" class="profile">
+                        </c:if>
+                        <c:if test="${userInfo.profile == null}">
+                            <img src="resources/img/basic_user.png" class="profile">
+                        </c:if>
+                    </td>
+                    <td class="main">
+                        <span style="width: 200px;">${userInfo.user_name} ${userInfo.user_type}</span><br><br>
+                        ${userInfo.user_id}
+                    </td>
+                    <td style="width: 60%; min-width: 150px; text-align: right;">
+                        <img src="resources/img/heart.png"  id="heart" style="vertical-align: middle;">
+                        <span style="vertical-align: middle;">${sessionScope.manner_variance}</span>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                </tr>
+                <tr>
+                    <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이메일 
+                        <span class="contents" style="margin-left: 100px; width: 200px; display: inline-block;">
+                            ${userInfo.user_email}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                </tr>
+                <tr>
+                    <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화번호 
+                        <span class="contents" style="margin-left: 80px; width: 200px; display: inline-block;">
+                            ${userInfo.user_phone}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                </tr>
+                <tr>
+                    <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;은행
+                        <span class="contents" style="margin-left: 120px; width: 400px; display: inline-block;">
+                            ${userInfo.user_bank}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                </tr>
+                <tr>
+                    <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계좌번호 
+                        <span class="contents" style="margin-left: 80px; width: 400px; display: inline-block;">
+                            ${userInfo.user_accountnumber}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
+                </tr>
+                <tr>
+                    <td class="main" colspan="3" style="width: 100%; text-align: left;">
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;잔여 포인트 
+                        <span class="contents" style="margin-left: 60px; width: 200px; display: inline-block;">
+                            ${sessionScope.point} P
+                        </span>
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <button onclick="window.location.href='withdrawPoint.go';" >출금</button>
+                    </td>
+                </tr>
+            </tbody>    
+        </table>
+    </div>
+</div>
 
-
-        </div>
-        </form>
-        </div>
  <div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>

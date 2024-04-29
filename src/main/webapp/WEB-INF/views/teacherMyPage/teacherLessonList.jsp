@@ -30,7 +30,7 @@
 		    padding: 10px;
 		    margin-bottom: 10px;
 		    margin-left: 361px;
-		    width: 100%;
+		    width: 91%;
 		}
 		
 		#tab th,
@@ -84,7 +84,7 @@
 		
 		#nav__bar{
 		 text-align:center;
-		 margin-left:-244px;
+		 margin-left:-369px;
 		}
 </style>
 </head>
@@ -139,7 +139,7 @@
                 <a href="teacherStudentList.go">수강생 관리</a>
                 <a href="teacherQnaList.go">강의 Q&A 관리</a>
                 <a href="teacherPointList.go">포인트 내역</a>
-                <a href="#">내가 받은 리뷰</a>
+                <a href="teacherReceivedList.go">내가 받은 리뷰</a>
                 <a href="#">내가 작성한 리뷰</a>
             </div>
  		<!-- HTML 코드 -->

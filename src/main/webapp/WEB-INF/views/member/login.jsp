@@ -11,7 +11,8 @@
 <style>
 #footer{
 	position: absolute;
-    width: 100%; /* 화면 전체 너비 차지 */
+    width: calc(100% - 200px); /* 화면 전체 너비 차지 */
+    bottom: 0;
 }
 .login{
     width: 480px;

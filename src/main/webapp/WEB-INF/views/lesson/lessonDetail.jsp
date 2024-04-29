@@ -15,8 +15,8 @@
 }
 #top {
     height: 150px;
-    padding-left: 350px;
-    padding-right: 350px;
+    padding-left: 28%;
+    padding-right: 28%;
     border-bottom: solid 5px #BEE6FF;
     display: flex;
     align-items: center;

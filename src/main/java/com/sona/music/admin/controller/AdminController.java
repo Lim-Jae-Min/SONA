@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sona.music.admin.service.AdminService;
+import com.sona.music.board.service.FAQService;
 import com.sona.music.board.service.NoticeService;
 
 @Controller
@@ -29,6 +30,7 @@ public class AdminController {
 	AdminService adminService;
 	@Autowired
 	NoticeService noticeService;
+	@Autowired FAQService faqService;
 
 	@RequestMapping(value="adminMain.go")
 	public String adminMainGo(HttpSession session) {
@@ -58,35 +60,48 @@ public class AdminController {
 	@RequestMapping(value = "/noticeManagement.go")
 	public String noticeManagementGo() {
 
-		return "adminPage/noticeManagement";
+		return "adminPage/adminNoticeList";
 	}
 
 	@RequestMapping(value = "/noticeDetailAdmin.go")
 	public String noticeDetailAdminGo(int idx, Model model) {
 		noticeService.noticeDetailAdmin(idx, model);
 
-		return "adminPage/noticeDetail";
+		return "adminPage/adminNoticeDetail";
 	}
 	
 	@RequestMapping(value = "/noticeEditAdmin.go")
 	public String noticeEditAdminGo(int idx, Model model) {
 		noticeService.noticeDetailAdmin(idx, model);
 
-		return "adminPage/noticeEdit";
+		return "adminPage/adminNoticeEdit";
 	}
+	
+	@RequestMapping(value = "/faqDetailAdmin.go")
+	public String faqDetailAdminGo(int idx, Model model) {
+		faqService.faqDetailAdmin(idx, model);
 
+		return "adminPage/adminFaqDetail";
+	}
+	
+	@RequestMapping(value = "/faqEditAdmin.go")
+	public String faqEditAdminGo(int idx, Model model) {
+		faqService.faqDetailAdmin(idx, model);
+
+		return "adminPage/adminFaqEdit";
+	}
 	
 	
 	@RequestMapping(value = "/noticeWrite.go")
 	public String noticeWrite() {
 
-		return "adminPage/noticeWrite";
+		return "adminPage/adminNoticeWrite";
 	}
 	
 	@RequestMapping(value = "faqManagement.go")
 	public String faqManagementGo() {
 		logger.info("faq관리 페이지 이동");
-		return "adminPage/faqManagement";
+		return "adminPage/adminFaqList";
 	}
 
 	@RequestMapping(value = "/noticeDel.ajax", method = RequestMethod.POST)
@@ -119,7 +134,7 @@ public class AdminController {
 		logger.info("공지사항에서 받은 제목 : " + param.get("title"));
 		logger.info("공지사항에서 받은 내용 : " + param.get("content"));
 
-		return "adminPage/noticeWrite";
+		return "adminPage/adminNoticeList";
 	}
 	
 	@RequestMapping(value = "/noticeEditAdmin.do")
@@ -141,7 +156,7 @@ public class AdminController {
 		logger.info("공지사항에서 받은 제목 : " + param.get("title"));
 		logger.info("공지사항에서 받은 내용 : " + param.get("content"));
 
-		return "adminPage/noticeEdit";
+		return "adminPage/adminNoticeList";
 	}
 	
 	@RequestMapping(value = "noticePhotoDel.ajax", method = RequestMethod.POST)
@@ -160,5 +175,62 @@ public class AdminController {
 		logger.info("사진삭제에서 가져온거 : " + photoname);
 		return map;
 	}
+	@RequestMapping(value = "adminFaqWrite.go")
+	public String adminFaqWriteGo() {
+		
+		return "adminPage/adminFaqWrite";
+	}
+	
+	@RequestMapping(value = "adminFaqWrite.do", method = RequestMethod.POST)
+	public String adminFaqWriteDo(HttpSession session, Model model , @RequestParam Map<String,String> param) {
+		String faqType = param.get("faqType");
+		String faqTitle = param.get("title");
+		String faqAnswer = param.get("answer");
+		logger.info("FAQ 작성에서 받은값 : "+faqType);
+		logger.info("FAQ 작성에서 받은값 : "+faqTitle);
+		logger.info("FAQ 작성에서 받은값 : "+faqAnswer);
+		
+		
+		
+		int row = adminService.adminFaqWriteDo(faqTitle,faqAnswer,faqType);
+			
+		
+		return "adminPage/adminFaqList";
+	}
+	
+	@RequestMapping(value = "adminFaqEdit.do", method = RequestMethod.POST)
+	public String adminFaqEditDo(HttpSession session, Model model , @RequestParam Map<String,String> param) {
+		String faqType = param.get("faqType");
+		String faqTitle = param.get("title");
+		String faqAnswer = param.get("answer");
+		String faqIdx = param.get("faqIdx");
+		logger.info("FAQ 수정에서 받은값 : "+faqType);
+		logger.info("FAQ 수정에서 받은값 : "+faqTitle);
+		logger.info("FAQ 수정에서 받은값 : "+faqAnswer);
+		logger.info("FAQ 수정에서 받은값 : "+faqIdx);
+		
+		
+		
+		int row = adminService.adminFaqEditDo(param);
+			
+		
+		return "adminPage/adminFaqList";
+	}
+	
+	@RequestMapping(value = "/faqDel.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> faqDel(int faqIdx) {
+		logger.info("FAQ 삭제 받은 idx : " + faqIdx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		int row = adminService.faqDel(faqIdx);
+		map.put("success", row);
+		return map;
 
+	}
+	
+	@RequestMapping(value = "adminSuggestionsLIst.go")
+	public String adminSuggestionsLIstGo() {
+		logger.info("건의사항 페이지 이동");
+		return "adminPage/adminSuggestionsLIst";
+	}
 }

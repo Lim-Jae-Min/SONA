@@ -10,4 +10,6 @@ public interface FAQDAO {
 
 	List<FAQDTO> showListSearch(int start, int pagePerCnt,int deleteStatus, String serachText, int searchType,int categoryNum);
 
+	FAQDTO faqDetailAdmin(int idx);
+
 }

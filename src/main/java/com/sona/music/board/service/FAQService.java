@@ -8,10 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.sona.music.board.dao.FAQDAO;
 import com.sona.music.board.dto.FAQDTO;
 import com.sona.music.board.dto.NoticeDTO;
+import com.sona.music.board.dto.PhotoDTO;
 
 @Service
 public class FAQService {
@@ -42,5 +44,21 @@ public class FAQService {
 		logger.info("공지사항관리에서 받아온 allCount"+faqDAO.allCount(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
 	return result;
 }
+
+
+	public void faqDetailAdmin(int idx, Model model) {
+		FAQDTO dto = faqDAO.faqDetailAdmin(idx);
+		String answer = dto.getFaq_answer();
+		int faqIdx = dto.getFaq_idx();
+//		faqDAO.faqViews(idx);
+		
+		String title = dto.getFaq_title();
+		logger.info("FAQ 들어간 FAQ 상세보기 : " + title);	
+		logger.info("FAQ 들어간 FAQ 상세보기 : " + answer);	
+		logger.info("FAQ 들어간 FAQ 상세보기 : " + faqIdx);
+		
+		model.addAttribute("faqDetail", dto);
+		
+	}
 	
 }

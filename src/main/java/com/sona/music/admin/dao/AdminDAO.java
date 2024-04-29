@@ -18,4 +18,10 @@ public interface AdminDAO {
 
 	int photoDel(int photoidx, String photocategory, String photoname);
 
+	int adminFaqWriteDo(String adminId, String faqTitle, String faqAnswer, String faqType);
+
+	int faqEdit(AdminDTO faqEditDto);
+
+	int faqDel(int faqIdx);
+
 }

@@ -112,5 +112,8 @@
 			</choose>	
 	</select> 
 	
+	<select id="faqDetailAdmin" resultType="com.sona.music.board.dto.FAQDTO">
+		SELECT * FROM FAQ_BOARD WHERE faq_idx = #{param1}
+	</select>
 	
 </mapper>

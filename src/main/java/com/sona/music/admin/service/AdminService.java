@@ -141,7 +141,41 @@ public class AdminService {
 			logger.info("경로에 있는 파일 삭제됨");
 		}
 	}
-	
+
+	public int adminFaqWriteDo(String faqTitle, String faqAnswer, String faqType) {
+		String adminId = "admin";
+		int row = adminDAO.adminFaqWriteDo(adminId,faqTitle,faqAnswer,faqType);
+		return row;
+	}
+
+	public int adminFaqEditDo(Map<String, String> param) {
+		
+		logger.info("공지사항 작성자 : "+param.get("writer"));
+		
+		AdminDTO faqEditDto = new AdminDTO();
+		faqEditDto.setAdmin_id("admin");
+		faqEditDto.setFaq_answer(param.get("answer"));
+		faqEditDto.setFaq_title(param.get("title"));
+		faqEditDto.setFaq_idx(Integer.parseInt(param.get("faqIdx")));
+		faqEditDto.setFaq_target(param.get("faqType"));
+		logger.info("faq수정에서 받은 faq 타겟"+faqEditDto.getFaq_target());
+		logger.info("faq수정에서 받은 faq 타이틀"+faqEditDto.getFaq_title());
+		logger.info("faq수정에서 받은 faq 대답"+faqEditDto.getFaq_answer());
+		logger.info("faq수정에서 받은 faq idx"+faqEditDto.getFaq_idx());
+		
+		int row = adminDAO.faqEdit(faqEditDto);
+		logger.info("faq 수정 성공시 나오는 row : 1 == " + row);
+		int faqIdx = faqEditDto.getFaq_idx();
+		logger.info("faq 수정 가져온 idx : " + faqIdx);
+		
+		return row;
+	}
+	public int faqDel(int faqIdx) {
+		
+		int row = adminDAO.faqDel(faqIdx);
+		logger.info("faq 삭제에 대한 값 : 1이면 삭제 완료" + row);
+		return row;
+	}
 
 	
 }

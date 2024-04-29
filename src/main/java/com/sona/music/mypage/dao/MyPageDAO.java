@@ -98,7 +98,7 @@ public interface MyPageDAO {
 
 
 	@Mapper
-	Object studentLessonAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+	Object teacherStudentAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
 
 
 

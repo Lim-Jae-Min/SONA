@@ -133,6 +133,17 @@
     	SELECT CEIL(COUNT(*) / #{cnt}) AS pages FROM CLASS_OPEN WHERE USER_ID ='user2'
 	</select>
 	
+	<select id="teacherStudentAllCount" resultType="Integer" parameterType="Integer">
+    	SELECT CEIL(COUNT(*)/#{cnt}) AS pages
+			FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx 
+			WHERE ah.APPLY_IDX IN (
+			    SELECT MAX(apply_idx)
+			    FROM APPLY_HISTORY
+			    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = 'user2')
+			    GROUP BY APPLY_DETAIL
+			)
+	</select>
+	
 
 	<select id="pointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 	SELECT 

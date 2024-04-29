@@ -269,7 +269,7 @@ public class MyPageService {
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.lessonAllCount(cnt, user_id));
+		result.put("totalPages", myPageDAO.teacherStudentAllCount(cnt, user_id));
 		
 		for (MyPageDTO r : list) {
 			logger.info(r.getClass_name()+"");

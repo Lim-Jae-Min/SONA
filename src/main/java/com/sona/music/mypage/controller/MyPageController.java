@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.mypage.dto.MyPageDTO;
@@ -38,7 +39,7 @@ public class MyPageController {
 		String page = "member/login";
 		String loginId = (String) session.getAttribute("loginId");
 		if (loginId != null) {
-			MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+			MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 			model.addAttribute("userInfo",userInfo);
 			logger.info("회원 정보 페이지 이동 성공 !");
 
@@ -55,7 +56,7 @@ public class MyPageController {
 	    String loginId = (String) session.getAttribute("loginId");
 	    if(loginId != null) {
 	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
-	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 	        // 모델에 사용자 정보 추가
 	        model.addAttribute("userInfo", userInfo);
 	        logger.info("회원 수정 페이지 이동 성공 !");
@@ -70,7 +71,7 @@ public class MyPageController {
 	    String loginId = (String) session.getAttribute("loginId");
 	    if(loginId != null) {
 	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
-	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 	        // 모델에 사용자 정보 추가
 	        model.addAttribute("userInfo", userInfo);
 	        logger.info("회원 수정 페이지 이동 성공 !");
@@ -88,7 +89,7 @@ public class MyPageController {
 		int point = (int) session.getAttribute("point");
 	    logger.info("point : "+ point);
 		if (loginId != null) {
-			MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+			MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 			model.addAttribute("userInfo",userInfo);
 			logger.info("강사 회원 정보 페이지 이동 성공 !");
 			page = "teacherMyPage/teacherPage";
@@ -179,7 +180,7 @@ public class MyPageController {
 	    String loginId = (String) session.getAttribute("loginId");
 	    if(loginId != null) {
 	        // 세션에서 로그인 아이디를 가져와 사용자 정보를 조회
-	        MyPageDTO userInfo = myPageService.getUserInfo(loginId);
+	        MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
 	        // 모델에 사용자 정보 추가
 	        model.addAttribute("userInfo", userInfo);
 	        logger.info("회원 수정 페이지 이동 성공 !");
@@ -266,21 +267,21 @@ public class MyPageController {
 	
 	
 	
-	@RequestMapping(value = "/studentPage.edit", method = RequestMethod.POST)
-	public String updateUserInfo(@RequestParam Map<String, String> map, HttpSession session, Model model) {
-		String page = "member/login";
-	    logger.info("회원 수정하기 요청이요~ ");
-	    String loginId = (String) session.getAttribute("loginId");
-	    logger.info("전달된 데이터: {}", map);
+	 @RequestMapping(value = "/studentPage.edit", method = RequestMethod.POST)
+	 public String updateUserInfo(MultipartFile[] photos, @RequestParam Map<String, String> map, HttpSession session, Model model) {
+	     String page = "member/login";
+	     logger.info("회원 수정하기 요청이요~ ");
+	     String loginId = (String) session.getAttribute("loginId");
+	     logger.info("전달된 데이터: {}", map);
 
-	    if (loginId != null) {
-	        logger.info("회원 수정하기~ ", map);
-	        map.put("loginId", loginId);
-	        myPageService.updateUserInfo(new HashMap<> (map)); // 로그인 ID를 전달
-	        page = "studentMyPage/studentPageEdit";
-	    }
-	    return page;
-	}
+	     if (loginId != null) {
+	         logger.info("회원 수정하기~ ", map);
+	         map.put("loginId", loginId);
+	         myPageService.updateUserInfo(photos, new HashMap<>(map), session); // 로그인 ID를 전달
+	         page = "studentMyPage/studentPageEdit";
+	     }
+	     return page;
+	 }
 	
 	@RequestMapping(value = "/studentPageApply.edit", method = RequestMethod.POST)
 	public String updateApplyForm(@RequestParam Map<String, String> map, HttpSession session, Model model) {

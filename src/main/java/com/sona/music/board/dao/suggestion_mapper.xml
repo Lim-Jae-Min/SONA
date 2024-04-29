@@ -4,4 +4,108 @@
 >
 <mapper namespace="com.sona.music.board.dao.SuggestionDAO">
 
+	<select id="showListSearch" resultType="com.sona.music.board.dto.SuggestionDTO">
+	
+		SELECT SB.*, COUNT(SA.sug_answer_idx) AS answer_count
+		FROM SUG_BOARD SB
+		LEFT JOIN SUG_ANSWER SA ON SB.sug_idx = SA.sug_idx
+		GROUP BY SB.sug_idx HAVING SB.sug_delete = #{param3}
+		<choose>
+				<when test="param6 == 1">
+				<![CDATA[
+					AND COUNT(SA.sug_answer_idx) >= '0' 
+					]]>
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	SB.user_id LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 SB.sug_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 2">
+				<![CDATA[
+					AND COUNT(SA.sug_answer_idx) = 0 
+					]]>
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	SB.user_id LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 SB.sug_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 3">
+				<![CDATA[
+					AND COUNT(SA.sug_answer_idx) > 0 
+					]]>
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	SB.user_id LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 SB.sug_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+			</choose>	
+			ORDER BY SB.sug_idx DESC LIMIT #{param1},#{param2};
+	</select>
+
+	
+ 	<select id="allCount" resultType="int">		
+	SELECT CEIL (COUNT(SB.sug_idx)/#{param1}) AS pages FROM SUG_BOARD SB		
+		LEFT JOIN SUG_ANSWER SA ON SB.sug_idx = SA.sug_idx
+		WHERE SB.sug_delete = #{param2}
+		<choose>		
+				<when test="param5 == 1">
+				<![CDATA[
+					AND COUNT(SA.sug_answer_idx)  >=0;
+					]]>
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	SB.user_id LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 SB.sug_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 == 2">
+				
+					AND COUNT(SA.sug_answer_idx) =0;
+					
+					<if test='param4!= null'>
+					 AND
+						 <if test="param4 == 2">
+						 	SB.user_id LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 SB.sug_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 == 3">
+					<![CDATA[
+					AND COUNT(SA.sug_answer_idx)  >0;
+					]]>
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	SB.user_id LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 SB.sug_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+			</choose>	
+	</select>  
+
 </mapper>

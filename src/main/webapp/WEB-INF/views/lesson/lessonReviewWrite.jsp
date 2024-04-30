@@ -75,8 +75,68 @@
 	height: 100%;
 	object-fit: cover;
 }
-.title{
-	margin-left: 20px;
+
+.title {
+	margin-left: 400px;
+	position: relative;
+}
+
+#content {
+	padding-bottom: 100px;
+}
+
+#top {
+	height: 150px;
+	padding-left: 28%;
+	padding-right: 28%;
+	border-bottom: solid 5px #BEE6FF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#left {
+	display: inline-block;
+}
+
+#right {
+	display: inline-block;
+}
+
+.gray {
+	color: gray;
+	font-size: 12px;
+}
+
+.red {
+	color: red;
+}
+
+.yellow {
+	color: #ffc400;
+}
+
+.lessonLogo {
+	height: 120px;
+	width: 120px;
+}
+
+.classStyles {
+	padding: 5px;
+	background-color: #0070b6;
+	color: white;
+	border-radius: 5px;
+	display: inline-block;
+	text-align: center;
+}
+
+.reviewProfile {
+	width: 50px;
+	height: 50px;
+}
+
+.smallFontSize {
+	font-size: 12px;
 }
 </style>
 </head>
@@ -123,30 +183,42 @@
 		</table>
 	</header>
 
-	<div class="header">
-		<div class="course-info">
-			<div class="course-name">쉽게 배우는 기타</div>
-			<div class="category">- 기타, 어쿠스틱 기타</div>
-			<div class="rating">
-				평균 만족도 : <span style="color: #FED000;">★4.7</span>
+	<div id="content">
+		<div id="top">
+			<div id="left">
+				<b>${lesson.class_name}</b> <br /> <span class="gray">${lesson.class_inst}</span>
+				<br /> <br /> <br /> 평균 만족도 <span class="yellow">★
+					${lesson.class_score}</span>
 			</div>
-		</div>
-		<div class="teacher-info">
-			<div class="teacher-name">ㅇㅇㅇ선생님</div>
-			<div class="location">📌서울 금천구</div>
-			<div class="likes">
-				<span style="color: red;">♥</span>80.5
+			<div id="right">
+				<table>
+					<tr>
+						<td>${lesson.user_name}</td>
+						<c:if test="${lessonLogo != null}">
+							<td rowspan="3"><img src="/photo/${lessonLogo}"
+								class="lessonLogo"></td>
+						</c:if>
+						<c:if test="${lessonLogo == null}">
+							<td rowspan="3"><img src="resources/img/basic_user.png"
+								class="lessonLogo"></td>
+						</c:if>
+					</tr>
+					<tr>
+						<td>${lesson.class_location}</td>
+					</tr>
+					<tr>
+						<td><span class="red">♥ ${lesson.manner}</span></td>
+					</tr>
+				</table>
 			</div>
-		</div>
-		<div class="rounded-image">
-			<img src="resources/img/basic_user.png" alt="Teacher Photo">
 		</div>
 	</div>
-	<hr
-		style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
+
+
+
 
 	<div class="title">
-	<img src="resources/img/review.png" id="review"> 강의 리뷰 작성
+		<img src="resources/img/review.png" id="review"> 강의 리뷰 작성
 	</div>
 	<br />
 
@@ -157,8 +229,9 @@
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>평가 강의명 : ${class_idx}<input type="hidden" name="class_idx" value="${class_idx}"/>
-						피평가자: ${ratee_id}<input type="hidden" name="ratee_id" value="${ratee_id}"/></th>
+						<th>평가 강의명 : ${class_idx}<input type="hidden"
+							name="class_idx" value="${class_idx}" /> 피평가자: ${ratee_id}<input
+							type="hidden" name="ratee_id" value="${ratee_id}" /></th>
 					</tr>
 					<tr>
 						<th style="font-size: 14px;">리뷰 제목</th>
@@ -172,10 +245,10 @@
 						<th>만족도</th>
 						<td colspan="4"><span style="color: #FED000;">★</span> <select
 							name="score" style="margin-left: 10px;">
-								<option value="1">1.0</option>								
-								<option value="2">2.0</option>								
-								<option value="3">3.0</option>								
-								<option value="4">4.0</option>								
+								<option value="1">1.0</option>
+								<option value="2">2.0</option>
+								<option value="3">3.0</option>
+								<option value="4">4.0</option>
 								<option value="5">5.0</option>
 						</select></td>
 					</tr>
@@ -195,15 +268,15 @@
 						</td>
 					</tr>
 					<td colspan="5" style="text-align: center;"><input
-						type="button" onclick="redirectToList(${classIdx})"
-						value="취소" />
+						type="button" onclick="redirectToList(${classIdx})" value="취소" />
 						<button>작성</button></td>
 					</tr>
 				</table>
 			</form>
 		</div>
 	</div>
-	<br/><br/>
+	<br />
+	<br />
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>
@@ -237,9 +310,7 @@
 		<div>
 			<a href="myPage.go">마이페이지</a>
 		</div>
-		<br />
-		<br />
-		<br />
+		<br /> <br /> <br />
 		<div>
 			<a href="logout.do">로그아웃</a>
 		</div>

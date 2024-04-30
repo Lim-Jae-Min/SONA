@@ -12,6 +12,14 @@
 	type="text/css">
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+.des1{
+	position: relative;
+ 	margin-left: 110px;
+ 	top: 60px;
+  	color:black;
+ 	font-size: 20px;
+ 	font-weight: bold;
+}
 .des{
 	position: relative;
  	margin-left: 110px;
@@ -140,6 +148,7 @@
 		</table>
 	</header>
 	
+	<p class="des1"> ${sessionScope.user_name} 님을 위한 추천 영상입니다.</p>
 	<p class="des">하늘색 박스를 클릭하면 크게 볼 수 있습니다.</p>
 
 	<br/><br/>

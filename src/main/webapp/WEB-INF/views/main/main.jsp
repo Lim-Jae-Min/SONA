@@ -150,9 +150,10 @@
 
 .video{
 	position: relative;
-	left: 190px;
-	top: 130px;
-	display: inline-flex;
+    top: 130px;
+    display: inline-flex;
+    width: 100%;
+    transform: translate(10%, -2%);
 }
 
 .videoList {

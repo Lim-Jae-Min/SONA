@@ -3,6 +3,8 @@ package com.sona.music.board.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.ui.Model;
+
 import com.sona.music.board.dto.PhotoDTO;
 import com.sona.music.board.dto.ReviewDTO;
 
@@ -27,6 +29,14 @@ public interface ReviewDAO {
 	List<PhotoDTO> photos(int post_idx, String photo_category);
 
 	void manner(ReviewDTO dto);
+
+	ReviewDTO lessonHeader(Integer review_idx);
+
+	String lessonLogoLoad(Integer review_idx);
+
+	ReviewDTO lessonHeaderClass(Integer class_idx);
+
+	String lessonLogoLoadClass(Integer class_idx);
 
 
 	

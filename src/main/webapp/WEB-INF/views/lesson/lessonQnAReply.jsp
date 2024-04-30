@@ -10,208 +10,360 @@
 	type="text/css">
 <style>
 .header {
-    background-color: #FFF;
-    padding: 20px;
-    display: flex;
-    align-items: flex-end;
+	background-color: #FFF;
+	padding: 20px;
+	display: flex;
+	align-items: flex-end;
 }
 
 /* Course Info */
 .course-info {
-    margin-right: auto;
+	margin-right: auto;
 }
 
 .course-name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 5px;
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 
 .category {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 5px;
+	font-size: 16px;
+	color: #666;
+	margin-bottom: 5px;
 }
 
 .rating {
-    font-size: 14px;
-    color: black; 
+	font-size: 14px;
+	color: black;
 }
 
 /* Teacher Info */
 .teacher-info {
-    margin-left: auto;
-    text-align: right;
+	margin-left: auto;
+	text-align: right;
 }
 
 .teacher-name {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 
 .location {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 5px;
+	font-size: 16px;
+	color: #666;
+	margin-bottom: 5px;
 }
 
 .likes {
-    font-size: 16px;
-    color: black; 
+	font-size: 16px;
+	color: black;
 }
 
 .rounded-image {
-    background-color: #BEE6FF;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
+	background-color: #BEE6FF;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	overflow: hidden;
 }
 
 .rounded-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
- .answer-box {
-    	border: 2px solid #BEE6FF;
-   		border-radius: 10px;
-    	background-color: #FFFFFF;
-    	padding: 20px;
-    	margin-bottom: 20px;
-		}
+.title {
+	position: relative;
+	text-align: left;
+}
 
+.answer-box {
+	border: 2px solid #BEE6FF;
+	border-radius: 10px;
+	background-color: #FFFFFF;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+#content {
+	padding-bottom: 100px;
+}
+
+#top {
+	height: 150px;
+	padding-left: 28%;
+	padding-right: 28%;
+	border-bottom: solid 5px #BEE6FF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#left {
+	display: inline-block;
+}
+
+#right {
+	display: inline-block;
+}
+
+.gray {
+	color: gray;
+	font-size: 12px;
+}
+
+.red {
+	color: red;
+}
+
+.yellow {
+	color: #ffc400;
+}
+
+.lessonLogo {
+	height: 120px;
+	width: 120px;
+}
+
+.classStyles {
+	padding: 5px;
+	background-color: #0070b6;
+	color: white;
+	border-radius: 5px;
+	display: inline-block;
+	text-align: center;
+}
+
+.reviewProfile {
+	width: 50px;
+	height: 50px;
+}
+
+.smallFontSize {
+	font-size: 12px;
+}
+
+#content {
+	padding-bottom: 100px;
+}
+
+#top {
+	height: 150px;
+	padding-left: 28%;
+	padding-right: 28%;
+	border-bottom: solid 5px #BEE6FF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#left {
+	display: inline-block;
+}
+
+#right {
+	display: inline-block;
+}
+
+.gray {
+	color: gray;
+	font-size: 12px;
+}
+
+.red {
+	color: red;
+}
+
+.yellow {
+	color: #ffc400;
+}
+
+.lessonLogo {
+	height: 120px;
+	width: 120px;
+}
+
+.classStyles {
+	padding: 5px;
+	background-color: #0070b6;
+	color: white;
+	border-radius: 5px;
+	display: inline-block;
+	text-align: center;
+}
+
+.reviewProfile {
+	width: 50px;
+	height: 50px;
+}
+
+.smallFontSize {
+	font-size: 12px;
+}
 </style>
 <body>
 	<header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                   <c:if test="${sessionScope.loginId eq null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="login.go">추천 강의</a>                   
-                      </c:if>
-                   </c:if>
-                   <c:if test="${sessionScope.loginId ne null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="recommendList.go">추천 강의</a>                   
-                      </c:if>
-                   </c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
-        </table>
-    </header>
-    
-		<div class="header">
-    <div class="course-info">
-        <div class="course-name">쉽게 배우는 기타</div>
-        <div class="category">- 기타, 어쿠스틱 기타</div>
-        <div class="rating">평균 만족도 : <span style="color: #FED000;">★4.7</span></div>
-    </div>
-    <div class="teacher-info">
-        <div class="teacher-name">ㅇㅇㅇ선생님</div>
-        <div class="location">📌서울 금천구</div>
-        <div class="likes"><span style="color: red;">♥</span>80.5</div>
-    </div>
-    <div class="rounded-image">
-        <img src="resources/img/basic_user.png" alt="Teacher Photo">
-    </div>
+		<table id="mainmenu">
+			<tr>
+				<th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+				<th class="menu"><c:if test="${sessionScope.loginId eq null}">
+						<c:if test="${sessionScope.user_type ne '강사'}">
+							<a href="login.go">추천 강의</a>
+						</c:if>
+					</c:if> <c:if test="${sessionScope.loginId ne null}">
+						<c:if test="${sessionScope.user_type ne '강사'}">
+							<a href="recommendList.go">추천 강의</a>
+						</c:if>
+					</c:if></th>
+				<th class="menu"><a href="allList.go">전체 강의</a></th>
+				<th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+			</tr>
+		</table>
+		<table id="mymenu">
+			<c:if test="${sessionScope.loginId ne null}">
+				<tr>
+					<c:if test="${sessionScope.alarm_count > 0}">
+						<th><img src="resources/img/alarm_on.png"
+							class="miniimg alarm"></th>
+					</c:if>
+					<c:if test="${sessionScope.alarm_count == 0}">
+						<th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+					</c:if>
+					<th><img src="resources/img/basic_user.png" class="miniimg"></th>
+					<th><div id="userName">${sessionScope.user_name}</div></th>
+				</tr>
+			</c:if>
+			<c:if test="${sessionScope.loginId eq null}">
+				<tr>
+					<th><a href="login.go">로그인</a></th>
+				</tr>
+			</c:if>
+		</table>
+	</header>
+
+	<div id="content">
+		<div id="top">
+			<div id="left">
+				<b>${lesson.class_name}</b> <br /> <span class="gray">${lesson.class_inst}</span>
+				<br />
+				<br />
+				<br /> 평균 만족도 <span class="yellow">★ ${lesson.class_score}</span>
+			</div>
+			<div id="right">
+				<table>
+					<tr>
+						<td>${lesson.user_name}</td>
+						<c:if test="${lessonLogo != null}">
+							<td rowspan="3"><img src="/photo/${lessonLogo}"
+								class="lessonLogo"></td>
+						</c:if>
+						<c:if test="${lessonLogo == null}">
+							<td rowspan="3"><img src="resources/img/basic_user.png"
+								class="lessonLogo"></td>
+						</c:if>
+					</tr>
+					<tr>
+						<td>${lesson.class_location}</td>
+					</tr>
+					<tr>
+						<td><span class="red">♥ ${lesson.manner}</span></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
- 	<hr style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
 
 
-	<img src="resources/img/QnA.png" id="review"> Q&A 답변 작성
+
+
 	<br />
 
 	<div style="text-align: center;">
-    <div style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
-        <form action="aWrite.do" method="post" enctype="multipart/form-data" onsubmit="return confirmWrite();">
-            <table>
-             <input type="hidden" name="class_idx" value="${question.class_idx}"/>
-                <tr  style="text-align: left;">
-                    <th>Q&A 번호 : ${question.question_idx}<input type="hidden" name="question_idx" value="${question.question_idx}"></th>
-                </tr>
-                <tr>
-                    <td>질문 내용: ${question.q_content}</td>
-                </tr>
-                <tr>
-                    <td>작성자: ${question.user_id} 작성일: ${question.q_reg_date}</td>
-                </tr>
-            </table>
-            <div style="font-size: 12px; text-align: right;">
-                    작성자 : ${sessionScope.loginId}<input type="hidden" name="user_id" value="${sessionScope.loginId}">
-                    작성일 : <span id="currentDate"></span>
-             </div>
-            <div style="margin-top: 10px; text-align: left;">답변 내용</div>
-            <div class="answer-box">
-                <textarea name="a_content" style="width: 882px; height: 311px; resize: none;"></textarea>
-            </div>
-            <div style="text-align: right;">
-                <input type="button" value="취소" onclick="redirectToList(${question.class_idx})" />
-                <button>작성</button>
-            </div>
-        </form>
-    </div>
-</div>
-	
-	
-	<br/><br/>
+		<div
+			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
+			<form action="aWrite.do" method="post" enctype="multipart/form-data"
+				onsubmit="return confirmWrite();">
+				<div class="title">
+					<img src="resources/img/QnA.png" id="review"> Q&A 답변 작성
+				</div>
+				<table>
+					<input type="hidden" name="class_idx" value="${question.class_idx}" />
+					<tr style="text-align: left;">
+						<th>Q&A 번호 : ${question.question_idx}<input type="hidden"
+							name="question_idx" value="${question.question_idx}"></th>
+					</tr>
+					<tr>
+						<td>질문 내용: ${question.q_content}</td>
+					</tr>
+					<tr>
+						<td>작성자: ${question.user_id} 작성일: ${question.q_reg_date}</td>
+					</tr>
+				</table>
+				<div style="font-size: 12px; text-align: right;">
+					작성자 : ${sessionScope.loginId}<input type="hidden" name="user_id"
+						value="${sessionScope.loginId}"> 작성일 : <span
+						id="currentDate"></span>
+				</div>
+				<div style="margin-top: 10px; text-align: left;">답변 내용</div>
+				<div class="answer-box">
+					<textarea name="a_content"
+						style="width: 882px; height: 311px; resize: none;"></textarea>
+				</div>
+				<div style="text-align: right;">
+					<input type="button" value="취소"
+						onclick="redirectToList(${question.class_idx})" />
+					<button>작성</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<br />
+	<br />
 	<div id="footer">
-        <li>상호명 : SONA</li>
-        <li>대표자 : 김○○</li>
-        <li>전화 : 02-123-4567</li>
-        <li>팩스 : 02-123-4568</li>
-        <li>사업자등록번호 : 000-00-00000</li>
-        <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
-    </div>
-    <div id="slide">
-        <table>
-            <tr>
-                <td colspan="2">${sessionScope.user_name} 회원님</td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="manner">♥ ${sessionScope.manner_variance}</td>
-            </tr>
-        </table>
-        <br/>
-        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
-        <br/>
-        <div>
-        	<c:if test="${sessionScope.user_type eq '수강생'}">
-	        	<a href="studentWrittenList.go">내가 쓴 리뷰</a>        	
-        	</c:if>
-        	<c:if test="${sessionScope.user_type eq '강사'}">
-	        	<a href="teacherWrittenList.go">내가 쓴 리뷰</a>        	
-        	</c:if>
-        </div>
-        <br/>
-        <div><a href="myPage.go">마이페이지</a></div>
-        <br/><br/><br/>
-        <div><a href="logout.do">로그아웃</a></div>
-    </div>
+		<li>상호명 : SONA</li>
+		<li>대표자 : 김○○</li>
+		<li>전화 : 02-123-4567</li>
+		<li>팩스 : 02-123-4568</li>
+		<li>사업자등록번호 : 000-00-00000</li>
+		<li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
+	</div>
+	<div id="slide">
+		<table>
+			<tr>
+				<td colspan="2">${sessionScope.user_name}회원님</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="manner">♥ ${sessionScope.manner_variance}</td>
+			</tr>
+		</table>
+		<br />
+		<div>
+			보유 포인트 : <span>${sessionScope.point}</span>
+		</div>
+		<br />
+		<div>
+			<c:if test="${sessionScope.user_type eq '수강생'}">
+				<a href="studentWrittenList.go">내가 쓴 리뷰</a>
+			</c:if>
+			<c:if test="${sessionScope.user_type eq '강사'}">
+				<a href="teacherWrittenList.go">내가 쓴 리뷰</a>
+			</c:if>
+		</div>
+		<br />
+		<div>
+			<a href="myPage.go">마이페이지</a>
+		</div>
+		<br />
+		<br />
+		<br />
+		<div>
+			<a href="logout.do">로그아웃</a>
+		</div>
+	</div>
 </body>
 <script>
 var classIdx = ${question.class_idx};

@@ -5,95 +5,177 @@
 <mapper namespace="com.sona.music.board.dao.QnADAO">
 
 
-	<select id="list" resultType= "com.sona.music.board.dto.QnADTO">
-	SELECT 
-    CQ.QUESTION_IDX,
-    CQ.CLASS_IDX,
-    CQ.USER_ID,
-    CQ.Q_TITLE,
-    CQ.Q_CONTENT,
-    CQ.ANONYMOUS_STATUS,
-    CQ.Q_REG_DATE,
-    CQ.Q_DELETE,
-    CQ.Q_HIT,
-    CO.USER_ID AS TEACHER_ID,
-    (CASE WHEN CA.QUESTION_IDX IS NOT NULL THEN TRUE ELSE FALSE END) AS REPLY_CHECK
-	FROM 
-    CLASS_QUESTION CQ
-	INNER JOIN 
-    CLASS_OPEN CO ON CQ.CLASS_IDX = CO.CLASS_IDX
-	LEFT JOIN 
-    CLASS_ANSWER CA ON CQ.QUESTION_IDX = CA.QUESTION_IDX
-	WHERE 
-    CQ.CLASS_IDX = #{param3} AND
-    CQ.Q_DELETE = 0
-    ORDER BY QUESTION_IDX DESC
-    LIMIT #{param2}, 5
+	<select id="list" resultType="com.sona.music.board.dto.QnADTO">
+		SELECT
+		CQ.QUESTION_IDX,
+		CQ.CLASS_IDX,
+		CQ.USER_ID,
+		CQ.Q_TITLE,
+		CQ.Q_CONTENT,
+		CQ.ANONYMOUS_STATUS,
+		CQ.Q_REG_DATE,
+		CQ.Q_DELETE,
+		CQ.Q_HIT,
+		CO.USER_ID AS TEACHER_ID,
+		(CASE WHEN CA.QUESTION_IDX IS NOT NULL THEN TRUE ELSE FALSE END) AS
+		REPLY_CHECK
+		FROM
+		CLASS_QUESTION CQ
+		INNER JOIN
+		CLASS_OPEN CO ON CQ.CLASS_IDX = CO.CLASS_IDX
+		LEFT JOIN
+		CLASS_ANSWER CA ON CQ.QUESTION_IDX = CA.QUESTION_IDX
+		WHERE
+		CQ.CLASS_IDX = #{param3} AND
+		CQ.Q_DELETE = 0
+		ORDER BY QUESTION_IDX DESC
+		LIMIT #{param2}, 5
 	</select>
 
 	<select id="allCount" resultType="Integer">
-		SELECT CEIL(COUNT(QUESTION_IDX) / #{param1}) AS pages 
-		FROM CLASS_QUESTION 
+		SELECT CEIL(COUNT(QUESTION_IDX)
+		/ #{param1}) AS pages
+		FROM CLASS_QUESTION
 		WHERE Q_DELETE = 0;
 	</select>
-	
-	
-	<insert id="qwrite"
-	useGeneratedKeys="true"
-	keyColumn = "QUESTION_IDX"
-	keyProperty="QUESTION_IDX"
-	parameterType="com.sona.music.board.dto.QnADTO"
-	>
-	INSERT INTO CLASS_QUESTION(CLASS_IDX,USER_ID,Q_TITLE,Q_CONTENT,ANONYMOUS_STATUS)
-			VALUES(#{class_idx},#{user_id},#{q_title},#{q_content},#{anonymous_status})
+
+
+	<insert id="qwrite" useGeneratedKeys="true"
+		keyColumn="QUESTION_IDX" keyProperty="QUESTION_IDX"
+		parameterType="com.sona.music.board.dto.QnADTO">
+		INSERT INTO
+		CLASS_QUESTION(CLASS_IDX,USER_ID,Q_TITLE,Q_CONTENT,ANONYMOUS_STATUS)
+		VALUES(#{class_idx},#{user_id},#{q_title},#{q_content},#{anonymous_status})
 	</insert>
-	
-	<select id="detail" resultType= "com.sona.music.board.dto.QnADTO">
-	SELECT 
-    CQ.*,
-    CO.USER_ID AS TEACHER_ID
-	FROM 
-   	CLASS_QUESTION CQ
-	INNER JOIN 
-    CLASS_OPEN CO ON CQ.CLASS_IDX = CO.CLASS_IDX
-	WHERE 
-    CQ.QUESTION_IDX = #{param1}
+
+	<select id="detail" resultType="com.sona.music.board.dto.QnADTO">
+		SELECT
+		CQ.*,
+		CO.USER_ID AS TEACHER_ID
+		FROM
+		CLASS_QUESTION CQ
+		INNER JOIN
+		CLASS_OPEN CO ON CQ.CLASS_IDX = CO.CLASS_IDX
+		WHERE
+		CQ.QUESTION_IDX = #{param1}
 	</select>
-	
-	<select id="adetail" resultType= "com.sona.music.board.dto.QnADTO">
-	SELECT * from CLASS_ANSWER where QUESTION_IDX = #{param1}
+
+	<select id="adetail"
+		resultType="com.sona.music.board.dto.QnADTO">
+		SELECT * from CLASS_ANSWER where QUESTION_IDX = #{param1}
 	</select>
-	
+
 	<update id="upHit" parameterType="Integer">
-		UPDATE CLASS_QUESTION SET Q_HIT = Q_HIT+1 WHERE QUESTION_IDX = #{question_idx}
+		UPDATE CLASS_QUESTION SET Q_HIT
+		= Q_HIT+1 WHERE QUESTION_IDX = #{question_idx}
 	</update>
-	
-	<insert id="reply"
-	useGeneratedKeys="true"
-	keyColumn = "ANSWER_IDX"
-	keyProperty="ANSWER_IDX"
-	parameterType="com.sona.music.board.dto.QnADTO"
-	>
-	INSERT INTO CLASS_ANSWER(QUESTION_IDX,USER_ID,A_CONTENT)
-			VALUES(#{question_idx},#{user_id},#{a_content})
+
+	<insert id="reply" useGeneratedKeys="true"
+		keyColumn="ANSWER_IDX" keyProperty="ANSWER_IDX"
+		parameterType="com.sona.music.board.dto.QnADTO">
+		INSERT INTO CLASS_ANSWER(QUESTION_IDX,USER_ID,A_CONTENT)
+		VALUES(#{question_idx},#{user_id},#{a_content})
 	</insert>
-	
+
 	<update id="deleteQuestion">
 		UPDATE CLASS_QUESTION
 		SET Q_DELETE = 1
-		WHERE QUESTION_IDX = #{param1}
+		WHERE
+		QUESTION_IDX = #{param1}
 	</update>
-	
-	<delete id="deleteAnswer" parameterType="com.sona.music.board.dto.QnADTO">
+
+	<delete id="deleteAnswer"
+		parameterType="com.sona.music.board.dto.QnADTO">
 		DELETE FROM CLASS_ANSWER WHERE QUESTION_IDX = #{param1}
 	</delete>
 
-	<update id="update" parameterType="com.sona.music.board.dto.QnADTO">
-    UPDATE CLASS_QUESTION  
-    SET Q_TITLE = #{q_title}, 
-    Q_CONTENT = #{q_content},
-    ANONYMOUS_STATUS = #{anonymous_status}
-    WHERE QUESTION_IDX = #{question_idx}
-</update>
+	<update id="update"
+		parameterType="com.sona.music.board.dto.QnADTO">
+		UPDATE CLASS_QUESTION
+		SET Q_TITLE = #{q_title},
+		Q_CONTENT = #{q_content},
+		ANONYMOUS_STATUS = #{anonymous_status}
+		WHERE QUESTION_IDX = #{question_idx}
+	</update>
+
+	<select id="lessonHeaderClass"
+		resultType="com.sona.music.board.dto.QnADTO">
+		SELECT
+		co.CLASS_IDX,
+		co.CLASS_NAME,
+		co.CLASS_INST,
+		co.CLASS_LOCATION,
+		u.USER_NAME,
+		FORMAT((SELECT (SUM(mh.MANNER_VARIANCE) + 36.5)
+		FROM
+		MANNER_HISTORY mh
+		WHERE mh.USER_ID = co.USER_ID), 2) AS MANNER,
+		FORMAT((SELECT AVG(r2.SCORE)
+		FROM REVIEW r2
+		WHERE r2.CLASS_IDX =
+		co.CLASS_IDX), 2) AS CLASS_SCORE
+		FROM
+		CLASS_OPEN co
+		JOIN
+		USERS u ON
+		co.USER_ID = u.USER_ID
+		WHERE
+		co.CLASS_IDX = #{param1}
+	</select>
+
+
+	<select id="lessonLogoLoadClass" resultType="String">
+		SELECT
+		pb.NEW_FILENAME
+		FROM
+		CLASS_OPEN co
+		JOIN
+		PHOTO_BOARD pb ON co.CLASS_IDX = pb.POST_IDX
+		WHERE
+		co.CLASS_IDX = #{param1}
+		AND pb.PHOTO_CATEGORY = 'Lesson'
+
+	</select>
+
+	<select id="lessonLogoLoad" resultType="String">
+		SELECT
+		pb.NEW_FILENAME
+		FROM
+		CLASS_QUESTION cq
+		JOIN
+		CLASS_OPEN co ON cq.CLASS_IDX = co.CLASS_IDX
+		JOIN
+		PHOTO_BOARD pb ON co.CLASS_IDX = pb.POST_IDX
+		WHERE
+		cq.QUESTION_IDX = #{param1}
+		AND pb.PHOTO_CATEGORY = 'Lesson';
+
+	</select>
+
+	<select id="lessonHeader"
+		resultType="com.sona.music.board.dto.QnADTO">
+		SELECT
+		co.CLASS_NAME,
+		co.CLASS_INST,
+		co.CLASS_LOCATION,
+		u.USER_NAME,
+		FORMAT((SELECT (SUM(mh.MANNER_VARIANCE) + 36.5)
+		FROM MANNER_HISTORY mh
+		WHERE mh.USER_ID = co.USER_ID), 2) AS MANNER,
+		FORMAT((SELECT AVG(r2.SCORE)
+		FROM REVIEW r2
+		WHERE r2.CLASS_IDX = co.CLASS_IDX), 2) AS CLASS_SCORE
+		FROM
+		CLASS_QUESTION cq
+		JOIN
+		CLASS_OPEN co ON cq.CLASS_IDX = co.CLASS_IDX
+		JOIN
+		USERS u ON co.USER_ID = u.USER_ID
+		WHERE
+		cq.QUESTION_IDX = #{param1}
+
+	</select>
+
+
 
 </mapper>

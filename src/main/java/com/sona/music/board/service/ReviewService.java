@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sona.music.board.dao.ReviewDAO;
 import com.sona.music.board.dto.PhotoDTO;
 import com.sona.music.board.dto.ReviewDTO;
+import com.sona.music.lesson.dao.LessonDAO;
+import com.sona.music.lesson.dto.LessonDTO;
 
 
 @Service
@@ -201,6 +203,31 @@ public class ReviewService {
 		dto.setManner_variance(mannerscore);
 		
 		reviewDAO.manner(dto);
+		
+		
+	}
+
+	public void lessonHeader(Integer review_idx, Model model) {
+		logger.info("lessonheader - 서비스");
+		ReviewDTO dto = reviewDAO.lessonHeader(review_idx);
+		model.addAttribute("lesson",dto);
+		
+		String lessonLogo = reviewDAO.lessonLogoLoad(review_idx);
+		logger.info("lessonLogo : " +lessonLogo);
+		model.addAttribute("lessonLogo",lessonLogo);
+		
+		
+		
+	}
+
+	public void lessonHeaderClass(Integer class_idx, Model model) {
+		logger.info("lessonheader - 서비스");
+		ReviewDTO dto = reviewDAO.lessonHeaderClass(class_idx);
+		model.addAttribute("lesson",dto);
+		
+		String lessonLogo = reviewDAO.lessonLogoLoadClass(class_idx);
+		logger.info("lessonLogo : " +lessonLogo);
+		model.addAttribute("lessonLogo",lessonLogo);
 		
 		
 	}

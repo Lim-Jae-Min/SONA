@@ -140,6 +140,28 @@ public class QnAService {
 		return row;
 	}
 
+	public void lessonHeaderClass(Integer class_idx, Model model) {
+		logger.info("lessonheader - 서비스");
+		QnADTO dto = qnaDAO.lessonHeaderClass(class_idx);
+		model.addAttribute("lesson",dto);
+
+		String lessonLogo = qnaDAO.lessonLogoLoadClass(class_idx);
+		logger.info("lessonLogo : " + lessonLogo);
+		model.addAttribute("lessonLogo",lessonLogo);
+
+	}
+
+	public void lessonHeader(Integer question_idx, Model model) {
+		logger.info("lessonheader - 서비스");
+		QnADTO dto = qnaDAO.lessonHeader(question_idx);
+		model.addAttribute("lesson",dto);
+
+		String lessonLogo = qnaDAO.lessonLogoLoad(question_idx);
+		logger.info("lessonLogo : " + lessonLogo);
+		model.addAttribute("lessonLogo",lessonLogo);
+
+	}
+
 
 
 

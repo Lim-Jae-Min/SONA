@@ -18,6 +18,19 @@ public class QnADTO {
 	private int answer_idx;
 	private String a_content;
 	private Date a_reg_date;
+	
+	private String class_name;
+	private String class_inst;
+	private double class_score;
+	private String user_name;
+	private String class_location;
+	private double manner;
+	private String lessonLogo;
+	
+	
+	
+	
+	
 	public int getQuestion_idx() {
 		return question_idx;
 	}
@@ -101,6 +114,48 @@ public class QnADTO {
 	}
 	public void setA_reg_date(Date a_reg_date) {
 		this.a_reg_date = a_reg_date;
+	}
+	public String getClass_name() {
+		return class_name;
+	}
+	public void setClass_name(String class_name) {
+		this.class_name = class_name;
+	}
+	public String getClass_inst() {
+		return class_inst;
+	}
+	public void setClass_inst(String class_inst) {
+		this.class_inst = class_inst;
+	}
+	public double getClass_score() {
+		return class_score;
+	}
+	public void setClass_score(double class_score) {
+		this.class_score = class_score;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getClass_location() {
+		return class_location;
+	}
+	public void setClass_location(String class_location) {
+		this.class_location = class_location;
+	}
+	public double getManner() {
+		return manner;
+	}
+	public void setManner(double manner) {
+		this.manner = manner;
+	}
+	public String getLessonLogo() {
+		return lessonLogo;
+	}
+	public void setLessonLogo(String lessonLogo) {
+		this.lessonLogo = lessonLogo;
 	}
 	
 

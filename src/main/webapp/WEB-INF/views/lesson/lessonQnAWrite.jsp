@@ -75,8 +75,68 @@
 	height: 100%;
 	object-fit: cover;
 }
-.title{
-	margin-left: 20px;
+
+.title {
+	position: relative;
+	text-align: left;
+}
+
+#content {
+	padding-bottom: 100px;
+}
+
+#top {
+	height: 150px;
+	padding-left: 28%;
+	padding-right: 28%;
+	border-bottom: solid 5px #BEE6FF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#left {
+	display: inline-block;
+}
+
+#right {
+	display: inline-block;
+}
+
+.gray {
+	color: gray;
+	font-size: 12px;
+}
+
+.red {
+	color: red;
+}
+
+.yellow {
+	color: #ffc400;
+}
+
+.lessonLogo {
+	height: 120px;
+	width: 120px;
+}
+
+.classStyles {
+	padding: 5px;
+	background-color: #0070b6;
+	color: white;
+	border-radius: 5px;
+	display: inline-block;
+	text-align: center;
+}
+
+.reviewProfile {
+	width: 50px;
+	height: 50px;
+}
+
+.smallFontSize {
+	font-size: 12px;
 }
 </style>
 <body>
@@ -119,38 +179,50 @@
 		</table>
 	</header>
 
-	<div class="header">
-		<div class="course-info">
-			<div class="course-name">쉽게 배우는 기타</div>
-			<div class="category">- 기타, 어쿠스틱 기타</div>
-			<div class="rating">
-				평균 만족도 : <span style="color: #FED000;">★4.7</span>
-			</div>
-		</div>
-		<div class="teacher-info">
-			<div class="teacher-name">ㅇㅇㅇ선생님</div>
-			<div class="location">📌서울 금천구</div>
-			<div class="likes">
-				<span style="color: red;">♥</span>80.5
-			</div>
-		</div>
-		<div class="rounded-image">
-			<img src="resources/img/basic_user.png" alt="Teacher Photo">
-		</div>
-	</div>
-	<hr
-		style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
 
-	<div class="title">
-	<img src="resources/img/QnA.png" id="review"> Q&A 작성
+	<div id="content">
+		<div id="top">
+			<div id="left">
+				<b>${lesson.class_name}</b> <br /> <span class="gray">${lesson.class_inst}</span>
+				<br />
+				<br />
+				<br /> 평균 만족도 <span class="yellow">★ ${lesson.class_score}</span>
+			</div>
+			<div id="right">
+				<table>
+					<tr>
+						<td>${lesson.user_name}</td>
+						<c:if test="${lessonLogo != null}">
+							<td rowspan="3"><img src="/photo/${lessonLogo}"
+								class="lessonLogo"></td>
+						</c:if>
+						<c:if test="${lessonLogo == null}">
+							<td rowspan="3"><img src="resources/img/basic_user.png"
+								class="lessonLogo"></td>
+						</c:if>
+					</tr>
+					<tr>
+						<td>${lesson.class_location}</td>
+					</tr>
+					<tr>
+						<td><span class="red">♥ ${lesson.manner}</span></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
-	<br />
+
+
 
 	<div style="text-align: center;">
 		<div
 			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
 			<form action="qWrite.do" method="post" enctype="multipart/form-data"
 				onsubmit="return confirmWrite();">
+				<div class="title">
+					<img src="resources/img/QnA.png" id="review"> Q&A 작성
+				</div>
+				<br />
 				<table>
 					<tr>
 						<th>질문 강의IDX: ${class_idx}<input type="hidden"
@@ -184,8 +256,9 @@
 			</form>
 		</div>
 	</div>
-	
-	<br/><br/>
+
+	<br />
+	<br />
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>
@@ -219,9 +292,7 @@
 		<div>
 			<a href="myPage.go">마이페이지</a>
 		</div>
-		<br />
-		<br />
-		<br />
+		<br /> <br /> <br />
 		<div>
 			<a href="logout.do">로그아웃</a>
 		</div>

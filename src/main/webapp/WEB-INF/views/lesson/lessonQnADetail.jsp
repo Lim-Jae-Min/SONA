@@ -174,6 +174,64 @@ body {
 	height: 100%;
 	object-fit: cover;
 }
+
+#content {
+	padding-bottom: 100px;
+}
+
+#top {
+	height: 150px;
+	padding-left: 28%;
+	padding-right: 28%;
+	border-bottom: solid 5px #BEE6FF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#left {
+	display: inline-block;
+}
+
+#right {
+	display: inline-block;
+}
+
+.gray {
+	color: gray;
+	font-size: 12px;
+}
+
+.red {
+	color: red;
+}
+
+.yellow {
+	color: #ffc400;
+}
+
+.lessonLogo {
+	height: 120px;
+	width: 120px;
+}
+
+.classStyles {
+	padding: 5px;
+	background-color: #0070b6;
+	color: white;
+	border-radius: 5px;
+	display: inline-block;
+	text-align: center;
+}
+
+.reviewProfile {
+	width: 50px;
+	height: 50px;
+}
+
+.smallFontSize {
+	font-size: 12px;
+}
 </style>
 </head>
 <body>
@@ -216,33 +274,47 @@ body {
 		</table>
 	</header>
 
-	<div class="header">
-		<div class="course-info">
-			<div class="course-name">쉽게 배우는 기타</div>
-			<div class="category">- 기타, 어쿠스틱 기타</div>
-			<div class="rating">
-				평균 만족도 : <span style="color: #FED000;">★4.7</span>
+
+	<div id="content">
+		<div id="top">
+			<div id="left">
+				<b>${lesson.class_name}</b> <br /> <span class="gray">${lesson.class_inst}</span>
+				<br />
+				<br />
+				<br /> 평균 만족도 <span class="yellow">★ ${lesson.class_score}</span>
 			</div>
-		</div>
-		<div class="teacher-info">
-			<div class="teacher-name">ㅇㅇㅇ선생님</div>
-			<div class="location">📌서울 금천구</div>
-			<div class="likes">
-				<span style="color: red;">♥</span>80.5
+			<div id="right">
+				<table>
+					<tr>
+						<td>${lesson.user_name}</td>
+						<c:if test="${lessonLogo != null}">
+							<td rowspan="3"><img src="/photo/${lessonLogo}"
+								class="lessonLogo"></td>
+						</c:if>
+						<c:if test="${lessonLogo == null}">
+							<td rowspan="3"><img src="resources/img/basic_user.png"
+								class="lessonLogo"></td>
+						</c:if>
+					</tr>
+					<tr>
+						<td>${lesson.class_location}</td>
+					</tr>
+					<tr>
+						<td><span class="red">♥ ${lesson.manner}</span></td>
+					</tr>
+				</table>
 			</div>
-		</div>
-		<div class="rounded-image">
-			<img src="resources/img/basic_user.png" alt="Teacher Photo">
 		</div>
 	</div>
-	<hr
-		style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
+
 
 	<div class="container">
 		<img src="resources/img/QnA.png" id="QnA"> Q&A 상세보기
 		<div class="question-box">
 			<div class="qna-title">글번호: ${question.question_idx}</div>
-			<div>Q&A 제목: ${question.q_title} 강의 idx : ${question.class_idx}</div>
+			<div>
+				Q&A 제목: ${question.q_title} <br />강의 idx : ${question.class_idx}
+			</div>
 			<div class="author-info">작성자: ${question.user_id} 작성일:
 				${question.q_reg_date} 조회수: ${question.q_hit}</div>
 			<div class="content">${question.q_content}</div>
@@ -289,39 +361,48 @@ body {
 		</div>
 	</div>
 
-	<br/><br/>
+	<br />
+	<br />
 	<div id="footer">
-        <li>상호명 : SONA</li>
-        <li>대표자 : 김○○</li>
-        <li>전화 : 02-123-4567</li>
-        <li>팩스 : 02-123-4568</li>
-        <li>사업자등록번호 : 000-00-00000</li>
-        <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
-    </div>
-    <div id="slide">
-        <table>
-            <tr>
-                <td colspan="2">${sessionScope.user_name} 회원님</td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="manner">♥ ${sessionScope.manner_variance}</td>
-            </tr>
-        </table>
-        <br/>
-        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
-        <br/>
-        <div>
-        	<c:if test="${sessionScope.user_type eq '수강생'}">
-	        	<a href="studentWrittenList.go">내가 쓴 리뷰</a>        	
-        	</c:if>
-        	<c:if test="${sessionScope.user_type eq '강사'}">
-	        	<a href="teacherWrittenList.go">내가 쓴 리뷰</a>        	
-        	</c:if>
-        </div>
-        <br/>
-        <div><a href="myPage.go">마이페이지</a></div>
-        <br/><br/><br/>
-        <div><a href="logout.do">로그아웃</a></div>
-    </div>
+		<li>상호명 : SONA</li>
+		<li>대표자 : 김○○</li>
+		<li>전화 : 02-123-4567</li>
+		<li>팩스 : 02-123-4568</li>
+		<li>사업자등록번호 : 000-00-00000</li>
+		<li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
+	</div>
+	<div id="slide">
+		<table>
+			<tr>
+				<td colspan="2">${sessionScope.user_name}회원님</td>
+				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="manner">♥ ${sessionScope.manner_variance}</td>
+			</tr>
+		</table>
+		<br />
+		<div>
+			보유 포인트 : <span>${sessionScope.point}</span>
+		</div>
+		<br />
+		<div>
+			<c:if test="${sessionScope.user_type eq '수강생'}">
+				<a href="studentWrittenList.go">내가 쓴 리뷰</a>
+			</c:if>
+			<c:if test="${sessionScope.user_type eq '강사'}">
+				<a href="teacherWrittenList.go">내가 쓴 리뷰</a>
+			</c:if>
+		</div>
+		<br />
+		<div>
+			<a href="myPage.go">마이페이지</a>
+		</div>
+		<br />
+		<br />
+		<br />
+		<div>
+			<a href="logout.do">로그아웃</a>
+		</div>
+	</div>
 </body>
 <script>
 var classIdx = ${question.class_idx};
@@ -411,7 +492,7 @@ function redirectToList(classIdx) {
 
 
 function redirectToEditPage(questionIdx) {
-    window.location.href = './lessonQnAEdit.do?question_idx=' + questionIdx;
+    window.location.href = './lessonQnAEdit.go?question_idx=' + questionIdx;
 }
 
 function redirectToReplyPage(questionIdx) {

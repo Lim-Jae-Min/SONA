@@ -83,5 +83,88 @@
 	
 	</insert>
 	
+	<select id="lessonLogoLoad" resultType="String">
+	SELECT
+	pb.NEW_FILENAME
+	FROM
+	REVIEW r
+	JOIN
+	CLASS_OPEN co ON r.CLASS_IDX = co.CLASS_IDX
+	JOIN
+	PHOTO_BOARD pb ON co.CLASS_IDX = pb.POST_IDX
+	WHERE
+	r.REVIEW_IDX = #{param1}
+	AND pb.PHOTO_CATEGORY = 'Lesson'
+	</select>
+	
+	<select id="lessonHeader" resultType="com.sona.music.board.dto.ReviewDTO">
+	SELECT 
+    r.CLASS_IDX,
+    co.CLASS_NAME,
+    co.CLASS_INST,
+    co.CLASS_LOCATION,
+    u.USER_NAME,
+    FORMAT((SELECT (SUM(mh.MANNER_VARIANCE) + 36.5)
+    FROM MANNER_HISTORY mh
+    WHERE mh.USER_ID = co.USER_ID), 2) AS MANNER,
+    FORMAT((SELECT AVG(r2.SCORE) 
+    FROM REVIEW r2 
+    WHERE r2.CLASS_IDX = r.CLASS_IDX), 2) AS CLASS_SCORE
+	FROM 
+    REVIEW r
+	JOIN 
+    CLASS_OPEN co ON r.CLASS_IDX = co.CLASS_IDX
+	JOIN 
+    USERS u ON co.USER_ID = u.USER_ID
+	WHERE 
+    r.REVIEW_IDX = #{param1}
+	
+	</select>
+	
+	
+	
+	
+	<select id="lessonLogoLoadClass" resultType="String">
+	SELECT
+	pb.NEW_FILENAME
+	FROM
+	CLASS_OPEN co
+	JOIN
+	PHOTO_BOARD pb ON co.CLASS_IDX = pb.POST_IDX
+	WHERE
+	co.CLASS_IDX = #{param1}
+	AND pb.PHOTO_CATEGORY = 'Lesson'
+	
+	</select>
+	
+	
+	
+	
+	<select id="lessonHeaderClass" resultType="com.sona.music.board.dto.ReviewDTO">
+	SELECT
+	co.CLASS_IDX,
+	co.CLASS_NAME,
+	co.CLASS_INST,
+	co.CLASS_LOCATION,
+	u.USER_NAME,
+	FORMAT((SELECT (SUM(mh.MANNER_VARIANCE) + 36.5)
+	FROM
+	MANNER_HISTORY mh
+	WHERE mh.USER_ID = co.USER_ID), 2) AS MANNER,
+	FORMAT((SELECT AVG(r2.SCORE)
+	FROM REVIEW r2
+	WHERE r2.CLASS_IDX =
+	co.CLASS_IDX), 2) AS CLASS_SCORE
+	FROM
+	CLASS_OPEN co
+	JOIN
+	USERS u ON
+	co.USER_ID = u.USER_ID
+	WHERE
+	co.CLASS_IDX = #{param1}
+	
+	</select>
+	
+	
 
 </mapper>

@@ -27,11 +27,11 @@ public class ReviewController {
 	@RequestMapping(value="/lessonReviewList.go")
 	public String reviewlist(Integer class_idx, Model model, HttpSession session) {
 		logger.info("idx="+class_idx+"리뷰 리스트 요청");
-		
+
 		String page = "redirect:/login.go";
-		
+
 		if (session.getAttribute("loginId")!=null) {
-			
+			reviewService.lessonHeaderClass(class_idx, model);
 			model.addAttribute("classIdx", class_idx);
 			page = "lesson/lessonReviewList";
 		}
@@ -61,6 +61,9 @@ public class ReviewController {
 		model.addAttribute("classIdx", class_idx);
 		model.addAttribute("ratee_id", user_id);
 
+		reviewService.lessonHeaderClass(class_idx, model);
+
+
 		return page;
 	}
 
@@ -70,13 +73,13 @@ public class ReviewController {
 		logger.info("params = {}", param);
 		String ratee_id = param.get("ratee_id");
 		int score = Integer.parseInt(param.get("score")) ;
-		
-		
+
+
 		String page = "redirect:/lessonReviewList.go?class_idx="+ class_idx;
 		if (session.getAttribute("loginId")!=null) {
 			int row = reviewService.write(photos, param);
 			reviewService.manner(ratee_id, score);
-			
+
 			if(row<1) {
 				page = "redirect:/lessonReviewWrite.go?class_idx="+ class_idx;
 			}
@@ -89,6 +92,8 @@ public class ReviewController {
 	@RequestMapping(value="/lessonReviewDetail.go")
 	public String detail(Integer review_idx, HttpSession session, Model model) {
 		logger.info("idx="+review_idx+"리뷰 디테일 요청");
+
+		reviewService.lessonHeader(review_idx, model);
 
 
 		if(session.getAttribute("loginId") != null && review_idx != null) {
@@ -138,6 +143,7 @@ public class ReviewController {
 		Integer post_idx = idx; // POST_IDX 값을 REVIEW_IDX로 설정
 		String photo_category = "Review"; // PHOTO_CATEGORY 값을 고정값으로 설정
 
+		reviewService.lessonHeader(idx, model);
 		reviewService.reviewEdit(idx, post_idx, photo_category, model);
 
 
@@ -156,7 +162,7 @@ public class ReviewController {
 		if(session.getAttribute("loginId")!= null) {
 
 			reviewService.update(photos, param);
-			
+
 			page = "redirect:/lessonReviewDetail.go?review_idx="+review_idx;
 			logger.info(""+ review_idx);
 		}

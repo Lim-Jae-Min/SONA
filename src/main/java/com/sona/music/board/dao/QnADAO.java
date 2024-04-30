@@ -33,6 +33,16 @@ public interface QnADAO {
 
 	int update(QnADTO dto);
 
+	QnADTO lessonHeaderClass(Integer class_idx);
+
+	String lessonLogoLoadClass(Integer class_idx);
+
+	QnADTO lessonHeader(Integer question_idx);
+
+	String lessonLogoLoad(Integer question_idx);
+
+
+
 
 
 }

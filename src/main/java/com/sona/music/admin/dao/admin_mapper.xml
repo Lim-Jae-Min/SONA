@@ -64,13 +64,14 @@
 	</update>
 		
   	<select id="reportAllCount" resultType="int">
-		SELECT CEIL (COUNT(report_idx)/#{param1}) AS pages FROM REPORT_BOARD Where
-				<if test='param3 != null'>					 
+		SELECT CEIL (COUNT(rb.report_idx)/#{param1}) AS pages FROM REPORT_BOARD rb
+			join ACTION_HISTORY ah on ah.report_idx = rb.report_idx Where
+				<if test='param3 != null'>									 
 					 <if test='param3 == 2'>
-					 	report_state LIKE '%${param3}%' 
+					 	ah.action_result LIKE '%${param2}%' 
 					 </if>
 					<if test='param3 == 1'>
-						 board_category LIKE '%${param3}%' 	
+						 rb.board_category LIKE '%${param2}%' 	
 					</if> 
 				</if>	
 
@@ -186,53 +187,60 @@
 	
 
 	<select id="showReportSearch" resultType="com.sona.music.admin.dto.AdminDTO">
-		SELECT * FROM REPORT_BOARD Where
-
+		SELECT distinct rb.report_idx, rb.board_category, ah.action_result,
+			rb.report_content, rb.report_date
+		 FROM REPORT_BOARD rb join ACTION_HISTORY ah on rb.report_idx = ah.report_idx 
+		 where
 				<if test='param4 != null'>
-					 
 					 <if test='param4 == 2'>
-					 	report_state LIKE '%${param3}%' 
+					 	ah.action_result LIKE '%${param3}%' 
 					 </if>
 					<if test='param4 == 1'>
-						 board_category LIKE '%${param3}%' 	
+						 rb.board_category LIKE '%${param3}%' 	
 					</if> 
 				</if>		
-			ORDER BY report_idx DESC LIMIT #{param1},#{param2};
-	</select>	
+			ORDER BY rb.report_idx DESC LIMIT #{param1},#{param2};
+	</select>
+	
+	<update id="ReportDel" >
+		UPDATE Report_BOARD set report_delete = 1 WHERE report_idx = #{param1}
+	</update>	
 	
 	<select id="reportDetailAdmin" resultType="com.sona.music.admin.dto.AdminDTO">
-		SELECT
+		SELECT DISTINCT 
 		    rb.board_idx,
 		    rb.report_idx,
 		    r.review_title AS review_title,
 		    co.class_name AS class_name,
-		    rb.report_state,
+		    ah.action_result,
 		    rb.report_content,
 		    rb.board_category,
 		    rb.report_date,
 		    u.user_name,
 		    a.ADMIN_ID
-		FROM
+		fROM
 		    REPORT_BOARD rb
+		    JOIN ACTION_HISTORY ah ON rb.report_idx = ah.report_idx
 		LEFT JOIN
 		    REVIEW r ON rb.board_idx = r.review_idx
 		LEFT JOIN
 		    CLASS_OPEN co ON rb.board_idx = co.class_idx
-		    	join USERS u on u.USER_ID = co.USER_ID
-		    	join ADMIN a
+		JOIN
+		    USERS u ON u.USER_ID = co.USER_ID
+		   join ADMIN a
 		    	  where rb.report_idx = #{param1}
 	</select>
 	
     <update id="updateReportState">
-        UPDATE REPORT_BOARD
-        SET report_state = #{param2}
+        UPDATE ACTION_HISTORY
+        SET action_result = #{param2}
         WHERE report_idx = #{param1}
     </update>
     
     
 	<insert id="adminActionWriteDo">
-		INSERT INTO ACTION_HISTORY (report_idx,admin_id,action_content)
-			VALUES(#{param1},#{param2},#{param3})
+		INSERT INTO ACTION_HISTORY (report_idx,admin_id,action_content,action_result)
+			VALUES(#{param1},#{param2},#{param3},#{param4})
 	</insert>
 	
 	<select id="showSuspensionSearch" resultType="com.sona.music.admin.dto.AdminDTO">
@@ -256,14 +264,21 @@
 			join USERS u on bu.user_id = u.user_id  Where
 				<if test='param3 != null'>					 
 					 <if test='param3 == 2'>
-					 	bu.action_category LIKE '%${param3}%' 
+					 	bu.action_category LIKE '%${param2}%' 
 					 </if>
 					<if test='param3 == 1'>
-						 u.user_name LIKE '%${param3}%' 	
+						 u.user_name LIKE '%${param2}%' 	
 					</if> 
 				</if>	
 
 	</select> 
+	
+	
+	<update id="updateEndDate">
+        UPDATE BANNED_USER
+        SET end_date = CURDATE()
+        	where banned_idx = #{param1}
+    </update>
 		  
 
 	<select id="adminData" resultType="com.sona.music.admin.dto.AdminDTO">
@@ -369,6 +384,7 @@
 		WHERE u.user_id = #{param1}
 	</select>
 	
+
 	<select id="showListSearchSuggestion" resultType="com.sona.music.admin.dto.AdminDTO">
 	
 		SELECT SB.*, COUNT(SA.sug_answer_idx) AS sug_answerCount
@@ -471,6 +487,25 @@
 	</choose>
 	</select>  
 
+
+	
+	<select id="userSuspensionDetail" resultType="com.sona.music.admin.dto.AdminDTO">
+	    SELECT bu.banned_idx, u.user_name, bu.start_date, bu.end_date, bu.action_category, a.admin_id, bu.user_id
+	    	FROM BANNED_USER bu
+	    		JOIN USERS u ON u.user_id = bu.user_id
+	    			join ADMIN a
+	    			where bu.banned_idx = #{param1} 
+	</select>
+	
+	<update id="addBan">
+	    UPDATE BANNED_USER
+	    SET end_date = #{param2}
+	    WHERE banned_idx = #{param1}
+	</update>
+	
+	
+				
+
 	<select id="adminUserDetailActionList" resultType="com.sona.music.admin.dto.AdminDTO">
 		SELECT 
 			rb.board_category 
@@ -512,5 +547,9 @@
 			</if>
 		</if>
 	</select>
+
+
+	
+	
 
 </mapper>

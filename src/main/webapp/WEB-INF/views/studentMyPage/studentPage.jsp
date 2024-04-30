@@ -77,25 +77,28 @@
                 <thead>
    			 		<hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
    			 		
-                    <tr>
-						<input type="hidden" name="photo_category" value="userInfo">
-	        		<td colspan="1" id="imgRow" style="width:15%;, height :20%; margin-right : 50px;">
-	        			<c:if test="${photos.size() < 1}">
-	        				등록된 사진이 없습니다.
-	        			</c:if>
-	        			<c:forEach items="${photos}" var="photo">
-	        				<img class="myPageImg" style="width: 200px; height:200px;" src="/photo/${photo.new_filename}">
-	        			</c:forEach>
-	        		</td>
-
-                        	  <td class="main" style="padding-right: 600px; width : 200px;">
-			                  	<span style = "width : 200px;">${userInfo.user_name} ${userInfo.user_type}</span>
-				                <br><br>${userInfo.user_id}
-				              </td>
-					           <td style="width: 60%; min-width: 150px; text-align: left;">
-						       	  <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${sessionScope.manner_variance}
-                       		   </td>
-                    </tr>
+					<tr>
+					    <c:choose>
+					        <c:when test="${empty userInfo.new_filename}">
+					            <td colspan="1" id="imgRow" style="width: 15%; height: 20%; margin-right: 50px;">
+					                등록된 사진이 없습니다.
+					            </td>
+					        </c:when>
+					        <c:otherwise>
+					            <td colspan="1" id="imgRow" style="width: 15%; height: 20%; margin-right: 50px;">
+					                <img class="myPageImg" style="width: 200px; height: 200px;" src="/photo/${userInfo.new_filename}">
+					            </td>
+					        </c:otherwise>
+					    </c:choose>
+					
+					    <td class="main" style="padding-right: 600px; width: 200px;">
+					        <span style="width: 200px;">${userInfo.user_name} ${userInfo.user_type}</span>
+					        <br><br>${userInfo.user_id}
+					    </td>
+					    <td style="width: 60%; min-width: 150px; text-align: left;">
+					        <img src="resources/img/heart.png" style="margin-right: 30px; width: 20px; height: 20px;" id="heart">${sessionScope.manner_variance}
+					    </td>
+					</tr>
                 </thead>
                 <tbody>
                     <tr>
@@ -141,7 +144,7 @@
                             <span class="contents" style="margin-left: 60px; width: 200px; display: inline-block;">${sessionScope.point}</span>
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-							<button style="background-color: #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;" onclick="window.location.href='./chargePoint.go';">충전</button>
+							<button id="chargeButton" style="background-color: #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">충전</button>
 							<button style="background-color: #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;" onclick="window.location.href='./withdrawPoint.go';">출금</button>
                         </td>
                   </tr>
@@ -296,6 +299,22 @@
     </div>
 </body>
 <script>
+$(document).ready(function(){
+    $("#chargeButton").click(function(){
+        var loginId = "${sessionScope.loginId}";
+        $.ajax({
+            url: "./chargePoint.go",
+            type: "POST",
+            data: { loginId: loginId },
+            success: function(response){
+                // 성공 시 처리할 내용
+                // 리다이렉트이므로 추가적인 처리가 필요하지 않음
+            }
+        });
+    });
+});
+
+
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});

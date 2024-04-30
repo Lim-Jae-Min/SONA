@@ -493,12 +493,14 @@ public class AdminDTO {
 	public void setAction_result(String action_result) {
 		this.action_result = action_result;
 	}
+
 	public Date getClass_reg_date() {
 		return class_reg_date;
 	}
 	public void setClass_reg_date(Date class_reg_date) {
 		this.class_reg_date = class_reg_date;
 	}
+
 	
 	//건의사항 게터 세터
 	public int getSug_idx() {

@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
@@ -73,7 +72,6 @@
 	#reportdetail{
 	text-align : center;
 	font-size : 25px;
-	margin-right : 50px;
 	}
 	p,td,span{
 	margin-left :40px;
@@ -94,10 +92,19 @@
 	}
 	
 	.footBtn {
+		background-color : skyblue;
 	    text-align: center;
 	    margin-left: 50px;
 	    width: 120px;
 	    height: 50px;
+	}
+	#returnList{
+	margin-left : 630px;
+	}
+	
+	#boardTitle{
+		margin-left : 40px;
+	
 	}
 	
 </style>
@@ -124,19 +131,19 @@
             <div id="adminside">
                 <h3>신고 관리</h3>
                 <hr/>
-                <a href="/adminMain.go">관리자 페이지</a>
-                <a href="#">회원 관리</a>
+                <a href="adminMain.go">관리자 페이지</a>
+                <a href="adminUserList.go">회원 관리</a>
                 <a href="#">강의 관리</a>
-                <a href="/noticeManagement.go">공지사항 관리</a>
+                <a href="noticeManagement.go">공지사항 관리</a>
                 <a href="faqManagement.go">faq 관리</a>
                 <a href="adminSuggestionsLIst.go">건의사항 관리</a>
-                <a href="#">리뷰 관리</a>
+                <a href="adminReviewList.go">리뷰 관리</a>
                 <a href="adminReportManagement.go">신고 관리</a>
                 <a href="userSuspensionHistory.go">회원 정지 이력</a>
             </div>
         </div>
         
-   <div class="container">
+   <div class="container" style="width:100%;">
    		<br><br>
         <h4 id = reportdetail>신고 상세보기</h4>
             <h4 id="boardTitle">신고 번호 : ${reportDetail.report_idx}</h4>
@@ -153,11 +160,22 @@
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           		
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            		           		
 				작성일자 : ${reportDetail.report_date} &nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           		조치 상태 : ${reportDetail.report_state}</span>
+           		조치 상태 : ${reportDetail.action_result}</span>
            		</td>
 			</tr>           	        
             <hr class = "contenthr">
@@ -167,8 +185,10 @@
             <br><br><br><br><br>
 			<input type="hidden" id="review_idx" value="${reportDetail.board_idx}">
 			<button id="reviewDetailBtn" onclick="reviewDetail()">바로가기</button>
+			<br><br>
             
             <hr class = "contenthr">
+            <br><br>
             <tr>
 			<td>
 				<button class = "footBtn" id="returnList" onclick="backList()">돌아가기</button>
@@ -206,7 +226,7 @@
 	        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	        xhr.onload = function() {
 	            if (xhr.status == 200) {
-	                document.getElementById("report_state").innerText = "반려";
+	                document.getElementById("action_result").innerText = "반려";
 	                // 반려 상태일 경우 버튼 비활성화
 	                document.getElementById("reject").disabled = true;
 	            }
@@ -215,18 +235,21 @@
 	    }
 	}
 	
-	function disableButtons(report_state) {
-	    if (report_state === "조치 완료" || report_state === "반려") {
+	function disableButtons(action_result) {
+	    if (action_result === "조치 완료" || action_result === "반려") {
 	        document.getElementById("reject").disabled = true;
 	    }
 	}
 	
-	 function writeAction(){
-		var reportIdx = document.getElementById("report_idx").value;
-		var url = "./adminActionWrite.go?report_idx=" + ${reportDetail.report_idx}
-	    window.location.href = url;
-
-		 }
+	function writeAction() {
+	    // 알림창 표시
+	    if (confirm("작성하시겠습니까?")) {
+	        // 작성창으로 이동
+	        var reportIdx = document.getElementById("report_idx").value;
+	        var url = "./adminActionWrite.go?report_idx=" + reportIdx;
+	        window.location.href = url;
+	    }
+	}
 
 	function reviewDetail() {
 	    // review_idx 값을 가져오기

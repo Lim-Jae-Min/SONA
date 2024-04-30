@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
@@ -63,8 +62,11 @@
 		width: 80%;
 		margin-left: 2%;
 	}
-	#boardTitle{
-	text-align : right;
+	#boardTitle {
+	    text-align: right;
+	    margin-right: 145px;
+	    font-size: 18px;
+	    font-weight: normal;
 	}
 	
 	#wrapper1 {
@@ -76,7 +78,7 @@
 	#reportdetail{
 	text-align : left;
 	font-size : 25px;
-	margin-right : 50px;
+	margin-left : 50px;
 	}
 	p,td,span{
 	margin-left :40px;
@@ -97,6 +99,7 @@
 	}
 	
 	.footBtn {
+	 background-color : skyblue;
 	 text-align: center;
 	 margin-left: 50px;
 	 width: 120px;
@@ -104,9 +107,16 @@
 	}
 	#writingAction{
 	margin-left: 50px;
-	width: 700px;
+	width: 1000px;
 	height: 110px;
 	}
+	#returnList{
+	margin-left : 680px;
+	}
+	#reason{
+	margin-left : 50px;
+	}
+	
 	
 </style>
 </head>
@@ -132,21 +142,21 @@
             <div id="adminside">
                 <h3>신고 관리</h3>
                 <hr/>
-                <a href="/adminMain.go">관리자 페이지</a>
-                <a href="#">회원 관리</a>
+                <a href="adminMain.go">관리자 페이지</a>
+                <a href="adminUserList.go">회원 관리</a>
                 <a href="#">강의 관리</a>
-                <a href="/noticeManagement.go">공지사항 관리</a>
+                <a href="noticeManagement.go">공지사항 관리</a>
                 <a href="faqManagement.go">faq 관리</a>
                 <a href="adminSuggestionsLIst.go">건의사항 관리</a>
-                <a href="#">리뷰 관리</a>
+                <a href="adminReviewList.go">리뷰 관리</a>
                 <a href="adminReportManagement.go">신고 관리</a>
-                <a href="userSuspensionHistory.go">회원 정지 이력</a>
+                <a href="userSuspensionHistory.go">회원 정지 이력</a>>
             </div>
         </div>
         
-   <div class="container">
+   <div class="container" style = "width : 100%;">
    <form action = "./adminActionWrite.do" method = "post">
-   		<br><br>
+   		<br>
         <h4 id = reportdetail>조치내역 작성</h4>
             <h4 id="boardTitle">신고 번호 : ${reportDetail.report_idx}</h4>
             <input type="hidden" id="repory_idx" name = "report_idx" value="${reportDetail.report_idx}">
@@ -157,7 +167,24 @@
            	
             
             
-  
+            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -170,6 +197,7 @@
  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
  				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+ 				<input type="hidden" id="action_result" name = "action_result" value="${reportDetail.action_result}">
  				
     	       	<span>조치자 : ${reportDetail.admin_id}</span>
     	       	<input type="hidden" id="admin_id" name = "admin_id" value="${reportDetail.admin_id}">
@@ -187,21 +215,25 @@
 			<br>
 			<tr>
 			<td>
-				<span>조치 사유 : </span> 
+				<span id = "reason">조치 사유 : </span> 
 			</td>			
 			</tr>
+			
 			<tr>
 			<br>
+			<br>
 			
-			<input id = writingAction type = "text" name = "action_content" placeholder="내용을 입력 해주세요"/>
+    		<input id="writingAction" type="text" name="action_content" placeholder="내용을 입력해주세요" required>
 			</tr>
+            <br>
+            <br>
             
             
             <hr class = "contenthr">
             <tr>
 			<td>
 				<button type = "button" class = "footBtn" id="returnList" onclick="backList()">돌아가기</button>
-				<button type = "submit" class = "footBtn" id="actionWrite">조치내용 작성</button>
+				<button type = "submit" class = "footBtn" id="actionWrite">작성하기</button>
 			</tr>
         </form>			
 	           

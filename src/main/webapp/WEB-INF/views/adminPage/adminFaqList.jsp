@@ -6,9 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
-<link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
+<link rel="stylesheet" href="resources/css/common.css?after" type="text/css">    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
 	#showlist {
@@ -19,12 +17,14 @@
 	
 	#showList th, #showList td {
 	    border: 1px solid #dddddd; /* 셀 테두리 색상 설정 */
-	    padding: 8px; /* 셀 내부 여백 설정 */
+	    padding: 15px; /* 셀 내부 여백 설정 */
 	    text-align: left; /* 텍스트를 왼쪽 정렬 */
+	    border-right: none;
+	    border-left: none;
 	}
 	
 	#showList tr:nth-child(even) {
-	    background-color: #f2f2f2; /* 짝수 행 배경색 설정 */
+	   
 
 	}
 	
@@ -128,7 +128,6 @@
 		   <table id ="showlist">
 		   	<thead>
 		      <tr class="listhead">
-		         <th class="nchb"><input type="checkbox" id="all"/></th>
 		         <th class="nidx">글번호</th>
 		         <th class="ntitle">제목</th>
 		         <th class="nid">작성자</th>
@@ -233,7 +232,6 @@
 		for(item of list){
 		    console.log(item);
 		    content += '<tr>';
-		    content += '<td class="nchb"><input type="checkbox" name="del" value="' + item.faq_idx +'"/></td>';
 		    content += '<td class="nidx">' + item.faq_idx + '</td>';
 		    content += '<td class="ntitle"><a href="faqDetailAdmin.go?idx=' + item.faq_idx + '">' + item.faq_title + '</a></td>'
 		    content += '<td class="nid">' + item.admin_id + '</td>';
@@ -243,7 +241,7 @@
 		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
 		    //content += '<td>' + item.reg_date + '</td>';
 		    //방법 2. Front-end : js에서 직접 변환
-		    var date = new Date(item.notice_reg_date);
+		    var date = new Date(item.faq_reg_date);
 		    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
 		    content += '<td class="ndate">' + dateStr + '</td>';
 		    

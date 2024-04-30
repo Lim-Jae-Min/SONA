@@ -15,6 +15,11 @@
     border: 1px solid #fff;
     border-radius: 5px;
     background-color: #fff;
+    width: 500px;
+    margin: 0px;
+    position: relative;
+    top: -63%;
+    left: 35%;
 }
 
 h1 {
@@ -107,12 +112,6 @@ img{
 	width: 40%
 }
 
-hr{
-	margin-top: 20px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 3px solid #eee
-}
 #editButton{
 /* 	position : relative;
 	left: 48%;
@@ -149,50 +148,101 @@ p.editOption{
 	left : 50%;
 	position: relative;
 }
-#faqDel{
-	background: red;
-	position: relative;
-	left: 55%;
-}
-
 </style>
 </head>
 <body>
 	<!-- 헤더 -->
-	<header id="adminmain">
+    <header id="usermain">
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu"></th>
-                <th class="menu"></th>
-                <th class="menu"></th>
+                <th class="menu">
+                	<c:if test="${sessionScope.loginId eq null}">
+                		<c:if test="${sessionScope.user_type ne '강사'}">
+		                	<a href="login.go">추천 강의</a>                	
+	                	</c:if>
+                	</c:if>
+                	<c:if test="${sessionScope.loginId ne null}">
+                		<c:if test="${sessionScope.user_type ne '강사'}">
+		                	<a href="recommendList.go">추천 강의</a>                	
+	                	</c:if>
+                	</c:if>
+                </th>
+                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
             </tr>
         </table>
         <table id="mymenu">
-           <tr>
-              <td><a href="adminLogout.do">로그아웃</a></td>
-           </tr>
+            <c:if test="${sessionScope.loginId ne null}">
+                <tr>
+                    <c:if test="${sessionScope.alarm_count > 0}">
+                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                    </c:if>
+                    <c:if test="${sessionScope.alarm_count == 0}">
+                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                    </c:if>
+                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                    <th><div id="userName">${sessionScope.user_name}</div></th>
+                </tr>
+            </c:if>
+            <c:if test="${sessionScope.loginId eq null}">
+                <tr>
+                    <th><a href="login.go">로그인</a></th>
+                </tr>
+            </c:if>
         </table>
     </header>
     <!-- 헤더영역 -->
+    <div id="sidemenu">
+                <h3>고객센터</h3>
+                <hr/>
+                <a href="studentPage.go">공지사항</a>
+                <a href="studentPageEdit.go">FAQ</a>
+                <a href="favoriteList.go">건의사항</a>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+                <hr/>
+        </div>
+    
+    
     
     <!-- 게시판 영역 -->
     <div class="container">
-        <h1>FAQ 상세보기</h1>
-            <h2 id="boardTitle">${faqDetail.faq_title}</h2>
-
+        <h1>게시판 상세보기</h1>
+            <h2 id="boardTitle">${noticeDetail.notice_title}</h2>
         <div id="boardDetail">
-        작성자 : ${faqDetail.admin_id}  작성일자 : ${faqDetail.faq_reg_date} &nbsp;&nbsp;  조회수 : ${faqDetail.faq_views} 대상 : ${faqDetail.faq_target}
+        작성자 : ${noticeDetail.admin_id}  작성일자 : ${noticeDetail.notice_reg_date} &nbsp;&nbsp;  조회수 : ${noticeDetail.notice_views}
             <hr>
- 
-            <p id="boardContent">${faqDetail.faq_answer}</p>
+            <div id="boardImageWrapper">
+				<c:if test="${photos.size()>0}">
+					<c:forEach items="${photos}" var="photo">
+						<img src="/photo/${photo.new_filename}" />
+					</c:forEach>
+				</c:if>
+			</div>
+            <p id="boardContent">${noticeDetail.notice_content}</p>
             <hr>
 
             
             <button id="returnList" onclick="backList()">목록</button>
-	        <button class="editOption" id="faqEdit" onclick="faqEdit()">수정</button>
-	        <button class="editOption" id="faqDel" onclick="faqDel()">삭제</button>
-            
         </div>
     </div>
     
@@ -283,54 +333,16 @@ $('.alarm').click(function alarmList() {
     
     
     
-    /* 삭제 버튼 구현 */
-    
-    function faqDel() {
 
-
-
-		var confirmationMessage = "정말로 faq를 삭제하시겠습니까?";
-
-		if (confirm(confirmationMessage)) {
-			$.ajax({
-				url : "faqDel.ajax", 
-				method : "POST",
-				data : {
-					faqIdx : ${faqDetail.faq_idx}
-					
-				},
-				success : function(response) {
-					if (response.success == 1) {
-						alert("삭제를 성공 했습니다.");
-						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
-						window.location.href = "faqManagement.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
-					} else {
-						alert("삭제를 실패 했습니다.");
-/* 						var form = document.createElement('form'); // 폼객체 생성
-						form.setAttribute('method', 'post'); //get,post 가능
-						form.setAttribute('action', "chargePoint.go"); //보내는 url
-						document.body.appendChild(form);
-						form.submit(); */
-
-					}
-				},
-				error : function(xhr, status, error) {
-					alert("서버 오류로 인해 공지사항 삭제를 실퍃하였습니다..");
-				}
-			});
-		} else {
-			alert("faq 삭제를 취소 했습니다.");
-		}
-	}
     
     /* 목록으로 가기 */
 	 function backList(){
-	    	location.href = "faqManagement.go";
+	    	location.href = "reportManagement.go";
 	    	
 	    }
-    function faqEdit(){
+    function actionWrite(){
     	console.log("수정버튼 클릭됨");
-    	location.href = 'faqEditAdmin.go?idx=${faqDetail.faq_idx}';
+    	location.href = 'actionEditAdmin.go?idx=${noticeDetail.notice_idx}';
 /*     	var form = document.createElement('form'); // 폼객체 생성
 		form.setAttribute('method', 'post'); //get,post 가능
 		form.setAttribute('action', "chargePoint.go"); //보내는 url

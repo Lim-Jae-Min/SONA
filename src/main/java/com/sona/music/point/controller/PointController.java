@@ -223,4 +223,16 @@ public class PointController {
 		return map;
 	}
 	
+	@RequestMapping(value = "test1.go")
+	public String testGo() {
+		
+		return "myPoint/test1";
+	}
+	
+	@RequestMapping(value = "test2.go")
+	public String testGo2() {
+		
+		return "myPoint/test2";
+	}
+	
 }

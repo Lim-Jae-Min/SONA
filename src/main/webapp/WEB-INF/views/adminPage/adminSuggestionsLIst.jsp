@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
@@ -15,16 +14,20 @@
 		position : relative;
 	    border-collapse: collapse;
 	    width: 100%; /* 테이블 셀 경계를 병합하여 구분선이 하나만 나타나도록 설정 */
+	    text-align: center;
 	}
 	
 	#showList th, #showList td {
 	    border: 1px solid #dddddd; /* 셀 테두리 색상 설정 */
-	    padding: 8px; /* 셀 내부 여백 설정 */
+	    padding: 15px; /* 셀 내부 여백 설정 */
 	    text-align: left; /* 텍스트를 왼쪽 정렬 */
+	    border-right: none;
+	    border-left: none;
+	    text-align: center;
 	}
 	
 	#showList tr:nth-child(even) {
-	    background-color: #f2f2f2; /* 짝수 행 배경색 설정 */
+
 
 	}
 	
@@ -38,21 +41,21 @@
 		width: 100%;
 	}
 	.nidx{
-		width: 8%;
+		width: 4%;
 	}
 	.nid{
-		width: 25%;
+		width: 15%;
 	}
 	.nbhit{
 		width: 16.6%;
 	}
 	.ndate{
-		width: 20%;
+		width: 10%;
 	}
 	.ntitle{
-		width: 20%;	
+		width: 30%;	
 	}
-	.nchb{
+	.nanswer{
 		width: 10%;
 	}
 	#container{
@@ -70,6 +73,9 @@
 	#faqWriteButton{
 		position: relative;
 		left: 880px;
+	}
+	#titleId{
+		color: blue;
 	}
 </style>
 </head>
@@ -91,64 +97,62 @@
         </table>
     </header>
     <!-- 헤더 -->
-    <div id = "divvv">
-    <div id="wrapper1">
-            <div id="adminside">
-                <h3>관리자 페이지</h3>
-                <hr/>
-                <a href="#">관리자 페이지</a>
-                <a href="#">회원 관리</a>
-                <a href="#">강의 관리</a>
-                <a href="#">공지사항 관리</a>
-                <a href="#">faq 관리</a>
-                <a href="#">건의사항 관리</a>
-                <a href="#">리뷰 관리</a>
-                <a href="#">신고 관리</a>
-                <a href="#">회원 정지 이력</a>
-            </div>
-        </div>
-        
-     	<div id = "paaaa">    	  
-	     	<h3>FAQ 리스트 </h3> 
-	     	<!-- 구분기능  -->
+	<div id="divvv">
+		<div id="wrapper1">
+			<div id="adminside">
+				<h3>관리자 페이지</h3>
+				<hr />
+				<a href="#">관리자 페이지</a> 
+				<a href="#">회원 관리</a> 
+				<a href="#">강의 관리</a>
+				<a href="#">공지사항 관리</a> 
+				<a href="#">faq 관리</a> 
+				<a href="#">건의사항 관리</a>
+				<a href="#">리뷰 관리</a>
+				<a href="#">신고 관리</a> 
+				<a href="#">회원정지 이력</a>
+			</div>
+		</div>
+
+		<div id="paaaa">
+			<h3>건의사항 페이지</h3>
+			<!-- 구분기능  -->
 			<div>
-				<button value="1" onclick="setCategory(1)">전체</button> 
-				<button value="2" onclick="setCategory(2)">답변중</button> 
+				<button value="1" onclick="setCategory(1)">전체</button>
+				<button value="2" onclick="setCategory(2)">답변중</button>
 				<button value="3" onclick="setCategory(3)">답변완료</button>
 			</div>
 			<select id="searchType">
-			  <option value="1">제목</option>
-			  <option value="2">작성자</option>
-			</select>
-	     	<input type="text" id ="searchText">
-	     	<button type="button" id="search">검색하기</button>
-	     	<!-- 검색기능 끝 -->
-		   <table id ="showlist">
-		   	<thead>
-		      <tr class="listhead">
-		         <th class="nchb"><input type="checkbox" id="all"/></th>
-		         <th class="nidx">글번호</th>
-		         <th class="ntitle">제목</th>
-		         <th class="nid">작성자</th>
-		         <th class="ndate">날짜</th>
-		         <th class="nid">답변여부</th>
+				<option value="1">제목</option>
+				<option value="2">작성자</option>
+			</select> <input type="text" id="searchText">
+			<button type="button" id="search">검색하기</button>
+			<!-- 검색기능 끝 -->
+			<table id="showlist">
+				<thead>
+					<tr class="listhead">						
+						<th class="nidx">글번호</th>
+						<th class="ntitle">제목</th>
+						<th class="nid">작성자</th>
+						<th class="ndate">날짜</th>
+						<th class="nanswer">답변여부</th>
 
-		        
-		      </tr>
-		     </thead>
-		     <tbody id="list" class="listhead"></tbody>
+
+					</tr>
+				</thead>
+				<tbody id="list" class="listhead"></tbody>
 				<tr>
-					<td colspan="7" id = "paging">
-						<div class="container">                           
-		               		<nav aria-label="page navigation" style="text-align:center">
-		                 	 <ul class="pagination" id="pagination"></ul>
-		               		</nav> 
-		               		<hr>              
-		            	</div>
+					<td colspan="7" id="paging">
+						<div class="container">
+							<nav aria-label="page navigation" style="text-align: center">
+								<ul class="pagination" id="pagination"></ul>
+							</nav>
+							<hr>
+						</div>
 					</td>
 				</tr>
-		   </table>
-	   </div>
+			</table>
+		</div>
 	</div>
 	<div id="footer">
 		<li>상호명 : SONA</li>
@@ -232,9 +236,8 @@
 		    console.log(item);
 		    content += '<tr>';
 		    
-		    content += '<td class="nchb"><input type="checkbox" name="del" value="' + item.sug_idx +'"/></td>';
 		    content += '<td class="nidx">' + item.sug_idx + '</td>';
-		    content += '<td class="ntitle">'+item.sug_secret +'<a href="faqDetailAdmin.go?idx=' + item.sug_idx + '">' + item.sug_title + '</a></td>'
+		    content += '<td class="ntitle"><a id="titleId" href="faqDetailAdmin.go?idx=' + item.sug_idx + '">' + item.sug_title + '</a></td>'
 		    content += '<td class="nid">' + item.user_id + '</td>';
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
 		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
@@ -245,9 +248,9 @@
 		    content += '<td class="ndate">' + dateStr + '</td>';
 		    
 		    if (item.sug_answerCount >0) {
-		    content += '<td class="nid">' + 'Y' + '</td>';	
+		    content += '<td class="nanswer">' + 'Y' + '</td>';	
 			}else{
-		    content += '<td class="nid">' + 'N' + '</td>';				
+		    content += '<td class="nanswer">' + 'N' + '</td>';				
 			};
 		    //content += '<td class="nid">' + item.sug_answerCount + '</td>';
 		    

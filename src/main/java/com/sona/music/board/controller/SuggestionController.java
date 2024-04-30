@@ -26,6 +26,9 @@ public class SuggestionController {
 		return "suggestion/suggestionsList";
 	}
 	
+
+
+
 	@RequestMapping(value="/suggestionsList.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> suggestionsListCall(String page, String condition, String searchContent) {

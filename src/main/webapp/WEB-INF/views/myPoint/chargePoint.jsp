@@ -171,14 +171,25 @@
 		</div>
 		
 	        <!-- 포인트 정보 표시 -->
-	        <div class="point-info">
-	        <hr>
-	        	<label>결제확인</label>
-	            <p>보유 포인트: <span id="currentPoints">${havePoint} P</span></p>
-	            <p>충전 포인트: <span id="chargingPoints">0</span></p>
-	            <p>결제금액: <span id="paymentAmount">0</span></p>
-	            <p>충전 후 포인트: <span id="afterPoints">0</span></p>
-	        </div>
+<table class="">
+    <tr>
+        <th colspan="2">결제확인</th>
+    </tr>
+    <tr>
+        <td>보유 포인트:</td>
+        <td>충전 포인트:</td>
+        <td>결제금액:</td>
+        <td>충전 후 포인트:</td>
+        
+    </tr>
+    <tr>
+        <td><span id="currentPoints">${havePoint} P</span></td>
+        <td><span id="chargingPoints">0</span></td>
+        <td><span id="paymentAmount">0</span></td>
+        <td><span id="afterPoints">0</span></td>
+    </tr>
+
+</table>
 	            <hr>
 	    <button type="button" class="btn" id="chargePointDo" onclick="chargePoint()"> 결제하기 </button>
 	    </div>

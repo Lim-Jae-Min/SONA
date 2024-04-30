@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class SuggestionDTO {
 
+
 	private int sug_idx;
 	private int sug_secret;
 	private String sug_title;
@@ -99,5 +100,4 @@ public class SuggestionDTO {
 	public void setSug_answer(String sug_answer) {
 		this.sug_answer = sug_answer;
 	}
-	
 }

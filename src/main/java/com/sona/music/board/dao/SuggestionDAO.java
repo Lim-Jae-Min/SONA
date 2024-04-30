@@ -7,6 +7,7 @@ import com.sona.music.board.dto.SuggestionDTO;
 
 public interface SuggestionDAO {
 
+
 	List<SuggestionDTO> suggestionsListCall(int pagePerCnt, int start, String condition, String searchContent);
 
 	Object suggestionsListCount(int pagePerCnt, String condition, String searchContent);
@@ -16,5 +17,4 @@ public interface SuggestionDAO {
 	SuggestionDTO suggestionsDetailGo(String sug_idx);
 
 	List<PhotoDTO> suggestionsDetailPhotos(String sug_idx);
-
 }

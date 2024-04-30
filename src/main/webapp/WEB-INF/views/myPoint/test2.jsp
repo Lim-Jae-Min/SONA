@@ -18,17 +18,19 @@
 	
 	#showList th, #showList td {
 	    border: 1px solid #dddddd; /* 셀 테두리 색상 설정 */
-	    padding: 8px; /* 셀 내부 여백 설정 */
+	    padding: 15px; /* 셀 내부 여백 설정 */
 	    text-align: left; /* 텍스트를 왼쪽 정렬 */
+	    border-right: none;
+	    border-left: none;
 	}
 	
 	#showList tr:nth-child(even) {
-	    background-color: #F0FAFF; /* 짝수 행 배경색 설정 */
+	    
 
 	}
 	
 	#showList th {
-	    background-color: #F0FAFF; /* 헤더 배경색 설정 */
+	    background-color: #dddddd; /* 헤더 배경색 설정 */
 	    color: #333333; /* 헤더 텍스트 색상 설정 */
 	}
 	#divvv{
@@ -66,72 +68,48 @@
 	#wrapper1 {
     display: flex;
 	}
-	th,td,tr{
+	.fa{
 		border-color: white;
 	}
+	
 </style>
 </head>
 <body>
-	<!-- 헤더 -->
-	<header id="usermain">
+	<header id="adminmain">
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                	<c:if test="${sessionScope.loginId eq null}">
-                		<c:if test="${sessionScope.user_type ne '강사'}">
-		                	<a href="login.go">추천 강의</a>                	
-	                	</c:if>
-                	</c:if>
-                	<c:if test="${sessionScope.loginId ne null}">
-                		<c:if test="${sessionScope.user_type ne '강사'}">
-		                	<a href="recommendList.go">추천 강의</a>                	
-	                	</c:if>
-                	</c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+                <th class="menu"></th>
+                <th class="menu"></th>
+                <th class="menu"></th>
             </tr>
         </table>
         <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
+           <tr>
+              <td><a href="adminLogout.do">로그아웃</a></td>
+           </tr>
         </table>
     </header>
-    <!-- 헤더 -->
-    
     
     <div id = "divvv">
-   
-        
-        <div id="sidemenu">
-                <h3>고객센터</h3>
+    <div id="wrapper1">
+            <div id="adminside">
+                <h3>관리자 페이지</h3>
                 <hr/>
-                <a href="studentPage.go">공지사항</a>
-                <a href="studentPageEdit.go">FAQ</a>
-                <a href="favoriteList.go">건의사항</a>
-
+                <a href="#">관리자 페이지</a>
+                <a href="#">회원 관리</a>
+                <a href="#">강의 관리</a>
+                <a href="#">공지사항 관리</a>
+                <a href="#">faq 관리</a>
+                <a href="#">건의사항 관리</a>
+                <a href="#">리뷰 관리</a>
+                <a href="#">신고 관리</a>
+                <a href="#">회원 정지 이력</a>
+            </div>
         </div>
-            
         
      	<div id = "paaaa">    	  
 	     	<h3>공지사항 리스트 </h3> 
-	     	<hr>
 	     	<!-- 검색기능  -->
 	     	<select id="searchType">
 			  <option value="1">제목</option>
@@ -139,10 +117,12 @@
 			</select>
 	     	<input type="text" id ="searchText">
 	     	<button type="button" id="search">검색하기</button>
+	     	<button type="button" id="noticeWrite" onclick="noticeWrite()" >글작성</button>
 	     	<!-- 검색기능 끝 -->
 		   <table id ="showlist">
 		   	<thead>
 		      <tr class="listhead">
+		         <th class="nchb"><input type="checkbox" id="all"/></th>
 		         <th class="nidx">글번호</th>
 		         <th class="ntitle">제목</th>
 		         <th class="nid">작성자</th>
@@ -186,7 +166,6 @@
 
 	$('#search').click(function (){
 		$('#pagination').twbsPagination('destroy');
-		showPage =1;
 		listCall(showPage);
 	});
 
@@ -239,9 +218,10 @@
 		for(item of list){
 		    console.log(item);
 		    content += '<tr>';
-		    content += '<td class="nidx">' + item.notice_idx + '</td>';
-		    content += '<td class="ntitle"><a href="noticeDetail.go?idx=' + item.notice_idx + '">' + item.notice_title + '</a></td>'
-		    content += '<td class="nid">' + item.admin_id + '</td>';
+		    content += '<td class="fa"><input type="checkbox" name="del" value="' + item.notice_idx +'"/></td>';
+		    content += '<td class="fa">' + item.notice_idx + '</td>';
+		    content += '<td class="fa"><a href="noticeDetailAdmin.go?idx=' + item.notice_idx + '">' + item.notice_title + '</a></td>'
+		    content += '<td class="fa">' + item.admin_id + '</td>';
 		    
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
 		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
@@ -249,11 +229,11 @@
 		    //방법 2. Front-end : js에서 직접 변환
 		    var date = new Date(item.notice_reg_date);
 		    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
-		    content += '<td class="ndate">' + dateStr + '</td>';
+		    content += '<td class="fa">' + dateStr + '</td>';
 		    
-		    content += '<td class="nbhit">' + item.notice_views +'</td>';
+		    content += '<td class="fa">' + item.notice_views +'</td>';
 
-		    content += '</tr> <hr>';
+		    content += '</tr>';
 
 	 	}
 	 
@@ -304,6 +284,9 @@
 	
 	function redirectToReplyPage() {
 	    window.location.href = './videoList.go';
+	}
+	function noticeWrite() {
+	    window.location.href = './noticeWrite.go';
 	}
 
 	$('#userName').click(function slide() {

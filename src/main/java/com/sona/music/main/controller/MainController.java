@@ -83,7 +83,7 @@ public class MainController {
 	@RequestMapping(value="/serviceCenter.go")
 	public String serviceCenter(Model model) {
 		model.addAttribute("msg", "고객 센터 이동");
-		return "notice/noticeList";
+		return "notice/NoticeList";
 	}
 	
 	@RequestMapping(value="/myPage.go")

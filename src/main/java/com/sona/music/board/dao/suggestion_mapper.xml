@@ -4,106 +4,79 @@
 >
 <mapper namespace="com.sona.music.board.dao.SuggestionDAO">
 
-	<select id="showListSearch" resultType="com.sona.music.board.dto.SuggestionDTO">
+	<select id="suggestionsListCall" resultType="com.sona.music.board.dto.SuggestionDTO">
+		SELECT
+			sb.sug_idx
+			, sb.sug_secret
+			, sb.sug_title
+			, sa.sug_answer_idx 
+			, u.user_name
+			, sb.sug_reg_date
+			, sb.user_id
+		FROM SUG_BOARD sb JOIN USERS u ON sb.user_id = u.user_id 
+			LEFT JOIN SUG_ANSWER sa ON sb.sug_idx = sa.sug_idx
+		<if test="param4 != ''">
+			WHERE
+			<if test="param3 == 'sug_title'">
+				sb.sug_title LIKE CONCAT('%', #{param4}, '%')
+			</if>
+			<if test="param3 == 'sug_content'">
+				sb.sug_content LIKE CONCAT('%', #{param4}, '%')
+			</if>
+			<if test="param3 == 'user_name'">
+				u.user_name LIKE CONCAT('%', #{param4}, '%')
+			</if>
+		</if>
+		ORDER BY sb.sug_idx DESC LIMIT #{param1} OFFSET #{param2}
+	</select>
 	
-		SELECT SB.*, COUNT(SA.sug_answer_idx) AS sug_answerCount
-		FROM SUG_BOARD SB
-		LEFT JOIN SUG_ANSWER SA ON SB.sug_idx = SA.sug_idx
-		GROUP BY SB.sug_idx HAVING SB.sug_delete = #{param3}
-		<choose>
-				<when test="param6 == 1">
-				<![CDATA[
-					AND COUNT(SA.sug_answer_idx) >= '0' 
-					]]>
-					<if test='param5 != null'>
-					 AND
-						 <if test="param5 == 2">
-						 	SB.user_id LIKE '%${param4}%' 
-						 </if>
-						<if test="param5 == 1">
-							 SB.sug_title LIKE '%${param4}%' 	
-						</if> 
-					</if>	
-				</when>
-				<when test="param6 == 2">
-				<![CDATA[
-					AND COUNT(SA.sug_answer_idx) = 0 
-					]]>
-					<if test='param5 != null'>
-					 AND
-						 <if test="param5 == 2">
-						 	SB.user_id LIKE '%${param4}%' 
-						 </if>
-						<if test="param5 == 1">
-							 SB.sug_title LIKE '%${param4}%' 	
-						</if> 
-					</if>	
-				</when>
-				<when test="param6 == 3">
-				<![CDATA[
-					AND COUNT(SA.sug_answer_idx) > 0 
-					]]>
-					<if test='param5 != null'>
-					 AND
-						 <if test="param5 == 2">
-						 	SB.user_id LIKE '%${param4}%' 
-						 </if>
-						<if test="param5 == 1">
-							 SB.sug_title LIKE '%${param4}%' 	
-						</if> 
-					</if>	
-				</when>
-			</choose>	
-			ORDER BY SB.sug_idx DESC LIMIT #{param1},#{param2};
+	<select id="suggestionsListCount" resultType="Integer">
+		SELECT
+			CEIL(COUNT(sb.sug_idx)/#{param1}) 
+		FROM SUG_BOARD sb JOIN USERS u ON sb.user_id = u.user_id 
+			LEFT JOIN SUG_ANSWER sa ON sb.sug_idx = sa.sug_idx
+		<if test="param3 != ''">
+			WHERE
+			<if test="param2 == 'sug_title'">
+				sb.sug_title LIKE CONCAT('%', #{param3}, '%')
+			</if>
+			<if test="param2 == 'sug_content'">
+				sb.sug_content LIKE CONCAT('%', #{param3}, '%')
+			</if>
+			<if test="param2 == 'user_name'">
+				u.user_name LIKE CONCAT('%', #{param3}, '%')
+			</if>
+		</if>
+	</select>
+	
+	<update id="suggestionsViewUp">
+		UPDATE SUG_BOARD SET sug_views = sug_views + 1 WHERE sug_idx = #{param1}
+	</update>
+
+	<select id="suggestionsDetailGo" resultType="com.sona.music.board.dto.SuggestionDTO">
+		SELECT
+			sb.sug_idx
+			, sb.sug_secret
+			, sb.sug_title
+			, u.user_name
+			, sb.user_id
+			, sb.sug_reg_date
+			, sb.sug_views 
+			, sb.sug_content
+			, sa.sug_answer_idx
+			, sa.admin_id
+			, sa.sug_answer_reg_date 
+			, sa.sug_answer
+		FROM SUG_BOARD sb JOIN USERS u ON sb.user_id = u.user_id LEFT JOIN SUG_ANSWER sa ON sb.sug_idx = sa.sug_idx
+		WHERE sb.sug_idx = #{param1}
 	</select>
 
-	
- 	<select id="allCount" resultType="int">		
-	<choose>
-		<when test='param5 == 1'>
-			SELECT CEIL(COUNT(SUG_IDX) / 10) AS pages
-				FROM SUG_BOARD WHERE sug_delete = #{param3}
-			<if test='param4 != null'>
-			 AND
-				 <if test="param4 == 2">
-				 	user_id LIKE '%${param3}%' 
-				 </if>
-				<if test="param4 == 1">
-					sug_title LIKE '%${param3}%' 	
-				</if> 
-			</if>	
-		</when>
-		
-		<when test='param5 == 2'>
-			SELECT  CEIL(COUNT(SB.SUG_IDX)/10) AS pages
-				FROM SUG_BOARD SB
-				LEFT JOIN SUG_ANSWER SA ON SB.SUG_IDX = SA.SUG_IDX
-				WHERE SA.SUG_IDX IS NULL
-			<if test='param4 != null'>
-			 AND
-				 <if test="param4 == 2">
-				 	SB.user_id LIKE '%${param3}%' 
-				 </if>
-				<if test="param4 == 1">
-					 SB.sug_title LIKE '%${param3}%' 	
-				</if> 
-			</if>
-		</when>
-		<when test='param5 == 3'>
-			SELECT CEIL(count(DISTINCT SA.SUG_IDX)/10) As pages 
-			FROM SUG_ANSWER SA
-			LEFT JOIN SUG_BOARD SB ON SB.SUG_IDX = SA.SUG_IDX
-				<if test='param4 != null'>
-					WHERE
-					 <if test="param4 == 2">
-					 	SB.user_id LIKE '%${param3}%' 
-					 </if>
-					<if test="param4 == 1">
-						 SB.sug_title LIKE '%${param3}%' 	
-					</if> 
-				</if>
-		</when>
-	</choose>
-	</select>  
+	<select id="suggestionsDetailPhotos" resultType="com.sona.music.board.dto.PhotoDTO">
+		SELECT
+			pb.new_filename
+		FROM PHOTO_BOARD pb
+		WHERE pb.post_idx = #{param1} AND pb.photo_category = 'Suggestion'
+	</select>
+
 
 </mapper>

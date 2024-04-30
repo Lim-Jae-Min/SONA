@@ -75,6 +75,11 @@ public interface AdminDAO {
 	void updateEndDate(int banned_idx);
 
 	void addBan(int banned_idx, String end_date);
+	List<AdminDTO> adminUserDetailActionList(String user_id);
+
+	List<AdminDTO> adminLessonListCall(int pagePerCnt, int start, String condition, String searchContent);
+
+	int adminLessonListCount(int pagePerCnt, String condition, String searchContent);
 
 
 }

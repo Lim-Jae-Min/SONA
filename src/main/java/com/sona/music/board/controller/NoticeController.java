@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,6 +19,19 @@ public class NoticeController {
 	
 	@Autowired NoticeService noticeService;
 	
+	
+	@RequestMapping(value = "noticeList.go")
+	public String noticeListGo() {
+		
+		return "notice/NoticeList";
+	}
+	
+	@RequestMapping(value = "/noticeDetail.go")
+	public String noticeDetailAdminGo(int idx, Model model) {
+		noticeService.noticeDetailAdmin(idx, model);
+
+		return "notice/NoticeDetail";
+	}
 	
 	@RequestMapping(value = "noticeManagementlist.ajax")
 	@ResponseBody
@@ -34,5 +48,6 @@ public class NoticeController {
 		
 		return map;
 	}
+	
 	
 }

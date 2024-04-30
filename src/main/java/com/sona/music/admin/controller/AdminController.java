@@ -220,6 +220,7 @@ public class AdminController {
 	@RequestMapping(value = "noticePhotoDel.ajax", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object>noticePhotoDel(@RequestParam Map<String, String> param){
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		int photoidx = Integer.parseInt(param.get("postIdx"));
 		String photoname = param.get("photoName");
@@ -241,6 +242,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "adminFaqWrite.do", method = RequestMethod.POST)
 	public String adminFaqWriteDo(HttpSession session, Model model , @RequestParam Map<String,String> param) {
+		
 		String faqType = param.get("faqType");
 		String faqTitle = param.get("title");
 		String faqAnswer = param.get("answer");
@@ -258,6 +260,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "adminFaqEdit.do", method = RequestMethod.POST)
 	public String adminFaqEditDo(HttpSession session, Model model , @RequestParam Map<String,String> param) {
+		
 		String faqType = param.get("faqType");
 		String faqTitle = param.get("title");
 		String faqAnswer = param.get("answer");
@@ -313,6 +316,49 @@ public class AdminController {
 		map = adminService.showListSearchReview(currPage,searchType,serachText,categoryNum);	
 		return map;
 	}
+	
+	@RequestMapping(value="/adminReviewDetail.go")
+	public String adminReviewDetailGo(Integer review_idx, HttpSession session, Model model) {
+		logger.info("idx="+review_idx+"리뷰 디테일 요청");
+
+
+		if(review_idx != null) {
+
+			Integer post_idx = review_idx; // POST_IDX 값을 REVIEW_IDX로 설정
+			String photo_category = "Review"; // PHOTO_CATEGORY 값을 고정값으로 설정
+
+			logger.info("detail post idx = " + post_idx);
+			logger.info("detail photo category = " + photo_category);
+
+			reviewService.detail(review_idx, post_idx, photo_category, model);
+
+			return "adminPage/adminReviewDetail"; 
+		} else {
+
+			return "adminPage/adminReviewList"; 
+		}
+	}
+	
+	@RequestMapping(value = "adminSuggestionsLIst.ajax")
+	@ResponseBody
+	public Map<String, Object> adminSuggestionsLIst(int page , int searchType, String serachText, int categoryNum) {
+		logger.info("adminSuggestionsLIst 요청");
+		logger.info("요청페이지 : " + page);
+		logger.info("faq 검색에서 가져온 text : "+serachText);
+		logger.info("faq 검색에서 가져온 type : "+searchType);
+		logger.info("faq 검색에서 가져온 category num : " + categoryNum);
+		Map<String, Object> map = null;
+		int currPage = page;
+			
+		map = adminService.showListSearchSuggestion(currPage,searchType,serachText,categoryNum);	
+		
+		
+		return map;
+	}
+	
+	/*---------------------------------------------------------------------------------------- 정민호*/
+	
+	
 	@RequestMapping(value = "/adminReportManagement.go")
 	public String reportManagementGo() {
 

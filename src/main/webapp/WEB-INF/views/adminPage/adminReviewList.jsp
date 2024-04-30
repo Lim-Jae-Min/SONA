@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
@@ -19,12 +18,15 @@
 	
 	#showList th, #showList td {
 	    border: 1px solid #dddddd; /* 셀 테두리 색상 설정 */
-	    padding: 8px; /* 셀 내부 여백 설정 */
+	    padding: 15px; /* 셀 내부 여백 설정 */
 	    text-align: left; /* 텍스트를 왼쪽 정렬 */
+	    border-right: none;
+	    border-left: none;
+	    text-align: center;
 	}
 	
 	#showList tr:nth-child(even) {
-	    background-color: #f2f2f2; /* 짝수 행 배경색 설정 */
+	   
 
 	}
 	
@@ -41,16 +43,16 @@
 		width: 8%;
 	}
 	.nid{
-		width: 25%;
+		width: 15%;
 	}
 	.nbhit{
 		width: 16.6%;
 	}
 	.ndate{
-		width: 20%;
+		width: 10%;
 	}
 	.ntitle{
-		width: 20%;	
+		width: 30%;	
 	}
 	.nchb{
 		width: 10%;
@@ -70,6 +72,9 @@
 	#faqWriteButton{
 		position: relative;
 		left: 880px;
+	}
+	#adminside{
+	height : 800px;
 	}
 </style>
 </head>
@@ -118,6 +123,7 @@
 			<select id="searchType">
 			  <option value="1">제목</option>
 			  <option value="2">내용</option>
+			  <option value="3">작성자</option>
 			</select>
 	     	<input type="text" id ="searchText">
 	     	<button type="button" id="search">검색하기</button>
@@ -125,13 +131,12 @@
 		   <table id ="showlist">
 		   	<thead>
 		      <tr class="listhead">
-		         <th class="nchb"><input type="checkbox" id="all"/></th>
 		         <th class="nidx">리뷰번호</th>
 		         <th class="ntitle">리뷰 제목</th>
 		         <th class="nid">작성자</th>
 		          <th class="nid">회원유형</th>
 		         <th class="ndate">날짜</th>
-		         <th class="nbhit">조회수</th>
+		         <th class="nbhit">리뷰점수</th>
 		        
 		      </tr>
 		     </thead>
@@ -230,10 +235,10 @@
 		for(item of list){
 		    console.log(item);
 		    content += '<tr>';
-		    content += '<td class="nchb"><input type="checkbox" name="del" value="' + item.review_idx +'"/></td>';
 		    content += '<td class="nidx">' + item.review_idx + '</td>';
-		    content += '<td class="ntitle"><a href="faqDetailAdmin.go?idx=' + item.reivew_idx + '">' + item.reivew_title + '</a></td>'
-		    content += '<td class="nid">' + item.radet_id + '</td>';
+		    /* content += '<td class="ntitle"><a href="lessonReviewDetail.go?idx=' + item.reivew_idx + '">' + item.review_title + '</a></td>' */ 
+		    content += '<td><a href="#" class="review-link" data-review-idx="' + item.review_idx + '">' + item.review_title + '</a></td>';
+		    content += '<td class="nid">' + item.rater_id + '</td>';
 		    content += '<td class="nid">' + item.user_type + '</td>';
 		    
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
@@ -244,13 +249,25 @@
 		    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
 		    content += '<td class="ndate">' + dateStr + '</td>';
 		    
-		    content += '<td class="nbhit">' + item.faq_views +'</td>';
+		    content += '<td class="nbhit">' + item.score +'</td>';
 
 		    content += '</tr>';
+		    
 
 	 	}
 	 
 	 	$('#list').html(content);
+	 	
+		$('.review-link').click(function(e) {
+	        e.preventDefault(); // 기본 동작 방지
+	        console.log('data-review-idx');
+	        var reviewIdx = $(this).data('review-idx');// 클릭된 리뷰의 REVIEW_IDX 추출
+	        
+	        console.log('reviewIdx:', reviewIdx);
+	       
+	        window.location.href = './adminReviewDetail.go?review_idx=' + reviewIdx; // REVIEW_IDX를 파라미터로 lessonReviewDetail 페이지로 이동
+	    });
+		
 	}
 
 	function del() {
@@ -320,6 +337,10 @@
 	function faqWriteGo(){
 		location.href = "adminFaqWrite.go";
 		
+	}
+	
+	function redirectToEditPage(reviewIdx) {
+	    window.location.href = './lessonReviewEdit.go?idx=' + reviewIdx;
 	}
 </script>
 </html>

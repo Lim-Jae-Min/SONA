@@ -7,6 +7,7 @@ import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.board.dto.FAQDTO;
 
 import com.sona.music.board.dto.NoticeDTO;
+import com.sona.music.board.dto.SuggestionDTO;
 
 
 public interface AdminDAO {
@@ -30,6 +31,11 @@ public interface AdminDAO {
 	int faqEdit(AdminDTO faqEditDto);
 
 	int faqDel(int faqIdx);
+	
+	List<AdminDTO> showListSearchSuggestion(int start, int pagePerCnt, int deleteStatus, String serachText, int searchType,
+			int categoryNum);
+
+	int allCountSuggestion(int pagePerCnt, int deleteStatus, String serachText, int searchType, int categoryNum);
 
 
 

@@ -206,10 +206,10 @@
 				var chkEmail = data.checkedEmail;
 
 				if (data.checkedId == null) {
-					alert('아이디를 다시 입력해 주세요');
+					alert('입력하신 아이디를 찾을 수 없습니다.');
 
 				} else if (data.checkedEmail == null) {
-					alert('아이디에 맞는 이메일이 아닙니다.');
+					alert('이메일을 다시 확인 해 주세요.');
 					$('input[name="email"]').val('');
 				} else {
 					alert(chkEmail + '로 인증번호를 보냈습니다.');

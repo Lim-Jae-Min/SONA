@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
-<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
 .container {
     max-width: 800px;
@@ -51,6 +48,7 @@ h1 {
     font-size: 18px;
     line-height: 1.6;
     margin-bottom: 20px;
+    height: 300px;
 }
 
 #adminButtons {
@@ -176,12 +174,12 @@ p.editOption{
     <!-- 게시판 영역 -->
     <div class="container">
         <h1>게시판 상세보기</h1>
-            <h2 id="boardTitle">${reportDetail.report_content}</h2>
+            <h2 id="boardTitle">${noticeDetail.notice_title}</h2>
            	<div id = "editButton">
            		<button id="editButton">⋮</button>
 	            <div id = "editslide">
 	             	<p class="editOption" id="" onclick="noticeDel()">삭제</p>
-	             	<p class="editOption" id="" onclick="noticeWrite()">수정</p>
+	             	<p class="editOption" id="" onclick="actionWrite()">수정</p>
 	            </div>
              </div>
         <div id="boardDetail">
@@ -194,7 +192,10 @@ p.editOption{
 					</c:forEach>
 				</c:if>
 			</div>
-            <p id="boardContent">${noticeDetail.notice_content}</p>
+			<div style="width: 882px; height: 311px; resize: none;">
+            ${noticeDetail.notice_content}
+			</div>            
+           
             <hr>
 
             
@@ -213,31 +214,7 @@ p.editOption{
         <li>팩스 : 02-123-4568</li>
         <li>사업자등록번호 : 000-00-00000</li>
         <li>본관 : (08505) 서울특별시 금천구 가산디지털2로 95</li>
-    </div>
-    <div id="slide">
-        <table>
-            <tr>
-                <td colspan="2">${sessionScope.user_name} 회원님</td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="manner">♥ ${sessionScope.manner_variance}</td>
-            </tr>
-        </table>
-        <br/>
-        <div>보유 포인트 : <span>${sessionScope.point}</span></div>
-        <br/>
-        <div>
-           <c:if test="${sessionScope.user_type eq '수강생'}">
-              <a href="studentWrittenList.go">내가 쓴 리뷰</a>           
-           </c:if>
-           <c:if test="${sessionScope.user_type eq '강사'}">
-              <a href="teacherWrittenList.go">내가 쓴 리뷰</a>           
-           </c:if>
-        </div>
-        <br/>
-        <div><a href="myPage.go">마이페이지</a></div>
-        <br/><br/><br/>
-        <div><a href="logout.do">로그아웃</a></div>
-    </div>    
+    </div>   
     <!-- 푸터 영역 -->
     
     
@@ -298,7 +275,7 @@ $('.alarm').click(function alarmList() {
 	    }
     function actionWrite(){
     	console.log("수정버튼 클릭됨");
-    	location.href = 'actionEditAdmin.go?idx=${noticeDetail.notice_idx}';
+    	location.href = 'noticeEditAdmin.go?idx=${noticeDetail.notice_idx}';
 /*     	var form = document.createElement('form'); // 폼객체 생성
 		form.setAttribute('method', 'post'); //get,post 가능
 		form.setAttribute('action', "chargePoint.go"); //보내는 url

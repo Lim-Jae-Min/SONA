@@ -23,6 +23,7 @@ import com.sona.music.admin.dto.PhotoDTO;
 import com.sona.music.board.dto.FAQDTO;
 
 import com.sona.music.board.dto.NoticeDTO;
+import com.sona.music.board.dto.SuggestionDTO;
 
 	
 
@@ -183,6 +184,36 @@ public class AdminService {
 		logger.info("faq 삭제에 대한 값 : 1이면 삭제 완료" + row);
 		return row;
 	}
+	
+	public Map<String, Object> showListSearchSuggestion(int currPage, int searchType, String serachText, int categoryNum) {
+		int pagePerCnt = 10;
+		int start = (currPage-1)*pagePerCnt;
+		int deleteStatus = 0;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> resultList = null;
+//		if(categoryNum == )
+		
+		resultList = adminDAO.showListSearchSuggestion(start,pagePerCnt,deleteStatus,serachText,searchType,categoryNum);
+		for (AdminDTO list : resultList) {
+			logger.info(list.getUser_id());
+			logger.info("sug 답변 개수 : "+list.getSug_answerCount());
+			logger.info("sug idx : "+list.getSug_idx());
+			logger.info(list.getUser_id());
+			
+		}
+		logger.info(serachText + "텍스트");
+
+		for (AdminDTO faqdto : resultList) {
+			logger.info("sug 에서 가져온 title : "+faqdto.getSug_title());
+		}
+	
+		result.put("list", resultList);
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.allCountSuggestion(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.allCountSuggestion(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		
+		return result;
+	}
 
 
 
@@ -256,6 +287,8 @@ public class AdminService {
 		
 		
 	}
+	
+	
 
 	public Map<String, Object> adminMainAjax() {
 		LocalDate currentDate = LocalDate.now();

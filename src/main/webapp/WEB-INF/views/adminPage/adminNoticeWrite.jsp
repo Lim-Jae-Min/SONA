@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
@@ -167,13 +166,14 @@ p.editOption{
     <!-- 게시판 영역 -->
     <form action="noticeWrite.do" method="post" enctype="multipart/form-data">
 	    <div class="container">
-	        <h1>게시판 상세보기</h1>
+	        <h1>공지사항 글작성</h1>
 	        	<hr>
 	            <div>제목 <input name="title" class="textA" type="text" id="title"  placeholder="제목을 입력 해주세요."> </div>    
 	        	<hr>
 	        	내용  
 	        <div id="boardDetail">
-				<input name="content" class="textA" type="text" id="content" placeholder="내용을 입력 해주세요">           
+				<!-- <input name="content" class="textA" type="text" id="content" placeholder="내용을 입력 해주세요">    -->  
+				<textarea name="content"style="width: 882px; height: 311px; resize: none;"></textarea>    
 	        	<hr>
 	        </div>
 	        <div>

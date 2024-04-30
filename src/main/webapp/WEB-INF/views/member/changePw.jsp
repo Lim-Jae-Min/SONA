@@ -170,7 +170,7 @@
 		var confirmPassword = $('input[name="confirmPassword"]').val();
 		console.log(confirmPassword + password);
 		if (password != confirmPassword) {
-			alert("비밀번호를 다시 확인해 주세요.")
+			alert("비밀번호가 일치하지 않습니다.")
 		} else {
 			alert("비밀번호가 변경 되었습니다.")
 			$('#findForm').attr("action", "changePw.do").submit();

@@ -92,7 +92,10 @@
 						 	R.review_content LIKE '%${param4}%' 
 						 </if>
 						<if test="param5 == 1">
-							 faq_title LIKE '%${param4}%' 	
+							 R.review_title LIKE '%${param4}%' 	
+						</if> 
+						<if test="param5 == 3">
+							 R.rater_id LIKE '%${param4}%' 	
 						</if> 
 					</if>	
 				</when>
@@ -104,8 +107,11 @@
 						 	R.review_content LIKE '%${param4}%' 
 						 </if>
 						<if test="param5 == 1">
-							 faq_title LIKE '%${param4}%' 	
-						</if> 
+							 R.review_title LIKE '%${param4}%' 	
+						</if>
+						<if test="param5 == 3">
+							 R.rater_id LIKE '%${param4}%' 	
+						</if> 						
 					</if>	
 				</when>
 				<when test="param6 == 3">
@@ -116,8 +122,11 @@
 						 	R.review_content LIKE '%${param4}%' 
 						 </if>
 						<if test="param5 == 1">
-							 faq_title LIKE '%${param4}%' 	
-						</if> 
+							 R.review_title LIKE '%${param4}%' 	
+						</if>
+						<if test="param5 == 3">
+							 R.rater_id LIKE '%${param4}%' 	
+						</if>  
 					</if>	
 				</when>
 			</choose>	
@@ -125,8 +134,8 @@
 	</select>
 	
 	<select id="allCountReview" resultType="int">
-		SELECT CEIL (COUNT(faq_idx)/#{param1}) AS pages FROM FAQ_BOARD
-			WHERE faq_delete = #{param2}
+		SELECT CEIL (COUNT(R.review_idx)/#{param1}) AS pages FROM REVIEW R left join USERS U ON R.rater_id  = U.user_id 
+			WHERE R.review_delete = #{param2}
 			<choose>
 				<when test="param5 == 1">
 					<if test='param4 != null'>
@@ -135,32 +144,41 @@
 						 	R.review_content LIKE '%${param3}%' 
 						 </if>
 						<if test="param4 == 1">
-							 faq_title LIKE '%${param3}%' 	
-						</if> 
+							 R.review_title LIKE '%${param3}%' 	
+						</if>
+						<if test="param4 == 3">
+							 R.rater_id LIKE '%${param4}%' 	
+						</if>  
 					</if>	
 				</when>
 				<when test="param5 == 2">
-					AND faq_target = "수강생"
+					AND U.user_type = "수강생"
 					<if test='param4 != null'>
 					 AND
 						 <if test="param4 == 2">
 						 	R.review_content LIKE '%${param3}%' 
 						 </if>
 						<if test="param4 == 1">
-							 faq_title LIKE '%${param3}%' 	
-						</if> 
+							 R.review_title LIKE '%${param3}%' 	
+						</if>
+						<if test="param4 == 3">
+							 R.rater_id LIKE '%${param4}%' 	
+						</if>  
 					</if>	
 				</when>
 				<when test="param5 == 3">
-					AND faq_target = "강사"
+					AND  U.user_type = "수강생"
 					<if test='param4 != null'>
 					 AND
 						 <if test="param4 == 2">
 						 	R.review_content LIKE '%${param3}%' 
 						 </if>
 						<if test="param4 == 1">
-							 faq_title LIKE '%${param3}%' 	
-						</if> 
+							 R.review_title LIKE '%${param3}%' 	
+						</if>
+						<if test="param4 == 3">
+							 R.rater_id LIKE '%${param4}%' 	
+						</if>  
 					</if>	
 				</when>			
 			</choose>	
@@ -351,4 +369,105 @@
 		WHERE u.user_id = #{param1}
 	</select>
 	
+	<select id="showListSearchSuggestion" resultType="com.sona.music.admin.dto.AdminDTO">
+	
+		SELECT SB.*, COUNT(SA.sug_answer_idx) AS sug_answerCount
+		FROM SUG_BOARD SB
+		LEFT JOIN SUG_ANSWER SA ON SB.sug_idx = SA.sug_idx
+		GROUP BY SB.sug_idx HAVING SB.sug_delete = #{param3}
+		<choose>
+				<when test="param6 == 1">
+				<![CDATA[
+					AND COUNT(SA.sug_answer_idx) >= '0' 
+					]]>
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	SB.user_id LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 SB.sug_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 2">
+				<![CDATA[
+					AND COUNT(SA.sug_answer_idx) = 0 
+					]]>
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	SB.user_id LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 SB.sug_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 3">
+				<![CDATA[
+					AND COUNT(SA.sug_answer_idx) > 0 
+					]]>
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	SB.user_id LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 SB.sug_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+			</choose>	
+			ORDER BY SB.sug_idx DESC LIMIT #{param1},#{param2};
+	</select>
+
+	
+ 	<select id="allCountSuggestion" resultType="int">		
+	<choose>
+		<when test='param5 == 1'>
+			SELECT CEIL(COUNT(SUG_IDX) / 10) AS pages
+				FROM SUG_BOARD WHERE sug_delete = #{param3}
+			<if test='param4 != null'>
+			 AND
+				 <if test="param4 == 2">
+				 	user_id LIKE '%${param3}%' 
+				 </if>
+				<if test="param4 == 1">
+					sug_title LIKE '%${param3}%' 	
+				</if> 
+			</if>	
+		</when>
+		
+		<when test='param5 == 2'>
+			SELECT  CEIL(COUNT(SB.SUG_IDX)/10) AS pages
+				FROM SUG_BOARD SB
+				LEFT JOIN SUG_ANSWER SA ON SB.SUG_IDX = SA.SUG_IDX
+				WHERE SA.SUG_IDX IS NULL
+			<if test='param4 != null'>
+			 AND
+				 <if test="param4 == 2">
+				 	SB.user_id LIKE '%${param3}%' 
+				 </if>
+				<if test="param4 == 1">
+					 SB.sug_title LIKE '%${param3}%' 	
+				</if> 
+			</if>
+		</when>
+		<when test='param5 == 3'>
+			SELECT CEIL(count(DISTINCT SA.SUG_IDX)/10) As pages 
+			FROM SUG_ANSWER SA
+			LEFT JOIN SUG_BOARD SB ON SB.SUG_IDX = SA.SUG_IDX
+				<if test='param4 != null'>
+					WHERE
+					 <if test="param4 == 2">
+					 	SB.user_id LIKE '%${param3}%' 
+					 </if>
+					<if test="param4 == 1">
+						 SB.sug_title LIKE '%${param3}%' 	
+					</if> 
+				</if>
+		</when>
+	</choose>
+	</select>  
 </mapper>

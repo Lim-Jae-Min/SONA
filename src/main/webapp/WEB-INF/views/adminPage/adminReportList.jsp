@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
@@ -70,6 +69,25 @@
 	#adminside{
 	height : 800px;
 	}
+	
+	#searchType {
+	    width: 300px;
+	    height: 35px;
+	    margin-left: 70px;
+	}
+	
+	#searchText {
+	    width: 700px;
+	    height: 35px;
+	    margin-left: 70px;
+	}
+	
+	#search{
+		height:29px;
+		width: 100px;
+		margin-left : 20px;
+	}
+	
 </style>
 </head>
 <body>
@@ -94,20 +112,20 @@
             <div id="adminside">
                 <h3>신고 관리</h3>
                 <hr/>
-                <a href="/adminMain.go">관리자 페이지</a>
-                <a href="#">회원 관리</a>
+                <a href="adminMain.go">관리자 페이지</a>
+                <a href="adminUserList.go">회원 관리</a>
                 <a href="#">강의 관리</a>
-                <a href="/noticeManagement.go">공지사항 관리</a>
+                <a href="noticeManagement.go">공지사항 관리</a>
                 <a href="faqManagement.go">faq 관리</a>
                 <a href="adminSuggestionsLIst.go">건의사항 관리</a>
-                <a href="#">리뷰 관리</a>
+                <a href="adminReviewList.go">리뷰 관리</a>
                 <a href="adminReportManagement.go">신고 관리</a>
                 <a href="userSuspensionHistory.go">회원 정지 이력</a>
             </div>
         </div>
         
      	<div id = "paaaa">    	  
-	     	<h3>신고 리스트 </h3> 
+		<br><br><br>
 	     	<!-- 검색기능  -->
 	     	<select id="searchType">
 			  <option value="1">신고 유형</option>
@@ -116,15 +134,16 @@
 	     	<input type="text" id ="searchText">
 	     	<button type="button" id="search">검색하기</button>
 	     	<!-- 검색기능 끝 -->
+	    	<br><br><br><br><br><br>
+	     	
 		   <table id ="showlist">
 		   	<thead>
 		      <tr class="listhead">
-		         <th class="nidx">신고번호</th>
-		         <th class="ntitle">신고 유형</th>
-		         <th class="nid">신고 대상</th>
-		         <th class="ndate">신고일자</th>
-		         <th class="nbhit">조치 진행상황</th>
-		        
+				<th class="nidx" style="text-align: center;">신고번호</th>
+				<th class="ntitle" style="text-align: center;">신고 유형</th>
+				<th class="nid" style="text-align: center;">신고 대상</th>
+				<th class="ndate" style="text-align: center;">신고일자</th>
+				<th class="nbhit" style="text-align: center;">조치 진행상황</th>	        
 		      </tr>
 		     </thead>
 		     <tbody id="list" class="listhead"></tbody>
@@ -152,7 +171,6 @@
 
 </body>
 <script>
-
 	var showPage =1;
 	var searchRemain = false;
 	
@@ -214,18 +232,16 @@
 		for(item of list){
 		    console.log(item);
 		    content += '<tr>';
-		    content += '<td class="nchb">' + item.report_idx +'</td>';
-		    content += '<td class="nidx">' + item.board_category + '</td>';
-		    content += '<td class="ntitle"><a href="reportDetailAdmin.go?report_idx=' + item.report_idx + '">' + item.report_content + '</a></td>'		    
-		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
-		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
-		    //content += '<td>' + item.reg_date + '</td>';
-		    //방법 2. Front-end : js에서 직접 변환
+		    content += '<td class="ncbb" style="text-align: center;">' + item.report_idx +'</td>';
+		    content += '<td class="nidx" style="text-align: center;">' + item.board_category + '</td>';
+		    content += '<td class="ntitle" style="text-align: center;"><a href="reportDetailAdmin.go?report_idx=' + item.report_idx + '">' + item.report_content + '</a></td>';
+
+		    // Convert the report_date to a localized date string
 		    var date = new Date(item.report_date);
-		    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
-		    content += '<td class="ndate">' + dateStr + '</td>';
-		    
-		    content += '<td class="nbhit">' + item.report_state +'</td>';
+		    var dateStr = date.toLocaleDateString("ko-KR");
+		    content += '<td class="ndate" style="text-align: center;">' + dateStr + '</td>';
+
+		    content += '<td class="nbhit" style="text-align: center;">' + item.action_result +'</td>';
 
 		    content += '</tr>';
 
@@ -274,6 +290,7 @@
 		}
 		
 	});
+
 	
 	
 	function redirectToReplyPage() {

@@ -1,5 +1,6 @@
 package com.sona.music.admin.controller;
 
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +10,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -363,6 +366,8 @@ public class AdminController {
 		
 		return map;
 	}
+	
+
 
 	
 	@RequestMapping(value = "/reportDetailAdmin.go")
@@ -390,13 +395,15 @@ public class AdminController {
 		int reportIdx = Integer.parseInt(param.get("report_idx"));
 		String admin = param.get("admin_id");
 		String content = param.get("action_content");
+		String action_result = param.get("action_result");
 		logger.info("조치내역 작성에서 받은 값 : "+reportIdx);
 		logger.info("조치내역 작성에서 받은 값 : "+admin);
 		logger.info("조치내역 작성에서 받은 값 : "+content);
+		logger.info("조치내역 작성에서 받은 값 : "+action_result);
 		
 		
 		
-		int row = adminService.adminActionWriteDo(reportIdx, admin, content);
+		int row = adminService.adminActionWriteDo(reportIdx, admin, content,action_result);
 			
 		
 		return "adminPage/adminReportList";
@@ -423,6 +430,31 @@ public class AdminController {
 		
 		return map;
 	}
+	
+	@RequestMapping(value = "/userSuspensionDetail.go")
+	public String userSuspensionDetailGo(int banned_idx, Model model) {
+		adminService.userSuspensionDetail(banned_idx,model);
+		return "adminPage/userSuspensionDetail";
+	}
+	
+    @RequestMapping(value = "/unbanned", method = RequestMethod.POST)
+    @ResponseBody
+    public String unbanUser(@RequestParam int banned_idx) {
+    	logger.info("ㅇㅇ"+banned_idx);
+        adminService.unbanUser(banned_idx);
+        
+        return "Success";
+    }
+    
+    @RequestMapping(value = "/addBan", method = RequestMethod.POST)
+    @ResponseBody
+    public String addBan(@RequestParam int banned_idx, @RequestParam String end_date) {
+        // 받은 데이터를 이용하여 DB에 업데이트
+        adminService.addBan(banned_idx, end_date);
+        return "Success";
+    }
 
+    
+    
 
 }

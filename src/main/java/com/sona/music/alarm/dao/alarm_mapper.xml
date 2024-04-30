@@ -4,4 +4,31 @@
 >
 <mapper namespace="com.sona.music.alarm.dao.AlarmDAO">
 
+
+	<select id="alarmListAllCount" resultType="Integer" parameterType="map">
+	SELECT 
+		   CEIL(COUNT(*)/#{cnt}) AS pages
+	FROM ALARM_HISTORY WHERE USER_ID = #{user_id} AND ALARM_DELETE = 0
+	ORDER BY ALARM_DATE DESC
+	</select>
+	
+	<select id="alarmList" resultType="com.sona.music.alarm.dto.AlarmDTO" parameterType="java.util.Map">
+	SELECT 
+		 ALARM_IDX
+		,ALARM_TITLE
+		,ALARM_DATE 
+		,ALARM_VIEWS
+		,ALARM_DELETE
+	FROM ALARM_HISTORY WHERE USER_ID = #{param3} AND ALARM_DELETE = 0
+	ORDER BY ALARM_DATE DESC
+	LIMIT #{param2},#{param1}
+	</select>
+	
+	
+	<update id="alarmViews">
+	UPDATE ALARM_HISTORY SET ALARM_VIEWS = ALARM_VIEWS+1 
+		WHERE alarm_idx = #{param1};
+	</update>
+	
+	
 </mapper>

@@ -24,7 +24,8 @@
     border-bottom: px solid #000;
     text-align: center;
     margin-right: 4px;
-    margin-bottom: 3px;
+    margin-bottom: 18px;
+    margin-top: 48px;
 }
 
 .join ul {
@@ -62,6 +63,7 @@
     padding: 8px; /* 입력 필드 안 여백 설정 */
     font-size: 16px; /* 폰트 크기 설정 */
     border-radius: 5px; /* 테두리 모서리 둥글게 설정 */
+    margin-top: 3px;
 }
 
 .join div ul {
@@ -100,8 +102,9 @@
     margin-bottom: 12px;
 }
 #footer{
-	position: absolute;
-    width: 100%; /* 화면 전체 너비 차지 */
+	    position: absolute;
+	    width: 100%;
+	    margin-top: 50%;
 }
 .join li select {
     margin-left: 10px; /* 드롭다운 메뉴와 텍스트 입력란 사이의 간격 조정 */
@@ -133,9 +136,6 @@
   background-color: #BEE6FF; /* 버튼 배경색 설정 */
   color: black; /* 버튼 텍스트 색상 설정 */
   border-radius: 0 10px 10px 0; /* 버튼 오른쪽 모서리 둥글게 설정 */
-}
-#boxcolor{
-
 }
 </style>
 </head>

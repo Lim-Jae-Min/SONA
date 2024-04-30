@@ -7,18 +7,19 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
+		
 		.main {
-		    font-size: 20px;
+		    font-size: 25px;
 		}
 		.profile {
-			width: 100px;
-			height: 100px;
+			width: 200px;
+			height: 200px;
 		}
 		
 		#heart{
 			margin-right: 3px;
-		 	width: 20px; 
-		 	height: 20px;
+		 	width: 25px; 
+		 	height: 25px;
 		}
 		hr {
 		width: 100%; 
@@ -26,8 +27,8 @@
 		border-bottom: 1px solid black; 
 		margin-top: 5px;
 		}
-		.profile_s{
-		width: 100px;
+		#profile_s{
+		width: 10%;
 		}	
 		button{
 		background-color:  #BEE6FF; 
@@ -35,11 +36,18 @@
 		padding: 10px 20px;
 		text-align: center;
 		display: inline-block; 
-		font-size: 16px; margin: 4px 2px; 
-		cursor: pointer; border-radius: 4px;"
+		font-size: 21px;
+		margin: 4px 2px; 
+		cursor: pointer;
+		border-radius: 4px;
 		}
-		.content{
+		#content{
 		width: 100%;
+		font-size: 14px;
+		}
+		#manner{
+		vertical-align: middle; 
+		font-size: 27px;
 		}
 </style>
 </head>
@@ -95,12 +103,13 @@
         <a href="teacherQnaList.go">강의 Q&A 관리</a>
         <a href="teacherPointList.go">포인트 내역</a>
         <a href="teacherReceivedList.go">내가 받은 리뷰</a>
-        <a href="#">내가 작성한 리뷰</a>
+        <a href="teacherWrittenList.go">내가 작성한 리뷰</a>
     </div>
             
-    <div>     
+    <div id = "content">     
         <table style="width: 100%;">
             <thead>
+            	<hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
                 <tr> 
                     <td id="profile_s">
                         <c:if test="${userInfo.profile != null}">
@@ -116,11 +125,12 @@
                     </td>
                     <td style="width: 60%; min-width: 150px; text-align: right;">
                         <img src="resources/img/heart.png"  id="heart" style="vertical-align: middle;">
-                        <span style="vertical-align: middle;">${sessionScope.manner_variance}</span>
+                        <span id="manner">${sessionScope.manner_variance}</span>
                     </td>
                 </tr>
             </thead>
             <tbody>
+            <thead>
                 <tr>
                     <td colspan="3" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                 </tr>

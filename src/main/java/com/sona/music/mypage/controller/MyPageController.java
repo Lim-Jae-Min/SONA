@@ -197,7 +197,6 @@ public class MyPageController {
 		    String page = "member/login";
 		    String loginId = (String) session.getAttribute("loginId");
 		    if(loginId != null) {
-		        // 모델에 사용자 정보 추가
 		        logger.info("강의 관리 페이지 이동 성공 !");
 		        page = "teacherMyPage/teacherLessonList";
 		    }
@@ -294,6 +293,40 @@ public class MyPageController {
 		 
 		 return map;	
 	 }
+	
+	
+	/* 강사가 작성한 리뷰 페이지 이동*/
+	@RequestMapping(value = "/teacherWrittenList.go")
+	 public String teacherWrittenList(HttpSession session, Model model) {
+		 String page = "member/login";
+		 String loginId = (String) session.getAttribute("loginId");
+		 logger.info("idx="+loginId+"포인트 이력 페이지로 이동");
+		 if (loginId != null) {
+		        logger.info("내가 작성한 리뷰!!!!!!!!!!!!!!!!!!!!!");
+		        page = "teacherMyPage/teacherWrittenList";
+		 }
+
+		 return page;
+		    
+	}
+	
+	/*강사가 작성한 리뷰 아작스 요청*/
+	@RequestMapping(value="/teacherWrittenList.ajax", method = RequestMethod.GET)
+	 @ResponseBody
+	 public Map<String , Object> teacherWrittenList(String page, int cnt, HttpSession session) {
+		 logger.info("------------------ 강사가 작성한 리뷰 리스트 요청 -------------");
+		 logger.info("페이지당 보여줄 갯수:" + cnt);
+		 logger.info("요청 페이지: " + page);
+		 String user_id = (String) session.getAttribute("loginId");
+
+		 int currPage = Integer.parseInt(page);
+		 logger.info(user_id);
+		 Map<String, Object> map = myPageService.teacherWrittenList(currPage, cnt, user_id);
+		 
+		 return map;	
+	 }
+	
+	
 	
 	
 

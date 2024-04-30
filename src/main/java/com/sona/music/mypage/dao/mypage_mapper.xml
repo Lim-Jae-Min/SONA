@@ -191,6 +191,12 @@
 			    up.point_idx desc
 	</select>	
 	
+	<select id="teacherWrittenAllCount" resultType="Integer" parameterType="map">
+	   	SELECT 
+	   	CEIL(COUNT(*)/#{cnt}) AS pages
+		FROM REVIEW WHERE RATER_ID = #{user_id}
+	</select>	
+	
 	<select id="teacherPointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 	SELECT 
 	    up.point_date,
@@ -482,6 +488,7 @@ LIMIT #{param2} OFFSET #{param3}
 		   , FORMAT(((r.score - 3) * 0.25), 2) AS manner_variance
 	  FROM REVIEW r JOIN CLASS_OPEN co ON r.class_idx = co.class_idx 
 	 	WHERE r.RATEE_ID = #{param1}
+	 	ORDER BY REVIEW_REG_DATE DESC
 	 	LIMIT #{param2} OFFSET #{param3}
 	</select>
 	    
@@ -495,6 +502,20 @@ LIMIT #{param2} OFFSET #{param3}
 		   , FORMAT(((r.score - 3) * 0.25), 2) AS manner_variance
 	  FROM REVIEW r JOIN CLASS_OPEN co ON r.class_idx = co.class_idx 
 	 	WHERE r.RATEE_ID = #{param1} and co.CLASS_NAME = #{param4}
+	 	ORDER BY REVIEW_REG_DATE DESC
 			LIMIT #{param2} OFFSET #{param3}
 	</select>
+	
+	<select id="teacherWrittenList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
+		SELECT 
+			REVIEW_IDX,
+			REVIEW_REG_DATE,
+			REVIEW_TITLE,
+			RATEE_ID,
+			SCORE
+		FROM REVIEW WHERE RATER_ID = #{param1}
+		ORDER BY REVIEW_REG_DATE DESC
+			LIMIT #{param2} OFFSET #{param3}
+	</select>
+	
 </mapper>

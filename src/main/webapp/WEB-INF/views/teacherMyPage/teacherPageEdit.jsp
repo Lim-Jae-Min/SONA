@@ -215,16 +215,16 @@
     </header>
     <div id="wrapper">
             <div id="sidemenu">
-                <h3>마이페이지</h3>
+                <h3>개인 정보 수정</h3>
                 <hr/>
                 <a href="teacherPage.go">마이페이지</a>
                 <a href="teacherPageEdit.go">개인 정보 수정</a>
                 <a href="teacherLessonList.go">강의 관리</a>
-                <a href="#">수강생 관리</a>
-                <a href="#">강의 Q&A 관리</a>
-                <a href="#">포인트 내역</a>
-                <a href="#">내가 받은 리뷰</a>
-                <a href="#">내가 작성한 리뷰</a>
+                <a href="teacherStudentList.go">수강생 관리</a>
+                <a href="teacherQnaList.go">강의 Q&A 관리</a>
+                <a href="teacherPointList.go">포인트 내역</a>
+                <a href="teacherReceivedList.go">내가 받은 리뷰</a>
+                <a href="teacherWrittenList.go">내가 작성한 리뷰</a>
             </div>
  		<!-- HTML 코드 -->
 <div id="content">

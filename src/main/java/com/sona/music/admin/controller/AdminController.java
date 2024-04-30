@@ -105,6 +105,34 @@ public class AdminController {
     	return page;
 	}
 	
+	@RequestMapping(value="/adminLessonList.go")
+	public String adminLessonListGo(HttpSession session) {
+//		String page = "main/main";
+		String page = "adminPage/adminLessonList";
+		
+		String user_type = (String) session.getAttribute("user_type");
+		
+		
+//		if (user_type.equals("관리자")) {
+//			page = "adminPage/adminUserList";
+//		}
+		
+    	return page;
+		
+	}
+	
+	@RequestMapping(value="/adminLessonList.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> adminLessonListCall(String page, String condition, String searchContent) {
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = 10;
+		
+		Map<String, Object> map = adminService.adminLessonListCall(currPage, pagePerCnt, condition, searchContent);
+		
+		return map;
+	}
+	
 	@RequestMapping(value="adminLogout.do")
 	public String adminLogout(HttpSession session) {
 		

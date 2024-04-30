@@ -26,7 +26,7 @@
 	border-bottom: solid 1px lightgray;
 }
 .second-col {
-	width: 200px;
+	width: 300px;
 	border-top: solid 1px lightgray;
 	border-bottom: solid 1px lightgray;
 }
@@ -36,11 +36,6 @@
 	border-bottom: solid 1px lightgray;
 }
 .fourth-col {
-	width: 200px;
-	border-top: solid 1px lightgray;
-	border-bottom: solid 1px lightgray;
-}
-.fifth-col {
 	width: 200px;
 	border-top: solid 1px lightgray;
 	border-bottom: solid 1px lightgray;
@@ -83,9 +78,8 @@
             <div id="content">
             	<br/><br/><br/><br/>
                 <select id="condition">
-                	<option value="name">이름</option>
-                	<option value="id">아이디</option>
-                	<option value="type">회원유형</option>
+                	<option value="class_name">강의명</option>
+                	<option value="user_name">강사명</option>
                 </select>
                 <input type="text" id="searchContent">
                 <input type="button" id="search" value="검색">
@@ -94,15 +88,14 @@
                 	<thead>
                 		<tr>
                 			<th class="first-col thead">No</th>
-                			<th class="second-col thead">아이디</th>
-                			<th class="third-col thead">이름</th>
-                			<th class="fourth-col thead">회원유형</th>
-                			<th class="fifth-col thead">가입일자</th>
+                			<th class="second-col thead">강의명</th>
+                			<th class="third-col thead">강사명</th>
+                			<th class="fourth-col thead">개설일자</th>
                 		</tr>
                 	</thead>
                 	<tbody id="listContent"></tbody>
                 	<tr>
-		      			<td colspan="5"><br/><br/>
+		      			<td colspan="4"><br/><br/>
 		      				<div class="container">                           
 		            			<nav aria-label="Page navigation" style="text-align:center">
 		                			<ul class="pagination" id="pagination"></ul>
@@ -141,7 +134,7 @@ $('#search').click(function (){
 function listCall(page){
     $.ajax({
        type:'post',
-       url:'./adminUserList.ajax',
+       url:'./adminLessonList.ajax',
        data:{
     	   'page':page
     	   ,'condition':$('#condition').val()
@@ -150,7 +143,7 @@ function listCall(page){
        dataType:'json',
        success:function(data){
     	  console.log('시작');
-          drawList(data.list, showPage, data.userCount);
+          drawList(data.list);
           console.log(data);          
           // 플러그인 추가
           
@@ -175,28 +168,19 @@ function listCall(page){
        }
 	});
 }
-function drawList(list, showPage, userCount){
-	showPage--;
-	
-	
-	showPage = parseInt(showPage);
-	userCount = parseInt(userCount);
-	
-	console.log(showPage + '/' + userCount);
-	
+function drawList(list){
 	var content = '';
 	
-	for (var i = 0; i < list.length; i++) {
+	for (var data of list) {
 		content += '<tr>';
-		content += '<th class="first-col">' + (userCount - i - (showPage * 10)) + '</th>';
-		content += '<th class="second-col"><a href="adminUserDetail.go?user_id=' + list[i].user_id + '">' + list[i].user_id + '</a></th>';
-		content += '<th class="second-col"><a href="adminUserDetail.go?user_id=' + list[i].user_id + '">' + list[i].user_name + '</a></th>';
-		content += '<th class="fourth-col">' + list[i].user_type + '</th>';
+		content += '<th class="first-col">' + data.class_idx + '</th>';
+		content += '<th class="second-col"><a href="lessonDetail.go?class_idx=' + data.class_idx + '">' + data.class_name + '</a></th>';
+		content += '<th class="second-col"><a href="adminUserDetail.go?user_id=' + data.user_id + '">' + data.user_name + '</a></th>';
 		
-		var date = new Date(list[i].user_reg_date);
+		var date = new Date(data.class_reg_date);
 		var dateStr = date.toLocaleDateString("ko-KR");//en-US		
 		
-		content += '<th class="fifth-col">' + dateStr + '</th>';
+		content += '<th class="fourth-col">' + dateStr + '</th>';
 		content += '</tr>'
 	}
 	

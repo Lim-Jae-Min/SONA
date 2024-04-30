@@ -32,6 +32,10 @@ public class AdminDTO {
 	private Date banned_start_date;
 	private Date banned_end_date;
 	private String new_filename;
+	private String action_result;
+	
+	// 강의 관리 dto
+	private Date class_reg_date;
 	
 	//공지사항 dto
 	private int notice_idx;
@@ -470,6 +474,18 @@ public class AdminDTO {
 	}
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
+	}
+	public String getAction_result() {
+		return action_result;
+	}
+	public void setAction_result(String action_result) {
+		this.action_result = action_result;
+	}
+	public Date getClass_reg_date() {
+		return class_reg_date;
+	}
+	public void setClass_reg_date(Date class_reg_date) {
+		this.class_reg_date = class_reg_date;
 	}
 	
 }

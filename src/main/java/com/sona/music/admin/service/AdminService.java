@@ -334,6 +334,9 @@ public class AdminService {
 		AdminDTO dto = adminDAO.adminUserDetail(user_id);
 		model.addAttribute("dto", dto);
 		
+		List<AdminDTO> list = adminDAO.adminUserDetailActionList(user_id);
+		model.addAttribute("list", list);
+		
 	}
 
 	
@@ -379,7 +382,24 @@ public class AdminService {
 		logger.info("정지 이력 에서 받아온 allCount"+adminDAO.suspensionAllCount(pagePerCnt,serachText,searchType));
 		return result;
 	}
-	
+
+	public Map<String, Object> adminLessonListCall(int currPage, int pagePerCnt, String condition,
+			String searchContent) {
+		int start = (currPage-1) * pagePerCnt;
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> list = adminDAO.adminLessonListCall(pagePerCnt, start, condition, searchContent);
+		logger.info("list : {}", list);
+		logger.info("list size : "+list.size());
+		logger.info("condition = " + condition);
+		logger.info("content = " + searchContent);
+		result.put("list", list);		
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.adminLessonListCount(pagePerCnt, condition, searchContent));
+		
+		return result;
 	}
+	
+}
 
 

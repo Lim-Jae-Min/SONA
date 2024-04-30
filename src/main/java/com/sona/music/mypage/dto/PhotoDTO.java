@@ -7,6 +7,8 @@ public class PhotoDTO {
 	private String new_filename;
 	private int post_idx;
 	private String photo_category;
+	private String profile;
+	
 	public int getPhoto_idx() {
 		return photo_idx;
 	}
@@ -42,6 +44,12 @@ public class PhotoDTO {
 	}
 	public void setPhoto_category(String photo_category) {
 		this.photo_category = photo_category;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 	
 	

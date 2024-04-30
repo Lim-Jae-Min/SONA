@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
@@ -36,21 +37,6 @@
 		left: -400px;
 		width: 100%;
 	}
-	.aaa{
-	text-align:center;
-	}
-	.bbb{
-	text-align:center;
-	}
-	.ccc{
-	text-align:center;
-	}
-	.ddd{
-	text-align:center;
-	}
-	.eee{
-	text-align:center;
-	}
 	.nidx{
 		width: 8%;
 	}
@@ -66,15 +52,12 @@
 	.ntitle{
 		width: 20%;	
 	}
-	
 	.nchb{
 		width: 10%;
 	}
-	
 	#container{
 		max-width: 600px;
 	}
-	
 	#paaaa{
 		position: relative;
 		width: 80%;
@@ -83,36 +66,16 @@
 	
 	#wrapper1 {
     display: flex;
-    text-align:center;
 	}
-	
-	#adminside{
-	height : 800px;
+	#faqWriteButton{
+		position: relative;
+		left: 880px;
 	}
-	
-	#searchType {
-	    width: 300px;
-	    height: 35px;
-	    margin-left: 70px;
-	}
-	
-	#searchText {
-	    width: 700px;
-	    height: 35px;
-	    margin-left: 70px;
-	}
-	
-	#search{
-		height:29px;
-		width: 100px;
-		margin-left : 20px;
-	}
-	
-	
 </style>
 </head>
 <body>
-<header id="adminmain">
+<!-- 헤더 -->
+	<header id="adminmain">
         <table id="mainmenu">
             <tr>
                 <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
@@ -127,43 +90,45 @@
            </tr>
         </table>
     </header>
-    
+ <!-- 헤더 -->   
     <div id = "divvv">
     <div id="wrapper1">
             <div id="adminside">
-                <h3>회원 정지 이력</h3>
+                <h3>FAQ</h3>
                 <hr/>
-                <a href="adminMain.go">관리자 페이지</a>
-                <a href="adminUserList.go">회원 관리</a>
-                <a href="#">강의 관리</a>
-                <a href="noticeManagement.go">공지사항 관리</a>
-                <a href="faqManagement.go">faq 관리</a>
-                <a href="adminSuggestionsLIst.go">건의사항 관리</a>
-                <a href="adminReviewList.go">리뷰 관리</a>
-                <a href="adminReportManagement.go">신고 관리</a>
-                <a href="userSuspensionHistory.go">회원 정지 이력</a>
+                <a href="#">공지사항</a>
+                <a href="faqList.go">FAQ</a>
+                <a href="#">건의사항</a>
             </div>
         </div>
         
      	<div id = "paaaa">    	  
-		<br><br><br>	
-		    <!-- 검색기능  -->
-	     	<select id="searchType">
-			  <option value="1">조치 유형</option>
-			  <option value="2">정지 대상자</option>
+	     	<h3>FAQ 리스트 </h3> 
+	     	<!-- 구분기능  -->
+			<div>
+				<button value="1" onclick="setCategory(1)">전체</button> 
+				<button value="2" onclick="setCategory(2)">수강생</button>
+				<button value="3" onclick="setCategory(3)">강사</button>
+				<button value="4" onclick="setCategory(4)">서비스</button>
+				<button id="faqWriteButton" onclick="faqWriteGo()">글쓰기</button>
+			</div>
+			<select id="searchType">
+			  <option value="1">제목</option>
+			  <option value="2">내용</option>
 			</select>
 	     	<input type="text" id ="searchText">
 	     	<button type="button" id="search">검색하기</button>
-	    	<br><br><br><br><br><br>
 	     	<!-- 검색기능 끝 -->
 		   <table id ="showlist">
 		   	<thead>
 		      <tr class="listhead">
-				<th class="aaa" style="text-align: center;">정지회원 번호</th>
-				<th class="bbb" style="text-align: center;">조치 유형</th>
-				<th class="ccc" style="text-align: center;">정지 대상자</th>
-				<th class="ddd" style="text-align: center;">정지 시작일</th>
-				<th class="eee" style="text-align: center;">정지 종료일</th>
+		         <th class="nchb"><input type="checkbox" id="all"/></th>
+		         <th class="nidx">글번호</th>
+		         <th class="ntitle">제목</th>
+		         <th class="nid">작성자</th>
+		          <th class="nid">대상</th>
+		         <th class="ndate">날짜</th>
+		         <th class="nbhit">조회수</th>
 		        
 		      </tr>
 		     </thead>
@@ -192,7 +157,7 @@
 
 </body>
 <script>
-
+	var category = 1;
 	var showPage =1;
 	var searchRemain = false;
 	
@@ -202,10 +167,17 @@
 
 	$('#search').click(function (){
 		$('#pagination').twbsPagination('destroy');
+		showPage =1;
 		listCall(showPage);
 	});
 
-	
+	function setCategory(num){
+		console.log(num);
+		category = num;
+		$('#pagination').twbsPagination('destroy');
+		showPage =1;
+		listCall(showPage);
+	}
 	
 	
 	
@@ -216,11 +188,12 @@
 			console.log(serachText);
 	    $.ajax({
 	       type:'get',
-	       url:'suspensionlist.ajax',
+	       url:'faqManagementlist.ajax',
 	       data:{
 	    	    'page':page,
 	    		'searchType':searchType,
-	    		'serachText':serachText
+	    		'serachText':serachText,
+	    		'categoryNum' : category
 	       },
 	       dataType:'json',
 	       success:function(data){
@@ -254,16 +227,22 @@
 		for(item of list){
 		    console.log(item);
 		    content += '<tr>';
-		    content += '<td class="aaa" style="text-align: center;">' + item.banned_idx + '</td>';
-		    content += '<td class="bbb" style="text-align: center;">' + item.action_category + '</td>';
-		    content += '<td class="ccc" style="text-align: center;"><a href="userSuspensionDetail.go?banned_idx=' + item.banned_idx + '">' + item.user_name + '</a></td>';
+		    content += '<td class="nchb"><input type="checkbox" name="del" value="' + item.faq_idx +'"/></td>';
+		    content += '<td class="nidx">' + item.faq_idx + '</td>';
+		    content += '<td class="ntitle"><a href="faqDetailAdmin.go?idx=' + item.faq_idx + '">' + item.faq_title + '</a></td>'
+		    content += '<td class="nid">' + item.admin_id + '</td>';
+		    content += '<td class="nid">' + item.faq_target + '</td>';
+		    
+		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
+		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
+		    //content += '<td>' + item.reg_date + '</td>';
+		    //방법 2. Front-end : js에서 직접 변환
+		    var date = new Date(item.notice_reg_date);
+		    var dateStr = date.toLocaleDateString("ko-KR"); //en-US
+		    content += '<td class="ndate">' + dateStr + '</td>';
+		    
+		    content += '<td class="nbhit">' + item.faq_views +'</td>';
 
-		    var stdate = new Date(item.start_date);
-		    var enddate = new Date(item.end_date);
-		    var dateStr = stdate.toLocaleDateString("ko-KR"); //en-US
-		    var dateStr1 = enddate.toLocaleDateString("ko-KR"); //en-US
-		    content += '<td class="ddd" style="text-align: center;">' + dateStr + '</td>';
-		    content += '<td class="eee" style="text-align: center;">' + dateStr1 + '</td>';
 		    content += '</tr>';
 
 	 	}
@@ -334,5 +313,10 @@
 	$('.alarm').click(function alarmList() {
 		location.href = 'alarmList.go';
 	});
+	
+	function faqWriteGo(){
+		location.href = "adminFaqWrite.go";
+		
+	}
 </script>
 </html>

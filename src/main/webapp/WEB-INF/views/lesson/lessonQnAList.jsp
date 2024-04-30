@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/common.css?after"
 	type="text/css">
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -147,7 +144,7 @@
 
 	<div style="text-align: center;">
 		<div
-			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
+			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px; width: 1500px;">
 			<div style="float: left;">
 				<img src="resources/img/QnA.png" id="qna"
 					style="margin-right: 10px;"> <span

@@ -5,9 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -15,6 +12,13 @@
 	type="text/css">
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+.des{
+	position: relative;
+ 	margin-left: 110px;
+ 	top: 60px;
+  	color:#999;
+ 	font-size: 14px;
+}
 .container {
 	display: flex;
 	justify-content: center; /* 가로 방향 중앙 정렬 */
@@ -48,7 +52,7 @@
 }
 
 .video-container {
-	width: 350px;
+	width: 300px;
 	height: 300px;
 	background-color: #BEE6FF;
 	/* 오른쪽 상단 모서리의 테두리 */
@@ -136,6 +140,7 @@
 		</table>
 	</header>
 	
+	<p class="des">하늘색 박스를 클릭하면 크게 볼 수 있습니다.</p>
 
 	<br/><br/>
 	<table>

@@ -351,4 +351,46 @@
 		WHERE u.user_id = #{param1}
 	</select>
 	
+	<select id="adminUserDetailActionList" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT 
+			rb.board_category 
+			, ah.action_date 
+			, ah.action_result
+		FROM REPORT_BOARD rb JOIN ACTION_HISTORY ah ON rb.report_idx = ah.report_idx
+		WHERE ah.action_result = '완료' AND rb.reportee_id = #{param1}
+	</select>
+	
+	<select id="adminLessonListCall" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT 
+			co.class_idx
+			, co.class_name
+			, co.user_id
+			, u.user_name
+			, co.class_reg_date
+		FROM CLASS_OPEN co JOIN USERS u ON co.user_id = u.user_id
+		<if test="param4 != ''">
+			WHERE
+			<if test="param3 == 'class_name'">
+				co.class_name LIKE CONCAT('%', #{param4}, '%')
+			</if>
+			<if test="param3 == 'user_name'">
+				u.user_name LIKE CONCAT('%', #{param4}, '%')
+			</if>
+		</if>
+		ORDER BY co.class_idx DESC LIMIT #{param1} OFFSET #{param2}
+	</select>
+	
+	<select id="adminLessonListCount" resultType="Integer">
+		SELECT CEIL(COUNT(co.class_idx)/#{param1}) FROM CLASS_OPEN co JOIN USERS u ON co.user_id = u.user_id
+		<if test="param3 != ''">
+			WHERE
+			<if test="param2 == 'class_name'">
+				co.class_name LIKE CONCAT('%', #{param3}, '%')
+			</if>
+			<if test="param2 == 'user_name'">
+				u.user_name LIKE CONCAT('%', #{param3}, '%')
+			</if>
+		</if>
+	</select>
+	
 </mapper>

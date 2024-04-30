@@ -65,5 +65,11 @@ public interface AdminDAO {
 
 	AdminDTO adminUserDetail(String user_id);
 
+	List<AdminDTO> adminUserDetailActionList(String user_id);
+
+	List<AdminDTO> adminLessonListCall(int pagePerCnt, int start, String condition, String searchContent);
+
+	int adminLessonListCount(int pagePerCnt, String condition, String searchContent);
+
 
 }

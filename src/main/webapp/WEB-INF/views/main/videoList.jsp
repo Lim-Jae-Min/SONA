@@ -10,23 +10,36 @@
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after"
 	type="text/css">
-<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<script src="resources/js/jquery.twbsPagination.js"
+	type="text/javascript"></script>
 <style>
-.des1{
+.inst {
+	font-size: 36px;
+	color: #6FA4FF;
+	font-weight: bold;
+	margin-left: 90px;
+	margin-top: 20px;
+	margin-bottom: -40px;
 	position: relative;
- 	margin-left: 110px;
- 	top: 60px;
-  	color:black;
- 	font-size: 20px;
- 	font-weight: bold;
 }
-.des{
+
+.des1 {
 	position: relative;
- 	margin-left: 110px;
- 	top: 60px;
-  	color:#999;
- 	font-size: 14px;
+	margin-left: 110px;
+	top: 69px;
+	color: black;
+	font-size: 20px;
+	font-weight: bold;
 }
+
+.des {
+	position: relative;
+	margin-left: 110px;
+	top: 60px;
+	color: #999;
+	font-size: 14px;
+}
+
 .container {
 	display: flex;
 	justify-content: center; /* 가로 방향 중앙 정렬 */
@@ -34,10 +47,12 @@
 	text-align: center;
 	margin-top: 20px;
 }
+
 .heart {
 	color: red; /* 원하는 색상 코드로 변경하세요 */
 	font-weight: bold;
 }
+
 .button-container.videoList1 button {
 	background-color: #6FA4FF;
 	color: white;
@@ -48,6 +63,7 @@
 	cursor: pointer;
 	transition: background-color 0.3s ease;
 }
+
 .video-wrapper {
 	display: inline-block;
 	position: relative;
@@ -147,41 +163,42 @@
 			</c:if>
 		</table>
 	</header>
-	
-	<p class="des1"> ${sessionScope.user_name} 님을 위한 추천 영상입니다.</p>
+	<p class="inst">누구나 배울 수 있는 악기!</p>
+	<p class="des1">${sessionScope.user_name} 님을 위한 추천 영상입니다.</p>
 	<p class="des">하늘색 박스를 클릭하면 크게 볼 수 있습니다.</p>
 
-	<br/><br/>
+	<br />
+	<br />
 	<table>
-	<thead></thead>
-	<tbody id="list"></tbody>
-				<tr>
-					<td colspan="7" id="paging">
-						<div class="container">
-							<nav aria-label="Page navigation" style="text-align: center">
-								<ul class="pagination" id="pagination"></ul>
-							</nav>
-						</div>
-					</td>
-				</tr>
-			</table>
+		<thead></thead>
+		<tbody id="list"></tbody>
+		<tr>
+			<td colspan="7" id="paging">
+				<div class="container">
+					<nav aria-label="Page navigation" style="text-align: center">
+						<ul class="pagination" id="pagination"></ul>
+					</nav>
+				</div>
+			</td>
+		</tr>
+	</table>
 
-<div id="modal" class="modal">
+	<div id="modal" class="modal">
 		<div class="modal-content">
 			<span class="close">&times;</span>
 			<iframe id="videoFrame" width="560" height="315" frameborder="0"
 				allowfullscreen></iframe>
-			<br />
-			<br />
+			<br /> <br />
 			<div class="button-container videoList1">
 				<button id="viewLectureBtn">해당 영상 강의보기</button>
 			</div>
 		</div>
 	</div>
-	
 
 
-	<br/><br/>
+
+	<br />
+	<br />
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>
@@ -215,9 +232,7 @@
 		<div>
 			<a href="studentPage.do">마이페이지</a>
 		</div>
-		<br />
-		<br />
-		<br />
+		<br /> <br /> <br />
 		<div>
 			<a href="logout.do">로그아웃</a>
 		</div>

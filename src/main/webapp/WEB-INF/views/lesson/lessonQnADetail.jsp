@@ -414,11 +414,11 @@ function confirmDelete(questionIdx) {
         $.ajax({
             type: "POST",
             url: "./deleteQuestion.ajax",
-            data: { questionIdx: questionIdx },
+            data: { questionIdx: ${question.question_idx} },
             success: function(response) {
             	alert("질문이 삭제되었습니다.");
             	console.log(classIdx);
-            	location.href = './lessonQnAList.go?class_idx=' + classIdx;
+            	location.href = './lessonQnAList.go?class_idx=' + ${question.class_idx};
             },
             error: function(error) {
                 console.log(error);
@@ -432,11 +432,11 @@ function confirmAllDelete(questionIdx) {
         $.ajax({
             type: "POST",
             url: "./deleteAllQnA.ajax",
-            data: { questionIdx: questionIdx },
+            data: { questionIdx: ${question.question_idx} },
             success: function(response) {
             	alert("모두 삭제되었습니다.");
             	console.log(classIdx);
-            	location.href = './lessonQnAList.go?class_idx=' + classIdx;
+            	location.href = './lessonQnAList.go?class_idx=' + ${question.class_idx};
             },
             error: function(error) {
                 console.log(error);
@@ -454,7 +454,7 @@ function answerDelete(questionIdx) {
             success: function(response) {
             	alert("답변이 삭제되었습니다.");
             	console.log(classIdx);
-            	location.href = './lessonQnAList.go?class_idx=' + classIdx;
+            	location.href = './lessonQnAList.go?class_idx=' + ${question.class_idx};
             },
             error: function(error) {
                 console.log(error);

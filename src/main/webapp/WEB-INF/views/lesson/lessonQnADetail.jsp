@@ -317,7 +317,7 @@ body {
 			</div>
 			<div class="author-info">작성자: ${question.user_id} 작성일:
 				${question.q_reg_date} 조회수: ${question.q_hit}</div>
-			<div class="content">${question.q_content}</div>
+			<div class="content"><pre>${question.q_content}</pre></div>
 			<c:if test="${not empty answer}">
 				<div style="text-align: right;">
 					<button class="button delete"

@@ -69,7 +69,7 @@
     position: relative; /* 부모 요소(container)를 상대 위치로 설정 */
     top: 50%; /* 화면 상단에서 수직으로 중앙에 위치하도록 설정 */
     transform: translateY(-50%);
-    margin-top: 0px;
+    margin-bottom: 30px;
 }
 
 .row {

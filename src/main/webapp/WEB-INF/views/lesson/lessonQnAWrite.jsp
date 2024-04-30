@@ -238,7 +238,7 @@
 					</tr>
 					<tr>
 						<th>Q&A 내용</th>
-						<td colspan="4"><textarea name="q_content"
+						<td colspan="4"><textarea name="q_content"  cols="100" wrap="hard"
 								style="width: 882px; height: 311px; resize: none;"></textarea></td>
 					</tr>
 					<tr>

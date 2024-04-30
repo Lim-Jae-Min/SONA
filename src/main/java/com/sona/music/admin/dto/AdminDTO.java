@@ -77,6 +77,7 @@ public class AdminDTO {
 	private int action_idx;
 	private String action_content;
 	private Date action_date;
+	private String action_result;
 	
 	// Suspension DTO
 	private int banned_idx;
@@ -470,6 +471,12 @@ public class AdminDTO {
 	}
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
+	}
+	public String getAction_result() {
+		return action_result;
+	}
+	public void setAction_result(String action_result) {
+		this.action_result = action_result;
 	}
 	
 }

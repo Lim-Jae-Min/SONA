@@ -18,8 +18,8 @@
 	        af.applyform_days,
 	        af.applyform_style,
 	        af.have_inst,
-	        (SELECT pb.NEW_FILENAME FROM PHOTO_BOARD pb WHERE u.USER_ID = pb.USER_ID
-	        		 AND pb.PHOTO_CATEGORY='Profile' and pb.USER_ID=#{loginId}) as profile
+			(SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = u.user_id AND pb.photo_category = 'Profile'
+				ORDER BY pb.photo_idx DESC LIMIT 1) AS new_filename
 	    FROM USERS u
 	    LEFT JOIN APPLICATION_FORM af ON u.user_id = af.user_id AND af.user_id = #{loginId}
 	    WHERE u.user_id = #{loginId}

@@ -1,5 +1,7 @@
 package com.sona.music.admin.dao;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.sona.music.admin.dto.AdminDTO;
@@ -38,7 +40,7 @@ public interface AdminDAO {
 
 	int allCountReview(int pagePerCnt, int deleteStatus, String serachText, int searchType, int categoryNum);
 
-	List<AdminDTO> showReportSearch(int start, int pagePerCnt,String serachText, int searchType);
+	List<AdminDTO> showReportSearch(int start, int pagePerCnt, String serachText, int searchType);
 
 	Object reportAllCount(int pagePerCnt, String serachText, int searchType);
 
@@ -46,7 +48,7 @@ public interface AdminDAO {
 
 	void updateReportState(int report_idx, String new_state);
 
-	int adminActionWriteDo(int reportIdx, String admin, String content);
+	int adminActionWriteDo(int reportIdx, String admin, String content, String action_result);
 
 	List<AdminDTO> showSuspensionSearch(int start, int pagePerCnt, String serachText, int searchType);
 
@@ -64,6 +66,15 @@ public interface AdminDAO {
 	int userCount(String condition, String searchContent);
 
 	AdminDTO adminUserDetail(String user_id);
+
+	int reportDel(int reportIdx);
+
+
+	AdminDTO userSuspensionDetail(int banned_idx);
+
+	void updateEndDate(int banned_idx);
+
+	void addBan(int banned_idx, String end_date);
 
 
 }

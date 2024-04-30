@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -189,7 +190,7 @@ public class AdminService {
 
 	
 
-		public Map<String, Object> showListSearchReview(int currPage, int searchType, String serachText, int categoryNum) {
+	public Map<String, Object> showListSearchReview(int currPage, int searchType, String serachText, int categoryNum) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
 		int deleteStatus = 0;
@@ -217,9 +218,9 @@ public class AdminService {
 	public Map<String, Object> showReportSearch(int currPage, int searchType, String serachText) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
-		int deleteStatus = 0;
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<AdminDTO> resultList = null;	
+		List<AdminDTO> resultList = null;
+		
 		resultList = adminDAO.showReportSearch(start,pagePerCnt,serachText,searchType);
 		logger.info(serachText);
 		
@@ -324,8 +325,8 @@ public class AdminService {
 
 
 
-	public int adminActionWriteDo(int reportIdx, String admin, String content) {
-		return adminDAO.adminActionWriteDo(reportIdx,admin,content);
+	public int adminActionWriteDo(int reportIdx, String admin, String content, String action_result) {
+		return adminDAO.adminActionWriteDo(reportIdx,admin,content,action_result);
 	}
 
 	public Map<String, Object> showSuspensionSearch(int currPage, int searchType, String serachText) {
@@ -346,6 +347,30 @@ public class AdminService {
 		logger.info("정지 이력 에서 받아온 allCount"+adminDAO.suspensionAllCount(pagePerCnt,serachText,searchType));
 		return result;
 	}
+
+	public int reportDel(int reportIdx) {
+		int row = adminDAO.reportDel(reportIdx);
+		logger.info("공지사항 삭제에 대한 값 : 1이면 삭제 완료" + row);
+		return row;
+	}
+
+	public void unbanUser(int banned_idx) {
+        // 해당 사용자의 end_date를 오늘 날짜로 업데이트합니다.
+	    adminDAO.updateEndDate(banned_idx); // LocalDate를 java.sql.Date로 변환하여 DAO에 전달합니다.
+    }
+
+	public void userSuspensionDetail(int banned_idx, Model model) {
+		AdminDTO dto = adminDAO.userSuspensionDetail(banned_idx);
+
+		String title = dto.getAction_category();
+		logger.info("정지이력에서 들어간 신고사항 상세보기 : " + title);		
+		model.addAttribute("suspension", dto);
+		
+	}
+
+    public void addBan(int banned_idx, String end_date) {
+        adminDAO.addBan(banned_idx, end_date);
+    }
 	
 	}
 

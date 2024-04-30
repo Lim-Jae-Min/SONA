@@ -431,6 +431,21 @@ public class MyPageService {
 		return result;
 	}
 
+	public Map<String, Object> teacherWrittenList(int currPage, int cnt, String user_id) {
+		int start = (currPage-1)*cnt;
+		logger.info("(서비스)받아온 user_id: " + user_id);
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		List<MyPageDTO> list = myPageDAO.teacherWrittenList(user_id,cnt,start);
+		logger.info("list size: "+list.size());
+		
+		result.put("list", list);
+		result.put("currPage",currPage);
+		result.put("totalPages", myPageDAO.teacherWrittenAllCount(cnt, user_id));	
+		
+		return result;
+	}
+
 
 
 	

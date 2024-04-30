@@ -6,7 +6,6 @@
 <title>포인트 내역</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
@@ -91,6 +90,11 @@
 		    font-size: 28px;
 		    line-height: 100px;
 		}
+		
+		#nav__bar{
+		 text-align:center;
+		 margin-left:200px;
+		}
 </style>
 </head>
 <body>
@@ -136,7 +140,7 @@
     </header>
     <div id="wrapper">
             <div id="sidemenu">
-                <h3>마이페이지</h3>
+                <h3>포인트 내역</h3>
                 <hr/>
                 <a href="teacherPage.go">마이페이지</a>
                 <a href="teacherPageEdit.go">개인 정보 수정</a>
@@ -145,7 +149,7 @@
                 <a href="teacherQnaList.go">강의 Q&A 관리</a>
                 <a href="teacherPointList.go">포인트 내역</a>
                 <a href="teacherReceivedList.go">내가 받은 리뷰</a>
-                <a href="#">내가 작성한 리뷰</a>
+                <a href="teacherWrittenList.go">내가 작성한 리뷰</a>
             </div>
  		<!-- HTML 코드 -->
  		
@@ -174,7 +178,7 @@
 	            <tr>
 	                <td colspan="6">
 	                    <div class="container">                           
-	                        <nav aria-label="Page navigation" style="text-align:center">
+	                        <nav aria-label="Page navigation"  id = "nav__bar">
 	                            <ul class="pagination" id="pagination"></ul>
 	                        </nav>               
 	                    </div>

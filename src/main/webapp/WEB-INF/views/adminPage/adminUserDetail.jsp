@@ -32,6 +32,10 @@
 .actionLog {
 	border: solid 1px gray;
 	border-radius: 5px;
+	padding-left: 10px;
+}
+#banned {
+	margin-left: 50px;
 }
 </style>
 </head>
@@ -57,7 +61,7 @@
                 <hr/>
                 <a href="adminMain.go">관리자 페이지</a>
                 <a href="adminUserList.go">회원 관리</a>
-                <a href="#">강의 관리</a>
+                <a href="adminLessonList.go">강의 관리</a>
                 <a href="#">공지사항 관리</a>
                 <a href="#">FAQ 관리</a>
                 <a href="#">건의사항 관리</a>
@@ -114,13 +118,20 @@
                 		<th class="first-col">신고 조치내역</th>
                 		<td class="second-col">
                 			<div class="actionLog">
-                				
+                				<c:forEach items="${list}" var="action">
+                					<span>
+                						부적절한 ${action.board_category}로 인한 블라인드 조치 ${action.action_result}&nbsp;&nbsp;${action.action_date}
+                					</span>
+                					<br/>
+                				</c:forEach>
                 			</div>
                 		</td>
                 		<th class="third-col"></th>
                 	</tr>
                 	<tr>
-                		<td colspan="3"></td>
+                		<td colspan="3">
+                			<span class="redFont" id="banned"></span>
+                		</td>
                 	</tr>
                 </table>
             </div>
@@ -138,5 +149,25 @@
 $('#logo').click(function main(){
 	location.href = 'adminMain.go';
 });
+
+var actionList = '${list}';
+
+console.log(actionList);
+
+if (actionList == '[]') {
+	$('.actionLog').css('border', 'none');
+	$('.actionLog').css('padding-left', '0px');
+	$('.actionLog').html('신고 조치 내역이 없습니다.');
+}
+
+var start_date = new Date('${dto.banned_start_date}');
+var end_date = new Date('${dto.banned_end_date}');
+var today = new Date();
+
+if (today >= start_date && today <= end_date) {
+	$('#banned').html('로그인 정지 ' + '${dto.banned_start_date}' + ' ~ ' + '${dto.banned_end_date}');
+}
+
+
 </script>
 </html>

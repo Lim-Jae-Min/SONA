@@ -102,17 +102,7 @@ public class MainController {
 		return page;
 	}
 	
-	@RequestMapping(value="/alarmList.go")
-	public String alarmList(Model model, HttpSession session) {
-		model.addAttribute("msg", "알림 리스트 이동");
-		String page = "member/login";
-		
-		if (session.getAttribute("loginId") != null) {
-			page = "alarm/alarmList";
-		}
-		
-		return page;
-	}
+	
 	
 	@RequestMapping(value="/loading.do")
 	public String loading(Model model, HttpSession session) {

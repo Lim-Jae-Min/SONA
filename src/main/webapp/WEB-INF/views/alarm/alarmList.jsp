@@ -3,11 +3,80 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>알림</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
+<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-    
+
+	    /* '전체' 선택 버튼의 스타일 */
+	    .click.read {
+	        padding: 5px;
+	        background-color: #2064f8; /* 파란색으로 변경 */
+	        color: white;
+	        border-radius: 5px;
+	        display: inline-block;
+	        cursor: pointer;
+	        text-align: center;
+	        font-weight: bold; /* 텍스트를 굵게 */
+        	font-size: 17px; /* 폰트 사이즈 조절 */
+	    }
+
+			
+		/* '삭제' 버튼의 스타일 */
+	    .click.delete {
+	        padding: 5px;
+	        background-color: #fa3434; /* 빨간색으로 변경 */
+	        color: white;
+	        border-radius: 5px;
+	        display: inline-block;
+	        cursor: pointer;
+	        text-align: center;
+	        font-weight: bold; /* 텍스트를 굵게 */
+        	font-size: 17px; /* 폰트 사이즈 조절 */
+	    }
+		.read, .delete {
+		   width: 67px;
+  		   height: 24px;
+		}
+		.clickresult{
+		   display: none;
+		}
+		#content {
+		    width: 1000px;
+		    padding: 10px;
+		    padding-bottom: 100px;
+		}
+		#tab {
+		    display: inline-block;
+		    border: 2px solid #BEE6FF;
+		    border-radius: 15px;
+		    padding: 10px;
+		    margin-bottom: 10px;
+		    margin-left: 98px;
+		    width: 93%;
+		}
+		
+		#tab th,
+	    #tab td {
+	        padding: 8px; /* 각 셀의 패딩 조절 */
+	        width:auto;
+	        max-width: 200px; /* 각 셀의 최대 너비 설정 */
+	        overflow: hidden; /* 텍스트 넘침 처리 */
+	        text-overflow: ellipsis; /* 텍스트 넘침 시 생략 부호(...) 표시 */
+	        white-space: nowrap; /* 텍스트가 너무 길어도 줄바꿈 없이 한 줄에 표시 */
+	        text-align: center;
+	    }
+	    
+	    #tab #checkbox{
+	    width: 1px;
+	    }
+	    
+	    #nav__bar{
+		 text-align:center;
+		 margin-left:0px;
+		}
 </style>
 </head>
 <body>
@@ -58,9 +127,46 @@
             </c:if>
         </table>
     </header>
-    <div>
-        ${msg}
+<div id="wrapper">
+    <div id="sidemenu">
+        <h2>알림</h2>
+        <hr/>
     </div>
+    <div>
+	    <div id = "content">     
+	        <div><h3>알림 목록</h3></div>
+	        <hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
+	 		<div style="margin-bottom: 10px; margin-left: 91px;">
+	 			   <div class="click read">읽음</div>&nbsp;&nbsp;
+				   <div class="click delete">삭제</div>&nbsp;&nbsp;
+				   <input type="text" class="clickresult" name="class_state"/>
+	 		</div>
+	 		<div id="tab" >
+		        <table style="border-collapse: collapse; width: 100%;">
+		            <thead>
+		                <tr>
+		                	<th id= "checkbox"><input type="checkbox" id="all"/></th>
+							<th>제목</th>
+							<th>작성일자</th>
+		                </tr>
+		            </thead>
+		            <tbody id="list">
+		            
+		            </tbody>
+		            <tr>
+		                <td colspan="6">
+		                    <div class="container">                           
+		                        <nav aria-label="Page navigation"  id = "nav__bar">
+		                            <ul class="pagination" id="pagination"></ul>
+		                        </nav>               
+		                    </div>
+		                </td>
+		            </tr>
+		        </table>
+		    </div>        
+	    </div>
+    </div>
+</div>
     <div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>
@@ -96,6 +202,86 @@
 </body>
 <script>
 
+var showPage = 1;
+
+$(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
+	
+	   listCall(showPage);
+	});
+
+function listCall(page){
+	
+	
+    $.ajax({
+       type:'get',
+       url:'./alarmList.ajax',
+       data:{
+          'page':page,
+          'cnt':10
+       },
+       dataType:'json',
+       success:function(data){
+          drawList(data.list);
+          console.log(data);
+          //플러그인 추가
+          var startPage = data.currPage > data.totalPages? data.totalPages : data.currPage;
+          
+          $('#pagination').twbsPagination({
+        	  startPage:startPage, //시작페이지
+        	  totalPages:data.totalPages, //총 페이지 갯수
+        	  visiblePages:5, //보여줄 페이지 수 [1][2][3][4][5]
+         	  onPageClick:function(evt, pg){//페이지 클릭시 실행 함수
+        		  console.log(evt); // 이벤트 객체
+        		  console.log(pg); //클릭한 페이지 번호
+        		  listCall(pg);
+        	  }
+        	  
+          });
+          
+       },
+       error: function(request, status, error) {
+           console.log("code: " + request.status)
+           console.log("message: " + request.responseText)
+           console.log("error: " + error);
+       }
+    });
+}
+
+
+function drawList(list){
+    var content = '';
+    var lastIndex = list.length; // 마지막 인덱스
+    for(item of list){
+       console.log(item);
+       content += '<tr class = "list-item">';
+       content += '<td><input type="checkbox" name="selected" value="' + item.alarm_idx +'"/></td>';
+       content += '<td>' +
+      		 '<a href="alarmDetail.go?alarm_idx=' + item.alarm_idx + '">' + item.alarm_title + '</a>' +
+    		  '</td>';
+       var date = new Date(item.alarm_date);
+       var dateStr = date.toLocaleDateString("ko-KR");
+       content += '<td>' + dateStr + '</td>';
+       
+       content += '</tr>';
+    }
+    $('#list').html(content);
+}
+
+
+
+
+
+$('#all').on('click', function() {
+    var $chk = $('input[name="selected"]');
+    if ($(this).prop('checked')) {
+        $chk.prop('checked', true);
+    } else {
+        $chk.prop('checked', false);
+    }
+});
+
+
+
 $('#userName').click(function slide() {
 	var display = $('#slide').css('display');
     if (display == 'none') {
@@ -109,6 +295,11 @@ $('#userName').click(function slide() {
 $('#logo').click(function main(){
 	location.href = '/main';
 });
+
+$('.alarm').click(function alarmList() {
+	   location.href = 'alarmList.go';
+});
+
 
 </script>
 </html>

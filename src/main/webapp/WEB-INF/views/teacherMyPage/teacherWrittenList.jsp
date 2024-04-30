@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>qna</title>
+<title>내가 받은 리뷰</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
@@ -29,7 +29,7 @@
 		    padding: 10px;
 		    margin-bottom: 10px;
 		    margin-left: 98px;
-		    width: 93%;
+		    width: 148%;
 		}
 		
 		#tab th,
@@ -72,11 +72,16 @@
 		    border-radius: 4px;
 		    margin-left: -259px;
 		}
-		
 		#nav__bar{
 		 text-align:center;
-		 margin-left:251px;
+		 margin-left:279px;
 		}
+		
+		#heart{
+		color: red;
+		font-size: 34px;
+		}
+		
 </style>
 </head>
 <body>
@@ -122,7 +127,7 @@
     </header>
     <div id="wrapper">
             <div id="sidemenu">
-                <h3>강의 Q&A 관리</h3>
+                <h3>내가 작성한 리뷰</h3>
                 <hr/>
                 <a href="teacherPage.go">마이페이지</a>
                 <a href="teacherPageEdit.go">개인 정보 수정</a>
@@ -136,23 +141,16 @@
  		<!-- HTML 코드 -->
  		
 	<div style="text-align: center; margin-top: 30px;">
-	    <div style="margin-bottom: 10px; margin-left: 107px;">
-	        강의명 : <select name="condition" id="condition" style="margin-left:7px; width: 850px;">
-			    <option style="margin-left: 50px; width: 700px" value="전체" >전체</option>
-			    <c:forEach items="${classNames}" var="class_name">
-					<option value="${class_name}" <c:if test="${selectedClass eq class_name}">selected</c:if>>${class_name}</option>
-				</c:forEach>
-			</select>
-	    </div>
+	    
 	
 	    <div id="tab" >
 	        <table style="border-collapse: collapse; width: 100%;">
 	            <thead>
 	                <tr>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>답변 여부</th>
 						<th>날짜</th>
+						<th>제목</th>
+						<th>대상자</th>
+						<th>만족도</th>
 	                </tr>
 	            </thead>
 	            <tbody id="list">
@@ -235,33 +233,22 @@ $('#userName').click(function slide() {
 });
 
 
-//셀렉트 박스의 변경 이벤트 핸들러
-$('#condition').change(function() {
-	$('#pagination').twbsPagination('destroy');
-    var selectedClass = $(this).val(); // 선택한 강의 제목
-    listCall(showPage, selectedClass); // 선택한 강의 제목으로 데이터 필터링
-});
-
 
 
 var showPage =1;
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
-	// listCall(showPage);
-	
-	// select 요소의 첫 번째 옵션을 선택하여 클릭 이벤트를 발생시킴
-    $('#condition option:first').prop('selected', true).click();
+	 listCall(showPage);
 });
 
 
-function listCall(page, selectedClass){
+function listCall(page){
     $.ajax({
        type:'get',
-       url:'./teacherQnaList.ajax',
+       url:'./teacherWrittenList.ajax',
        data:{
           'page':page,
-          'cnt':10,
-          'selectedClass': selectedClass
+          'cnt':10
        },
        dataType:'json',
        success:function(data){
@@ -278,9 +265,9 @@ function listCall(page, selectedClass){
         		  console.log(evt); // 이벤트 객체
         		  console.log(pg); //클릭한 페이지 번호
         		  showPage = pg;
-        		  listCall(pg, selectedClass);
+        		  listCall(pg);
         	  }
-        	  
+        
           });
           
        },
@@ -294,47 +281,35 @@ function listCall(page, selectedClass){
 
 
 
+function drawList(list) {
+    var content = ''; // 테이블에 추가할 전체 문자열
+    for (item of list) {
+        
+        function formatDate(dateString) {
+            var date = new Date(dateString);
+            if (dateString === null) {
+                return '-';
+            }
+            return date.toLocaleDateString("ko-KR");
+        }
+        
+        var rdate = formatDate(item.review_reg_date);
 
-function drawList(list){
-    var content = '';
-    var lastIndex = list.length; // 마지막 인덱스
-    
- 	
-    for(item of list){
-       console.log(item);
-       
-       var firstLetter = item.user_id.charAt(0); // 첫 번째 글자
-       var otherLetters = item.user_id.substring(1); // 나머지 글자
-       var maskedName = firstLetter + "O".repeat(otherLetters.length);
-    	
-       content += '<tr class = "list-item">';
-       content += '<td>'+ 
-      		 '<a href="lessonQnADetail.go?question_idx=' + item.question_idx + '">' + item.q_title + '</a>' +
-      			 '</td>'; // 제목을 클릭하면 해당 강의일지의 세부 정보 페이지로 이동
-       content += '<td>' + maskedName + '</td>';
-       content += '<td>' + item.answer_status + '</td>';
-       
-       function formatDate(dateString) {
-    	    var date = new Date(dateString);
-    	    if (dateString === null) {
-    	        return '';
-    	    }
-    	    return date.toLocaleDateString("ko-KR");
-    	}
-    	var qdate = formatDate(item.q_reg_date);
-    	content += '<td>' + qdate + '</td>';
-      	content += '</tr>';
+        content += '<tr class="list-item">';
+        content += '<td>' + rdate + '</td>';
+        content += '<td>'+ 
+                    '<a href="lessonReviewDetail.go?review_idx=' + item.review_idx + '">' + item.review_title + '</a>' +
+                   '</td>'; // 제목을 클릭하면 해당 리뷰의 세부 정보 페이지로 이동
+        content += '<td>' + item.ratee_id + '</td>';
+        content += '<td><span style="color: #FED000;">★</span>' + parseFloat(item.score).toFixed(1) + '</td>'; // score를 소숫점 한 자리까지 표시
+        content += '</tr>';
     }
-    $('#list').html(content);
+    $('#list').html(content); // 전체 문자열을 테이블에 추가
 }
 
 
 
 
-
-	
-	
-	
 
 </script>
 </html>

@@ -40,7 +40,7 @@ public class MyPageDTO {
 	private Date review_reg_date;
 	private String review_title;
 	private String rater_id;
-	private long score;
+	private String score;
 	private String ratee_id;
 	private String teacher_name;
 	private int class_price;
@@ -58,7 +58,7 @@ public class MyPageDTO {
 	private Date start_date;
 	private Date end_date;
 	private int accumulate_lesson;
-	private int manner_variance;
+	private String manner_variance;
 	
 	
 	
@@ -281,10 +281,10 @@ public class MyPageDTO {
 	public void setRater_id(String rater_id) {
 		this.rater_id = rater_id;
 	}
-	public long getScore() {
+	public String getScore() {
 		return score;
 	}
-	public void setScore(long score) {
+	public void setScore(String score) {
 		this.score = score;
 	}
 	public String getRatee_id() {
@@ -389,10 +389,10 @@ public class MyPageDTO {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
-	public int getManner_variance() {
+	public String getManner_variance() {
 		return manner_variance;
 	}
-	public void setManner_variance(int manner_variance) {
+	public void setManner_variance(String manner_variance) {
 		this.manner_variance = manner_variance;
 	}
 

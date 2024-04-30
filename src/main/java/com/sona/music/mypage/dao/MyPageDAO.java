@@ -131,6 +131,12 @@ public interface MyPageDAO {
 	Object teacherReceiveAllCountFilter(@Param("cnt") int cnt, @Param("user_id") String user_id, @Param("selectedClass") String selectedClass);
 
 
+	List<MyPageDTO> teacherWrittenList(String user_id, int cnt, int start);
+
+	@Mapper
+	Object teacherWrittenAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+
+
 
 
 }

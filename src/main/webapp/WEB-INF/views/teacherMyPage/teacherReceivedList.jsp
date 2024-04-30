@@ -6,7 +6,6 @@
 <title>내가 받은 리뷰</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
@@ -73,6 +72,15 @@
 		    border-radius: 4px;
 		    margin-left: -259px;
 		}
+		#nav__bar{
+		 text-align:center;
+		 margin-left:279px;
+		}
+		
+		#heart{
+		color: red;
+		font-size: 34px;
+		}
 		
 </style>
 </head>
@@ -119,7 +127,7 @@
     </header>
     <div id="wrapper">
             <div id="sidemenu">
-                <h3>마이페이지</h3>
+                <h3>내가 받은 리뷰</h3>
                 <hr/>
                 <a href="teacherPage.go">마이페이지</a>
                 <a href="teacherPageEdit.go">개인 정보 수정</a>
@@ -128,7 +136,7 @@
                 <a href="teacherQnaList.go">강의 Q&A 관리</a>
                 <a href="teacherPointList.go">포인트 내역</a>
                 <a href="teacherReceivedList.go">내가 받은 리뷰</a>
-                <a href="#">내가 작성한 리뷰</a>
+                <a href="teacherWrittenList.go">내가 작성한 리뷰</a>
             </div>
  		<!-- HTML 코드 -->
  		
@@ -139,7 +147,7 @@
 		    <br/>
 		    <br/><br/>
 		    <span style="text-align: left; width: 1000px; font-size: 28px; height: 129px; margin-bottom : 50px;">
-		        ${sessionScope.loginId}님의 매너지수 ♥  ${sessionScope.manner_variance}
+		        ${sessionScope.loginId}님의 매너지수 <span id = "heart">♥</span>  ${sessionScope.manner_variance}
 		    </span>
 		</div>
 	    
@@ -168,7 +176,7 @@
 	            <tr>
 	                <td colspan="6">
 	                    <div class="container">                           
-	                        <nav aria-label="Page navigation" style="text-align:center">
+	                        <nav aria-label="Page navigation"  id = "nav__bar">
 	                            <ul class="pagination" id="pagination"></ul>
 	                        </nav>               
 	                    </div>
@@ -304,8 +312,6 @@ function listCall(page, selectedClass){
 function drawList(list) {
     var content = ''; // 테이블에 추가할 전체 문자열
     for (item of list) {
-        var satisfaction = parseFloat(item.score).toFixed(1); // 소수점 한 자리까지 표현
-        satisfaction = '★' + satisfaction;
         
         var firstLetter = item.rater_id.charAt(0); // 첫 번째 글자
         var otherLetters = item.rater_id.substring(1); // 나머지 글자
@@ -327,8 +333,8 @@ function drawList(list) {
                     '<a href="lessonReviewDetail.go?review_idx=' + item.review_idx + '">' + item.review_title + '</a>' +
                    '</td>'; // 제목을 클릭하면 해당 리뷰의 세부 정보 페이지로 이동
         content += '<td>' + maskedName + '</td>';
-        content += '<td><span style="color: #FED000;">★</span>' + item.score + '</td>';
-        content += '<td>' + item.manner_variance + '</td>';
+        content += '<td><span style="color: #FED000;">★</span>' + parseFloat(item.score).toFixed(1) + '</td>'; // score를 소숫점 한 자리까지 표시
+        content += '<td>' + parseFloat(item.manner_variance).toFixed(2) + '</td>'; // manner_variance를 소숫점 둘째 자리까지 표시
         content += '</tr>';
     }
     $('#list').html(content); // 전체 문자열을 테이블에 추가

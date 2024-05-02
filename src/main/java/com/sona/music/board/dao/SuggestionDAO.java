@@ -17,4 +17,12 @@ public interface SuggestionDAO {
 	SuggestionDTO suggestionsDetailGo(String sug_idx);
 
 	List<PhotoDTO> suggestionsDetailPhotos(String sug_idx);
+
+	int answerWrite(String sug_idx, String adminId, String sug_answer);
+
+	int suggestionsDelete(String sug_idx);
+
+	int answerDelete(String sug_idx);
+
+	int suggestionsWrite(SuggestionDTO dto);
 }

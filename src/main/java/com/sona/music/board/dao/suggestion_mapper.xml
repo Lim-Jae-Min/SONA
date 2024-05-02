@@ -78,5 +78,17 @@
 		WHERE pb.post_idx = #{param1} AND pb.photo_category = 'Suggestion'
 	</select>
 
+	<insert id="answerWrite">
+		INSERT INTO SUG_ANSWER(sug_idx, admin_id, sug_answer)
+			VALUES(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<delete id="suggestionsDelete">
+		DELETE FROM SUG_BOARD WHERE sug_idx = #{param1}
+	</delete>
+	
+	<delete id="answerDelete">
+		DELETE FROM SUG_ANSWER WHERE sug_idx = #{param1}
+	</delete>
 
 </mapper>

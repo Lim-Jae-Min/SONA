@@ -3,28 +3,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>알림</title>
+<title>알림 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
+		hr{
+		 width: 100%;
+		 border: none;
+		 border-bottom: 1px solid black;
+		 margin-top: 5px;
+		}
 
-	    /* '전체' 선택 버튼의 스타일 */
-	    .click.read {
-	        padding: 5px;
-	        background-color: #2064f8; /* 파란색으로 변경 */
-	        color: white;
-	        border-radius: 5px;
-	        display: inline-block;
-	        cursor: pointer;
-	        text-align: center;
-	        font-weight: bold; /* 텍스트를 굵게 */
-        	font-size: 17px; /* 폰트 사이즈 조절 */
-        	margin-left: 28px;
-	    }
 
-			
 		/* '삭제' 버튼의 스타일 */
 	    .click.delete {
 	        padding: 5px;
@@ -38,61 +31,57 @@
         	font-size: 17px; /* 폰트 사이즈 조절 */
         	margin-left: -7px;
 	    }
-		.read, .delete {
-		   width: 67px;
-  		   height: 24px;
-		}
-		.clickresult{
-		   display: none;
-		}
+
+
 		#content {
 		    width: 1000px;
 		    padding: 10px;
 		    padding-bottom: 100px;
 		    margin-left: 132px;
 		}
-		#tab {
+	    
+	    
+	    .notification-item {
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		}
+		
+		.title {
+		    margin-right: auto; /* Delete button이 왼쪽으로 밀리도록 오른쪽 마진을 auto로 설정 */
+		}
+	    
+	    .button {
 		    display: inline-block;
-		    border: 2px solid #BEE6FF;
-		    border-radius: 15px;
-		    padding: 10px;
-		    margin-bottom: 10px;
-		    margin-left: 22px;
-		    width: 93%;
+		    padding: 10px 20px;
+		    background-color: #007bff;
+		    color: #fff;
+		    text-decoration: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    margin-top: 10px;
 		}
 		
-		#tab th,
-	    #tab td {
-	        padding: 8px; /* 각 셀의 패딩 조절 */
-	        width:auto;
-	        max-width: 200px; /* 각 셀의 최대 너비 설정 */
-	        overflow: hidden; /* 텍스트 넘침 처리 */
-	        text-overflow: ellipsis; /* 텍스트 넘침 시 생략 부호(...) 표시 */
-	        white-space: nowrap; /* 텍스트가 너무 길어도 줄바꿈 없이 한 줄에 표시 */
-	        text-align: center;
-	    }
-	    
-	    #tab th {
-	        border-bottom: 3px solid #BEE6FF;
-	        padding: 8px;
-	        font-size: 20px;
-		}
-	    
-	    #tab #checkbox{
-	    width: 1px;
-	    }
-	    
-	    #nav__bar{
-		 text-align:center;
-		 margin-left:0px;
+		.button:hover {
+		    background-color: #0056b3;
 		}
 		
-		#list tr.list-item td {
-		    border-top: 1px solid #BEE6FF; /* 바디의 각 행에 위쪽에 1픽셀 두께의 회색 선 추가 */
+		.button2 {
+		    display: inline-block;
+		    padding: 10px 20px;
+		    background-color: #adabab;
+		    color: black;
+		    text-decoration: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    width: 64px;
+   			text-align: center;
+   			margin-top: 10px;
+    		margin-left: 450px;
 		}
 		
-		#list tr.list-item:first-child td {
-		    border-top: none; /* 첫 번째 바디 행에는 위쪽 선을 없앱니다. */
+		.button2:hover {
+		    background-color: #8a8989;
 		}
 </style>
 </head>
@@ -144,46 +133,34 @@
             </c:if>
         </table>
     </header>
-<div id="wrapper">
-    <div id="sidemenu">
-        <h2>알림</h2>
-        <hr/>
-    </div>
-    <div>
-	    <div id = "content">     
-	        <div><h3>알림 목록</h3></div>
-	        <hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
-	 		<div style="margin-bottom: 10px; margin-left: -2px;">
-	 				<div style="display: inline-block;"><botton class="click read" onclick="read()">읽음</button></div>&nbsp;&nbsp;
-	 				<div style="display: inline-block;"><botton class="click delete" onclick="del()">삭제</button></div>&nbsp;&nbsp;
-				   <input type="text" class="clickresult" name="class_state"/>
-	 		</div>
-	 		<div id="tab" >
-		        <table style="border-collapse: collapse; width: 100%;">
-		            <thead>
-		                <tr>
-		                	<th id= "checkbox"><input type="checkbox" id="all"/></th>
-							<th>제목</th>
-							<th>작성일자</th>
-		                </tr>
-		            </thead>
-		            <tbody id="list">
-		            
-		            </tbody>
-		            <tr>
-		                <td colspan="6">
-		                    <div class="container">                           
-		                        <nav aria-label="Page navigation"  id = "nav__bar">
-		                            <ul class="pagination" id="pagination"></ul>
-		                        </nav>               
-		                    </div>
-		                </td>
-		            </tr>
-		        </table>
-		    </div>        
+	<div id="wrapper">
+	    <div id="sidemenu">
+	        <h2>알림</h2>
+	        <hr/>
 	    </div>
-    </div>
-</div>
+	    <div>
+	        <div id="content">     
+	            <div style="margin-bottom: 10px; margin-left: -2px;">
+	                <div class="notification-item">
+	                    <div class="title"><h2>${alarm.alarm_title}</h2></div>
+	                    <div class="delete-button">
+	                        <button class="click delete" onclick="del(${alarm.alarm_idx})">
+	                            <i class="fas fa-trash-alt"></i>
+	                        </button>
+	                    </div>
+	                </div>
+	            </div>
+	            <hr>
+	            <div>${alarm.alarm_date}</div>
+	            </br></br>
+	            <div>${alarm.alarm_content}</div>
+	            <div><a class="button" href="#">바로가기</a></div>
+	            <hr>
+	            <div><a class="button2" href="alarmList.go">목록</a></div>
+	        </div>
+	    </div>
+	</div>
+
     <div id="footer">
         <li>상호명 : SONA</li>
         <li>대표자 : 김○○</li>
@@ -286,77 +263,35 @@ function drawList(list){
 }
 
 
-function del() {
-    var delArr = [];
-    $("input[name='selected']").each(function(index, item) {
-      if ($(item).is(":checked")) {
-         var val = $(this).val();
-         console.log(val);
-         delArr.push(val);
-      }
-   });
-     $.ajax({
-         type:'post' // method 방식
-         ,url:'./del.ajax' // 요청할 주소 // 파라미터 
-         ,data:{delList:delArr}
-        ,dataType:'json' // 기본 데이터 타입은 JSON 이다
-         ,success:function(data){
-            if(data.cnt>0){
-               alert('선택하신'+data.cnt+'개의 글이 삭제되었습니다.');
-               $('#list').empty(); // 업데이트 전 리스트들을 지워버리고
-               listCall(showPage); // 업데이트 후 리스트들을 다시 불러옴
-            }
-            console.log(data);
-         } 
-         ,error:function(error){ // 통신 실패한 경우
-             console.log(error);
-         }
-     });
-}
-
-
-
-function read() {
-    var readArr = [];
-    $("input[name='selected']").each(function(index, item) {
-        if ($(item).is(":checked")) {
-            var val = $(this).val();
-            console.log(val);
-            readArr.push(val);
-        }
-    });
-    
-    $.ajax({
-        type: 'post',
-        url: './read.ajax',
-        data: { readList: readArr },
-        dataType: 'json',
-        success: function(data) {
-            if (data.cnt > 0) {
-                alert('선택하신 ' + data.cnt + '개의 알림이 읽음 처리되었습니다.');
+function del(alarm_idx) {
+	var confirmDelete = confirm("이 알림을 삭제하시겠습니까?");
+    if (confirmDelete) {
+        $.ajax({
+            type: 'post',
+            url: './detailDel.ajax',
+            data: { alarm_idx: alarm_idx },
+            dataType: 'json',
+            success: function (data) {
+                alert('선택하신 글이 삭제되었습니다.');
                 $('#list').empty();
                 listCall(showPage);
+                // 알림이 삭제된 후 알림 리스트 페이지로 이동
+                location.href = 'alarmList.go';
+                console.log(data);
+            },
+            error: function (error) {
+                console.log(error);
             }
-            console.log(data);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-    });
+        });
+    } else {
+    	
+    }
 }
 
 
 
 
 
-$('#all').on('click', function() {
-    var $chk = $('input[name="selected"]');
-    if ($(this).prop('checked')) {
-        $chk.prop('checked', true);
-    } else {
-        $chk.prop('checked', false);
-    }
-});
 
 
 

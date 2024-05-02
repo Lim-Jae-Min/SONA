@@ -86,6 +86,19 @@
 		 text-align:center;
 		 margin-left:34px;
 		}
+		
+		#tab th {
+	        border-bottom: 3px solid #BEE6FF;
+	        padding: 8px;
+	        font-size: 18px;
+		}
+		#list tr.list-item td {
+		    border-top: 1px solid #BEE6FF; /* 바디의 각 행에 위쪽에 1픽셀 두께의 회색 선 추가 */
+		}
+		
+		#list tr.list-item:first-child td {
+		    border-top: none; /* 첫 번째 바디 행에는 위쪽 선을 없앱니다. */
+		}
 </style>
 </head>
 <body>
@@ -155,12 +168,12 @@
         <table style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">No</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">강의명</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">누적 수강생 수</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">만족도</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">상태</th>
-                    <th style="border-bottom: 2px solid #BEE6FF; padding: 8px;">개설 날짜</th>
+                    <th>No</th>
+                    <th>강의명</th>
+                    <th>누적 수강생 수</th>
+                    <th>만족도</th>
+                    <th>상태</th>
+                    <th>개설 날짜</th>
                 </tr>
             </thead>
             <tbody id="list">

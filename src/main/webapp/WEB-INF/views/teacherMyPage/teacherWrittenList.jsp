@@ -28,8 +28,8 @@
 		    border-radius: 15px;
 		    padding: 10px;
 		    margin-bottom: 10px;
-		    margin-left: 98px;
-		    width: 148%;
+		    margin-left: 0px;
+		    width: 98%;
 		}
 		
 		#tab th,
@@ -43,10 +43,18 @@
 	        text-align: center;
 	    }
 
-		th{
-	        border-bottom: 2px solid #BEE6FF;
+		#tab th {
+	        border-bottom: 3px solid #BEE6FF;
 	        padding: 8px;
-	    }
+	        font-size: 18px;
+		}
+		#list tr.list-item td {
+		    border-top: 1px solid #BEE6FF; /* 바디의 각 행에 위쪽에 1픽셀 두께의 회색 선 추가 */
+		}
+		
+		#list tr.list-item:first-child td {
+		    border-top: none; /* 첫 번째 바디 행에는 위쪽 선을 없앱니다. */
+		}
 	    
 	     #progress {
 	        position: relative;
@@ -80,6 +88,16 @@
 		#heart{
 		color: red;
 		font-size: 34px;
+		}
+		
+		#content {
+		    width: 1000px;
+		    padding: 10px;
+		    padding-bottom: 100px;
+		    margin-left: 113px;
+		}
+		h3{
+		text-align: left;
 		}
 		
 </style>
@@ -141,31 +159,33 @@
  		<!-- HTML 코드 -->
  		
 	<div style="text-align: center; margin-top: 30px;">
-	    
-	
-	    <div id="tab" >
-	        <table style="border-collapse: collapse; width: 100%;">
-	            <thead>
-	                <tr>
-						<th>날짜</th>
-						<th>제목</th>
-						<th>대상자</th>
-						<th>만족도</th>
-	                </tr>
-	            </thead>
-	            <tbody id="list">
-	            
-	            </tbody>
-	            <tr>
-	                <td colspan="6">
-	                    <div class="container">                           
-	                        <nav aria-label="Page navigation"  id = "nav__bar">
-	                            <ul class="pagination" id="pagination"></ul>
-	                        </nav>               
-	                    </div>
-	                </td>
-	            </tr>
-	        </table>
+	    <div id = "content"> 
+		<div><h3>내가 작성한 리뷰</h3></div>
+	       <hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
+		    <div id="tab" >
+		        <table style="border-collapse: collapse; width: 100%;">
+		            <thead>
+		                <tr>
+							<th>날짜</th>
+							<th>제목</th>
+							<th>대상자</th>
+							<th>만족도</th>
+		                </tr>
+		            </thead>
+		            <tbody id="list">
+		            
+		            </tbody>
+		            <tr>
+		                <td colspan="6">
+		                    <div class="container">                           
+		                        <nav aria-label="Page navigation"  id = "nav__bar">
+		                            <ul class="pagination" id="pagination"></ul>
+		                        </nav>               
+		                    </div>
+		                </td>
+		            </tr>
+		        </table>
+		    </div>
 	    </div>
     </div>
 </div>    

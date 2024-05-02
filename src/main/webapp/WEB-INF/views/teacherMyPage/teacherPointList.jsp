@@ -43,10 +43,18 @@
 	        text-align: center;
 	    }
 
-		th{
-	        border-bottom: 2px solid #BEE6FF;
+		#tab th {
+	        border-bottom: 3px solid #BEE6FF;
 	        padding: 8px;
-	    }
+	        font-size: 18px;
+		}
+		#list tr.list-item td {
+		    border-top: 1px solid #BEE6FF; /* 바디의 각 행에 위쪽에 1픽셀 두께의 회색 선 추가 */
+		}
+		
+		#list tr.list-item:first-child td {
+		    border-top: none; /* 첫 번째 바디 행에는 위쪽 선을 없앱니다. */
+		}
 	    
 	     #progress {
 	        position: relative;

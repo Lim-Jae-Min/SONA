@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 정보 수정	</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
@@ -21,7 +21,7 @@
 		
 		/* 사용자 정보 셀 스타일 */
 		.user-info-cell {
-		    width: 20%; /* 예시로 너비를 20%로 설정합니다. */
+		    width: 5px; /* 예시로 너비를 20%로 설정합니다. */
     		text-align: center; /* 가운데 정렬 */
 		}
 		
@@ -36,6 +36,7 @@
 		    display: flex; /* 내용을 수평으로 정렬 */
 		    flex-direction: column; /* 내용을 세로로 정렬 */
 		    text-align: left; /* 왼쪽정렬 */
+  			margin-left: 23px;
 		}
 		
 		/* 사용자 이름 입력란 스타일 */
@@ -138,11 +139,10 @@
 		}
 		
 		.confirm-button {
-		    position: absolute;
-			top: 15px;
-			right: 431px;
-			width: 100px;
-			height: 40px;
+		    position: static;
+		    width: 99px;
+		    height: 45px;
+		    margin-left: -107px;
 		}
 				
 		#sidemenu {
@@ -273,7 +273,7 @@
 				        비밀번호 확인 
 				        <div class="input-container">
 				            <input type="password" value="" id="user_pass" name="user_pass" class="password-input">
-				            <span id = "button"><button type="button" id="confirmation" onclick="confirmPw()" class="confirm-button">확인</button></span>
+				            <button type="button" id="confirmation" onclick="confirmPw()" class="confirm-button">확인</button>
 				        </div>
 				    </td>
 				</tr>
@@ -333,7 +333,7 @@
                             <option value="농협은행">농협은행</option>
                             <option value="카카오뱅크">카카오뱅크</option>
                         </select>
-                        <span><button type="button" onclick="teacherEdit()" class="save-button">기본 유저 정보 저장</button></span>
+                        <button type="button" onclick="teacherEdit()" class="save-button">정보 수정</button>
                     </td>
                 </tr>
             </tbody>

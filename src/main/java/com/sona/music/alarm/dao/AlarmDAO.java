@@ -16,6 +16,21 @@ public interface AlarmDAO {
 	Object alarmListAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
 
 
-	int dellist(String idx);
+	int del(String idx);
+
+
+	int alarmViews(String idx);
+
+
+	AlarmDTO alarmDetail(int idx);
+
+
+	void alarmViews(int idx);
+
+
+	int detailDel(int alarm_idx);
+
+
+
 
 }

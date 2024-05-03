@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sona.music.board.dto.QnADTO;
 import com.sona.music.board.service.QnAService;
@@ -124,34 +125,38 @@ public class QnAController {
 
 
 
-	@RequestMapping(value = "/deleteQuestion.ajax")
-	public String deleteQuestion(@RequestParam("questionIdx") int questionIdx) {
+	@RequestMapping(value = "/deleteQuestion.do")
+	public String deleteQuestion(@RequestParam("questionIdx") int questionIdx, @RequestParam("classIdx") int classIdx, RedirectAttributes redirectmsg) {
 		logger.info(questionIdx+"질문 삭제 요청 - 컨트롤러");
 
 		qnaService.deleteQuestion(questionIdx);
-
-
-		return "redirect:/lessonReviewList";
+		
+		redirectmsg.addFlashAttribute("msg","질문이 삭제 되었습니다.");
+		
+		return "redirect:/lessonQnAList.go?class_idx="+classIdx;
 	}
 
-	@RequestMapping(value = "/deleteAnswer.ajax")
-	public String deleteAnswer(@RequestParam("questionIdx") int questionIdx) {
+	@RequestMapping(value = "/deleteAnswer.do")
+	public String deleteAnswer(@RequestParam("questionIdx") int questionIdx, @RequestParam("classIdx") int classIdx, RedirectAttributes redirectmsg) {
 		logger.info(questionIdx+"답변 삭제 요청 - 컨트롤러");
 
 		qnaService.deleteAnswer(questionIdx);
-
-
-		return "redirect:/lessonReviewList";
+		
+		redirectmsg.addFlashAttribute("msg","답변이 삭제 되었습니다.");
+		
+		return "redirect:/lessonQnAList.go?class_idx="+classIdx;
 	}
 
-	@RequestMapping(value = "/deleteAllQnA.ajax")
-	public String deleteAllQnA(@RequestParam("questionIdx") int questionIdx) {
-		logger.info(questionIdx+"질문 삭제 요청 - 컨트롤러");
+	@RequestMapping(value = "/deleteAllQnA.do")
+	public String deleteAllQnA(@RequestParam("questionIdx") int questionIdx, @RequestParam("classIdx") int classIdx, RedirectAttributes redirectmsg) {
+		logger.info(questionIdx+"전체 삭제 요청 - 컨트롤러");
 
 		qnaService.deleteQuestion(questionIdx);
 		qnaService.deleteAnswer(questionIdx);
 
-		return "redirect:/lessonReviewList";
+		redirectmsg.addFlashAttribute("msg","전체 삭제 되었습니다.");
+		
+		return "redirect:/lessonQnAList.go?class_idx="+classIdx;
 	}
 
 	@RequestMapping(value = "/lessonQnAEdit.go")
@@ -168,7 +173,7 @@ public class QnAController {
 	public String questionEdit(@RequestParam Map<String, String> param, HttpSession session) {
 		logger.info(param.get("question_idx")+"질문 수정함");
 		int class_idx =Integer.parseInt(param.get("class_idx"));
-		String page = "redirect:/lessonQnAList.go?class_idx="+ param.get("class_idx");
+		String page = "redirect:/lessonQnAList.go?class_idx="+ class_idx;
 
 		if(session.getAttribute("loginId")!= null) {
 

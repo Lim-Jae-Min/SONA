@@ -312,6 +312,16 @@
 var showPage =1;
 var classIdx = ${classIdx};
 
+
+function checkMsg() {
+    var msg = '${msg}';
+    if (msg !== null && msg !== '') {
+        alert(msg);
+    }
+}
+
+window.onload = checkMsg;
+
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 	listCall(showPage);
 });

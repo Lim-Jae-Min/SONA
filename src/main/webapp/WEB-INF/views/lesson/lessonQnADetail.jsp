@@ -329,11 +329,11 @@ body {
 				<div
 					style="text-align: right; display: flex; justify-content: flex-end;">
 					<button class="button edit"
-						onclick="redirectToEditPage(${question.question_idx},${question.class_idx})">수정</button>
+						onclick="redirectToEditPage(${question.question_idx})">수정</button>
 					<button class="button delete"
-						onclick="confirmDelete(${question.question_idx})">삭제</button>
+						onclick="confirmDelete(${question.question_idx},${question.class_idx})">삭제</button>
 					<button class="button reply"
-						onclick="redirectToReplyPage(${question.question_idx},${question.class_idx})">답변</button>
+						onclick="redirectToReplyPage(${question.question_idx})">답변</button>
 				</div>
 			</c:if>
 			<!-- 답변이 아직 작성이 안됐을경우 -->
@@ -350,7 +350,7 @@ body {
 					<div class="content">${answer.a_content}</div>
 					<div style="text-align: right;">
 						<button class="button adelete"
-							onclick="answerDelete(${question.question_idx})">삭제</button>
+							onclick="answerDelete(${question.question_idx},${question.class_idx})">삭제</button>
 					</div>
 				</div>
 			</c:if>
@@ -409,63 +409,6 @@ var classIdx = ${question.class_idx};
 var questionIdx = ${question.question_idx};
 
 
-function confirmDelete(questionIdx) {
-    if (confirm("질문을 삭제 하시겠습니까?")) {
-        $.ajax({
-            type: "POST",
-            url: "./deleteQuestion.ajax",
-            data: { questionIdx: ${question.question_idx} },
-            success: function(response) {
-            	alert("질문이 삭제되었습니다.");
-            	console.log(classIdx);
-            	location.href = './lessonQnAList.go?class_idx=' + ${question.class_idx};
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
-}
-
-function confirmAllDelete(questionIdx) {
-    if (confirm("질문과 답변 모두 삭제 하시겠습니까?")) {
-        $.ajax({
-            type: "POST",
-            url: "./deleteAllQnA.ajax",
-            data: { questionIdx: ${question.question_idx} },
-            success: function(response) {
-            	alert("모두 삭제되었습니다.");
-            	console.log(classIdx);
-            	location.href = './lessonQnAList.go?class_idx=' + ${question.class_idx};
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
-}
-
-function answerDelete(questionIdx) {
-    if (confirm("답변을 삭제 하시겠습니까?")) {
-        $.ajax({
-            type: "POST",
-            url: "./deleteAnswer.ajax",
-            data: { questionIdx: questionIdx },
-            success: function(response) {
-            	alert("답변이 삭제되었습니다.");
-            	console.log(classIdx);
-            	location.href = './lessonQnAList.go?class_idx=' + ${question.class_idx};
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
-}
-
-
-
-
 $(document).ready(function() {
     // 현재 로그인한 사용자의 아이디
     var loggedInUserId = "${sessionScope.loginId}";
@@ -485,6 +428,25 @@ $(document).ready(function() {
         $(".adelete").hide();
     }
 });
+
+function confirmAllDelete(questionIdx, classIdx){
+	if(confirm("전체 삭제 하시겠습니까?")){
+		 window.location.href = './deleteAllQnA.do?questionIdx=' + questionIdx + '&classIdx=' + classIdx;
+	}
+}
+
+function confirmDelete(questionIdx, classIdx){
+	if(confirm("질문을 삭제 하시겠습니까?")){
+		window.location.href = './deleteQuestion.do?questionIdx=' + questionIdx + '&classIdx=' + classIdx;
+	}
+	
+}
+
+function answerDelete(questionIdx, classIdx){
+	if(confirm("답변 삭제 하시겠습니까?")){
+		window.location.href = './deleteAnswer.do?questionIdx=' + questionIdx + '&classIdx=' + classIdx;
+	}
+}
 
 function redirectToList(classIdx) {
     window.location.href = './lessonQnAList.go?class_idx=' + classIdx;

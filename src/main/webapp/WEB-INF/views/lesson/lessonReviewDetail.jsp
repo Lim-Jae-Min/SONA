@@ -378,6 +378,7 @@ body {
 </body>
 <script>
 var classIdx = ${review.class_idx};
+var reviewIdx = ${review.review_idx};
 
 
 function confirmBlind(reviewIdx) {

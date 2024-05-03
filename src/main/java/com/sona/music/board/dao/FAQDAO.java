@@ -12,4 +12,6 @@ public interface FAQDAO {
 
 	FAQDTO faqDetailAdmin(int idx);
 
+	void faqViews(int idx);
+
 }

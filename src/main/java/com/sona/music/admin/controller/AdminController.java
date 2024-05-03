@@ -146,7 +146,7 @@ public class AdminController {
 	}
 	
 	
-	@RequestMapping(value = "/noticeManagement.go")
+	@RequestMapping(value = "/adminNoticeList.go")
 	public String noticeManagementGo() {
 
 		return "adminPage/adminNoticeList";
@@ -187,7 +187,7 @@ public class AdminController {
 		return "adminPage/adminNoticeWrite";
 	}
 	
-	@RequestMapping(value = "faqManagement.go")
+	@RequestMapping(value = "adminFaqList.go")
 	public String faqManagementGo() {
 		logger.info("faq관리 페이지 이동");
 		return "adminPage/adminFaqList";

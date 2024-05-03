@@ -18,12 +18,14 @@
 	
 	#showList th, #showList td {
 	    border: 1px solid #dddddd; /* 셀 테두리 색상 설정 */
-	    padding: 8px; /* 셀 내부 여백 설정 */
+	    padding: 15px; /* 셀 내부 여백 설정 */
 	    text-align: left; /* 텍스트를 왼쪽 정렬 */
+	    border-right: none;
+	    border-left: none;
+	    text-align: center;
 	}
 	
 	#showList tr:nth-child(even) {
-	    background-color: #F0FAFF; /* 짝수 행 배경색 설정 */
 
 	}
 	
@@ -122,9 +124,9 @@
         <div id="sidemenu">
                 <h3>고객센터</h3>
                 <hr/>
-                <a href="studentPage.go">공지사항</a>
-                <a href="studentPageEdit.go">FAQ</a>
-                <a href="favoriteList.go">건의사항</a>
+                <a href="noticeList.go">공지사항</a>
+                <a href="faqList.go">FAQ</a>
+                <a href="suggestionsList.go">건의사항</a>
 
         </div>
             

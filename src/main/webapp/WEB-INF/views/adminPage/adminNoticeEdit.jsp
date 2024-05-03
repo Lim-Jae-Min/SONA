@@ -140,6 +140,10 @@ p.editOption{
 #content{
 	width: 735px;
 }
+	#inputContent{
+		width: 790px;
+		height: 300px;
+	}
 </style>
 </head>
 <body>
@@ -165,13 +169,14 @@ p.editOption{
     <form action="noticeEditAdmin.do" method="post" enctype="multipart/form-data">
     	<input type="hidden" value="${noticeDetail.notice_content}">
 	    <div class="container">
-	        <h1>게시판 상세보기</h1>
+	        <h1>공지사항 수정</h1>
 	        	<hr>
 	            <div>제목 <input name="title" class="textA" type="text" id="title"  value="${noticeDetail.notice_title}"> </div>    
 	        	<hr>
 	        	내용  
 	        <div id="boardDetail">
-				<input name="content" class="textA" type="text" id="content" value="${noticeDetail.notice_content}">           
+				  <!--  <input name="content" class="textA" type="text" id="content" value="${noticeDetail.notice_content}">          -->
+	        	<textarea  cols="100" wrap="hard"  name="content" required="required" id="inputContent">${noticeDetail.notice_content}</textarea>
 	        	<hr>
 	        </div>
 	        <div>

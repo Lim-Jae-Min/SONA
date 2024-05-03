@@ -182,12 +182,14 @@ p.editOption{
 	        		<option value="강사">강사</option>
 	        		<option value="서비스">서비스</option>
 	        	</select>
-	        	<input name="title" class="textA" type="text" id="title"  placeholder="제목을 입력 해주세요.">	
+	        	<!-- <input name="title" class="textA" type="text" id="title"  placeholder="제목을 입력 해주세요."> -->
+	        	<textarea class="textA" id="title" cols="100" wrap="hard"  name="title" required="required" id="inputContent"></textarea>	
 	         </div>    
 	        	<hr>
 	        	대답  
 	        <div id="boardDetail">
-				<input name="answer" class="textA" type="text" id="content" placeholder="내용을 입력 해주세요">           
+				<!-- <input name="answer" class="textA" type="text" id="content" placeholder="내용을 입력 해주세요"> -->
+				<textarea  class="textA" id="content" cols="100" wrap="hard"  name="answer" required="required" id="inputContent"></textarea>           
 	        	<hr>
 	        </div>
 	        <div>

@@ -15,6 +15,7 @@
     border: 1px solid #fff;
     border-radius: 5px;
     background-color: #fff;
+    margin-top: 60px;
 }
 
 h1 {
@@ -150,6 +151,11 @@ p.editOption{
 	left : 50%;
 	position: relative;
 }
+.eyes{
+	width: 16px;
+    position: relative;
+    top: 2px;
+}
 </style>
 </head>
 <body>
@@ -173,7 +179,6 @@ p.editOption{
     
     <!-- 게시판 영역 -->
     <div class="container">
-        <h1>게시판 상세보기</h1>
             <h2 id="boardTitle">${noticeDetail.notice_title}</h2>
            	<div id = "editButton">
            		<button id="editButton">⋮</button>
@@ -183,7 +188,7 @@ p.editOption{
 	            </div>
              </div>
         <div id="boardDetail">
-        작성자 : ${noticeDetail.admin_id}  작성일자 : ${noticeDetail.notice_reg_date} &nbsp;&nbsp;  조회수 : ${noticeDetail.notice_views}
+         ${noticeDetail.admin_id} &nbsp;&nbsp;  ${noticeDetail.notice_reg_date} &nbsp;&nbsp;&nbsp;  <img src="resources/img/eyes.png" class="eyes"> ${noticeDetail.notice_views}
             <hr>
             <div id="boardImageWrapper">
 				<c:if test="${photos.size()>0}">
@@ -191,11 +196,10 @@ p.editOption{
 						<img src="/photo/${photo.new_filename}" />
 					</c:forEach>
 				</c:if>
-			</div>
-			<div style="width: 882px; height: 311px; resize: none;">
-            ${noticeDetail.notice_content}
-			</div>            
-           
+			</div>           
+           <div style="width: 882px; height: 311px; resize: none;">
+           	<pre> ${noticeDetail.notice_content}</pre>
+           </div>
             <hr>
 
             
@@ -270,7 +274,7 @@ $('.alarm').click(function alarmList() {
     
     /* 목록으로 가기 */
 	 function backList(){
-	    	location.href = "reportManagement.go";
+	    	location.href = "adminNoticeList.go";
 	    	
 	    }
     function actionWrite(){

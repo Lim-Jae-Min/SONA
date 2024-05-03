@@ -15,11 +15,6 @@
     border: 1px solid #fff;
     border-radius: 5px;
     background-color: #fff;
-    width: 500px;
-    margin: 0px;
-    position: relative;
-    top: -63%;
-    left: 35%;
 }
 
 h1 {
@@ -53,6 +48,7 @@ h1 {
     font-size: 18px;
     line-height: 1.6;
     margin-bottom: 20px;
+    height: 300px;
 }
 
 #adminButtons {
@@ -112,6 +108,48 @@ img{
 	width: 40%
 }
 
+hr{
+	margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 3px solid #eee
+}
+#editButton{
+/* 	position : relative;
+	left: 48%;
+	background-color: rgba(0,0,0,0);
+	border: none;
+	font-size: 5px; */
+    position: relative;
+    /* position: absolute; */
+    left: 366px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    font-size: x-large;
+    top: 7px;
+    height: 0px;
+}
+p.editOption{
+	position : relative;
+}
+
+#editslide{
+	display : none;
+	border: 1px solid black;
+	position:absolute;
+	max-width: 50px;
+	left: 48%;
+	width: 45;
+    text-align: center;
+    font-size : 15px;
+    top: 39px;
+
+    
+}
+#returnList{
+	left : 50%;
+	position: relative;
+}
 #editButton{
 /* 	position : relative;
 	left: 48%;
@@ -193,34 +231,6 @@ p.editOption{
         </table>
     </header>
     <!-- 헤더영역 -->
-    <div id="sidemenu">
-                <h3>고객센터</h3>
-                <hr/>
-                <a href="studentPage.go">공지사항</a>
-                <a href="studentPageEdit.go">FAQ</a>
-                <a href="favoriteList.go">건의사항</a>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-                <hr/>
-        </div>
     
     
     
@@ -337,7 +347,7 @@ $('.alarm').click(function alarmList() {
     
     /* 목록으로 가기 */
 	 function backList(){
-	    	location.href = "reportManagement.go";
+	    	location.href = "noticeList.go";
 	    	
 	    }
     function actionWrite(){

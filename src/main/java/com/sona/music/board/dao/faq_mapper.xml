@@ -116,4 +116,8 @@
 		SELECT * FROM FAQ_BOARD WHERE faq_idx = #{param1}
 	</select>
 	
+	<update id="faqViews">
+		UPDATE FAQ_BOARD SET faq_views = faq_views+1 WHERE faq_idx = #{param1}
+	</update>
+	
 </mapper>

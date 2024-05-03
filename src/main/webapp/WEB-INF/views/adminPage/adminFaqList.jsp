@@ -21,6 +21,7 @@
 	    text-align: left; /* 텍스트를 왼쪽 정렬 */
 	    border-right: none;
 	    border-left: none;
+	    text-align: center;
 	}
 	
 	#showList tr:nth-child(even) {
@@ -41,19 +42,16 @@
 		width: 8%;
 	}
 	.nid{
-		width: 25%;
+		width: 15%;
 	}
 	.nbhit{
 		width: 16.6%;
 	}
 	.ndate{
-		width: 20%;
+		width: 10%;
 	}
 	.ntitle{
-		width: 20%;	
-	}
-	.nchb{
-		width: 10%;
+		width: 30%;	
 	}
 	#container{
 		max-width: 600px;
@@ -69,7 +67,19 @@
 	}
 	#faqWriteButton{
 		position: relative;
-		left: 880px;
+    	left: 95%;
+    	top: -4%;
+	}
+	.searchIcon{
+	width: 23px;
+    position: relative;
+    top: 5px;
+	}
+	.searchType{
+	height: 30px;
+	}
+	#searchText{
+	height: 30px;
 	}
 </style>
 </head>
@@ -92,9 +102,9 @@
     </header>
  <!-- 헤더 -->   
     <div id = "divvv">
-    <div id="wrapper1">
+    	<div id="wrapper1">
             <div id="adminside">
-                <h3>관리자 페이지</h3>
+                <h3>FAQ 관리</h3>
                 <hr/>
                 <a href="#">관리자 페이지</a>
                 <a href="#">회원 관리</a>
@@ -106,50 +116,56 @@
                 <a href="#">신고 관리</a>
                 <a href="#">회원 정지 이력</a>
             </div>
-        </div>
-        
-     	<div id = "paaaa">    	  
-	     	<h3>FAQ 리스트 </h3> 
-	     	<!-- 구분기능  -->
+    	</div>
+
+		<div id="paaaa">
+			<h3>FAQ 리스트</h3>
+			<!-- 구분기능  -->
+			<section>
 			<div>
-				<button value="1" onclick="setCategory(1)">전체</button> 
+				<button value="1" onclick="setCategory(1)">전체</button>
 				<button value="2" onclick="setCategory(2)">수강생</button>
 				<button value="3" onclick="setCategory(3)">강사</button>
 				<button value="4" onclick="setCategory(4)">서비스</button>
-				<button id="faqWriteButton" onclick="faqWriteGo()">글쓰기</button>
 			</div>
-			<select id="searchType">
-			  <option value="1">제목</option>
-			  <option value="2">내용</option>
-			</select>
-	     	<input type="text" id ="searchText">
-	     	<button type="button" id="search">검색하기</button>
-	     	<!-- 검색기능 끝 -->
-		   <table id ="showlist">
-		   	<thead>
-		      <tr class="listhead">
-		         <th class="nidx">글번호</th>
-		         <th class="ntitle">제목</th>
-		         <th class="nid">작성자</th>
-		          <th class="nid">대상</th>
-		         <th class="ndate">날짜</th>
-		         <th class="nbhit">조회수</th>
-		        
-		      </tr>
-		     </thead>
-		     <tbody id="list" class="listhead"></tbody>
+			<div>
+				<select id="searchType" class="searchType">
+					<option value="1" class="searchType">제목</option>
+					<option value="2" class="searchType">내용</option>
+				</select> 
+				<input type="text" id="searchText">
+				<!--<button type="button" id="search">검색하기</button>  -->
+				<img src="resources/img/search.png" id="search" height="20px"
+				width="20px" onclick="search()" class="searchIcon">
+			</div>
+			</section>
+			<button id="faqWriteButton" onclick="faqWriteGo()">글쓰기</button>
+			<!-- 검색기능 끝 -->
+			<table id="showlist">
+				<thead>
+					<tr class="listhead">
+						<th class="nidx">글번호</th>
+						<th class="ntitle">제목</th>
+						<th class="nid">작성자</th>
+						<th class="nid">대상</th>
+						<th class="ndate">날짜</th>
+						<th class="nbhit">조회수</th>
+
+					</tr>
+				</thead>
+				<tbody id="list" class="listhead"></tbody>
 				<tr>
-					<td colspan="7" id = "paging">
-						<div class="container">                           
-		               		<nav aria-label="page navigation" style="text-align:center">
-		                 	 <ul class="pagination" id="pagination"></ul>
-		               		</nav> 
-		               		<hr>              
-		            	</div>
+					<td colspan="7" id="paging">
+						<div class="container">
+							<nav aria-label="page navigation" style="text-align: center">
+								<ul class="pagination" id="pagination"></ul>
+							</nav>
+							<hr>
+						</div>
 					</td>
 				</tr>
-		   </table>
-	   </div>
+			</table>
+		</div>
 	</div>
 	<div id="footer">
 		<li>상호명 : SONA</li>
@@ -184,6 +200,11 @@
 		listCall(showPage);
 	}
 	
+	function search(){
+		$('#pagination').twbsPagination('destroy');
+		showPage =1;
+		listCall(showPage);		
+	};
 	
 	
 	function listCall(page){

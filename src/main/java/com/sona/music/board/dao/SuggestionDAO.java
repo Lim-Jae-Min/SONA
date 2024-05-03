@@ -25,4 +25,10 @@ public interface SuggestionDAO {
 	int answerDelete(String sug_idx);
 
 	int suggestionsWrite(SuggestionDTO dto);
+
+	void photoWrite(String loginId, String fileName, String newFileName, int idx);
+
+	int suggestionsEdit(SuggestionDTO dto);
+
+	int answerEdit(int sug_answer_idx, String adminId, String sug_answer);
 }

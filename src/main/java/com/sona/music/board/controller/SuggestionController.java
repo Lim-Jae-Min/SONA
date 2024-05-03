@@ -25,7 +25,7 @@ public class SuggestionController {
 	
 	@Autowired SuggestionService suggestionService;
 	
-	@RequestMapping(value="suggestionsList.go")
+	@RequestMapping(value="/suggestionsList.go")
 	public String suggestionsListGo() {
 		return "suggestion/suggestionsList";
 	}
@@ -45,7 +45,7 @@ public class SuggestionController {
 		return map;
 	}
 	
-	@RequestMapping(value="suggestionsDetail.go")
+	@RequestMapping(value="/suggestionsDetail.go")
 	public String suggestionsDetailGo(String sug_idx, Model model) {
 		
 		suggestionService.suggestionsDetailGo(sug_idx, model);
@@ -53,12 +53,12 @@ public class SuggestionController {
 		return "suggestion/suggestionsDetail";
 	}
 	
-	@RequestMapping(value="suggestionsAnswerWrite.do")
-	public String answerWrite (String sug_idx, String sug_answer, HttpSession session) {
+	@RequestMapping(value="/suggestionsAnswerWrite.do")
+	public String answerWrite (String sug_idx, @RequestParam Map<String, String> param, HttpSession session) {
 		String page = "member/login";
 		String adminId = (String) session.getAttribute("loginId");
 		String user_type = (String) session.getAttribute("user_type");
-		
+		String sug_answer = param.get("sug_answer");
 		
 		if (user_type.equals("관리자")) {
 			int row = suggestionService.answerWrite(sug_idx, adminId, sug_answer);
@@ -69,7 +69,7 @@ public class SuggestionController {
 		return page;
 	}
 	
-	@RequestMapping(value="suggestionsDelete.do")
+	@RequestMapping(value="/suggestionsDelete.do")
 	public String suggestionsDelete (String sug_idx, HttpSession session) {
 		String page = "member/login";
 		
@@ -80,7 +80,7 @@ public class SuggestionController {
 		return page;
 	}
 	
-	@RequestMapping(value="answerDelete.do")
+	@RequestMapping(value="/answerDelete.do")
 	public String answerDelete (String sug_idx, HttpSession session) {
 		String page = "member/login";
 		String user_type = (String) session.getAttribute("user_type");
@@ -95,7 +95,7 @@ public class SuggestionController {
 		return page;
 	}
 	
-	@RequestMapping(value="suggestionsWrite.go")
+	@RequestMapping(value="/suggestionsWrite.go")
 	public String suggestionsWriteGo (HttpSession session) {
 		String page = "member/login";
 		
@@ -105,16 +105,71 @@ public class SuggestionController {
 		return page;
 	}
 	
-	@RequestMapping(value="suggestionsWrite.do", method = RequestMethod.POST)
-	public String suggestionsWriteDo (MultipartFile sug_photos, @RequestParam Map<String, String> param, HttpSession session) {
+	@RequestMapping(value="/suggestionsWrite.do", method = RequestMethod.POST)
+	public String suggestionsWriteDo (MultipartFile[] sug_photos, @RequestParam Map<String, String> param, HttpSession session) {
 		String page = "member/login";
 		String loginId = (String) session.getAttribute("loginId");
 		
 		if (loginId != null) {
-			page = "suggestion/suggestionsList";
+			page = "redirect:/suggestionsList.go";
 			int row = suggestionService.suggestionsWrite(sug_photos, param, loginId);
 			logger.info("입력한 게시글 수 = " + row);
 		}
 		return page;
 	}
+	
+	@RequestMapping(value="/suggestionsEdit.go")
+	public String suggestionsEditGo (String sug_idx, HttpSession session, Model model) {
+		String page = "member/login";
+		
+		if (session.getAttribute("loginId") != null) {
+			page = "suggestion/suggestionsEdit";
+			suggestionService.suggestionsEditGo(sug_idx, model);
+		}
+		return page;
+		
+	}
+	
+	@RequestMapping(value="/suggestionsEdit.do", method = RequestMethod.POST)
+	public String suggestionsEditDo (MultipartFile[] sug_photos, @RequestParam Map<String, String> param, String sug_idx, HttpSession session) {
+		String page = "member/login";
+		String loginId = (String) session.getAttribute("loginId");
+		
+		if (loginId != null) {
+			page = "redirect:/suggestionsDetail.go?sug_idx=" + sug_idx;
+			int row = suggestionService.suggestionsEdit(sug_photos, param, loginId, sug_idx);
+			logger.info("수정한 게시글 수 = " + row);
+		}
+		return page;
+	}
+	
+	@RequestMapping(value="/answerEdit.go")
+	public String answerEditGo (String sug_idx, HttpSession session, Model model) {
+		String page = "member/login";
+		
+		if (session.getAttribute("loginId") != null) {
+			page = "suggestion/suggestionsAnswerEdit";
+			suggestionService.answerEditGo(sug_idx, model);
+		}
+		return page;
+		
+	}
+	
+	@RequestMapping(value="/suggestionsAnswerEdit.do", method = RequestMethod.POST)
+	public String answerWrite (@RequestParam Map<String, String> param, String sug_idx, HttpSession session) {
+		String page = "member/login";
+		String adminId = (String) session.getAttribute("loginId");
+		String user_type = (String) session.getAttribute("user_type");
+		String sug_answer = param.get("sug_answer");
+		int sug_answer_idx = Integer.parseInt(param.get("sug_answer_idx"));
+		
+		if (user_type.equals("관리자")) {
+			int row = suggestionService.answerEdit(sug_answer_idx, adminId, sug_answer);
+			logger.info("수정한 row 수 = " + row);
+			page = "redirect:/suggestionsDetail.go?sug_idx=" + sug_idx;
+		}
+		
+		return page;
+	}
+	
 }

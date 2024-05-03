@@ -29,6 +29,11 @@ public class MemberDTO {
     private String index_order;
     private String class_disable;
     private int class_idx;
+    
+    private String favorite;
+    private String block;
+    
+    
 	public String getUser_id() {
 		return user_id;
 	}
@@ -166,6 +171,18 @@ public class MemberDTO {
 	}
 	public void setClass_idx(int class_idx) {
 		this.class_idx = class_idx;
+	}
+	public String getFavorite() {
+		return favorite;
+	}
+	public void setFavorite(String favorite) {
+		this.favorite = favorite;
+	}
+	public String getBlock() {
+		return block;
+	}
+	public void setBlock(String block) {
+		this.block = block;
 	}
 
 	

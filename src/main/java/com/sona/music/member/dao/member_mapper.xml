@@ -31,7 +31,7 @@
 	</update>
 	
  
-	<select id="login" resultType="com.sona.music.member.dto.MemberDTO">
+	<select id="userLogin" resultType="com.sona.music.member.dto.MemberDTO">
 		<![CDATA[
 			select 
 				u.USER_ID,
@@ -70,23 +70,25 @@
 				FROM MANNER_HISTORY mh), 2), '') AS manner,
 			(SELECT pb.NEW_FILENAME from PHOTO_BOARD pb WHERE u.USER_ID = pb.USER_ID
 				AND pb.PHOTO_CATEGORY='Profile' and pb.USER_ID='user2') as profile
-		FROM USERS u WHERE u.USER_ID = 'user2'
+		FROM USERS u WHERE u.USER_ID = #{param1}
 	</select>
 	
-	<select id="list" resultType="com.sona.music.member.dto.MemberDTO">
+	<select id="userLessonList" resultType="com.sona.music.member.dto.MemberDTO">
 		SELECT co.class_name
 		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 		         THEN 0
 		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 		         END AS count
-		   , FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
+		   , CASE WHEN FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx), 1) IS NULL THEN 0
+				ELSE FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx), 1)
+				END AS score
 		   , co.class_reg_date
-		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2'
+		FROM CLASS_OPEN co WHERE co.USER_ID = #{param1}
 		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>
 	
-	<select id="list2" resultType="com.sona.music.board.dto.ReviewDTO">
+	<select id="userReviewList" resultType="com.sona.music.board.dto.ReviewDTO">
 	SELECT 
 	    review_title,
 	    rater_id,
@@ -101,20 +103,36 @@
 	            score,
 	            review_reg_date,
 	            REVIEW_IDX,
-	            (SELECT COUNT(*) FROM REVIEW WHERE ratee_id = 'user2') AS total_reviews
+	            (SELECT COUNT(*) FROM REVIEW WHERE ratee_id = #{param1}) AS total_reviews
 	        FROM 
 	            REVIEW 
 	        WHERE 
-	            ratee_id = 'user2'
+	            ratee_id = #{param1}
 	    ) AS review_with_total_reviews
 	ORDER BY REVIEW_IDX DESC
 	    LIMIT #{param2} OFFSET #{param3}
    
 	</select>	
 	
+	<select id="userLessonCount" resultType="Integer">
+		SELECT CEIL(COUNT(*)/#{param1}) AS pages FROM CLASS_OPEN WHERE user_id = #{param2}
+	</select>
 	
-	<select id="allCount" resultType="Integer">
-		SELECT CEIL(COUNT(*)/#{param1}) AS pages FROM REVIEW
+	
+	<select id="userReviewCount" resultType="Integer">
+		SELECT CEIL(COUNT(*)/#{param1}) AS pages FROM REVIEW WHERE ratee_id = #{param2}
+	</select>
+	
+	<select id="adminLogin" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT a.admin_id FROM ADMIN a WHERE a.admin_id = #{param1} AND a.admin_pass = #{param2} 
+	</select>
+	
+	<select id="myTeacher" resultType="com.sona.music.member.dto.MemberDTO">
+		SELECT 
+			(SELECT mt.category FROM MY_TEACHER mt WHERE mt.user_id = #{param2} 
+				AND mt.teacher_id = #{param1} AND mt.category = 'favorite') AS favorite
+			, (SELECT mt2.category FROM MY_TEACHER mt2 WHERE mt2.user_id = #{param2} 
+				AND mt2.teacher_id = #{param1} AND mt2.category = 'block') AS block
 	</select>
 	
 </mapper>	

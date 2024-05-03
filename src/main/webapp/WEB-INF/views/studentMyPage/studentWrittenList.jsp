@@ -257,17 +257,6 @@ function drawList(list) {
         var satisfaction = parseFloat(send.score).toFixed(1); // 소수점 한 자리까지 표현
         satisfaction = '★' + satisfaction;
         
-        var firstLetter = send.ratee_id.charAt(0); // 첫 번째 글자
-        var otherLetters = send.ratee_id.substring(1); // 나머지 글자
-        
-        var maskedName = '';
-        if (send.ratee_id) {
-            var firstLetter = send.ratee_id.charAt(0); // 첫 번째 글자
-            var otherLetters = send.ratee_id.substring(1); // 나머지 글자
-            maskedName = firstLetter + "O".repeat(otherLetters.length);
-        } else {
-            maskedName = ''; // 빈 문자열 또는 다른 기본값으로 처리
-        }
 
         
         content += '<tr style="border-bottom: 1px solid #ddd; height: 50px;">'; // 각 항목에 경계선 추가
@@ -275,7 +264,7 @@ function drawList(list) {
         content += '<td style="text-align: center;">' +
         '<a href="./lessonReviewDetail.go?review_idx=' + send.review_idx + '">' + send.review_title + '</a>' +
         '</td>'; // 리뷰 제목
-        content += '<td style="text-align: center;">' + maskedName + '</td>'; // 대상자
+        content += '<td style="text-align: center;">' + send.user_name + '</td>'; // 대상자
         content += '<td style="text-align: center; color: yellow;">' + satisfaction + '</td>'; // 만족도
         content += '</tr>';
     }

@@ -296,7 +296,7 @@ function qnaListCall(page, selectedClass, loginId) {
 	        content += '<tr style="border-bottom: 1px solid #ddd;">'; // 각 항목에 경계선 추가
 	        content += '<td style="text-align: center;"><img src="' + lockIcon + '" class="locked-img" width="38" height="38"></td>'; // locked 이미지에 클래스 추가 및 중앙 정렬
 	        content += '<td style="text-align: center;">' +
-	        '<a href="/qnaDetail?q_idx=' + qna.question_idx + '">' + qna.q_title + '</a>' +
+	        '<a href="./lessonQnADetail.go?question_idx=' + qna.question_idx + '">' + qna.q_title + '</a>' +
 	        '</td>'; // 질문 제목
 	        content += '<td style="text-align: center;">' + qna.answer_status + '</td>'; // 답변 여부
 	        content += '<td style="text-align: center;">' + qna.q_reg_date + '</td>'; // 날짜

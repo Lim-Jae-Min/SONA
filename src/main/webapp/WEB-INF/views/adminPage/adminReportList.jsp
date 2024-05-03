@@ -114,7 +114,7 @@
                 <hr/>
                 <a href="adminMain.go">관리자 페이지</a>
                 <a href="adminUserList.go">회원 관리</a>
-                <a href="#">강의 관리</a>
+                <a href="adminLessonList.go">강의 관리</a>
                 <a href="noticeManagement.go">공지사항 관리</a>
                 <a href="faqManagement.go">faq 관리</a>
                 <a href="adminSuggestionsLIst.go">건의사항 관리</a>

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.member.dto.MemberDTO;
 import com.sona.music.member.service.MemberService;
 import com.sona.music.mypage.dto.MyPageDTO;
@@ -128,8 +128,10 @@ public class MemberController {
 	@RequestMapping(value="/userDetail.go")
 	public String userdetail(Model model, HttpSession session, String user_id) {
 		logger.info("회원상세보기 페이지 접근");
-		MemberDTO detail = memberService.userdetail(user_id);
-		model.addAttribute("detail" , detail);
+		
+		String loginId = (String) session.getAttribute("loginId");
+		
+		memberService.userdetail(user_id, loginId, model);
 		return "member/userDetail";
 	}
 	
@@ -139,11 +141,14 @@ public class MemberController {
 		String page = "member/login";
 		logger.info("id : {} | pw : {}", id, pw);
 		
-		
-		MemberDTO info = memberService.login(id, pw);
-		
-		
-		if(info != null) {
+		AdminDTO adminInfo = memberService.adminLogin(id, pw);
+		MemberDTO info = memberService.userLogin(id, pw);
+		if (adminInfo != null) {
+			session.setAttribute("loginId", adminInfo.getAdmin_id());
+			session.setAttribute("user_type", "관리자");
+			
+			page = "redirect:/adminMain.go";
+		} else if(info != null && adminInfo == null) {
 //			page = "/main/main";
 			session.setAttribute("loginId", info.getUser_id());	
 			session.setAttribute("user_type", info.getUser_type());	
@@ -225,7 +230,7 @@ public class MemberController {
 	}
 
 	/*회원 상세보기*/
-	@RequestMapping(value="/classreview.ajax")
+	@RequestMapping(value="/userLessonList.ajax")
 	@ResponseBody
 	public Map<String , Object> listCall(String page, String cnt, String user_id){
 //		logger.info("listCall 요청");
@@ -236,13 +241,13 @@ public class MemberController {
 		
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 5;
-		Map<String, Object>map = memberService.classreview(currPage, pagePerCnt, user_id);
+		Map<String, Object>map = memberService.userLessonList(currPage, pagePerCnt, user_id);
 		logger.info("map : {}",map);
 		
 		return map;
 	}
 	
-	@RequestMapping(value="/classreview2.ajax")
+	@RequestMapping(value="/userReviewList.ajax")
 	@ResponseBody
 	public Map<String , Object> listCall2(String page, String cnt, String user_id){
 		logger.info("listCall 요청");
@@ -252,7 +257,7 @@ public class MemberController {
 		
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 5;
-		Map<String, Object>map = memberService.classreview2(currPage, pagePerCnt, user_id);
+		Map<String, Object>map = memberService.userReviewList(currPage, pagePerCnt, user_id);
 		logger.info("map : {}",map);
 		
 		return map;

@@ -21,7 +21,6 @@
 	float: right;
 	font-weight: 900;
 	cursor: pointer;
-	display: none;
 }
 .locked {
 	width: 20px;
@@ -62,26 +61,6 @@ button {
     cursor: pointer;
     padding: 5px;
     width: 60px;
-}
-#editDiv {
-	height: 60px;
-    position: absolute;
-    top: 230px;
-    right: 300px;
-    border: solid 2px black;
-    background-color: white;
-    padding: 10px;
-    display: none;
-}
-#adminEditDiv {
-	height: 60px;
-    position: absolute;
-    top: 900px;
-    right: 300px;
-    border: solid 2px black;
-    background-color: white;
-    padding: 10px;
-    display: none;
 }
 </style>
 </head>
@@ -128,7 +107,7 @@ button {
     </header>
     <div id="content">
     	<br/><br/><br/><br/>
-    	<form action="suggestionsAnswerWrite.do?sug_idx=${dto.sug_idx}" method="post">
+    	<form action="suggestionsAnswerEdit.do?sug_idx=${dto.sug_idx}" method="post">
 	        <table id="contentTable">
 	        	<thead>
 	        		<tr>
@@ -145,8 +124,7 @@ button {
 	        		</tr>
 	        		<tr>
 	        			<td>
-	        				<span><b>${dto.user_name}</b>(${dto.user_id})&nbsp;&nbsp;&nbsp;&nbsp;${dto.sug_reg_date}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-	        				<span><img src="resources/img/eyes.png" class="eyes"/>&nbsp;&nbsp;${dto.sug_views}</span>
+	        				<span><b>${dto.user_name}</b>(${dto.user_id})&nbsp;&nbsp;&nbsp;&nbsp;${dto.sug_reg_date}</span>
 	        			</td>
 	        		</tr>
 	        		<tr><td><hr/></td></tr>
@@ -167,40 +145,21 @@ button {
 	        			</tr>
 	        		</c:if>
 	        		<tr><td><hr/></td></tr>
-	        		<c:if test="${dto.sug_answer_idx ne ''}">
-		        		<tr>
-		        			<td><b>답변</b></td>
-		        		</tr>
-		        		<tr><td><hr/></td></tr>
-		        		<tr>
-		        			<td>
-		        				<span>${dto.admin_id}&nbsp;&nbsp;${dto.sug_answer_reg_date}</span>
-		        				<span id="adminEditMenu">&hellip;</span>
-		        			</td>
-		        		</tr>
-		        		<tr>
-		        			<td>
-		        				<div>${dto.sug_answer}</div>
-		        			</td>
-		        		</tr>
-		        		<tr><td><hr/></td></tr>
-	        		</c:if>
 	        	</tbody>
-	        	<c:if test="${dto.sug_answer_idx ne '' && sessionScope.user_type eq '관리자'}">
-		        	<tfoot>
-		        		<tr>
-		        			<td>
-		        				<textarea name="sug_answer" placeholder="내용을 입력해주세요." id="classContent"></textarea>
-		        			</td>
-		        		</tr>
-		        		<tr>
-		        			<td>
-		        				<button type="button" id="answerSubmit">등록</button>
-		        			</td>
-		        		</tr>
-		        	</tfoot>
-		        	<tr><td><hr/></td></tr>
-	        	</c:if>
+		        <tfoot>
+		        	<tr>
+		        		<td>
+		        			<textarea name="sug_answer" placeholder="내용을 입력해주세요." id="classContent">${dto.sug_answer}</textarea>
+		        			<input type="hidden" name="sug_answer_idx" value="${dto.sug_answer_idx}"/>
+		        		</td>
+		        	</tr>
+		        	<tr>
+		        		<td>
+		        			<button type="button" id="answerSubmit">등록</button>
+		        		</td>
+		        	</tr>
+		        </tfoot>
+		        <tr><td><hr/></td></tr>
 	        </table>
         </form>
         <br/><br/>
@@ -237,14 +196,6 @@ button {
         <div><a href="myPage.go">마이페이지</a></div>
         <br/><br/><br/>
         <div><a href="logout.do">로그아웃</a></div>
-    </div>
-    <div id="editDiv">
-    	<a href="suggestionsEdit.go?sug_idx=${dto.sug_idx}">수정하기</a><br/><br/>
-    	<a id="suggestionsDelete">삭제하기</a>
-    </div>
-    <div id="adminEditDiv">
-    	<a href="answerEdit.go?sug_idx=${dto.sug_idx}">수정하기</a><br/><br/>
-    	<a id="answerDelete">삭제하기</a>
     </div>
 </body>
 <script>
@@ -285,48 +236,6 @@ $('#answerSubmit').click(function (){
 	}
 });
 
-$('#adminEditMenu').click(function () {
-	var display = $('#adminEditDiv').css('display');
-    if (display == 'none') {
-        $('#adminEditDiv').css('display', 'block');
-    }
-    if (display == 'block') {
-        $('#adminEditDiv').css('display', 'none');
-    }
-});
-
-$('#editMenu').click(function () {
-	var display = $('#editDiv').css('display');
-    if (display == 'none') {
-        $('#editDiv').css('display', 'block');
-    }
-    if (display == 'block') {
-        $('#editDiv').css('display', 'none');
-    }
-});
-
-$('#suggestionsDelete').click(function (){
-	var result = confirm('삭제하시겠습니까?');
-	
-	if (result) {
-		location.href = 'suggestionsDelete.do?sug_idx=' + '${dto.sug_idx}';
-	}
-});
-
-$('#answerDelete').click(function (){
-	var result = confirm('삭제하시겠습니까?');
-	
-	if (result) {
-		location.href = 'answerDelete.do?sug_idx=' + '${dto.sug_idx}';
-	}
-});
-
-var loginId = '${sessionScope.loginId}';
-var boardId = '${dto.user_id}';
-
-if (loginId == boardId) {
-	$('#editMenu').css('display', 'inline-block');
-}
 
 </script>
 </html>

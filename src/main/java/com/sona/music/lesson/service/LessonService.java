@@ -52,8 +52,6 @@ public class LessonService {
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<LessonDTO> list = lessonDAO.allListCall(pagePerCnt, start, condition, content, loca, instCategory, inst);
-		String test = list.get(0).getClass_name();
-		logger.info("test : " + test);
 		logger.info("list : {}", list);
 		logger.info("list size : "+list.size());
 		result.put("list", list);		

@@ -26,8 +26,8 @@ public class AlarmController {
 	@Autowired AlarmService alarmService;
 	/*알림 리스트로 이동*/
 	@RequestMapping(value="/alarmList.go")
-	public String alarmList(Model model, HttpSession session) {
-		model.addAttribute("msg", "알림 리스트 이동");
+	public String alarmList(HttpSession session) {
+		logger.info("알림 리스트로 이동!~~~~~~~~~~~");
 		String page = "member/login";
 		
 		if (session.getAttribute("loginId") != null) {
@@ -53,22 +53,67 @@ public class AlarmController {
 	}
 	
 	// 배열 형태로 들어올 경우 따로 명시를 해줘야 한다.
-		@RequestMapping(value="/del.ajax", method=RequestMethod.POST)
-		@ResponseBody // response 객체로 반환
-		public Map<String, Object> del(@RequestParam(value="delList[]") List<String> delList) {
-			logger.info("del List : {}",delList);
+	@RequestMapping(value="/del.ajax", method=RequestMethod.POST)
+	@ResponseBody // response 객체로 반환
+	public Map<String, Object> del(@RequestParam(value="delList[]") List<String> delList) {
+		logger.info("삭제 요청!!!!!!!!!!!!!!!!!!!!!!!");
+		logger.info("del List : {}",delList);
+
+		int cnt = alarmService.del(delList);
+		logger.info("del count :"+cnt);
 			
-			int cnt = alarmService.del(delList);
-			logger.info("del count :"+cnt);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cnt", cnt);
 			
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("cnt", cnt);
+		return map; //json 과 가장 닮은 map으로 반환
+	}
+
+
+	@RequestMapping(value="/read.ajax", method=RequestMethod.POST)
+	@ResponseBody // response 객체로 반환
+	public Map<String, Object> read(@RequestParam(value="readList[]") List<String> readList) {
+		logger.info("읽음 요청!!!!!!!!!!!!!!!!!!!!!!!");
+		logger.info("del List : {}",readList);
+		
+		
+		int cnt = alarmService.read(readList);
+		logger.info("del count :"+cnt);
+					
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("cnt", cnt);
+					
+		return map; 
+	}
 			
-			return map; //json 과 가자 닮은 map으로 반환
+			
+	
+	/*알림 상세보기로 이동*/
+	@RequestMapping(value="/alarmDetail.go")
+	public String alarmDetail(Model model ,String alarm_idx, HttpSession session) {
+		logger.info("알림 상세보기로 이동!!!!!!!!!!!!!!!!!!!!!!!");
+		String page = "member/login";
+		int idx = Integer.parseInt(alarm_idx);
+		if (session.getAttribute("loginId") != null) {
+		alarmService.alarmDetail(idx, model);	
+			
+			page = "alarm/alarmDetail";
 		}
+		
+		return page;
+	}
 	
 	
+	@RequestMapping(value="/detailDel.ajax", method=RequestMethod.POST)
+	@ResponseBody // response 객체로 반환
+	public int detailDel(int alarm_idx) {
+		logger.info("상세보기에서 삭제 요청!!!!!!!!!!!!!!!!!!!!!!!");
+		logger.info("삭제할 IDX: "+alarm_idx);
+		
+		int cnt = alarmService.detailDel(alarm_idx);
+		logger.info("cnt: "+ cnt);
 			
-			
+		return cnt; //json 과 가장 닮은 map으로 반환
+	}
+	
 	
 }

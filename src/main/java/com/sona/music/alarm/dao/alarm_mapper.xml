@@ -24,11 +24,30 @@
 	LIMIT #{param2},#{param1}
 	</select>
 	
+	<update id="del">
+	UPDATE ALARM_HISTORY SET ALARM_DELETE = 1 
+		WHERE alarm_idx = #{param1};
+	</update>
+	
 	
 	<update id="alarmViews">
 	UPDATE ALARM_HISTORY SET ALARM_VIEWS = ALARM_VIEWS+1 
 		WHERE alarm_idx = #{param1};
 	</update>
 	
+	<select id="alarmDetail" resultType="com.sona.music.alarm.dto.AlarmDTO" >
+	SELECT 
+		 ALARM_IDX
+		,ALARM_TITLE
+		,ALARM_DATE 
+		,ALARM_CONTENT
+		,ALARM_VIEWS
+		,ALARM_DELETE
+	FROM ALARM_HISTORY WHERE ALARM_IDX = #{param1}
+	</select>
 	
+	<update id="detailDel">
+	UPDATE ALARM_HISTORY SET ALARM_DELETE = 1 
+		WHERE alarm_idx = #{param1};
+	</update>
 </mapper>

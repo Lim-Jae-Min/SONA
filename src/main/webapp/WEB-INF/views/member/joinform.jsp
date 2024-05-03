@@ -330,7 +330,7 @@ if(msg != ''){
 function overlay(){
 	console.log('click');
 	
-	var id = $('input[name="id"]').val();
+	var id = $('input[name="user_id"]').val();
 	
 	$.ajax({
 		type:'post',

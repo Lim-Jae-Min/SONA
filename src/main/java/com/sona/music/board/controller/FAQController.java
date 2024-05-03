@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sona.music.admin.service.AdminService;
 import com.sona.music.board.service.FAQService;
 
 @Controller
@@ -18,10 +19,11 @@ public class FAQController {
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Autowired FAQService faqService;
+	@Autowired AdminService adminService;
 	
 	
 	@RequestMapping(value = "/faqList.go")
-	public String faqDetailAdminGo() {
+	public String faqListGo() {
 		return "faq/faqList";
 	}
 	
@@ -44,5 +46,29 @@ public class FAQController {
 		return map;
 	}
 	
+	
+	
+	@RequestMapping(value = "faqList.ajax")
+	@ResponseBody
+	public Map<String, Object> faqList(int page, int categoryNum) {
+		logger.info("noticeManagementlist 요청");
+		logger.info("요청페이지 : " + page);
+
+		logger.info("faq 검색에서 가져온 category num : " + categoryNum);
+		Map<String, Object> map = null;
+		int currPage = page;
+			
+		map = faqService.faqList(currPage,categoryNum);	
+		
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/faqDetail.go")
+	public String faqDetailGo(int idx, Model model) {
+		
+		faqService.faqDetailAdmin(idx, model);
+		return "faq/faqDetail";
+	}
 	
 }

@@ -263,12 +263,6 @@ function receiveListCall(page, loginId) {
 	        var receive = list[i];
 	        var satisfaction = parseFloat(receive.score).toFixed(1); // 소수점 한 자리까지 표현
 	        satisfaction = '★' + satisfaction;
-	        
-	        var firstLetter = receive.rater_id.charAt(0); // 첫 번째 글자
-	        var otherLetters = receive.rater_id.substring(1); // 나머지 글자
-	        
-	        var maskedName = firstLetter + "O".repeat(otherLetters.length);
-
 
 	        
 	        content += '<tr style="border-bottom: 1px solid #ddd; height: 50px;">'; // 각 항목에 경계선 추가
@@ -276,8 +270,9 @@ function receiveListCall(page, loginId) {
 	        content += '<td style="text-align: center;">' +
 	        '<a href="./lessonReviewDetail.go?review_idx=' + receive.review_idx + '">' + receive.review_title + '</a>' +
 	        '</td>'; // 리뷰 제목
-	        content += '<td style="text-align: center;">' + maskedName + '</td>'; // 작성자
+	        content += '<td style="text-align: center;">' + receive.user_name + '</td>'; // 작성자
 	        content += '<td style="text-align: center; color: yellow;">' + satisfaction + '</td>'; // 만족도
+	        content += '<td style="text-align: center;">' + receive.manner_variance + '</td>'; // 매너점수
 	        content += '</tr>';
 	    }
 	    $('#list').html(content); // 리스트를 테이블에 추가

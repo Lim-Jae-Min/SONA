@@ -145,7 +145,7 @@
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 							<button id="chargeButton" style="background-color: #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">충전</button>
-							<button style="background-color: #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;" onclick="window.location.href='./withdrawPoint.go';">출금</button>
+							<button id="withdrawButton" style="background-color: #BEE6FF; color: black; border: none; padding: 10px 20px; text-align: center; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px;">출금</button>
                         </td>
                   </tr>
                 </tbody>
@@ -299,20 +299,33 @@
     </div>
 </body>
 <script>
+
 $(document).ready(function(){
     $("#chargeButton").click(function(){
         var loginId = "${sessionScope.loginId}";
-        $.ajax({
-            url: "./chargePoint.go",
-            type: "POST",
-            data: { loginId: loginId },
-            success: function(response){
-                // 성공 시 처리할 내용
-                // 리다이렉트이므로 추가적인 처리가 필요하지 않음
-            }
-        });
+        // loginId 값이 없을 경우에는 이동하지 않음
+        if(loginId) {
+            // chargePoint.go로 이동하는 URL 생성
+            var url = "./chargePoint.go?loginId=" + loginId;
+            // 생성한 URL로 이동
+            window.location.href = url;
+        }
     });
 });
+
+$(document).ready(function(){
+    $("#withdrawButton").click(function(){
+        var loginId = "${sessionScope.loginId}";
+        // loginId 값이 없을 경우에는 이동하지 않음
+        if(loginId) {
+            // chargePoint.go로 이동하는 URL 생성
+            var url = "./withdrawPoint.go?loginId=" + loginId;
+            // 생성한 URL로 이동
+            window.location.href = url;
+        }
+    });
+});
+
 
 
 $('.alarm').click(function alarmList() {

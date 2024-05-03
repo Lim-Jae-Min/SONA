@@ -5,6 +5,7 @@ import java.util.List;
 
 import java.util.Map;
 
+import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.board.dto.ReviewDTO;
 import com.sona.music.member.dto.MemberDTO;
 
@@ -12,7 +13,7 @@ public interface MemberDAO {
 
 	String findIdEmail(String email);
 	
-	MemberDTO login(String id, String pw);
+	MemberDTO userLogin(String id, String pw);
 
 	List<String> findId(String email);
 
@@ -26,16 +27,22 @@ public interface MemberDAO {
 
 	Object overlay(String id);
 
-	List<MemberDTO> list(String user_id, int pagePerCnt, int start);
+	List<MemberDTO> userLessonList(String user_id, int pagePerCnt, int start);
 
-	int allCount(int pagePerCnt);
+	int userReviewCount(int pagePerCnt, String user_id);
 
 
-	List<ReviewDTO> list2(String user_id, int pagePerCnt, int start);
+	List<ReviewDTO> userReviewList(String user_id, int pagePerCnt, int start);
 
 	MemberDTO detail(String user_id);
 
 	int join(MemberDTO dto);
+
+	AdminDTO adminLogin(String id, String pw);
+
+	Object userLessonCount(int pagePerCnt, String user_id);
+
+	MemberDTO myTeacher(String user_id, String loginId);
 
 
 }

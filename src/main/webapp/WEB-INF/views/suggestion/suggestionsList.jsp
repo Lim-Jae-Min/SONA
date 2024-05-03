@@ -134,8 +134,8 @@
 	    <div id="serviceSideMenu">
 	        <h3 class="blueFont">고객센터</h3>
 	        <hr/>
-	        <a href="#">공지사항</a>
-	        <a href="#">FAQ</a>
+	        <a href="noticeList.go">공지사항</a>
+	        <a href="faqList.go">FAQ</a>
 	        <a href="suggestionsList.go">건의사항</a>
 	    </div>
 	    <div id="content">

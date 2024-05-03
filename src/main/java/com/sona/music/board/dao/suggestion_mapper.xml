@@ -15,8 +15,9 @@
 			, sb.user_id
 		FROM SUG_BOARD sb JOIN USERS u ON sb.user_id = u.user_id 
 			LEFT JOIN SUG_ANSWER sa ON sb.sug_idx = sa.sug_idx
+		WHERE sb.sug_delete = 0
 		<if test="param4 != ''">
-			WHERE
+			AND
 			<if test="param3 == 'sug_title'">
 				sb.sug_title LIKE CONCAT('%', #{param4}, '%')
 			</if>
@@ -78,5 +79,41 @@
 		WHERE pb.post_idx = #{param1} AND pb.photo_category = 'Suggestion'
 	</select>
 
-
+	<insert id="answerWrite">
+		INSERT INTO SUG_ANSWER(sug_idx, admin_id, sug_answer)
+			VALUES(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<update id="suggestionsDelete">
+		UPDATE SUG_BOARD SET sug_delete = 1 WHERE sug_idx = #{param1}
+	</update>
+	
+	<delete id="answerDelete">
+		DELETE FROM SUG_ANSWER WHERE sug_idx = #{param1}
+	</delete>
+	
+	<insert id="suggestionsWrite"
+		useGeneratedKeys="true"
+		keyColumn="sug_idx"
+		keyProperty="sug_idx"
+		parameterType="com.sona.music.board.dto.SuggestionDTO">
+		INSERT INTO SUG_BOARD(user_id, sug_title, sug_content, sug_secret)
+			VALUES(#{user_id}, #{sug_title}, #{sug_content}, #{sug_secret})
+	</insert>
+	
+	<insert id="photoWrite">
+		INSERT INTO PHOTO_BOARD(user_id, ori_filename, new_filename, post_idx, photo_category) 
+			VALUES(#{param1}, #{param2}, #{param3}, #{param4}, 'Suggestion')
+	</insert>
+	
+	<update id="suggestionsEdit" parameterType="com.sona.music.board.dto.SuggestionDTO">
+		UPDATE SUG_BOARD SET sug_title = #{sug_title}, sug_content = #{sug_content}, sug_secret = #{sug_secret}
+			WHERE sug_idx = #{sug_idx}
+	</update>
+	
+	<update id="answerEdit">
+		UPDATE SUG_ANSWER SET admin_id = #{param2}, sug_answer = #{param3}
+			WHERE sug_answer_idx = #{param1}
+	</update>
+	
 </mapper>

@@ -173,7 +173,7 @@ p.editOption{
     <!-- 게시판 영역 -->
     <form action="adminFaqEdit.do" method="post">
 	    <div class="container">
-	        <h1>FAQ 글쓰기</h1>
+	        <h1>FAQ 수정하기</h1>
 
 	        	<hr>
 	            <div>자주 묻는 질문       
@@ -182,12 +182,14 @@ p.editOption{
 	        		<option value="강사">강사</option>
 	        		<option value="서비스">서비스</option>
 	        	</select>
-	        	<input name="title" class="textA" type="text" id="title"  placeholder="제목을 입력 해주세요." value="${faqDetail.faq_title}">	
+	        	<%-- <input name="title" class="textA" type="text" id="title"  placeholder="제목을 입력 해주세요." value="${faqDetail.faq_title}">	 --%>
+	         	<textarea class="textA" id="title" cols="100" wrap="hard"  name="title" required="required" id="inputContent">${faqDetail.faq_title}</textarea>
 	         </div>    
 	        	<hr>
 	        	대답  
 	        <div id="boardDetail">
-				<input name="answer" class="textA" type="text" id="content" placeholder="내용을 입력 해주세요" value="${faqDetail.faq_answer}">           
+				<%-- <input name="answer" class="textA" type="text" id="content" placeholder="내용을 입력 해주세요" value="${faqDetail.faq_answer}">   --%>         
+	        	<textarea  class="textA" id="content" cols="100" wrap="hard"  name="answer" required="required" id="inputContent">${faqDetail.faq_answer}</textarea>
 	        	<hr>
 	        </div>
 	        <div>

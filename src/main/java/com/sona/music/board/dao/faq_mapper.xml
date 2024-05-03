@@ -115,8 +115,7 @@
 	<select id="faqDetailAdmin" resultType="com.sona.music.board.dto.FAQDTO">
 		SELECT * FROM FAQ_BOARD WHERE faq_idx = #{param1}
 	</select>
-	
-	
+
 	
 	<select id="faqList" resultType="com.sona.music.board.dto.FAQDTO">
 	    SELECT * FROM FAQ_BOARD WHERE faq_delete = #{param3}
@@ -170,5 +169,5 @@
 		UPDATE FAQ_BOARD SET faq_views = faq_views+1 WHERE faq_idx = #{param1}
 	</update>
 	
-	
+
 </mapper>

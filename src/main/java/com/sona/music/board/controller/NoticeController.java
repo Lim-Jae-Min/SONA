@@ -20,17 +20,19 @@ public class NoticeController {
 	@Autowired NoticeService noticeService;
 	
 	
-	@RequestMapping(value = "noticeList.go")
+	@RequestMapping(value = "/noticeList.go")
 	public String noticeListGo() {
 		
-		return "notice/NoticeList";
+		logger.info("공지사항 리스트 진입");
+		
+		return "noticePage/noticeList";
 	}
 	
 	@RequestMapping(value = "/noticeDetail.go")
 	public String noticeDetailAdminGo(int idx, Model model) {
 		noticeService.noticeDetailAdmin(idx, model);
 
-		return "notice/NoticeDetail";
+		return "noticePage/noticeDetail";
 	}
 	
 	@RequestMapping(value = "noticeManagementlist.ajax")

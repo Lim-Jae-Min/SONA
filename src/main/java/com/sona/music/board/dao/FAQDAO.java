@@ -12,6 +12,7 @@ public interface FAQDAO {
 
 	FAQDTO faqDetailAdmin(int idx);
 
+
 	List<FAQDTO> faqList(int start, int pagePerCnt, int deleteStatus, int categoryNum);
 
 	Object faqAllCount(int pagePerCnt, int deleteStatus, int categoryNum);

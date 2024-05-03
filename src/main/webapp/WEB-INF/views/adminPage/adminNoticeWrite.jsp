@@ -10,138 +10,143 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style> 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    background-color: #fff;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-#boardDetail {
-    margin-top: 20px;
-    margin: 1px;
-}
-
-#boardTitle {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-#boardWriter, #boardDate, #boardViews {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-#boardImageWrapper img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-#boardContent {
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-#adminButtons {
-    margin-top: 20px;
-    text-align: center;
-}
-
-#adminButtons button {
-    padding: 10px 20px;
-    margin-right: 10px;
-    border: none;
-    background-color: #007bff;
-    color: #eee;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#confirmDelete {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-}
-
-.modal-content p {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.modal-content button {
-    padding: 10px 20px;
-    margin-right: 10px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.hidden {
-    display: block;
-}
-img{
-	width: 40%
-}
-
-hr{
-	margin-top: 20px;
-    margin-bottom: 20px;
-    border: 0;
-    border-top: 3px solid #eee
-}
-#editButton{
-	position : relative;
-	left: 48%;
-}
-p.editOption{
-	position : relative;
-}
-
-#editslide{
-	border: 1px solid black;
-	position:absolute;
-	max-width: 50px;
-	left: 48%;
-	width: 45;
-    text-align: center;
-}
-.buttonA{
-	position: relative;
-	left: 87%;
-}
-.textA{
-	width: 700px;
-}
-#content{
-	width: 735px;
-}
+	.container {
+	    max-width: 800px;
+	    margin: 0 auto;
+	    padding: 20px;
+	    border: 1px solid #fff;
+	    border-radius: 5px;
+	    background-color: #fff;
+	}
+	
+	h1 {
+	    text-align: center;
+	    margin-bottom: 20px;
+	}
+	
+	#boardDetail {
+	    margin-top: 20px;
+	    margin: 1px;
+	}
+	
+	#boardTitle {
+	    font-size: 24px;
+	    font-weight: bold;
+	    margin-bottom: 10px;
+	}
+	
+	#boardWriter, #boardDate, #boardViews {
+	    font-size: 16px;
+	    color: #666;
+	    margin-bottom: 10px;
+	}
+	
+	#boardImageWrapper img {
+	    max-width: 100%;
+	    height: auto;
+	    margin-bottom: 10px;
+	}
+	
+	#boardContent {
+	    font-size: 18px;
+	    line-height: 1.6;
+	    margin-bottom: 20px;
+	}
+	
+	#adminButtons {
+	    margin-top: 20px;
+	    text-align: center;
+	}
+	
+	#adminButtons button {
+	    padding: 10px 20px;
+	    margin-right: 10px;
+	    border: none;
+	    background-color: #007bff;
+	    color: #eee;
+	    font-size: 16px;
+	    cursor: pointer;
+	}
+	
+	#confirmDelete {
+	    display: none;
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    background-color: rgba(0, 0, 0, 0.5);
+	}
+	
+	.modal-content {
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    padding: 20px;
+	    background-color: #fff;
+	    border-radius: 5px;
+	}
+	
+	.modal-content p {
+	    font-size: 16px;
+	    margin-bottom: 20px;
+	}
+	
+	.modal-content button {
+	    padding: 10px 20px;
+	    margin-right: 10px;
+	    border: none;
+	    background-color: #007bff;
+	    color: #fff;
+	    font-size: 16px;
+	    cursor: pointer;
+	}
+	
+	.hidden {
+	    display: block;
+	}
+	img{
+		width: 40%
+	}
+	
+	hr{
+		margin-top: 20px;
+	    margin-bottom: 20px;
+	    border: 0;
+	    border-top: 3px solid #eee
+	}
+	#editButton{
+		position : relative;
+		left: 48%;
+	}
+	p.editOption{
+		position : relative;
+	}
+	
+	#editslide{
+		border: 1px solid black;
+		position:absolute;
+		max-width: 50px;
+		left: 48%;
+		width: 45;
+	    text-align: center;
+	}
+	.buttonA{
+		position: relative;
+		left: 87%;
+	}
+	.textA{
+		width: 700px;
+	}
+	#content{
+		width: 735px;
+	}
+	
+	#inputContent{
+		width: 790px;
+		height: 300px;
+	}
 </style>
 </head>
 <body>
@@ -173,7 +178,7 @@ p.editOption{
 	        	내용  
 	        <div id="boardDetail">
 				<!-- <input name="content" class="textA" type="text" id="content" placeholder="내용을 입력 해주세요">    -->  
-				<textarea name="content"style="width: 882px; height: 311px; resize: none;"></textarea>    
+				<textarea  cols="100" wrap="hard"  name="content" required="required" id="inputContent"></textarea>
 	        	<hr>
 	        </div>
 	        <div>

@@ -51,7 +51,7 @@ public class FAQService {
 		String answer = dto.getFaq_answer();
 		int faqIdx = dto.getFaq_idx();
 //		faqDAO.faqViews(idx);
-		
+		faqDAO.faqViews(idx);
 		String title = dto.getFaq_title();
 		logger.info("FAQ 들어간 FAQ 상세보기 : " + title);	
 		logger.info("FAQ 들어간 FAQ 상세보기 : " + answer);	

@@ -126,7 +126,9 @@
 			  <option value="3">작성자</option>
 			</select>
 	     	<input type="text" id ="searchText">
-	     	<button type="button" id="search">검색하기</button>
+	     	<!-- <button type="button" id="search">검색하기</button> -->
+	     	<img src="resources/img/search.png" id="search" height="20px"
+					width="20px" onclick="search()" class="searchIcon">
 	     	<!-- 검색기능 끝 -->
 		   <table id ="showlist">
 		   	<thead>
@@ -178,6 +180,12 @@
 		showPage =1;
 		listCall(showPage);
 	});
+	
+	function search(){
+		$('#pagination').twbsPagination('destroy');
+		showPage =1;
+		listCall(showPage);		
+	};
 
 	function setCategory(num){
 		console.log(num);

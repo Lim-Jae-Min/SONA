@@ -15,6 +15,7 @@
     border: 1px solid #fff;
     border-radius: 5px;
     background-color: #fff;
+    margin-top: 60px;
 }
 
 h1 {
@@ -145,16 +146,42 @@ p.editOption{
 
     
 }
-#returnList{
+/* #returnList{
 	left : 50%;
 	position: relative;
 }
 #faqDel{
-	background: red;
 	position: relative;
 	left: 55%;
+} */
+.faqInfo1{
+	position : relative;
+	display: inline-block;
 }
-
+.faqInfo2{
+	position : relative;
+	display: inline-block;
+	left: 56%;
+}
+.faqQuestion{
+	margin-bottom: 40px;
+}
+.faqButton{
+	position: relative;
+	left: 24%;
+    width: 500px;
+}
+.faqButton button{
+	width: 70px;
+	height: 50px;
+	margin-left: 50px;
+}
+#faqDetail{
+	height: 400px;
+}
+.faqQtext{
+	margin-bottom: 100px;
+}
 </style>
 </head>
 <body>
@@ -177,26 +204,30 @@ p.editOption{
     <!-- 헤더영역 -->
     
     <!-- 게시판 영역 -->
-    <div class="container">
-        <h1>FAQ 상세보기</h1>
-            <h2 id="boardTitle">${faqDetail.faq_title}</h2>
+	<div class="container">
+		<h1>FAQ 상세보기</h1>
+		<%-- <h2 id="boardTitle">${faqDetail.faq_title}</h2> --%>
 
-        <div id="boardDetail">
-        작성자 : ${faqDetail.admin_id}  작성일자 : ${faqDetail.faq_reg_date} &nbsp;&nbsp;  조회수 : ${faqDetail.faq_views} 대상 : ${faqDetail.faq_target}
-            <hr>
- 
-            <p id="boardContent">${faqDetail.faq_answer}</p>
-            <hr>
+		<div id="boardDetail">
+			<div class="faqInfo1">작성일자 : ${faqDetail.faq_reg_date}</div>
+			<div class="faqInfo2">조회수 : ${faqDetail.faq_views}&nbsp; 대상 :
+				${faqDetail.faq_target}</div>
+			<hr>
+		<div id="faqDetail">
+			<div class="faqQuestion"><h2 id="boardTitle">자주묻는 질문  </h2><pre class="faqQtext">${faqDetail.faq_title}</pre></div>
+			
+			<div class="faqAnswer"><h2 id="boardContent">답변  </h2><pre>${faqDetail.faq_answer}</pre></div>
+		</div>
+			<hr>
+		<div class="faqButton">
+			<button id="returnList" onclick="backList()">목록</button>
+			<button class="editOption" id="faqEdit" onclick="faqEdit()">수정</button>
+			<button class="editOption" id="faqDel" onclick="faqDel()">삭제</button>
+		</div>
+		</div>
+	</div>
 
-            
-            <button id="returnList" onclick="backList()">목록</button>
-	        <button class="editOption" id="faqEdit" onclick="faqEdit()">수정</button>
-	        <button class="editOption" id="faqDel" onclick="faqDel()">삭제</button>
-            
-        </div>
-    </div>
-    
-    <!-- 게시판 영역 -->
+	<!-- 게시판 영역 -->
 
 
 	<!-- 푸터 영역 -->
@@ -325,7 +356,7 @@ $('.alarm').click(function alarmList() {
     
     /* 목록으로 가기 */
 	 function backList(){
-	    	location.href = "faqManagement.go";
+	    	location.href = "adminFaqList.go";
 	    	
 	    }
     function faqEdit(){

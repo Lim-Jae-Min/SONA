@@ -125,7 +125,9 @@
 			, co.inst_category_idx
 			, co.class_inst
 			, (SELECT u.user_name FROM USERS u WHERE u.user_id = co.user_id) AS user_name
-			, FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 2) AS class_score
+			, CASE WHEN FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx), 2) IS NULL THEN 0
+				ELSE FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx), 2)
+				END AS class_score
 			, co.user_id
 			, co.class_location
 			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner

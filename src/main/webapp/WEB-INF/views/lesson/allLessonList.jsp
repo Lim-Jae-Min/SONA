@@ -77,6 +77,8 @@
 	border: none;
 	margin-left: 80px;
 	display: block;
+	border-radius: 5px;
+	cursor: pointer;
 }
 </style>
 </head>

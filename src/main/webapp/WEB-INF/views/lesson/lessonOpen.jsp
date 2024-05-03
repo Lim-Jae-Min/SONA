@@ -743,8 +743,9 @@ $('#open').click(function() {
 				$classPrice.val('');
 				$classPrice.focus();
 				return false;
+			}else {
+				$('form').submit();
 			}
-			$('form').submit();
 		}
 	}
 });

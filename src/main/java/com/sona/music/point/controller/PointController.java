@@ -29,7 +29,7 @@ public class PointController {
 	
 	@Autowired PointService pointService;
 	
-	@RequestMapping(value = "/chargePoint.go", method = RequestMethod.POST)
+	@RequestMapping(value = "/chargePoint.go")
 	public String chargePointGo(Model model, HttpSession session) {
 		String id =(String) session.getAttribute("loginId");
 		String page = "redirect:/";
@@ -39,9 +39,9 @@ public class PointController {
 			logger.info(chargePointLoginId);
 			int havePoint = pointService.getHavePoint(chargePointLoginId);
 			model.addAttribute("havePoint", havePoint);
-			page = "myPoint/chargePoint";
-			
+			page = "myPoint/chargePoint";		
 		}
+		logger.info("ㅎㅇㅎㅇ");
 		return page;
 	}
 	
@@ -75,7 +75,7 @@ public class PointController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/withdrawPoint.go" , method = RequestMethod.POST)
+	@RequestMapping(value = "/withdrawPoint.go")
 	public String withdrawPointGO(Model model, HttpSession session) {
 		
 		String page = "redirect:/";

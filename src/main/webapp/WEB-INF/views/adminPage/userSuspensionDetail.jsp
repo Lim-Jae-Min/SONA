@@ -156,7 +156,7 @@
                 <hr/>
                 <a href="adminMain.go">관리자 페이지</a>
                 <a href="adminUserList.go">회원 관리</a>
-                <a href="#">강의 관리</a>
+                <a href="adminLessonList.go">강의 관리</a>
                 <a href="noticeManagement.go">공지사항 관리</a>
                 <a href="faqManagement.go">faq 관리</a>
                 <a href="adminSuggestionsLIst.go">건의사항 관리</a>
@@ -287,6 +287,8 @@
 	        if (xhr.status == 200) {
 	            alert("사용자가 추가 정지되었습니다.");
 	            // 추가 정지 후에 필요한 추가 동작이 있으면 여기에 추가하세요.
+	            // 추가 정지가 완료된 후에 userSuspensionHistory.go로 이동하도록 추가합니다.
+	            window.location.href = "userSuspensionHistory.go";
 	        } else {
 	            alert("요청을 처리하는 동안 오류가 발생했습니다.");
 	        }
@@ -312,6 +314,8 @@
 	            if (xhr.status == 200) {
 	                alert("사용자가 정지가 해제되었습니다.");
 	                // 정지 해제 후에 필요한 추가 동작이 있으면 여기에 추가하세요.
+	                // 사용자가 정지가 해제된 후에 userSuspensionHistory.go로 이동하도록 추가합니다.
+	                window.location.href = "userSuspensionHistory.go";
 	            } else {
 	                alert("요청을 처리하는 동안 오류가 발생했습니다.");
 	            }

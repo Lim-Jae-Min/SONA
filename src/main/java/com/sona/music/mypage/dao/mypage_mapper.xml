@@ -379,47 +379,90 @@ LIMIT #{param2} OFFSET #{param3}
 				LIMIT #{param2} OFFSET #{param3}
 	</select>
 	
-	<select id="receiveList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
-		select r.review_idx, r.review_reg_date, r.review_title, r.rater_id, r.score from REVIEW r 
-			join USERS u on u.user_id = r.ratee_id 
-			where u.user_id = #{param3}
-				ORDER BY 
-				    r.review_idx desc
-						LIMIT #{param2},#{param1}
-	</select>
+<select id="receiveList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
+    SELECT 
+        r.review_idx, 
+        r.review_reg_date, 
+        r.review_title, 
+        u2.user_name AS user_name, 
+        r.score,
+        FORMAT(((r.score - 3) * 0.25), 2) AS manner_variance
+    FROM 
+        REVIEW r 
+    JOIN 
+        USERS u1 ON u1.user_id = r.ratee_id 
+    JOIN 
+        USERS u2 ON u2.user_id = r.rater_id 
+    WHERE 
+        r.ratee_id = #{param3}
+    ORDER BY 
+        r.review_idx DESC
+    LIMIT 
+        #{param2}, #{param1}
+</select>
 	   
 	<select id="sendList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
-		select r.review_idx, r.review_reg_date, r.review_title, r.ratee_id, r.score from REVIEW r 
-			join USERS u on u.user_id = r.rater_id 
-				where u.user_id = #{param3}
-					ORDER BY 
-				   	 r.review_idx desc
-						LIMIT #{param2},#{param1}	   	   
+	    SELECT 
+	        r.review_idx, 
+	        r.review_reg_date, 
+	        r.review_title, 
+	        u.user_name AS user_name, 
+	        r.score 
+	    FROM 
+	        REVIEW r 
+	    JOIN 
+	        USERS u ON u.user_id = r.ratee_id 
+	    WHERE 
+	        r.rater_id = #{param3} 
+	    ORDER BY 
+	        r.review_idx DESC
+	    LIMIT 
+	        #{param2}, #{param1}
 	</select>
 	   
 	   
 	<select id="courseList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
-		SELECT co.class_idx 
-			,ah.apply_idx
-		   , co.class_name
-		   , (SELECT u.user_name FROM USERS u WHERE u.user_id = co.user_id) AS teacher_name
-		   , co.class_price
-		   , ah.apply_state
-		   , (SELECT ch.ch_result FROM CLASS_HISTORY ch 
-		      WHERE ch.ch_idx = (SELECT MAX(ch_idx) FROM CLASS_HISTORY WHERE student_id = #{param3} 
-		      AND apply_detail = ah.apply_detail AND ch_result NOT IN ('강의 종료'))) AS lesson_progress
-		   , (SELECT ch2.ch_result FROM CLASS_HISTORY ch2 WHERE ch2.student_id = #{param3} 
-		      AND ch2.apply_detail = ah.apply_detail AND ch2.ch_result = '강의 종료') AS end_check
-		   , (SELECT ah2.reg_date FROM APPLY_HISTORY ah2 WHERE ah2.user_id = #{param3} 
-		      AND ah2.apply_state = '신청 완료' AND ah2.apply_detail = ah.apply_detail) AS apply_date
-		FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx 
-		WHERE ah.APPLY_IDX IN (
-		    SELECT MAX(apply_idx)
-		    FROM APPLY_HISTORY
-		    WHERE user_id = #{param3}
-		    GROUP BY apply_detail
-		)
-		ORDER BY ah.APPLY_IDX DESC
+	SELECT distinct
+	    co.class_idx,
+	    ah.apply_idx,
+	    co.class_name,
+	    u.user_name AS teacher_name,
+	    co.class_price,
+	    ah.apply_state,
+	    ch.ch_result AS lesson_progress,
+	    ch2.ch_result AS end_check,
+	    ah2.reg_date AS apply_date
+	FROM 
+	    APPLY_HISTORY ah
+	JOIN 
+	    CLASS_OPEN co ON ah.class_idx = co.class_idx
+	JOIN 
+	    USERS u ON u.user_id = co.user_id
+	LEFT JOIN 
+	    CLASS_HISTORY ch ON ch.ch_idx = (
+	        SELECT MAX(ch_idx) 
+	        FROM CLASS_HISTORY 
+	        WHERE student_id = #{param3} 
+	        AND apply_detail = ah.apply_detail 
+	        AND ch_result NOT IN ('강의 종료')
+	    )
+	LEFT JOIN 
+	    CLASS_HISTORY ch2 ON ch2.student_id = #{param3} 
+	    AND ch2.apply_detail = ah.apply_detail 
+	    AND ch2.ch_result = '강의 종료'
+	LEFT JOIN 
+	    APPLY_HISTORY ah2 ON ah2.user_id = #{param3} 
+	    AND ah2.apply_state = '신청 완료' 
+	    AND ah2.apply_detail = ah.apply_detail
+	WHERE 
+	    ah.APPLY_IDX IN (
+	        SELECT MAX(apply_idx)
+	        FROM APPLY_HISTORY
+	        WHERE user_id = #{param3}
+	        GROUP BY apply_detail
+	    )
+	ORDER BY 
+	    ah.APPLY_IDX DESC
 			LIMIT #{param2},#{param1}	
 		
 	</select>

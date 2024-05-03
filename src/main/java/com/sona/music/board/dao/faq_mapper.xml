@@ -115,9 +115,59 @@
 	<select id="faqDetailAdmin" resultType="com.sona.music.board.dto.FAQDTO">
 		SELECT * FROM FAQ_BOARD WHERE faq_idx = #{param1}
 	</select>
+
+	
+	<select id="faqList" resultType="com.sona.music.board.dto.FAQDTO">
+	    SELECT * FROM FAQ_BOARD WHERE faq_delete = #{param3}
+	    <choose>
+	        <when test="param4 != null and param4 == 1">
+	        </when>
+	        <when test="param4 != null and param4 == 2">
+	            <!-- 수강생 카테고리 선택시 -->
+	            AND faq_target = '수강생'
+	        </when>
+	        <when test="param4 != null and param4 == 3">
+	            <!-- 강사 카테고리 선택시 -->
+	            AND faq_target = '강사'
+	        </when>
+	        <when test="param4 != null and param4 == 4">
+	            <!-- 서비스 카테고리 선택시 -->
+	            AND faq_target = '서비스'
+	        </when>
+	    </choose>
+	    ORDER BY faq_idx DESC LIMIT #{param1},#{param2};
+	</select>
+	
+		<select id="faqAllCount" resultType="int">
+		SELECT CEIL (COUNT(faq_idx)/#{param1}) AS pages FROM FAQ_BOARD
+			WHERE faq_delete = #{param2}
+			<choose>
+	        <when test="param3 != null and param3 == 1">
+	            <!-- 전체 카테고리 선택시 -->
+	            AND (
+	                faq_target = '수강생'
+	                OR faq_target = '강사'
+	                OR faq_target = '서비스'
+	            )
+	        </when>
+	        <when test="param3 != null and param3 == 2">
+	            <!-- 수강생 카테고리 선택시 -->
+	            AND faq_target = '수강생'
+	        </when>
+	        <when test="param3 != null and param3 == 3">
+	            <!-- 강사 카테고리 선택시 -->
+	            AND faq_target = '강사'
+	        </when>
+	        <when test="param3 != null and param3 == 4">
+	            <!-- 서비스 카테고리 선택시 -->
+	            AND faq_target = '서비스'
+	        </when>
+	    </choose>
+	</select> 
 	
 	<update id="faqViews">
 		UPDATE FAQ_BOARD SET faq_views = faq_views+1 WHERE faq_idx = #{param1}
 	</update>
 	
+
 </mapper>

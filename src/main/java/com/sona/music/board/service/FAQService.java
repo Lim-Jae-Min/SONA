@@ -56,9 +56,32 @@ public class FAQService {
 		logger.info("FAQ 들어간 FAQ 상세보기 : " + title);	
 		logger.info("FAQ 들어간 FAQ 상세보기 : " + answer);	
 		logger.info("FAQ 들어간 FAQ 상세보기 : " + faqIdx);
-		
+		faqDAO.faqViews(idx);
 		model.addAttribute("faqDetail", dto);
 		
 	}
+
+
+	public Map<String, Object> faqList(int currPage, int categoryNum) {
+		int pagePerCnt = 10;
+		int start = (currPage-1)*pagePerCnt;
+		int deleteStatus = 0;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<FAQDTO> resultList = null;
+//		if(categoryNum == )
+		
+		resultList = faqDAO.faqList(start,pagePerCnt,deleteStatus,categoryNum);
+
+		for (FAQDTO faqdto : resultList) {
+			logger.info(faqdto.getFaq_title());
+		}
+	
+		result.put("list", resultList);
+		result.put("currPage", currPage);
+		result.put("totalPages", faqDAO.faqAllCount(pagePerCnt,deleteStatus,categoryNum));
+		logger.info("공지사항관리에서 받아온 allCount"+faqDAO.faqAllCount(pagePerCnt,deleteStatus,categoryNum));
+	return result;
+	}
+
 	
 }

@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.sona.music.admin.dto.AdminDTO;
 import com.sona.music.board.dto.ReviewDTO;
 import com.sona.music.member.dao.MemberDAO;
 import com.sona.music.member.dto.MemberDTO;
@@ -28,10 +30,13 @@ public class MemberService {
 		return  memberDAO.findIdEmail(email);
 	}
 
-	public MemberDTO login(String id, String pw) {
+	public MemberDTO userLogin(String id, String pw) {
 		logger.info("여긴 서비스 ");
 		logger.info("id : {} | pw : {}", id, pw);
-		return memberDAO.login(id,pw);
+		
+		
+		
+		return memberDAO.userLogin(id,pw);
 	}
 
 	public List<String> findId(String email) {
@@ -98,16 +103,16 @@ public class MemberService {
 		return row;
 	}
 
-	public Map<String, Object> classreview(int currPage, int pagePerCnt, String user_id) {
+	public Map<String, Object> userLessonList(int currPage, int pagePerCnt, String user_id) {
 		
 		int start = (currPage-1)*pagePerCnt;
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<MemberDTO> list = memberDAO.list(user_id,pagePerCnt,start);
+		List<MemberDTO> list = memberDAO.userLessonList(user_id,pagePerCnt,start);
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", memberDAO.allCount(pagePerCnt));
+		result.put("totalPages", memberDAO.userLessonCount(pagePerCnt, user_id));
 		
 		for (MemberDTO r : list) {
 //			logger.info(r.getClass_name()+"");
@@ -120,16 +125,16 @@ public class MemberService {
 		return result;
 	}
 
-	public Map<String, Object> classreview2(int currPage, int pagePerCnt, String user_id) {
+	public Map<String, Object> userReviewList(int currPage, int pagePerCnt, String user_id) {
 
 		int start = (currPage-1)*pagePerCnt;
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<ReviewDTO> list = memberDAO.list2(user_id,pagePerCnt,start);
+		List<ReviewDTO> list = memberDAO.userReviewList(user_id,pagePerCnt,start);
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", memberDAO.allCount(pagePerCnt));
+		result.put("totalPages", memberDAO.userReviewCount(pagePerCnt, user_id));
 		for (ReviewDTO r : list) {
 
 
@@ -145,11 +150,19 @@ public class MemberService {
 	}
 
 
-	public MemberDTO userdetail(String user_id) {
+	public void userdetail(String user_id, String loginId, Model model) {
 		logger.info("서비스");
 		MemberDTO detail = memberDAO.detail(user_id);
 		logger.info("회원 정보: "+ detail);
-		return memberDAO.detail(user_id);
+		model.addAttribute("detail", detail);
+		
+		MemberDTO myTeacher = memberDAO.myTeacher(user_id, loginId);
+		model.addAttribute("myTeacher", myTeacher);
+	}
+
+	public AdminDTO adminLogin(String id, String pw) {
+		
+		return memberDAO.adminLogin(id, pw);
 	}
 
 	

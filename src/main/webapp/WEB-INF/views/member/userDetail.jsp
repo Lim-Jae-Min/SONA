@@ -10,25 +10,29 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
-		h2 {
-		text-align: left;
-   	 	margin-left: 100px;
-		}
-		#content{
-		    flex: 1;
-		    padding: 10px;
-		    padding-bottom: 32px;
-		}
+h2 {
+	text-align: left;
+   	margin-left: 100px;
+}
+#content{
+	flex: 1;
+	padding: 10px;
+	padding-bottom: 32px;
+}
 		
-		.list-item{
-			box-sizing: border-box;
-			border-block-end: inherit;
-		}
-		.profile {
-			width: 200px;
-			height: 200px;
-		}
-	
+.list-item{
+	box-sizing: border-box;
+	border-block-end: inherit;
+}
+.profile {
+	width: 200px;
+	height: 200px;
+}
+.myTeacher {
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
 		
 </style>
 </head>
@@ -89,8 +93,17 @@
         					&nbsp;<td rowspan="2" style="width: 50px;"><img src="resources/img/basic_user.png" class="profile"></td>
         				</c:if>
         				</tr>
-                        
-                        <td class="main" style="padding-right: 800px; width : 200px;"><span style = "width : 200px;">${detail.user_name} ${detail.user_type}</span><br><br>${detail.user_id}</td>
+                        <tr>
+                        <td class="main" style="padding-right: 800px; width : 200px;">
+	                        <span style = "width : 200px;">
+	                        	${detail.user_name} ${detail.user_type}
+	                        	<c:if test="${sessionScope.user_type eq '수강생' and detail.user_type eq '강사'}">
+	                        		&nbsp;&nbsp;&nbsp;&nbsp;<img src="resources/img/favoriteOff.png" class="myteacher favorite"/>
+	                        		&nbsp;&nbsp;<img src="resources/img/blockOff.png" class="myteacher block"/>
+	                        	</c:if>
+	                        </span>
+	                        <br><br>${detail.user_id}
+                        </td>
                         <td style="width: 60%; min-width: 150px; text-align: right;">
                             <img src="resources/img/heart.png" style="margin-right: 7px; width: 20px; height: 20px;" id="heart">${detail.manner}
                         </td>
@@ -106,7 +119,7 @@
                 </tbody>
             </table>
         </div>
-        
+        <c:if test="${detail.user_type eq '강사'}">
         <hr style="flex: 1; margin: 0; border: 0; border-top: 4px solid #BEE6FF;">
 	
 <div style="text-align: center;">
@@ -135,7 +148,7 @@
         </table>
     </div>
 </div>
-
+</c:if>
 
   <hr style="flex: 1; margin-top: 10px; border: 0; border-top: 4px solid #BEE6FF;">
 	
@@ -221,18 +234,26 @@ $('#logo').click(function main(){
 
 var showPage =1;
 
+var user_type = '${detail.user_type}';
+
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
-	listCall(showPage);
+	if (user_type == '강사') {
+		listCall(showPage);		
+	}
+	
 	listCall2(showPage);
 });
+
+
 
 function listCall(page){
     $.ajax({
        type:'get',
-       url:'./classreview.ajax',
+       url:'./userLessonList.ajax',
        data:{
           'page':page,
-          'cnt':5
+          'cnt':5,
+          'user_id':'${detail.user_id}'
        },
        dataType:'json',
        success:function(data){
@@ -282,10 +303,11 @@ function drawList(list){
 function listCall2(page){
     $.ajax({
        type:'get',
-       url:'./classreview2.ajax',
+       url:'./userReviewList.ajax',
        data:{
           'page':page,
-          'cnt':5
+          'cnt':5,
+          'user_id':'${detail.user_id}'
        },
        dataType:'json',
        success:function(data){
@@ -331,6 +353,55 @@ function drawList2(list){
     $('#list2').html(content);
 }
 
+var favorite = '${myTeacher.favorite}';
+var block = '${myTeacher.block}';
+
+console.log(favorite);
+console.log(block);
+
+if (favorite != '') {
+	$('.favorite').attr('src', 'resources/img/favoriteOn.png');
+}
+if (block != '') {
+	$('.block').attr('src', 'resources/img/blockOn.png');
+}
+
+/* $('.favorite').click(function (){
+	if (favorite != '') {
+		$.ajax({
+			type:'post',
+			url:'unFavorite.do',
+			data:{
+				'loginId':'${sessionScope.loginId}',
+				'teacher_id':'${detail.user_id}'
+			},
+			success:function(data){
+				console.log(data.result);
+				$('.favorite').attr('src', 'resources/img/favoriteOff.png');
+			}, 
+			error:function(error){ // 통신 실패 시
+				console.log(error);
+			} 
+		});
+	} else if (favorite == '') {
+		$.ajax({
+			type:'post',
+			url:'favorite.do',
+			data:{
+				'loginId':'${sessionScope.loginId}',
+				'teacher_id':'${detail.user_id}'
+			},
+			success:function(data){
+				console.log(data.result);
+				$('.favorite').attr('src', 'resources/img/favoriteOn.png');
+			}, 
+			error:function(error){ // 통신 실패 시
+				console.log(error);
+			} 
+		});
+	}
+});
+ */
 
 </script>
 </html>

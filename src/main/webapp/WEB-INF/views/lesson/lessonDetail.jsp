@@ -409,7 +409,7 @@ button {
 			        					<td class="smallInterval">
 			        						<span class="smallFontSize">${review.rater_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallFontSize yellow">★ ${review.score}</span>
 			        						<br/>
-			        						<span><a href="lessonReviewDetail?REVIEW_IDX=${review.review_idx}">${review.review_title}</a></span>
+			        						<span><a href="lessonReviewDetail.go?review_idx=${review.review_idx}">${review.review_title}</a></span>
 			        					</td>
 		        					</tr>
 		        				</c:forEach>
@@ -432,7 +432,7 @@ button {
 			        							비공개 Q&A 입니다. <img src="resources/img/locked.png" class="locked">
 			        						</c:if>
 			        						<c:if test="${!QnA.anonymous_status}">
-				        						<span><a href="lessonQnADetail?QUESTION_IDX=${QnA.question_idx}">${QnA.q_title}</a></span>
+				        						<span><a href="lessonQnADetail.go?Question_idx=${QnA.question_idx}">${QnA.q_title}</a></span>
 			        						</c:if>
 			        					</td>
 		        					</tr>
@@ -639,10 +639,10 @@ function closeModal() {
 console.log('${lesson.video_url}');
 
 $('#moreReview').click(function (){
-	location.href = 'lessonReviewList?CLASS_IDX=${lesson.class_idx}';
+	location.href = 'lessonReviewList.go?class_idx=${lesson.class_idx}';
 });
 $('#moreQnA').click(function (){
-	location.href = 'lessonQnAList?CLASS_IDX=${lesson.class_idx}';
+	location.href = 'lessonQnAList.go?class_idx=${lesson.class_idx}';
 });
 $('#lessonApplyButton').click(function (){
 	var result = confirm("수강 신청하시겠습니까?");

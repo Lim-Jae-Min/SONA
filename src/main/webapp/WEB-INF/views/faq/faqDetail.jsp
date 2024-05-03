@@ -108,13 +108,25 @@
         background-color: white; 
         color: black; 
 	}
-	   .selected {
+	.selected {
         color: skyblue; /* 선택된 버튼의 글자색을 흰색으로 변경 */
     }
+   	#reportdetail{
+		text-align : center;
+		font-size : 25px;
+	}
+	p,td,span{
+		margin-left :40px;
+		font-size : 18px;
+	}
+	
+	#boardTitle{
+		text-align : center;
+	}
+	
 	
 	</style>
 </head>
-<body>
 <body>
     <header id="usermain">
         <table id="mainmenu">
@@ -156,41 +168,69 @@
             </c:if>
         </table>
     </header>
-    <div id="wrapper">
-	    <div id="serviceSideMenu">
-	        <h3 class="blueFont">고객센터</h3>
-	        <hr/>
-	        <a href="#">공지사항</a>
-	        <a href="#">FAQ</a>
-	        <a href="suggestionsList.go">건의사항</a>
-	    </div>
-        
-     	<div id = "paaaa">    	  
-	     	<h3>FAQ</h3> 
-	     	<!-- 구분기능  -->
-			<div>
-				<button class = "cate" value="1" onclick="setCategory(1)">전체</button> 
-				<button class = "cate" value="2" onclick="setCategory(2)">수강생</button>
-				<button class = "cate" value="3" onclick="setCategory(3)">강사</button>
-				<button class = "cate" value="4" onclick="setCategory(4)">서비스</button>
-			</div>
+    
+    
+   <div class="container" style="width:100%;">
+   		<br>
+        <h4 id = reportdetail>FAQ</h4>
+            <h4 id="boardTitle">FAQ 질문 : ${faqDetail.faq_title}</h4>
+            <br><br><br><br>
+            <tr>
+           		<td><span>조회 수 : ${faqDetail.faq_views}
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		           		           		
+				게시판 종류 : ${faqDetail.faq_target} &nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		날짜 : ${faqDetail.faq_reg_date}</span>
+           		</td>
+			</tr>           	        
+            <hr class = "contenthr">
+            <span>작성자 : ${faqDetail.admin_id}</span>
+            <br><br><br><br><br>            
+            <p id="boardContent">답변 : <br><br>${faqDetail.faq_answer}</p>
+            <br><br><br><br><br>
+			<br><br>
+            
+            <hr class = "contenthr">
+            <br><br>
+            <tr>
+			<td>
+				<button class = "footBtn" id="returnList" onclick="backList()">돌아가기</button>
+			</tr>
 			
-			<br><br><hr>
-		   <table id ="showlist">
-		     <tbody id="list" class="listhead"></tbody>
-				<tr>
-					<td colspan="7" id = "paging">
-						<div class="container">                           
-		               		<nav aria-label="page navigation" style="text-align:center">
-		                 	 <ul class="pagination" id="pagination"></ul>
-		               		</nav> 
-		               		<hr>              
-		            	</div>
-					</td>
-				</tr>
-		   </table>
-	   </div>
-	</div>
+	           
+             </div>
+        <div id="boardDetail">
+
+
+            
+        </div>
+    </div>
 	<div id="footer">
 		<li>상호명 : SONA</li>
 		<li>대표자 : 김○○</li>
@@ -206,100 +246,10 @@
 	var showPage =1;
 	var searchRemain = false;
 	
-	$(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
-		listCall(showPage);
-	});
+    function backList() {
+        window.location.href = "./faqList.go";
+    }
 
-
-
-	function setCategory(num){
-	    console.log(num);
-	    category = num;
-	    $('#pagination').twbsPagination('destroy');
-	    showPage = 1;
-	    
-	    // 모든 카테고리 버튼에서 선택 취소
-	    $('.cate').removeClass('selected');
-	    // 선택한 카테고리 버튼에 선택 표시
-	    $('.cate[value="' + num + '"]').addClass('selected');
-	    
-	    listCall(showPage); // 새로운 카테고리에 맞는 리스트 호출
-	}
-	
-	
-	
-	function listCall(page){
-
-	    $.ajax({
-	       type:'get',
-	       url:'faqList.ajax',
-	       data:{
-	    	    'page':page,
-	    		'categoryNum' : category
-	       },
-	       dataType:'json',
-	       success:function(data){
-	          drawList(data.list);
-	          
-	          var startPage = 1;
-	          
-	       // 플러그인 추가
-	       	$('#pagination').twbsPagination({
-	    		startPage:data.currPage, // 시작 페이지
-	    		totalPages:data.totalPages, // 총 페이지 갯수
-	    		visiblePages:5,  // 보여줄 페이지 수[1][2][3][4][5]
-	    		onPageClick:function(evt,pg){ // 페이지 클릭시 실행 함수
-	    			console.log(evt); // 이벤트 객체
-	    			console.log(pg); //클릭한 페이지 번호 의미
-	        		showPage = pg;
-	        		listCall(pg);
-	    			
-	    		}
-	       	});
-	       
-	       },
-	       error:function(error){
-	          console.log(error)
-	       }
-	    });
-	}
-
-	function drawList(list) {
-	    var content = '';
-	    for (var i = 0; i < Math.min(10, list.length); i++) {
-	        var item = list[i];
-	        content += '<tr>';
-	        content += '<td class="ntitle"><a href="faqDetail.go?idx=' + item.faq_idx + '"><img src="resources/img/question.png" class="faq-icon"></a>&nbsp;&nbsp;' + item.faq_title + '</td>';
-	        content += '</tr>';
-	        content += '<tr class="hr-row hidden">';
-	        content += '<td><hr></td>';
-	        content += '</tr>';
-	        content += '<tr class="answer-row hidden">';
-	        content += '<td class="nbhit"><img src="resources/img/answer.jpg" class="faq-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + item.faq_answer + '</td>';
-	        content += '</tr>';
-	        content += '<tr class="hr-row hidden">';
-	        content += '<td><br><br><hr></td>';
-	        content += '</tr>';
-	    }
-	    $('#list').html(content);
-
-	    // 초기에는 모든 faq_answer와 구분선을 숨김
-	    $('.answer-row').hide();
-	    $('.hr-row').hide();
-
-	    // FAQ title을 클릭했을 때 이벤트 처리
-	    $('.ntitle').click(function() {
-	        var $this = $(this);
-	        var $answerRow = $this.parent().next().next('.answer-row');
-	        var $hrRows = $this.parent().nextAll('.hr-row').slice(0, 2);
-	        // 클릭한 faq_title과 관련된 faq_answer와 구분선 토글
-	        $answerRow.slideToggle();
-	        $hrRows.slideToggle();
-	        // 다른 faq_answer와 구분선 숨기기
-	        $('.answer-row').not($answerRow).slideUp();
-	        $('.hr-row').not($hrRows).slideUp();
-	    });
-	}
 
 	
 	

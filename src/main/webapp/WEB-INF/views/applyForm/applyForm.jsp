@@ -9,10 +9,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
-#footer{
-	position: absolute;
-    width: 100%; /* 화면 전체 너비 차지 */
-}
 
 
 h1 {
@@ -260,7 +256,7 @@ p {
     </div>
     
     
-    <button  id=apply_button >강의 신청하기</button>
+    <button id=apply_button >강의 신청하기</button>
     </form> 
 <div id="footer">
         <li>상호명 : SONA</li>
@@ -296,6 +292,26 @@ p {
     </div>
 </body>
 <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});

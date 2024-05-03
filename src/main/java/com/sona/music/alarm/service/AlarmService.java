@@ -8,10 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.sona.music.alarm.dao.AlarmDAO;
 import com.sona.music.alarm.dto.AlarmDTO;
-import com.sona.music.mypage.dto.MyPageDTO;
+import com.sona.music.lesson.dto.LessonDTO;
 
 @Service
 public class AlarmService {
@@ -46,15 +47,41 @@ public class AlarmService {
 	public int del(List<String> delList) {
 		int cnt = 0;
 	    for (String idx : delList) {
-	        cnt += alarmDAO.dellist(idx);
+	        cnt += alarmDAO.del(idx);
 	    }
 	    return cnt;
 	}
 
-	private void delFile(List<String> files) {
-		
+	public int read(List<String> readList) {
+		int cnt = 0;
+	    for (String idx : readList) {
+	        cnt += alarmDAO.alarmViews(idx);
+	    }
+	    return cnt;
 	}
-	
+
+	public void alarmDetail(int idx, Model model) {
+		logger.info("상세보기 Service 접속 완료");
+		AlarmDTO dto = alarmDAO.alarmDetail(idx);
+		model.addAttribute("alarm", dto);
+//		
+//		logger.info("IDX: " , dto.getAlarm_idx());
+//		logger.info("Title: " , dto.getAlarm_title());
+//		logger.info("CONTENT: ", dto.getAlarm_content());
+//		logger.info("VIEWS : ", dto.getAlarm_views());
+//		logger.info("DATE: ", dto.getAlarm_date());
+		
+		alarmDAO.alarmViews(idx);
+	}
+
+	public int detailDel(int alarm_idx) {
+		logger.info("상세보기 삭제 Service 접속");
+		int cnt = alarmDAO.detailDel(alarm_idx);
+		
+		return cnt;
+	}
+
+
 	
 	
 	

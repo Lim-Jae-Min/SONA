@@ -208,10 +208,10 @@ public class MemberController {
 			page = "member/login";
 			
 				// 회원 가입 후 회원타입이 수강생인 경우
-	        if("수강생".equals(param.get("usertype"))) {
+	        if("수강생".equals(param.get("user_type"))) {
 	        	
 	            page = "applyForm/applyForm";
-	        } else if("강사".equals(param.get("usertype"))) {
+	        } else if("강사".equals(param.get("user_type"))) {
 	            // 회원 가입 후 회원타입이 강사인 경우
 	            page = "member/login";
 	        }

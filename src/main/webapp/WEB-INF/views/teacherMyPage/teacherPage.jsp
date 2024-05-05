@@ -191,7 +191,7 @@
                         </span>
                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                        <button onclick="window.location.href='withdrawPoint.go';" >출금</button>
+                        <button id="withdrawButton" >출금</button>
                     </td>
                 </tr>
             </tbody>    
@@ -250,6 +250,18 @@ $('#userName').click(function slide() {
         $('#slide').css('display', 'none');
     }
 });
+
+$("#withdrawButton").click(function(){
+    var loginId = "${sessionScope.loginId}";
+    // loginId 값이 없을 경우에는 이동하지 않음
+    if(loginId) {
+        // chargePoint.go로 이동하는 URL 생성
+        var url = "./withdrawPoint.go?loginId=" + loginId;
+        // 생성한 URL로 이동
+        window.location.href = url;
+    }
+});
+
 
 
 </script>

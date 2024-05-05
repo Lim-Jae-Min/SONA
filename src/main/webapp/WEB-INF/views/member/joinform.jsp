@@ -273,7 +273,7 @@ function join(){
 	var $confirm = $('input[name="confirm"]');
 	var $phone = $('input[name="user_phone"]');
 	var $accountnumber = $('input[name="user_accountnumber"]');
-	var $usertype = $('input[name="user_type"]');
+	var $usertype = $('input[name="user_type"]:checked');
 	
  	if(overChk == false){
 		alert('중복 체크를 해주세요.');
@@ -299,8 +299,7 @@ function join(){
 	}else if($accountnumber.val()==''){
 		alert('계좌 번호를 입력 해 주세요!');
 		$accountnumber.focus();
-	}else if($usertype.val()==null){
-		console.log(usertype.val());
+	}else if($usertype.length === 0){
 		alert('사용자 유형을 선택 해 주세요!');
 	}else{
 		var regExp = new RegExp('[^0-9]');

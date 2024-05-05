@@ -368,6 +368,23 @@ public class MyPageController {
 	     }
 	     return page;
 	 }
+	 
+	 
+	 @RequestMapping(value = "/teacherPage.edit", method = RequestMethod.POST)
+	 public String updateUserInfo2(MultipartFile[] photos, @RequestParam Map<String, String> map, HttpSession session, Model model) {
+	     String page = "member/login";
+	     logger.info("회원 수정하기 요청이요~ ");
+	     String loginId = (String) session.getAttribute("loginId");
+	     logger.info("전달된 데이터: {}", map);
+
+	     if (loginId != null) {
+	    	 logger.info("회원 수정하기~ ", map);
+	         map.put("loginId", loginId);
+	         myPageService.updateUserInfo(photos, new HashMap<>(map), session); // 로그인 ID를 전달
+	         page = "teacherMyPage/teacherPageEdit";
+	     }
+	     return page;
+	 }
 	
 	@RequestMapping(value = "/studentPageApply.edit", method = RequestMethod.POST)
 	public String updateApplyForm(@RequestParam Map<String, String> map, HttpSession session, Model model) {

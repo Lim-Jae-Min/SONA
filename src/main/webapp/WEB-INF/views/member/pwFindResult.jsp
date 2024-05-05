@@ -57,6 +57,18 @@
 	.btn:hover {
 		background-color: #0056b3;
 	}
+	.idFindResultBox{
+		list-style-type: none;
+		text-align: center;
+		padding: 0px;
+	}
+	.pwpw{
+		color: black;
+		font-size: 20px;
+	}
+	#idButton{
+		width: 130px;
+	}
 </style>
 
 </head>
@@ -106,14 +118,16 @@
 	<form id="chanePw" action="changePw.go" method="post">
 		<input type="hidden" name="changePwNeedId" value=${username}>
 		<div id="resultPage">
-			<div class="result-msg">비밀번호 찾기 결과</div>
+			<div class="result-msg">PW 찾기</div>
 			<div class="result-id">
-				<tr>
-					<td>${findPwResult}</td>
-				</tr>
+				<ul class="idFindResultBox">
+					<li><span class="pwpw">비밀번호 : </span> ${findPwResult}</li>
+				</ul>
 			</div>
-			<a href="/login.do" class="btn">로그인 하기</a> <input type="submit"
-				class="btn" value="비밀번호 변경하기">
+			<br> <br>
+			<a href="login.go" class="btn" id="idButton">로그인 하기</a> 
+			<br><br>
+			<input type="submit" class="btn" value="비밀번호 변경하기">
 		</div>
 	</form>
 
@@ -155,6 +169,20 @@
 
 	var id = "${username}";
 	console.log(id);
+
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	    if (display == 'none') {
+	        $('#slide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#slide').css('display', 'none');
+	    }
+	});
+
+	$('#logo').click(function main(){
+		location.href = '/main';
+	});
 
 	$('.alarm').click(function alarmList() {
 		location.href = 'alarmList.go';

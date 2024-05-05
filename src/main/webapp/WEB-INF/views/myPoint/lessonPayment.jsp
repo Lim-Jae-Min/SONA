@@ -73,6 +73,17 @@
 		width: 100px; /* 이미지의 너비 */
 		height: 100px; /* 이미지의 높이 */
 	}
+	.buttonDiv{
+	position: relative;
+	left:35%;
+	}
+	#cancelButton{
+		width: 105px;
+	}
+	.lessonPayMentHead{
+		position: relative;
+		left: 42%;
+	}
 </style>
 </head>
 <body>
@@ -115,13 +126,22 @@
 			</c:if>
 		</table>
 	</header>
-
+	<br> <br>
+		
 	<form action="lessonPayment.do" method="post">
 		<div class="wrapper">
+		<h1 class="lessonPayMentHead">강의 결제</h1>
 			<!-- 프로필 영역 -->
 			<div class="section profile">
 				<div class="profile-info">
-					<img src="/photo/1.jpg" alt="프로필 사진">
+					<br>
+					<c:if test="${photoNewFileName != null}">
+						<img src="/photo/${photoNewFileName}" class="lessonImg">
+					</c:if>
+					<c:if test="${photoNewFileName == null}">
+						<img src="resources/img/basic_user.png" class="lessonImg">
+					</c:if>
+					&nbsp;&nbsp;&nbsp;
 					<div class="lecture-info">
 						<input type="hidden" name="TuserName" value="${USER_NAME}">
 						<!-- 강사 이름정보 -->
@@ -130,8 +150,11 @@
 						<input type="hidden" name="TuserId" value="${T_USER_ID}">
 						<!-- 강사 아이디  -->
 						<input type="hidden" name="classIdx" value="${Class_idx}">
-						<span id="teacherId">${USER_NAME} 강사님 </span><br> <span>강의
-							제목: ${Class_name}</span><br> <span>강의 횟수: ${Class_times}</span><br>
+						<span id="teacherId"> ${USER_NAME} 강사님 </span>
+						<br> 
+						<span>강의제목: ${Class_name}</span>
+						<br> <span>강의 횟수: ${Class_times}</span>
+						<br>
 						<span>강의 가격: ${Class_price}</span>
 					</div>
 				</div>
@@ -149,22 +172,22 @@
 			<!-- 강의료 및 포인트 정보 영역 -->
 			<div class="section">
 				<span>총 강의료: ${Class_price}</span><br> <span>현재 포인트:
-					${havePoint}</span><br> <span>남은 포인트: ${remainPoint}</span>
+					${havePoint}</span><br> <span id="">남은 포인트: ${remainPoint}</span>
 			</div>
 			<!-- 수평선 -->
 			<div class="divider"></div>
 
 			<!-- 최종 결제 금액 영역 -->
 			<div class="section">
-				<span>최종 결제 금액: ${Class_price}</span>
+				<span>최종 결제 금액: ${Class_price} P</span>
 			</div>
 			<!-- 수평선 -->
 			<div class="divider"></div>
 
 			<!-- 버튼 영역 -->
-			<div class="btn-group">
+			<div class="buttonDiv">
 				<button type="button" class="btn" onclick="lessonPayment()">결제하기</button>
-				<button type="button" class="btn">취소하기</button>
+				<button type="button" class="btn" id="cancelButton" onclick="myPageGo()">취소</button>
 			</div>
 		</div>
 	</form>
@@ -210,18 +233,11 @@
 	if (msg != '') {
 		alert(msg);
 	}
-	$('.alarm').click(function alarmList() {
-		location.href = 'alarmList.go';
-	});
 
 	/* 결제버튼 구현  */
 	function lessonPayment() {
 
-		var paymentAmount = $
-		{
-			Class_price
-		}
-		; // 결제 금액을 가져옵니다.
+		var paymentAmount = ${Class_price}; // 결제 금액을 가져옵니다.
 
 		var TuserName = $("input[name='TuserName']").val(); // 강사 이름 정보 가져오기
 		var classPrice = $("input[name='classPrice']").val(); // 강의 가격 정보 가져오기
@@ -245,13 +261,20 @@
 					if (response.success == 1) {
 						alert("강의 구매가 완료되었습니다.");
 						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
-						window.location.href = "login.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
+						window.location.href = "myPage.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
 					} else {
 						alert("결제 포인트가 부족합니다 . 포인트 충전 페이지로 이동합니다.");
 						var form = document.createElement('form'); // 폼객체 생성
+						var input1 = document.createElement('input');
+						input1.setAttribute("type", "hidden");
+						input1.setAttribute("name", "GetremainPoint");
+						input1.setAttribute("value", ${remainPoint});
+						
 						form.setAttribute('method', 'post'); //get,post 가능
 						form.setAttribute('action', "chargePoint.go"); //보내는 url
+						form.appendChild(input1);
 						document.body.appendChild(form);
+						
 						form.submit();
 
 					}
@@ -264,5 +287,27 @@
 			alert("강의 구매가 취소되었습니다.");
 		}
 	}
+	
+	function myPageGo(){
+		location.href = "studentAttendedList.go";	
+	};
+	
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	    if (display == 'none') {
+	        $('#slide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#slide').css('display', 'none');
+	    }
+	});
+
+	$('#logo').click(function main(){
+		location.href = '/main';
+	});
+
+	$('.alarm').click(function alarmList() {
+		location.href = 'alarmList.go';
+	});
 </script>
 </html>

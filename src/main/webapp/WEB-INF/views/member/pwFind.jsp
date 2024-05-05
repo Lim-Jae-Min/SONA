@@ -185,6 +185,7 @@
 } */
 
 	var cfEmail = null;
+var certificationNumber = null;
 	function submitEmail() {
 		console.log('click');
 		var email = $('input[name="email"]').val();
@@ -214,6 +215,8 @@
 				} else {
 					alert(chkEmail + '로 인증번호를 보냈습니다.');
 					cfEmail = chkEmail;
+					certificationNumber =data.certificationNumber;
+					console.log(certificationNumber);
 				}
 			},
 			error : function(error) { // 통신 실패 시
@@ -232,7 +235,7 @@
 		// 여기에서 서버로 인증번호 확인 요청을 보내고,
 		// 서버에서는 해당 인증번호가 맞는지 확인한 후 응답을 보냅니다.
 		// 여기서는 간단히 인증번호가 "123456"이라고 가정합니다.
-		var crNumber = "123456";
+		var crNumber = certificationNumber;
 
 		if (crNumber == cfNumber) {
 			cfn = true;
@@ -249,14 +252,31 @@
 	
 	function findSubmit() {
 
-		if (cfn == false) {
-			alert("인증번호를 확인 해주세요.");
-		} else if (cfn == true) {
+		if (cfn == true) {
 			var email = cfEmail;
+			cfn = false;
 			$('#findForm').attr("action", "pwFindResult.do").submit();
+		} else{
+			$('#findForm').removeAttr('action');
+			alert("인증번호를 확인 해주세요.");
+			location.href = "pwFind.go";
 		}
 
 	}
+
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	    if (display == 'none') {
+	        $('#slide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#slide').css('display', 'none');
+	    }
+	});
+
+	$('#logo').click(function main(){
+		location.href = '/main';
+	});
 
 	$('.alarm').click(function alarmList() {
 		location.href = 'alarmList.go';

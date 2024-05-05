@@ -72,6 +72,13 @@ public class PointService {
 		return pointDAO.getUserInfo(chargePointLoginId);
 	}
 
+	public String pointGetPhotoName(String chargePointLoginId) {
+		String photoCategory = "userInfo";
+		String photoNewFileName = pointDAO.pointGetPhotoName(chargePointLoginId,photoCategory);
+		logger.info(photoNewFileName);
+		return photoNewFileName;
+	}
+
 //	public String getPhotoName(String user_id) {
 //		// TODO Auto-generated method stub
 //		return pointDAO.getPhotoName(user_id);

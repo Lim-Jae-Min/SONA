@@ -69,47 +69,62 @@
 		padding: 10px; /* 여백 지정 */
 		border-top: 1px solid #ccc; /* 윗부분 테두리 추가 */
 	}
+	
+		.btn {
+		display: inline-block;
+		padding: 10px 20px;
+		font-size: 16px;
+		background-color: #007bff;
+		color: #fff;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		text-decoration: none;
+		margin-right: 10px;
+	}
 </style>
 </head>
 <body>
 	<header id="usermain">
-		<table id="mainmenu">
-			<tr>
-				<th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-				<th class="menu"><c:if test="${sessionScope.loginId eq null}">
-						<c:if test="${sessionScope.user_type ne '강사'}">
-							<a href="login.go">추천 강의</a>
-						</c:if>
-					</c:if> <c:if test="${sessionScope.loginId ne null}">
-						<c:if test="${sessionScope.user_type ne '강사'}">
-							<a href="recommendList.go">추천 강의</a>
-						</c:if>
-					</c:if></th>
-				<th class="menu"><a href="allList.go">전체 강의</a></th>
-				<th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-			</tr>
-		</table>
-		<table id="mymenu">
-			<c:if test="${sessionScope.loginId ne null}">
-				<tr>
-					<c:if test="${sessionScope.alarm_count > 0}">
-						<th><img src="resources/img/alarm_on.png"
-							class="miniimg alarm"></th>
-					</c:if>
-					<c:if test="${sessionScope.alarm_count == 0}">
-						<th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-					</c:if>
-					<th><img src="resources/img/basic_user.png" class="miniimg"></th>
-					<th><div id="userName">${sessionScope.user_name}</div></th>
-				</tr>
-			</c:if>
-			<c:if test="${sessionScope.loginId eq null}">
-				<tr>
-					<th><a href="login.go">로그인</a></th>
-				</tr>
-			</c:if>
-		</table>
-	</header>
+        <table id="mainmenu">
+            <tr>
+                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                <th class="menu">
+                	<c:if test="${sessionScope.loginId eq null}">
+                		<c:if test="${sessionScope.user_type ne '강사'}">
+		                	<a href="login.go">추천 강의</a>                	
+	                	</c:if>
+                	</c:if>
+                	<c:if test="${sessionScope.loginId ne null}">
+                		<c:if test="${sessionScope.user_type ne '강사'}">
+		                	<a href="recommendList.go">추천 강의</a>                	
+	                	</c:if>
+                	</c:if>
+                </th>
+                <th class="menu"><a href="allList.go">전체 강의</a></th>
+                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+            </tr>
+        </table>
+        <table id="mymenu">
+            <c:if test="${sessionScope.loginId ne null}">
+                <tr>
+                    <c:if test="${sessionScope.alarm_count > 0}">
+                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                    </c:if>
+                    <c:if test="${sessionScope.alarm_count == 0}">
+                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                    </c:if>
+                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                    <th><div id="userName">${sessionScope.user_name}</div></th>
+                </tr>
+            </c:if>
+            <c:if test="${sessionScope.loginId eq null}">
+                <tr>
+                    <th><a href="login.go">로그인</a></th>
+                </tr>
+            </c:if>
+        </table>
+    </header>
 
 
 	<form id="findForm" method="post">
@@ -122,7 +137,7 @@
 			<input type="password" name="confirmPassword" id="confirmPassword"
 				placeholder="비밀번호 확인">
 		</div>
-		<button type="button" id="changePw" onclick="changePassword()">비밀번호
+		<button type="button" id="changePw" onclick="changePassword()" class="btn">비밀번호
 			변경</button>
 
 	</form>
@@ -170,12 +185,27 @@
 		var confirmPassword = $('input[name="confirmPassword"]').val();
 		console.log(confirmPassword + password);
 		if (password != confirmPassword) {
-			alert("비밀번호가 일치하지 않습니다.")
+			alert("비밀번호가 일치하지 않습니다.");
 		} else {
-			alert("비밀번호가 변경 되었습니다.")
+			alert("비밀번호가 변경 되었습니다.");
 			$('#findForm').attr("action", "changePw.do").submit();
+
 		}
-	}
+	};
+	
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	    if (display == 'none') {
+	        $('#slide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#slide').css('display', 'none');
+	    }
+	});
+
+	$('#logo').click(function main(){
+		location.href = '/main';
+	});
 
 	$('.alarm').click(function alarmList() {
 		location.href = 'alarmList.go';

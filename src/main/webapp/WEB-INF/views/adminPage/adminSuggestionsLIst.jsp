@@ -245,7 +245,7 @@
 		    content += '<tr>';
 		    
 		    content += '<td class="nidx">' + item.sug_idx + '</td>';
-		    content += '<td class="ntitle"><a id="titleId" href="suggestionsDetail.go?sug_idx=' + item.sug_idx + '">' + item.sug_title + '</a></td>'
+		    content += '<td class="ntitle"><a id="titleId" href="adminSuggestionsDetail.go?sug_idx=' + item.sug_idx + '">' + item.sug_title + '</a></td>'
 		    content += '<td class="nid">' + item.user_id + '</td>';
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
 		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)

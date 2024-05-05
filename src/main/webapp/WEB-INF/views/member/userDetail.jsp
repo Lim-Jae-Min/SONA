@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 상세보기</title>
+<title>SONA 회원 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
@@ -257,7 +257,7 @@ function listCall(page){
        },
        dataType:'json',
        success:function(data){
-          drawList(data.list);
+          drawList(data.list, data.allCount, showPage);
           console.log(data);
           //플러그인 추가
           var startPage = data.currPage > data.totalPages? data.totalPages : data.currPage;
@@ -282,16 +282,21 @@ function listCall(page){
     });
 }
 
-function drawList(list){
-    var content = '';
-    for(item of list){
-       console.log(item);
+function drawList(list, allCount, showPage){
+	showPage--;
+	
+	
+	showPage = parseInt(showPage);
+	allCount = parseInt(allCount);
+	
+	var content = '';
+    for(var i = 0; i < list.length; i++){
        content += '<tr class = "list-item">';
-       content += '<td>&nbsp;&nbsp;'+item.index_order +'</td>';
-       content += '<td>&nbsp;&nbsp;' + item.class_name + '</td>';
-       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ item.count+'명' + '</td>';
-       content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
-       var date = new Date(item.class_reg_date);
+       content += '<td>&nbsp;&nbsp;' + (allCount - i - (showPage * 5)) + '</td>';
+       content += '<td>&nbsp;&nbsp;<a href="lessonDetail.go?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a></td>';
+       content += '<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+ list[i].count+'명' + '</td>';
+       content += '<td><span style="color: #FED000;">★</span>' + list[i].score +'</td>';
+       var date = new Date(list[i].class_reg_date);
        var dateStr = date.toLocaleDateString("ko-KR");
        content += '<td>' + dateStr + '</td>';
        content += '</tr>';
@@ -342,7 +347,7 @@ function drawList2(list){
        console.log(item);
        content += '<tr class="list-item">';
        content += '<td>&nbsp;&nbsp;'+ item.index_order +'</td>';
-       content += '<td>'+ item.review_title +'</td>';
+       content += '<td><a href="lessonReviewDetail.go?review_idx=' + item.review_idx + '">'+ item.review_title +'</a></td>';
        content += '<td>&nbsp;&nbsp;&nbsp;' + item.rater_id + '</td>';
        content += '<td>&nbsp;&nbsp;<span style="color: #FED000;">★</span>' + item.score +'</td>';
        var date = new Date(item.review_reg_date);
@@ -366,11 +371,11 @@ if (block != '') {
 	$('.block').attr('src', 'resources/img/blockOn.png');
 }
 
-/* $('.favorite').click(function (){
-	if (favorite != '') {
+$('.favorite').click(function (){
+	if ($(this).attr('src') == 'resources/img/favoriteOn.png') {
 		$.ajax({
 			type:'post',
-			url:'unFavorite.do',
+			url:'unFavorite.ajax',
 			data:{
 				'loginId':'${sessionScope.loginId}',
 				'teacher_id':'${detail.user_id}'
@@ -383,10 +388,10 @@ if (block != '') {
 				console.log(error);
 			} 
 		});
-	} else if (favorite == '') {
+	} else if ($(this).attr('src') == 'resources/img/favoriteOff.png') {
 		$.ajax({
 			type:'post',
-			url:'favorite.do',
+			url:'favorite.ajax',
 			data:{
 				'loginId':'${sessionScope.loginId}',
 				'teacher_id':'${detail.user_id}'
@@ -394,6 +399,7 @@ if (block != '') {
 			success:function(data){
 				console.log(data.result);
 				$('.favorite').attr('src', 'resources/img/favoriteOn.png');
+				$('.block').attr('src', 'resources/img/blockOff.png');
 			}, 
 			error:function(error){ // 통신 실패 시
 				console.log(error);
@@ -401,7 +407,44 @@ if (block != '') {
 		});
 	}
 });
- */
+
+$('.block').click(function (){
+	if ($(this).attr('src') == 'resources/img/blockOn.png') {
+		$.ajax({
+			type:'post',
+			url:'unBlock.ajax',
+			data:{
+				'loginId':'${sessionScope.loginId}',
+				'teacher_id':'${detail.user_id}'
+			},
+			success:function(data){
+				console.log(data.result);
+				$('.favorite').attr('src', 'resources/img/blockOff.png');
+			}, 
+			error:function(error){ // 통신 실패 시
+				console.log(error);
+			} 
+		});
+	} else if ($(this).attr('src') == 'resources/img/blockOff.png') {
+		$.ajax({
+			type:'post',
+			url:'block.ajax',
+			data:{
+				'loginId':'${sessionScope.loginId}',
+				'teacher_id':'${detail.user_id}'
+			},
+			success:function(data){
+				console.log(data.result);
+				$('.favorite').attr('src', 'resources/img/favoriteOff.png');
+				$('.block').attr('src', 'resources/img/blockOn.png');
+			}, 
+			error:function(error){ // 통신 실패 시
+				console.log(error);
+			} 
+		});
+	}
+});
+
 
 </script>
 </html>

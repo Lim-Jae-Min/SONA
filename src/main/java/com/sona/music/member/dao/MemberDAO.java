@@ -29,7 +29,7 @@ public interface MemberDAO {
 
 	List<MemberDTO> userLessonList(String user_id, int pagePerCnt, int start);
 
-	int userReviewCount(int pagePerCnt, String user_id);
+	int userReviewPageCount(int pagePerCnt, String user_id);
 
 
 	List<ReviewDTO> userReviewList(String user_id, int pagePerCnt, int start);
@@ -40,9 +40,20 @@ public interface MemberDAO {
 
 	AdminDTO adminLogin(String id, String pw);
 
-	Object userLessonCount(int pagePerCnt, String user_id);
+	Object userLessonPageCount(int pagePerCnt, String user_id);
 
 	MemberDTO myTeacher(String user_id, String loginId);
 
+	int favorite(String loginId, String teacher_id);
+
+	int unFavorite(String loginId, String teacher_id);
+
+	int block(String loginId, String teacher_id);
+
+	int unblock(String loginId, String teacher_id);
+
+	Object userReviewAllCount(String user_id);
+
+	Object userLessonAllCount(String user_id);
 
 }

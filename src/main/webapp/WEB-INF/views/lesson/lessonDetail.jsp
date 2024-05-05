@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SONA 강의 상세보기</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3972a11b49199823dcd31c279f730c6e&libraries=services"></script> <!-- appkey 다음에 내 카카오 앱키 넣기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3972a11b49199823dcd31c279f730c6e"></script> <!-- appkey 다음에 내 카카오 앱키 넣기 -->

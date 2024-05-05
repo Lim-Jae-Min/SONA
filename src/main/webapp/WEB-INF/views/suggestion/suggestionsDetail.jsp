@@ -76,7 +76,7 @@ button {
 #adminEditDiv {
 	height: 60px;
     position: absolute;
-    top: 900px;
+    top: 20%;
     right: 300px;
     border: solid 2px black;
     background-color: white;
@@ -186,7 +186,7 @@ button {
 		        		<tr><td><hr/></td></tr>
 	        		</c:if>
 	        	</tbody>
-	        	<c:if test="${dto.sug_answer_idx ne '' && sessionScope.user_type eq '관리자'}">
+	        	<c:if test="${dto.sug_answer_idx eq '' && sessionScope.user_type eq '관리자'}">
 		        	<tfoot>
 		        		<tr>
 		        			<td>
@@ -271,7 +271,7 @@ $('#goList').click(function (){
 });
 
 $('#answerSubmit').click(function (){
-	var result = confirm('답변을 수정하시겠습니까?');
+	var result = confirm('답변을 등록하시겠습니까?');
 	
 	var $sug_answer = $('textarea[name="sug_answer"]');
 	
@@ -327,6 +327,10 @@ var boardId = '${dto.user_id}';
 if (loginId == boardId) {
 	$('#editMenu').css('display', 'inline-block');
 }
+
+var adminTop = $('#adminEditMenu').offset().top;
+console.log(adminTop);
+$('#adminEditDiv').css('top', adminTop + 30);
 
 </script>
 </html>

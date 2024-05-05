@@ -74,7 +74,9 @@
 	</select>
 	
 	<select id="userLessonList" resultType="com.sona.music.member.dto.MemberDTO">
-		SELECT co.class_name
+		SELECT
+			co.class_idx 
+			, co.class_name
 		   , CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
 		         THEN 0
 		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
@@ -90,6 +92,7 @@
 	
 	<select id="userReviewList" resultType="com.sona.music.board.dto.ReviewDTO">
 	SELECT 
+		review_idx,
 	    review_title,
 	    rater_id,
 	    score,
@@ -114,13 +117,20 @@
    
 	</select>	
 	
-	<select id="userLessonCount" resultType="Integer">
+	<select id="userLessonPageCount" resultType="Integer">
 		SELECT CEIL(COUNT(*)/#{param1}) AS pages FROM CLASS_OPEN WHERE user_id = #{param2}
 	</select>
 	
+	<select id="userLessonAllCount" resultType="Integer">
+		SELECT COUNT(*) AS allCount FROM CLASS_OPEN WHERE user_id = #{param1}
+	</select>
 	
-	<select id="userReviewCount" resultType="Integer">
+	<select id="userReviewPageCount" resultType="Integer">
 		SELECT CEIL(COUNT(*)/#{param1}) AS pages FROM REVIEW WHERE ratee_id = #{param2}
+	</select>
+	
+	<select id="userReviewAllCount" resultType="Integer">
+		SELECT COUNT(*) AS allCount FROM REVIEW WHERE ratee_id = #{param1}
 	</select>
 	
 	<select id="adminLogin" resultType="com.sona.music.admin.dto.AdminDTO">
@@ -134,5 +144,23 @@
 			, (SELECT mt2.category FROM MY_TEACHER mt2 WHERE mt2.user_id = #{param2} 
 				AND mt2.teacher_id = #{param1} AND mt2.category = 'block') AS block
 	</select>
+	
+	<insert id="favorite">
+		INSERT INTO MY_TEACHER(user_id, teacher_id, category) VALUES(#{param1}, #{param2}, 'favorite')
+	</insert>
+	
+	<delete id="unFavorite">
+		DELETE FROM MY_TEACHER WHERE user_id = #{param1} AND teacher_id = #{param2} AND category = 'favorite'
+	</delete>
+	
+	<insert id="block">
+		INSERT INTO MY_TEACHER(user_id, teacher_id, category) VALUES(#{param1}, #{param2}, 'block')
+	</insert>
+	
+	<delete id="unblock">
+		DELETE FROM MY_TEACHER WHERE user_id = #{param1} AND teacher_id = #{param2} AND category = 'block'
+	</delete>
+	
+	
 	
 </mapper>	

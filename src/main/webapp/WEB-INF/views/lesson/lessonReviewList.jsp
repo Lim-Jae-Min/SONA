@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SONA 강의 리뷰 목록</title>
 <link rel="stylesheet" href="resources/css/common.css?after"
 	type="text/css">
 

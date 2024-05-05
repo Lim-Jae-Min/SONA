@@ -292,14 +292,17 @@
 				<table>
 					<input type="hidden" name="class_idx" value="${question.class_idx}" />
 					<tr style="text-align: left;">
-						<th>Q&A 번호 : ${question.question_idx}<input type="hidden"
+						<th><input type="hidden"
 							name="question_idx" value="${question.question_idx}"></th>
+					</tr>
+					<tr>
+						<td>질문 제목: ${question.q_title}</td>
 					</tr>
 					<tr>
 						<td>질문 내용: ${question.q_content}</td>
 					</tr>
 					<tr>
-						<td>작성자: ${question.user_id} 작성일: ${question.q_reg_date}</td>
+						<td>질문 작성자: ${question.user_id} 질문 작성일: ${question.q_reg_date}</td>
 					</tr>
 				</table>
 				<div style="font-size: 12px; text-align: right;">

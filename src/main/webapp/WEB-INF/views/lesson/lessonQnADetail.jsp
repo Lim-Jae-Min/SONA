@@ -311,9 +311,9 @@ body {
 	<div class="container">
 		<img src="resources/img/QnA.png" id="QnA"> Q&A 상세보기
 		<div class="question-box">
-			<div class="qna-title">글번호: ${question.question_idx}</div>
+			<div class="qna-title">No.${question.question_idx}</div>
 			<div>
-				Q&A 제목: ${question.q_title} <br />강의 idx : ${question.class_idx}
+				Q&A 제목: ${question.q_title} <br />
 			</div>
 			<div class="author-info">작성자: ${question.user_id} 작성일:
 				${question.q_reg_date} 조회수: ${question.q_hit}</div>
@@ -443,7 +443,7 @@ function confirmDelete(questionIdx, classIdx){
 }
 
 function answerDelete(questionIdx, classIdx){
-	if(confirm("답변 삭제 하시겠습니까?")){
+	if(confirm("답변을 삭제 하시겠습니까?")){
 		window.location.href = './deleteAnswer.do?questionIdx=' + questionIdx + '&classIdx=' + classIdx;
 	}
 }

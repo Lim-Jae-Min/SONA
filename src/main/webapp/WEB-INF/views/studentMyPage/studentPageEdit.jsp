@@ -382,11 +382,21 @@ var overChk = false;
 	            return false;
 	        }
 
-	        // 폼을 직접 제출
-	        $('form').submit();
+	        // 수정 확인 알림 표시
+	        if (confirm('정보를 수정하시겠습니까?')) {
+	            // 확인을 선택한 경우 폼을 제출합니다.
+	            $('form').submit();
+	        } else {
+	            // 취소를 선택한 경우 아무 작업도 수행하지 않습니다.
+	            // 사용자가 취소를 선택하면 아무런 동작도 하지 않습니다.
+	        }
 	    }
 	}
-	
+
+	// Add a button to trigger the edit
+	$(document).ready(function() {
+	    $('body').append('<button onclick="studentEdit()">수정하시겠습니까?</button>');
+	});
 
 </script>
 </html>

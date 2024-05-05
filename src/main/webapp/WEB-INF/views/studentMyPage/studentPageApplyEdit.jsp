@@ -440,14 +440,15 @@ var overChk = false;
 	    var $inst = $('select[name="applyform_inst"]');
 	    var $location = $('select[name="applyform_location"]');
 	    var $haveinst = $('select[name="have_inst"]');
-
-	   
+	    
 	    // 체크된 요일 가져오기
+	    var selectedDays = [];
 	    $('input[name="dayCheckbox"]:checked').each(function() {
 	        selectedDays.push($(this).val());
 	    });
 	    
 	    // 체크된 스타일 가져오기
+	    var selectedStyles = [];
 	    $('input[name="styleCheckbox"]:checked').each(function() {
 	        selectedStyles.push($(this).val());
 	    });
@@ -465,12 +466,14 @@ var overChk = false;
 	        // 전화번호가 숫자만 포함하는지 확인
 	        if ($haveinst.val() == '') {
 	            alert('악기 유무를 체크해주세요!');
-	            $accountNumber.focus();
+	            $haveinst.focus();
 	            return false;
 	        }
 
 	        // 폼을 직접 제출
-	        $('form').submit();
+	        if (confirm('클릭할 때 수정하시겠습니까?')) {
+	            $('form').submit();
+	        }
 	    }
 	}
 	

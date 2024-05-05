@@ -104,15 +104,15 @@ input[type="checkBox"] {
 	    <div id="sidemenu">
 	        <h3>숨김 강사</h3>
 	        <hr/>
-	        <a href="studentPage.go">마이페이지</a>
-            <a href="editStudentPage.go">개인 정보 수정</a>
-            <a href="favoriteList.go">즐겨찾기 강사</a>
-            <a href="blockList.go">숨김 강사</a>
-            <a href="myQnA.go">내가 작성한 Q&A</a>
-            <a href="myPoint.go">포인트 내역</a>
-            <a href="#">내가 받은 리뷰</a>
-            <a href="#">내가 작성한 리뷰</a>
-            <a href="#">수강 이력</a>
+                <a href="studentPage.go">마이페이지</a>
+                <a href="studentPageEdit.go">개인 정보 수정</a>
+                <a href="favoriteList.go">즐겨찾기 강사</a>
+                <a href="blockList.go">숨김 강사</a>
+                <a href="studentQnAList.go">내가 작성한 Q&A</a>
+                <a href="studentPointList.go">포인트 내역</a>
+                <a href="studentReceivedList.go">내가 받은 리뷰</a>
+                <a href="studentWrittenList.go">내가 작성한 리뷰</a>
+                <a href="studentAttendedList.go">수강 이력</a>
 	    </div>
 	    <div id="content">
 	    	<br/><br/><br/><br/>

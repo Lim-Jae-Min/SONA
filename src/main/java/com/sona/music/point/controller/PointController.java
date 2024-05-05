@@ -135,7 +135,7 @@ public class PointController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/lessonPayment.go" , method = RequestMethod.POST)
+	@RequestMapping(value = "/lessonPayment.go")
 	public String lessonPaymentGo(Model model,HttpSession session ,int class_idx) {
 		int userPoint = (int) session.getAttribute("point");
 		logger.info(userPoint+"세션에서 가져온 포인트 값");

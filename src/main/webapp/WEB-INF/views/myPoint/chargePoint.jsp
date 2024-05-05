@@ -75,9 +75,18 @@
     align-items: center; /* 가로 중앙 정렬 */
     justify-content: center; /* 가로 정렬 */
     flex-direction: row; /* 가로로 나열 */
+    position: relative;
+    left: 7%;
 }
 .payment-method {
     margin-right: 80px; /* 결제 방식 간의 간격 설정 */
+}
+.buttonDiv{
+	position: relative;
+	left:30%;
+}
+#cancelButton{
+	width: 105px;
 }
     </style>
 </head>
@@ -132,67 +141,79 @@
     
     <!-- 헤더 영역에 프로필 및 로그인한 유저 정보 표시 -->
     <form action="chargePoint.do" method="post">
-	        <div class="profile">
-	            <img src="/photo/1.jpg" alt="프로필 사진">
-	            <br>
-	            <span id="userId"> <h2>${sessionScope.loginId}</h2>
-	            <br>
-	            <div> 님이 보유중인 포인트 ${havePoint} P</div>
-	            </span>
-	        </div>
-	
-	    <div class="container">
-	        <h2>포인트 충전</h2>
-	        <!-- 충전금액 입력 -->
-	        <div class="form-group">
-	            <label for="chargeAmount">충전금액:</label>
-	            <input type="number" id="chargeAmount" name="amount" onkeyup="calculatePoints()" value="0">
-	        </div>
-	
-	        <!-- 결제 방식 선택 -->
-
-		<div class="form-group">
-		    <label>결제 방식:</label>
-		    <hr> <!-- 선 추가 -->
-				<div class="payment-methods">
-				    <div class="payment-method">
-				        <input type="radio" id="creditCard" name="paymentMethod" value="creditCard" onchange="calculatePoints()">
-				        <label for="creditCard">신용카드</label>
-				    </div>
-				    <div class="payment-method">
-				        <input type="radio" id="debitCard" name="paymentMethod" value="debitCard" onchange="calculatePoints()">
-				        <label for="debitCard">직불카드</label>
-				    </div>
-				    <div class="payment-method">
-				        <input type="radio" id="bankTransfer" name="paymentMethod" value="bankTransfer" onchange="calculatePoints()">
-				        <label for="bankTransfer">계좌이체</label>
-				    </div>
-				</div>
+		<div class="profile">
+			<br>
+			<c:if test="${photoNewFileName != null}">
+				<img src="/photo/${photoNewFileName}" class="lessonImg">
+			</c:if>
+			<c:if test="${photoNewFileName == null}">
+				<img src="resources/img/basic_user.png" class="lessonImg">
+			</c:if>
+								
+			<br> <span id="userId">
+				<h2>${sessionScope.loginId}</h2>
+				<div>님이 보유중인 포인트 ${havePoint} P</div>
+			</span>
 		</div>
-		
-	        <!-- 포인트 정보 표시 -->
-<table class="">
-    <tr>
-        <th colspan="2">결제확인</th>
-    </tr>
-    <tr>
-        <td>보유 포인트:</td>
-        <td>충전 포인트:</td>
-        <td>결제금액:</td>
-        <td>충전 후 포인트:</td>
-        
-    </tr>
-    <tr>
-        <td><span id="currentPoints">${havePoint} P</span></td>
-        <td><span id="chargingPoints">0</span></td>
-        <td><span id="paymentAmount">0</span></td>
-        <td><span id="afterPoints">0</span></td>
-    </tr>
 
-</table>
-	            <hr>
-	    <button type="button" class="btn" id="chargePointDo" onclick="chargePoint()"> 결제하기 </button>
-	    </div>
+		<div class="container">
+			<h2>포인트 충전</h2>
+			<!-- 충전금액 입력 -->
+			<div class="form-group">
+				<label for="chargeAmount">충전금액:</label> <input type="number"
+					id="chargeAmount" name="amount" onkeyup="calculatePoints()"
+					value="${chargeAmout}">
+			</div>
+
+			<!-- 결제 방식 선택 -->
+
+			<div class="form-group">
+				<label>결제 방식:</label>
+				<hr>
+				<!-- 선 추가 -->
+				<div class="payment-methods">
+					<div class="payment-method">
+						<input type="radio" id="creditCard" name="paymentMethod"
+							value="creditCard" onchange="calculatePoints()"> <label
+							for="creditCard">신용카드</label>
+					</div>
+					<div class="payment-method">
+						<input type="radio" id="debitCard" name="paymentMethod"
+							value="debitCard" onchange="calculatePoints()"> <label
+							for="debitCard">직불카드</label>
+					</div>
+					<div class="payment-method">
+						<input type="radio" id="bankTransfer" name="paymentMethod"
+							value="bankTransfer" onchange="calculatePoints()"> <label
+							for="bankTransfer">계좌이체</label>
+					</div>
+				</div>
+			</div>
+
+			<!-- 포인트 정보 표시 -->
+			<hr>
+			<div class="point-info">
+				<p>
+					보유 포인트: <span id="currentPoints">${havePoint} P</span>
+				</p>
+				<p>
+					충전 포인트: <span id="chargingPoints">0</span>
+				</p>
+				<p>
+					결제금액: <span id="paymentAmount">0</span>
+				</p>
+				<p>
+					충전 후 포인트: <span id="afterPoints">0</span>
+				</p>
+			</div>
+		<hr>
+			<div class="buttonDiv">
+				<button type="button" class="btn" id="chargePointDo"
+					onclick="chargePoint()">결제하기</button>
+				<button type="button" class="btn" id="cancelButton" onclick="myPageGo()">취소</button>
+			</div>
+		</div>
+
 	</form>
 	
 	
@@ -237,6 +258,10 @@
 
 <script>
 
+	window.onload = function(){
+		calculatePoints();
+	};
+	
 function chargePoint() {
     var chargeAmount = parseInt($("#chargeAmount").val());
 
@@ -252,7 +277,7 @@ function chargePoint() {
                 if (response.success==1) {
                     alert("포인트 충전이 완료되었습니다.");
                     // 여기에 추가적으로 처리할 내용을 작성할 수 있습니.
-                    window.location.href = "login.go";
+                    window.location.href = "myPage.go";
                 } else {
                     alert("포인트 충전을 실패하였습니다.");
                 }
@@ -277,7 +302,8 @@ function calculatePoints() {
     var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
 
     // 결제 방식에 따라 결제 금액 설정 (여기서는 임의의 값으로 대체)
-    var paymentAmount = chargeAmount*1.05;
+    var paymentAmount =  Math.floor(chargeAmount*1.05);
+   
     if (paymentMethod) {
         var method = paymentMethod.value;
         if (method === 'creditCard') {
@@ -287,7 +313,7 @@ function calculatePoints() {
         } else if (method === 'bankTransfer') {
             // 계좌이체 선택 시 추가 처리
         }
-    }
+    };
 
     // 충전 포인트 및 충전 후 포인트 계산
     var chargingPoints = chargeAmount;
@@ -298,10 +324,30 @@ function calculatePoints() {
     document.getElementById('chargingPoints').innerText = chargingPoints;
     document.getElementById('paymentAmount').innerText = paymentAmount;
     document.getElementById('afterPoints').innerText = afterPoints;
-}
-$('.alarm').click(function alarmList() {
-	   location.href = 'alarmList.go';
-	});
+};
 
+
+
+function myPageGo(){
+	location.href = "myPage.go";	
+};
+
+$('#userName').click(function slide() {
+	var display = $('#slide').css('display');
+    if (display == 'none') {
+        $('#slide').css('display', 'block');
+    }
+    if (display == 'block') {
+        $('#slide').css('display', 'none');
+    }
+});
+
+$('#logo').click(function main(){
+	location.href = '/main';
+});
+
+$('.alarm').click(function alarmList() {
+	location.href = 'alarmList.go';
+});
 </script>
 </html>

@@ -125,7 +125,7 @@
                 <a href="#">회원 정지 이력</a>
             </div>
     	</div>
-	</div>
+
 
 		<div id="paaaa">
 			<h3>공지사항 리스트</h3>

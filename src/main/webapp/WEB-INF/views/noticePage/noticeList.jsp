@@ -30,7 +30,7 @@
 	}
 	
 	#showList th {
-	    background-color: #F0FAFF; /* 헤더 배경색 설정 */
+	    background-color: #dddddd; /* 헤더 배경색 설정 */
 	    color: #333333; /* 헤더 텍스트 색상 설정 */
 	}
 	#divvv{
@@ -42,16 +42,16 @@
 		width: 8%;
 	}
 	.nid{
-		width: 25%;
+		width: 15%;
 	}
 	.nbhit{
 		width: 16.6%;
 	}
 	.ndate{
-		width: 20%;
+		width: 10%;
 	}
 	.ntitle{
-		width: 20%;	
+		width: 30%;	
 	}
 	.nchb{
 		width: 10%;
@@ -70,6 +70,25 @@
 	}
 	th,td,tr{
 		border-color: white;
+	}
+	#searchText{
+		height: 30px;
+	}
+	.searchType{
+		height: 30px;
+	}
+	.searchBox{
+		position: relative;
+	}
+	#noticeWrite {
+	    position: relative;
+	    left: 96%;
+	    top: -22px;
+	}
+	.searchIcon{
+		width: 23px;
+	    position: relative;
+	    top: 5px;
 	}
 </style>
 </head>
@@ -140,7 +159,8 @@
 			  <option value="2">내용</option>
 			</select>
 	     	<input type="text" id ="searchText">
-	     	<button type="button" id="search">검색하기</button>
+	     	<img src="resources/img/search.png" id="search" height="20px"
+					width="20px" onclick="search()" class="searchIcon">
 	     	<!-- 검색기능 끝 -->
 		   <table id ="showlist">
 		   	<thead>
@@ -192,6 +212,11 @@
 		listCall(showPage);
 	});
 
+	function search(){
+		$('#pagination').twbsPagination('destroy');
+		showPage =1;
+		listCall(showPage);		
+	};
 	
 	
 	

@@ -57,6 +57,19 @@
 	.btn:hover {
 		background-color: #0056b3;
 	}
+	.isFindId{
+		color: black;
+		font-size: 10px;
+	}
+	.idFindResultBox{
+		list-style-type: none;
+		text-align: center;
+		padding: 0px;
+	}
+	.idid{
+		color: black;
+		font-size: 20px;
+	}
 </style>
 
 </head>
@@ -103,16 +116,18 @@
     </header>
 
 	<div id="resultPage">
-		<div class="result-msg">아이디 찾기 결과</div>
+		<div class="result-msg"><h2> ID 찾기</h2></div>
 		<div class="result-id">
 			<c:forEach items="${findId}" var="ids">
-				<tr>
-					<td>${findId}</td>
-				</tr>
+				<ul class="idFindResultBox">
+					<li class="isFindId">존재하는 아이디가 있습니다.</li><br>
+					<li><span class="idid">아이디 : </span> ${findId}</li>
+				</ul>
 			</c:forEach>
 		</div>
-		<a href="/login.do" class="btn">로그인 하기</a> <a href="pwFind.go"
-			class="btn">비밀번호 찾기</a>
+		<br> <br>
+		<a href="login.go" class="btn">로그인 하기</a> 
+		<a href="pwFind.go"	class="btn">비밀번호 찾기</a>
 	</div>
 	<div id="footer">
         <li>상호명 : SONA</li>
@@ -148,8 +163,22 @@
     </div>
 </body>
 <script>
+$('#userName').click(function slide() {
+	var display = $('#slide').css('display');
+    if (display == 'none') {
+        $('#slide').css('display', 'block');
+    }
+    if (display == 'block') {
+        $('#slide').css('display', 'none');
+    }
+});
+
+$('#logo').click(function main(){
+	location.href = '/main';
+});
+
 $('.alarm').click(function alarmList() {
-	   location.href = 'alarmList.go';
-	});
+	location.href = 'alarmList.go';
+});
 </script>
 </html>

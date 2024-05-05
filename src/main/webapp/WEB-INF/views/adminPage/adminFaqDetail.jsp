@@ -334,7 +334,7 @@ $('.alarm').click(function alarmList() {
 					if (response.success == 1) {
 						alert("삭제를 성공 했습니다.");
 						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
-						window.location.href = "faqManagement.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
+						window.location.href = "adminFaqList.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
 					} else {
 						alert("삭제를 실패 했습니다.");
 /* 						var form = document.createElement('form'); // 폼객체 생성

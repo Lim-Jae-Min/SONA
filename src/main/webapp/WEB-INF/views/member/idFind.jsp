@@ -69,6 +69,9 @@
 		right: 5px; /* 또는 원하는 위치로 조정 */
 		transform: translateY(-50%);
 	}
+	.idFindDiv{
+		background-color: aqua;
+	}
 </style>
 </head>
 <body>
@@ -115,8 +118,8 @@
         ${msg}
     </div>
 
-
 	<form id="findForm" method="post">
+		<h2>ID 찾기</h2>
 		<div class="form-group input-group">
 			<input type="text" name="email" id="email" placeholder="이메일">
 			<button type="button" id="idFindEmailSubmit" onclick="submitEmail()">전송</button>
@@ -163,18 +166,6 @@
         <div><a href="logout.do">로그아웃</a></div>
     </div>
 	
-	<form action="chargePoint.go" method="post">
-		<button type="submit">충전페이지</button>
-	</form>
-	
-	<form action="withdrawPoint.go" method="post">
-		<button type="submit">출금페이지</button>
-	</form>
-	
-	<form action="lessonPayment.go" method="post">
-		<button type="submit">결제페이지</button>
-	</form>
-	
 </body>
 <script>
 /* function submitEmail(){
@@ -196,6 +187,7 @@
 } */
 
 	var cfEmail = null;
+	var certificationNumber = null;
 	function submitEmail() {
 		console.log('click');
 		var email = $('input[name="email"]').val();
@@ -212,12 +204,14 @@
 				//여기에 뿌려준다
 				console.log(data.checkedEmail);
 				var chkEmail = data.checkedEmail;
-				if (data.checkedEmail == null) {
+				if (chkEmail == null) {
 					alert('이메일을 다시 입력해 주세요');
 					$('input[name="email"]').val('');
 				} else {
 					alert(chkEmail + '로 인증번호를 보냈습니다.');
 					cfEmail = chkEmail;
+					certificationNumber = data.certificationNumber;
+					console.log(certificationNumber);
 				}
 			},
 			error : function(error) { // 통신 실패 시
@@ -235,7 +229,7 @@
 		// 여기에서 서버로 인증번호 확인 요청을 보내고,
 		// 서버에서는 해당 인증번호가 맞는지 확인한 후 응답을 보냅니다.
 		// 여기서는 간단히 인증번호가 "123456"이라고 가정합니다.
-		var crNumber = "123456";
+		var crNumber = certificationNumber;
 
 		if (crNumber == cfNumber) {
 			cfn = true;
@@ -251,14 +245,31 @@
 
 	
 	function findSubmit() {
-		if (cfn == false) {
-			alert("인증번호를 확인 해주세요.");
-		} else if (cfn == true) {
+		if (cfn == true) {
 			var email = cfEmail;
+			cfn = false;
 			$('#findForm').attr("action", "idFindResult.do").submit();
+		} else{
+			$('#findForm').removeAttr('action');
+			alert("인증번호를 확인 해주세요.");
+			location.href = "idFind.go";
 		}
 
 	}
+
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	    if (display == 'none') {
+	        $('#slide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#slide').css('display', 'none');
+	    }
+	});
+
+	$('#logo').click(function main(){
+		location.href = '/main';
+	});
 
 	$('.alarm').click(function alarmList() {
 		location.href = 'alarmList.go';

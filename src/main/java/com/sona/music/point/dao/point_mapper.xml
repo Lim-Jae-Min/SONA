@@ -40,4 +40,9 @@
 	<select id="getUserInfo" resultType="com.sona.music.member.dto.MemberDTO">
 		SELECT user_phone,user_accountnumber FROM USERS WHERE user_id = #{param1};
 	</select>
+	
+	<select id="pointGetPhotoName" resultType="String">
+		SELECT new_filename FROM PHOTO_BOARD WHERE user_id = #{param1} AND photo_category = #{param2}
+			ORDER BY photo_idx DESC LIMIT 1
+	</select>
 </mapper>

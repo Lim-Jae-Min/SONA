@@ -30,15 +30,25 @@ public class PointController {
 	@Autowired PointService pointService;
 	
 	@RequestMapping(value = "/chargePoint.go")
-	public String chargePointGo(Model model, HttpSession session) {
+	public String chargePointGo(Model model, HttpSession session, String GetremainPoint) {
 		String id =(String) session.getAttribute("loginId");
+		logger.info("겟 리메인 포인트 : " + GetremainPoint);
+		int leesonPaychargeAmount = 0;
 		String page = "redirect:/";
 		if(id != null) {
 			model.addAttribute(model);
 			String chargePointLoginId = (String) session.getAttribute("loginId");
 			logger.info(chargePointLoginId);
 			int havePoint = pointService.getHavePoint(chargePointLoginId);
+			String photoNewFileName = pointService.pointGetPhotoName(chargePointLoginId);
+			model.addAttribute("photoNewFileName",photoNewFileName);
+			logger.info("db에서 가져온 포인트 프로필 사진 : " + photoNewFileName);
 			model.addAttribute("havePoint", havePoint);
+			if(GetremainPoint != null) {
+				leesonPaychargeAmount = Integer.parseInt(GetremainPoint) ;
+				leesonPaychargeAmount = -leesonPaychargeAmount;
+			}
+			model.addAttribute("chargeAmout",leesonPaychargeAmount);
 			page = "myPoint/chargePoint";		
 		}
 		logger.info("ㅎㅇㅎㅇ");
@@ -86,7 +96,9 @@ public class PointController {
 			int userAccount = userInfo.getUser_accountnumber();
 			String userPhone = userInfo.getUser_phone();
 			logger.info("출금포인트 가져오기 : p a : " + userPhone + userAccount);
-			
+			String photoNewFileName = pointService.pointGetPhotoName(chargePointLoginId);
+			model.addAttribute("photoNewFileName",photoNewFileName);
+			logger.info("db에서 가져온 포인트 프로필 사진 : " + photoNewFileName);
 			page = "myPoint/withdrawPoint";
 			model.addAttribute(model);
 			logger.info(chargePointLoginId);
@@ -135,8 +147,8 @@ public class PointController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/lessonPayment.go" , method = RequestMethod.POST)
-	public String lessonPaymentGo(Model model,HttpSession session ,int class_idx) {
+	@RequestMapping(value = "/lessonPayment.go")
+	public String lessonPaymentGo(Model model,HttpSession session ,int class_idx ) {
 		int userPoint = (int) session.getAttribute("point");
 		logger.info(userPoint+"세션에서 가져온 포인트 값");
 		
@@ -148,6 +160,11 @@ public class PointController {
 		int havePoint = pointService.getHavePoint(chargePointLoginId);
 		LessonDTO lessonInfo = pointService.paymentGetLesson(class_idx);
 //		String new_filename = pointService.getPhotoName(lessonInfo.getUser_id());
+		String tUserId = lessonInfo.getUser_id();
+		logger.info("강의결제 선생님 id : " + tUserId);
+		String photoNewFileName = pointService.pointGetPhotoName(tUserId);
+		model.addAttribute("photoNewFileName",photoNewFileName);
+		logger.info("db에서 가져온 포인트 프로필 사진 : " + photoNewFileName);
 		model.addAttribute("USER_NAME",lessonInfo.getUser_name());
 		model.addAttribute("Class_name",lessonInfo.getClass_name());
 		model.addAttribute("Class_times",lessonInfo.getClass_times());
@@ -168,8 +185,8 @@ public class PointController {
 	public Map<String, Object> lessonPaymentDo(Model model,HttpSession session,
 			@RequestParam Map<String, String> param ) {
 		String TuserName = param.get("TuserName");
-		int classPrice = Integer.parseInt(param.get("classPrice"));
 		String TuserId = param.get("TuserId");
+		int classPrice = Integer.parseInt(param.get("classPrice"));
 		int classIdx = Integer.parseInt(param.get("classIdx"));
 		Map<String, Object> map = new HashMap<String, Object>();
 		logger.info(TuserName,TuserId + "강의결제에서 받아온 값");
@@ -191,7 +208,7 @@ public class PointController {
 		if(id != null) {
 			logger.info("강의결제에서 보유포인트 - 강의결제" + resultPoint);
 			
-			if(resultPoint>0) {
+			if(resultPoint>=0) {
 				
 				row = pointService.lessonPayment(id,amount,pointType);
 				logger.info("강의 결제 성공 1 : " + row);
@@ -223,16 +240,5 @@ public class PointController {
 		return map;
 	}
 	
-	@RequestMapping(value = "test1.go")
-	public String testGo() {
-		
-		return "myPoint/test1";
-	}
-	
-	@RequestMapping(value = "test2.go")
-	public String testGo2() {
-		
-		return "myPoint/test2";
-	}
 	
 }

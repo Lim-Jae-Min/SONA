@@ -186,6 +186,12 @@ p.editOption{
 	left : 50%;
 	position: relative;
 }
+
+.eyes{
+	width: 16px;
+    position: relative;
+    top: 2px;
+}
 </style>
 </head>
 <body>
@@ -235,28 +241,32 @@ p.editOption{
     
     
     <!-- 게시판 영역 -->
-    <div class="container">
-        <h1>게시판 상세보기</h1>
-            <h2 id="boardTitle">${noticeDetail.notice_title}</h2>
-        <div id="boardDetail">
-        작성자 : ${noticeDetail.admin_id}  작성일자 : ${noticeDetail.notice_reg_date} &nbsp;&nbsp;  조회수 : ${noticeDetail.notice_views}
-            <hr>
-            <div id="boardImageWrapper">
+	<div class="container">
+		<h1>공지사항</h1>
+		<h2 id="boardTitle">${noticeDetail.notice_title}</h2>
+		<div id="boardDetail">
+			${noticeDetail.admin_id} &nbsp;&nbsp; ${noticeDetail.notice_reg_date}
+			&nbsp;&nbsp;&nbsp; <img src="resources/img/eyes.png" class="eyes">
+			${noticeDetail.notice_views}
+			<hr>
+			<div id="boardImageWrapper">
 				<c:if test="${photos.size()>0}">
 					<c:forEach items="${photos}" var="photo">
 						<img src="/photo/${photo.new_filename}" />
 					</c:forEach>
 				</c:if>
 			</div>
-            <p id="boardContent">${noticeDetail.notice_content}</p>
-            <hr>
+			<div style="width: 882px; height: 311px; resize: none;">
+				<pre> ${noticeDetail.notice_content}</pre>
+			</div>
+			<hr>
 
-            
-            <button id="returnList" onclick="backList()">목록</button>
-        </div>
-    </div>
-    
-    <!-- 게시판 영역 -->
+
+			<button id="returnList" onclick="backList()">목록</button>
+		</div>
+	</div>
+
+	<!-- 게시판 영역 -->
 
 
 	<!-- 푸터 영역 -->

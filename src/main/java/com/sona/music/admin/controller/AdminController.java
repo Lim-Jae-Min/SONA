@@ -26,6 +26,7 @@ import com.sona.music.admin.service.AdminService;
 import com.sona.music.board.service.FAQService;
 import com.sona.music.board.service.NoticeService;
 import com.sona.music.board.service.ReviewService;
+import com.sona.music.board.service.SuggestionService;
 
 @Controller
 public class AdminController {
@@ -38,6 +39,7 @@ public class AdminController {
 	NoticeService noticeService;
 	@Autowired FAQService faqService;
 	@Autowired ReviewService reviewService;
+	@Autowired SuggestionService suggestionService;
 
 	@RequestMapping(value="adminMain.go")
 	public String adminMainGo(HttpSession session, Model model) {
@@ -192,6 +194,15 @@ public class AdminController {
 		logger.info("faq관리 페이지 이동");
 		return "adminPage/adminFaqList";
 	}
+	
+	@RequestMapping(value="/adminSuggestionsDetail.go")
+	public String suggestionsDetailGo(String sug_idx, Model model) {
+		
+		suggestionService.suggestionsDetailGo(sug_idx, model);
+		
+		return "adminPage/adminSuggestionsDetail";
+	}
+	
 
 	@RequestMapping(value = "/noticeDel.ajax", method = RequestMethod.POST)
 	@ResponseBody

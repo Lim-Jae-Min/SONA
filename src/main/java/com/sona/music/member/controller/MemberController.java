@@ -3,6 +3,8 @@ package com.sona.music.member.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -39,8 +41,16 @@ public class MemberController {
 
         String checkedEmail = memberService.findIdEmail(email);
         logger.info(checkedEmail+ "ID 찾기 요청으로 DB에서 받아온 이메일 ");
-        map.put("checkedEmail",checkedEmail);
-
+        if(checkedEmail !=null) {
+        	
+        	map.put("checkedEmail",checkedEmail);
+        	Random random = new Random();
+        	int randomNumber = random.nextInt(9000) + 1000; 
+        	String certificationNumber = String.valueOf(randomNumber);
+        	map.put("certificationNumber", certificationNumber);
+        	String ctfNum = certificationNumber + "";
+        	logger.info("인증번호" + ctfNum);
+        }
         return map;
     }
     
@@ -54,8 +64,19 @@ public class MemberController {
         logger.info("findPwEmail.do 에서 받은 값 : " + checkedEmail + " : " + checkedId );
         
         logger.info(checkedEmail);
-        map.put("checkedEmail",checkedEmail);
-        map.put("checkedId", checkedId);
+        if(checkedId != null) {
+        	map.put("checkedId", checkedId);
+        	
+        	if(checkedEmail != null) {
+        		map.put("checkedEmail",checkedEmail);
+        		Random random = new Random();
+        		int randomNumber = random.nextInt(9000) + 1000;
+        		String certificationNumber = String.valueOf(randomNumber);
+        		logger.info("인증번호" + certificationNumber);
+        		map.put("certificationNumber", certificationNumber);
+        		
+        	}
+        }
         return map;
     }
     
@@ -88,11 +109,18 @@ public class MemberController {
         
     	logger.info(changePwNeedId + "찐 비밀번호 변경에서 받은 아이디");
     	logger.info(newPassword + "찐 비밀번호 변경에서 받은 비밀번호");
-    	
+    	String msg = "비밀번호 변경에 실패했습니다.";
     	int row = memberService.changePw(changePwNeedId,newPassword);
+    	logger.info("비밀번호 성공여부 : "+row);
+//    	if(row ==1) {
+//    		logger.info("비밀번호 변경 성공");
+//    		msg = "비밀번호 변경에 성공 했습니다.";
+//    	}
+//    	model.addAttribute("result",row);
+//    	model.addAttribute("msg",msg);
 //    	model.addAttribute("changePwNeedId", changePwNeedId);
 
-        return "member/login";
+        return "member/changePw";
     }
 	
 	@RequestMapping(value="/joinform.go")

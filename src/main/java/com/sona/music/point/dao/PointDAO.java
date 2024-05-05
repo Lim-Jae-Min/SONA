@@ -18,6 +18,8 @@ public interface PointDAO {
 
 	MemberDTO getUserInfo(String chargePointLoginId);
 
+	String pointGetPhotoName(String chargePointLoginId, String photoCategory);
+
 //	String getPhotoName(String user_id);
 
 }

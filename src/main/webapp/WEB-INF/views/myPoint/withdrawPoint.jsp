@@ -9,7 +9,7 @@
  <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
  <style>
     .container {
-        max-width: 400px;
+        max-width: 500px;
         margin: 0 auto;
         padding: 20px;
         border: 1px solid #ccc;
@@ -113,6 +113,13 @@
         text-align: center; /* 텍스트 가운데 정렬 */
         margin-bottom: 20px; /* 아래 여백 */
    	}
+   	.buttonDiv{
+	position: relative;
+	left:23%;
+	}
+	#cancelButton{
+		width: 105px;
+	}
 </style>
 
 <body>
@@ -159,9 +166,18 @@
 	<!-- 헤더 영역에 프로필 및 로그인한 유저 정보 표시 -->
 	<form action="withdrawPoint.do" method="post">
 		<div class="profile">
-			<img src="/photo/1.jpg" alt="프로필 사진"> <br> <span
-				id="userId">${sessionScope.loginId}</span> <br>
-			<div>님이 보유중인 포인트 ${havePoint} P</div>
+			<br>
+			<c:if test="${photoNewFileName != null}">
+				<img src="/photo/${photoNewFileName}" class="lessonImg">
+			</c:if>
+			<c:if test="${photoNewFileName == null}">
+				<img src="resources/img/basic_user.png" class="lessonImg">
+			</c:if>
+
+			<br> <span id="userId">
+				<h2>${sessionScope.loginId}</h2>
+				<div>님이 보유중인 포인트 ${havePoint} P</div>
+			</span>
 		</div>
 
 		<div class="container">
@@ -205,8 +221,13 @@
 				</p>
 			</div>
 			<hr>
-			<button type="button" class="btn" onclick="withdrawPoint()">출금하기</button>
+			<div class="buttonDiv">
+				<button type="button" class="btn" onclick="withdrawPoint()">출금하기</button>
+				<button type="button" class="btn" id="cancelButton"	onclick="myPageGo()">취소</button>
+			</div>
 		</div>
+		
+		
 
 	</form>
 	<!-- footer -->
@@ -266,19 +287,10 @@
 	// 출금 포인트 및 출금 후 포인트 계산 및 UI 업데이트 함수
 	function calculatePoints() {
 		// 출금 금액 입력값 가져오기
-		var currentPoints = $
-		{
-			havePoint
-		}
-		;
+		var currentPoints = ${havePoint};
 		var withdrawAmount = parseInt(document.getElementById('withdrawAmount').value);
 
 		// 현재 보유 포인트 가져오기 (여기서는 임의의 값으로 대체)
-		var currentPoints = $
-		{
-			havePoint
-		}
-		;
 
 		// 출금 방식 선택 여부 확인
 		var withdrawMethod = document
@@ -342,6 +354,25 @@
 </body>
 
 <script>
+	
+	function myPageGo(){
+		location.href = "myPage.go";	
+	};
+	
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	    if (display == 'none') {
+	        $('#slide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#slide').css('display', 'none');
+	    }
+	});
+
+	$('#logo').click(function main(){
+		location.href = '/main';
+	});
+
 	$('.alarm').click(function alarmList() {
 		location.href = 'alarmList.go';
 	});

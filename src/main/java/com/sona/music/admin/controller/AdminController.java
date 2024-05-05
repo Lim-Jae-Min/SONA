@@ -409,15 +409,15 @@ public class AdminController {
 	
 	@RequestMapping(value = "reportManagementlist.ajax")
 	@ResponseBody
-	public Map<String, Object> reportManagementlist(int page , int searchType, String serachText) {
+	public Map<String, Object> reportManagementlist(int page , int searchType, String searchText) {
 		logger.info("reportManagementlist 요청");
 		logger.info("요청페이지 : " + page);
-		logger.info("신고 검색에서 가져온 text : "+serachText);
+		logger.info("신고 검색에서 가져온 text : "+searchText);
 		logger.info("신고 검색에서 가져온 type : "+searchType);
 		Map<String, Object> map = null;
 		int currPage = page;
 			
-			map = adminService.showReportSearch(currPage,searchType,serachText);	
+			map = adminService.showReportSearch(currPage,searchType,searchText);	
 
 		
 		
@@ -474,15 +474,15 @@ public class AdminController {
 	
 	@RequestMapping(value = "suspensionlist.ajax")
 	@ResponseBody
-	public Map<String, Object> suspensionlist(int page , int searchType, String serachText) {
+	public Map<String, Object> suspensionlist(int page , int searchType, String searchText) {
 		logger.info("reportManagementlist 요청");
 		logger.info("요청페이지 : " + page);
-		logger.info("신고 검색에서 가져온 text : "+serachText);
+		logger.info("신고 검색에서 가져온 text : "+searchText);
 		logger.info("신고 검색에서 가져온 type : "+searchType);
 		Map<String, Object> map = null;
 		int currPage = page;
 			
-			map = adminService.showSuspensionSearch(currPage,searchType,serachText);	
+			map = adminService.showSuspensionSearch(currPage,searchType,searchText);	
 		
 		
 		return map;

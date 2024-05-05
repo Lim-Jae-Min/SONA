@@ -32,8 +32,14 @@ public class MemberDTO {
     
     private String favorite;
     private String block;
+    private int allCount;
     
-    
+	public int getAllCount() {
+		return allCount;
+	}
+	public void setAllCount(int allCount) {
+		this.allCount = allCount;
+	}
 	public String getUser_id() {
 		return user_id;
 	}

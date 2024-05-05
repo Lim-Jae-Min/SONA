@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SONA 회원 상세보기 - 관리자</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
@@ -62,12 +62,12 @@
                 <a href="adminMain.go">관리자 페이지</a>
                 <a href="adminUserList.go">회원 관리</a>
                 <a href="adminLessonList.go">강의 관리</a>
-                <a href="#">공지사항 관리</a>
-                <a href="#">FAQ 관리</a>
-                <a href="#">건의사항 관리</a>
-                <a href="#">리뷰 관리</a>
-                <a href="#">신고 관리</a>
-                <a href="#">회원 정지 이력</a>
+                <a href="noticeManagement.go">공지사항 관리</a>
+                <a href="faqManagement.go">FAQ 관리</a>
+                <a href="adminSuggestionsLIst.go">건의사항 관리</a>
+                <a href="adminReviewList.go">리뷰 관리</a>
+                <a href="adminReportManagement.go">신고 관리</a>
+                <a href="userSuspensionHistory.go">회원 정지 이력</a>
             </div>
             <div id="content">
                 <table class="mainTable">

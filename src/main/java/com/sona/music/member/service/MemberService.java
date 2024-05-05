@@ -112,8 +112,9 @@ public class MemberService {
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", memberDAO.userLessonCount(pagePerCnt, user_id));
-		
+		result.put("totalPages", memberDAO.userLessonPageCount(pagePerCnt, user_id));
+		result.put("allCount", memberDAO.userLessonAllCount(user_id));
+
 		for (MemberDTO r : list) {
 //			logger.info(r.getClass_name()+"");
 //			logger.info(r.getClass_reg_date() + "");
@@ -134,7 +135,8 @@ public class MemberService {
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", memberDAO.userReviewCount(pagePerCnt, user_id));
+		result.put("totalPages", memberDAO.userReviewPageCount(pagePerCnt, user_id));
+		result.put("allCount", memberDAO.userReviewAllCount(user_id));
 		for (ReviewDTO r : list) {
 
 
@@ -163,6 +165,45 @@ public class MemberService {
 	public AdminDTO adminLogin(String id, String pw) {
 		
 		return memberDAO.adminLogin(id, pw);
+	}
+
+	public Map<String, Object> favorite(String loginId, String teacher_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int result = memberDAO.unblock(loginId, teacher_id);
+		logger.info("숨김 해제한 강사 수 = " + result);
+		
+		result = memberDAO.favorite(loginId, teacher_id);
+		logger.info("즐겨찾기한 강사 수 = " + result);
+		
+		map.put("result", result);
+		
+		return map;
+	}
+
+	public Map<String, Object> unFavorite(String loginId, String teacher_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int result = memberDAO.unFavorite(loginId, teacher_id);
+		logger.info("즐겨찾기 해제한 강사 수 = " + result);
+		
+		map.put("result", result);
+		
+		return map;
+	}
+
+	public Map<String, Object> block(String loginId, String teacher_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int result = memberDAO.unFavorite(loginId, teacher_id);
+		logger.info("즐겨찾기 해제한 강사 수 = " + result);
+		
+		result = memberDAO.block(loginId, teacher_id);
+		logger.info("숨김 강사 수 = " + result);
+		
+		map.put("result", result);
+		
+		return map;
 	}
 
 	

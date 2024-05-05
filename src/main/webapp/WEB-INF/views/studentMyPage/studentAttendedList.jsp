@@ -311,20 +311,10 @@ function drawList(list) {
 		    // 진행률이 있는 경우에만 회색으로 설정
 		    gaugeColor = "green";
 		}; 
-        var firstLetter = course.teacher_name.charAt(0); // 첫 번째 글자
-        var otherLetters = course.teacher_name.substring(1); // 나머지 글자
-        var maskedName = '';
+        
         
         if (convertToPercentage(course) === '') {
             continue; // 다음 반복으로 넘어감
-        }
-        
-        if (course.teacher_name) {
-            var firstLetter = course.teacher_name.charAt(0); // 첫 번째 글자
-            var otherLetters = course.teacher_name.substring(1); // 나머지 글자
-            maskedName = firstLetter + "O".repeat(otherLetters.length);
-        } else {
-            maskedName = ''; // 빈 문자열 또는 다른 기본값으로 처리
         }
         
         if (course.end_check == null){
@@ -348,7 +338,7 @@ function drawList(list) {
 	             '<a href="lessonPayment.go?class_idx=' + course.class_idx + '">' + course.class_name + '</a>' +
 	             '</td>'; // 제목을 클릭하면 해당 강의의 결제 페이지로 이동
 	     }
-        content += '<td style="text-align: center;">' + maskedName + '</td>'; // 선생님 이름
+        content += '<td style="text-align: center;">' + course.teacher_name + '</td>'; // 선생님 이름
         content += '<td style="text-align: center;">' + course.class_price + '</td>'; // 가격
         // 진행률 게이지 바 추가
 		content += '<td style="text-align: center;">';

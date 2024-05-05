@@ -46,9 +46,9 @@ public interface AdminDAO {
 
 	int allCountReview(int pagePerCnt, int deleteStatus, String serachText, int searchType, int categoryNum);
 
-	List<AdminDTO> showReportSearch(int start, int pagePerCnt, String serachText, int searchType);
+	List<AdminDTO> showReportSearch(int start, int pagePerCnt, String searschText, int searchType);
 
-	Object reportAllCount(int pagePerCnt, String serachText, int searchType);
+	Object reportAllCount(int pagePerCnt, String searchText, int searchType);
 
 	AdminDTO reportDetailAdmin(int report_idx);
 
@@ -56,9 +56,9 @@ public interface AdminDAO {
 
 	int adminActionWriteDo(int reportIdx, String admin, String content, String action_result);
 
-	List<AdminDTO> showSuspensionSearch(int start, int pagePerCnt, String serachText, int searchType);
+	List<AdminDTO> showSuspensionSearch(int start, int pagePerCnt, String searchText, int searchType);
 
-	Object suspensionAllCount(int pagePerCnt, String serachText, int searchType);
+	Object suspensionAllCount(int pagePerCnt, String searchText, int searchType);
 
 
 	AdminDTO adminData();

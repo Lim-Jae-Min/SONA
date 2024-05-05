@@ -197,9 +197,9 @@
 	       url:'reportManagementlist.ajax',
 	       data:{
 	    	    'page':page,
-	    		'searchType':searchType,
-	    		'serachText':serachText
-	       },
+	    	    'searchType':searchType,
+	    	    'searchText':serachText 
+	    	},
 	       dataType:'json',
 	       success:function(data){
 	          drawList(data.list);

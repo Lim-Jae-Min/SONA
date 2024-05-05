@@ -246,19 +246,19 @@ public class AdminService {
 	
 
 		
-	public Map<String, Object> showReportSearch(int currPage, int searchType, String serachText) {
+	public Map<String, Object> showReportSearch(int currPage, int searchType, String searchText) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<AdminDTO> resultList = null;
 		
-		resultList = adminDAO.showReportSearch(start,pagePerCnt,serachText,searchType);
-		logger.info(serachText);
+		resultList = adminDAO.showReportSearch(start,pagePerCnt,searchText,searchType);
+		logger.info(searchText);
 		
 		result.put("list", resultList);
 		result.put("currPage", currPage);
-		result.put("totalPages", adminDAO.reportAllCount(pagePerCnt,serachText,searchType));
-		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.reportAllCount(pagePerCnt,serachText,searchType));
+		result.put("totalPages", adminDAO.reportAllCount(pagePerCnt,searchText,searchType));
+		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.reportAllCount(pagePerCnt,searchText,searchType));
 		
 		return result;
 	}
@@ -365,22 +365,22 @@ public class AdminService {
 		return adminDAO.adminActionWriteDo(reportIdx,admin,content,action_result);
 	}
 
-	public Map<String, Object> showSuspensionSearch(int currPage, int searchType, String serachText) {
+	public Map<String, Object> showSuspensionSearch(int currPage, int searchType, String searchText) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<AdminDTO> resultList = null;
 		
 		
-		resultList = adminDAO.showSuspensionSearch(start,pagePerCnt,serachText,searchType);
-		logger.info(serachText);
+		resultList = adminDAO.showSuspensionSearch(start,pagePerCnt,searchText,searchType);
+		logger.info(searchText);
 
 
 	
 		result.put("list", resultList);
 		result.put("currPage", currPage);
-		result.put("totalPages", adminDAO.suspensionAllCount(pagePerCnt,serachText,searchType));
-		logger.info("정지 이력 에서 받아온 allCount"+adminDAO.suspensionAllCount(pagePerCnt,serachText,searchType));
+		result.put("totalPages", adminDAO.suspensionAllCount(pagePerCnt,searchText,searchType));
+		logger.info("정지 이력 에서 받아온 allCount"+adminDAO.suspensionAllCount(pagePerCnt,searchText,searchType));
 		return result;
 	}
 

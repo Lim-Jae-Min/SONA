@@ -193,6 +193,15 @@
 </body>
 <script>
 
+	
+	$('#pagination').twbsPagination({
+	    // 설정 옵션...
+	    onPageClick: function (evt, page) {
+	        // 클릭한 페이지 번호를 사용하여 데이터 로드 등의 작업 수행
+	        listCall(page);
+	    }
+	});
+	
 	var showPage =1;
 	var searchRemain = false;
 	
@@ -211,16 +220,16 @@
 	
 	function listCall(page){
 			var searchType = $('select[id="searchType"]').val();
-			var serachText = $('input[id="searchText"]').val();
+			var searchText = $('input[id="searchText"]').val();
 			console.log(searchType);
-			console.log(serachText);
+			console.log(searchText);
 	    $.ajax({
 	       type:'get',
 	       url:'suspensionlist.ajax',
 	       data:{
 	    	    'page':page,
 	    		'searchType':searchType,
-	    		'serachText':serachText
+	    		'searchText':searchText
 	       },
 	       dataType:'json',
 	       success:function(data){
@@ -230,7 +239,7 @@
 	          
 	       // 플러그인 추가
 	       	$('#pagination').twbsPagination({
-	    		startPage:data.currPage, // 시작 페이지
+	    		startPage:currentPage, // 시작 페이지
 	    		totalPages:data.totalPages, // 총 페이지 갯수
 	    		visiblePages:5,  // 보여줄 페이지 수[1][2][3][4][5]
 	    		onPageClick:function(evt,pg){ // 페이지 클릭시 실행 함수

@@ -270,12 +270,11 @@ $('#condition').change(function() {
 var showPage =1;
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
-	// listCall(showPage);
-	
 	// select 요소의 첫 번째 옵션을 선택하여 클릭 이벤트를 발생시킴
-    $('#condition option:first').prop('selected', true).click();
+    $('#condition option[value="전체"]').prop('selected', true).click();
+    
+	listCall(showPage, $('#condition').val());
 });
-
 
 function listCall(page, selectedClass){
     $.ajax({

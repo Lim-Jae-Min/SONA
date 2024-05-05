@@ -256,7 +256,7 @@ p {
     </div>
     
     
-    <button id=apply_button >강의 신청하기</button>
+    <button type="button" id=apply_button onclick="apply()">강의 신청하기</button>
     </form> 
 <div id="footer">
         <li>상호명 : SONA</li>
@@ -297,10 +297,44 @@ p {
 
 
 
+function apply(){
+	var $instCategory = $('select[name="instCategory"]');
+	var $inst = $('select[name="inst"]');
+	var $location = $('select[name="location"]');
+	var $class_days = $('input[name="class_days"]');
+	var $class_style = $('input[name="class_style"]');
+	var $have = $('select[name="have"]');
+	
+ 	if($instCategory.val()==''){
+		alert('악기 카테고리를 선택 해주세요.');
+		$instCategory.focus(); 
+		return false;
+	}else if($inst.val()==''){
+		alert('악기를 선택해 주세요!');
+		$inst.focus();
+		return false;
+	}else if($location.val() == ''){
+		alert('원하시는 장소 선택해 주세요!')
+		&location.focus();
+		return false;
+	}else if($class_days.val()==''){
+		alert('원하시는 요일을 선택해 주세요!');
+		$class_days.focus();
+		return false;
+	}else if($class_style.val()==''){
+		alert('원하시는 강의스타일을 선택해 주세요!');
+		$class_style.focus();
+		return false;
+	}else if($have.val()==''){
+		alert('악기 유무를 선택 해주세요!');
+		$have.focus();
+		return false;
+	}
+		$('form').submit();
+}
 
 
-
-
+	
 
 
 

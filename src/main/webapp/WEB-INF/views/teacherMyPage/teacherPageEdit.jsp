@@ -21,7 +21,7 @@
 		
 		/* 사용자 정보 셀 스타일 */
 		.user-info-cell {
-		    width: 5px; /* 예시로 너비를 20%로 설정합니다. */
+		    width: 119px; /* 예시로 너비를 20%로 설정합니다. */
     		text-align: center; /* 가운데 정렬 */
 		}
 		
@@ -170,6 +170,17 @@
 		    border-radius: 5px; /* 5px 만큼의 모서리를 둥글게 설정합니다. */
 		}
 		
+		#imgUpload {
+	        margin-left: 23px;
+  			margin-top: 10px;
+	    }
+	    
+	    .myPageImg{
+	     width: 200px; 
+	     height:200px; 
+	     margin-left : 30px;
+	    }
+		
 </style>
 </head>
 <body>
@@ -228,26 +239,28 @@
             </div>
  		<!-- HTML 코드 -->
 <div id="content">
-    <form action="./studentPage.edit" method="POST">
+    <form action="./teacherPage.edit" method="POST" enctype="multipart/form-data">
         <table class="user-info-table">
             <thead>
                 <tr>
                     <td colspan="2" class="spacer"></td>
                 </tr>
                 <tr>
+                <input type="hidden" name="photo_category" value="userInfo">
                     <td class="user-info-cell">
-						<c:if test="${userInfo.profile != null}">
-                    		<img src="/photo/${userInfo.profile}" class="profile">
-						</c:if>
-						<c:if test="${userInfo.profile == null}">
-		                    <img src="resources/img/basic_user.png" class="profile">
-						</c:if>
+						<c:if test="${photos.size() < 1}">
+	        				등록된 사진이 없습니다.
+	        			</c:if>
+	        			<c:forEach items="${photos}" var="photo">
+	        				<img class="myPageImg" src="/photo/${photos.new_filename}">
+	        			</c:forEach>
 					</td>
 					<td>
                         <div class="user-info">
                             <input type="text" name="user_name" value="${userInfo.user_name}" class="user-name-input"></br>
                             ${userInfo.user_id}
                         </div>
+                        <div><input type="file" name="lessonLogo" multiple="multiple" id="imgUpload"/></div>
                     </td>
                 </tr>
             </thead>
@@ -324,7 +337,7 @@
                         </br>
                         은행 
                         </br>
-                        <select name="bank" id="user_bank" class="bank-select">
+                        <select name="user_bank" id="user_bank" class="bank-select">
                             <option value="국민은행">국민은행</option>
                             <option value="신한은행">신한은행</option>
                             <option value="우리은행">우리은행</option>
@@ -377,112 +390,148 @@
     </div>
 </body>
 <script>
-$('.alarm').click(function alarmList() {
-	   location.href = 'alarmList.go';
-	});
+
+
+$('#imgUpload').change(function (){
+	var count = $(this)[0].files.length;
+	var files = this.files;
+	var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+	/* console.log(count); */
+	if (count > 1) {
+		alert("이미지 파일 첨부는 1개까지 가능합니다.");
+		$('#imgPreview').attr('src', 'resources/img/basic_user.png');
+		this.value = '';
+	}
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!allowedExtensions.exec(file.name)) {
+            alert("이미지 파일 첨부만 가능합니다.");
+            this.value = '';
+            $('#imgPreview').attr('src', 'resources/img/basic_user.png');
+            return;
+        }
+    }
+	
+    if (file) {
+    var reader = new FileReader();
+        reader.onload = function (){
+            $('#imgPreview').attr('src', reader.result);
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+
+
 
 
 var overChk = false;
 
 
 
-		function confirmPw() {
-		    var newPassword = $('#newPassword').val();
-		    var user_pass = $('#user_pass').val();
-		
-		    if (newPassword !== user_pass) {
-		        alert('입력하신 비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
-		        $('#user_pass').val('');
-		    } else {
-		        $.ajax({
-		            type:'POST',
-		        	url:'./confirmPw.ajax',
-		            data:{'newPassword':newPassword, 'user_pass':user_pass},
-		            success: function(response) {
-		                if (response) {
-		                    alert('비밀번호가 일치합니다.');
-		                    overChk= true;
-		                } else {
-		                    alert('입력하신 비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
-		                    $('#user_pass').val('');
-		                }
-		            },
-		            error: function(request, status, error) {
-		                alert('서버와의 통신 중 문제가 발생했습니다. 다시 시도해주세요.');
-		                console.log("code: " + request.status)
-		                console.log("message: " + request.responseText)
-		                console.log("error: " + error);
-	                    overChk= true;
+function confirmPw() {
+    var newPassword = $('#newPassword').val();
+    var user_pass = $('#user_pass').val();
 
-		            }
-		        });
-		    }
-		}
+    if (newPassword !== user_pass) {
+        alert('입력하신 비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+        $('#user_pass').val('');
+    } else {
+        $.ajax({
+            type:'POST',
+        	url:'./confirmPw.ajax',
+            data:{'newPassword':newPassword, 'user_pass':user_pass},
+            success: function(response) {
+                if (response) {
+                    alert('비밀번호가 일치합니다.');
+                    overChk= true;
+                } else {
+                    alert('입력하신 비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+                    $('#user_pass').val('');
+                }
+            },
+            error: function(request, status, error) {
+                alert('서버와의 통신 중 문제가 발생했습니다. 다시 시도해주세요.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+                   overChk= true;
+
+            }
+        });
+    }
+}
 
 
-	$('#logo').click(function main(){
-		   location.href = '/main';
-		});
-    
-	
-	
-	$('#userName').click(function slide() {
-		var display = $('#slide').css('display');
-	    if (display == 'none') {
-	        $('#slide').css('display', 'block');
-	    }
-	    if (display == 'block') {
-	        $('#slide').css('display', 'none');
-	    }
+
+
+function teacherEdit() {
+    var $name = $('input[name="user_name"]');
+    var $pw = $('input[name="user_pass]');
+    var $email = $('input[name="user_email"]');
+    var $phoneNumber = $('input[name="user_phone"]');
+    var $accountNumber = $('input[name="user_accountnumber"]');
+    var $bank = $('select[name="user_bank"]');
+   
+   
+    if (overChk == false) {
+        alert('비밀번호 확인을 해주세요');
+        $pw.focus();
+    } else if ($name.val() == '') {
+        alert('이름을 입력해주세요.');
+        $name.focus();
+    } else if ($pw.val() == '') {
+        alert('비밀번호를 입력해주세요');
+        $pw.focus();
+    } else if ($email.val() == '') {
+        alert('이메일을 입력해주세요');
+        $email.focus();
+    } else if ($phoneNumber.val() == '') {
+        alert('전화번호를 입력해주세요');
+        $phoneNumber.focus();
+    } else if ($accountNumber.val() == '') {
+        alert('계좌번호를 입력해주세요');
+        $accountNumber.focus();
+    } else if ($bank.val() == '') {
+        alert('은행을 선택해주세요');
+        $bank.focus();
+    }  else {
+        // 전화번호가 숫자만 포함하는지 확인
+        var accountNumberValue = $accountNumber.val();
+        var regExp = /^[0-9]+$/;
+        if (!regExp.test(accountNumberValue)) {
+            alert('계좌번호는 숫자만 입력해 주세요!');
+            $accountNumber.val('');
+            $accountNumber.focus();
+            return false;
+        }
+
+        // 폼을 직접 제출
+        $('form').submit();
+    }
+}
+
+$('.alarm').click(function alarmList() {
+	   location.href = 'alarmList.go';
 	});
-	
-	
-	function teacherEdit() {
-	    var $name = $('input[name="user_name"]');
-	    var $pw = $('input[name="user_pass]');
-	    var $email = $('input[name="user_email"]');
-	    var $phoneNumber = $('input[name="user_phone"]');
-	    var $accountNumber = $('input[name="user_accountnumber"]');
-	    var $bank = $('select[name="user_bank"]');
-	   
-	   
-	    if (overChk == false) {
-	        alert('비밀번호 확인을 해주세요');
-	        $pw.focus();
-	    } else if ($name.val() == '') {
-	        alert('이름을 입력해주세요.');
-	        $name.focus();
-	    } else if ($pw.val() == '') {
-	        alert('비밀번호를 입력해주세요');
-	        $pw.focus();
-	    } else if ($email.val() == '') {
-	        alert('이메일을 입력해주세요');
-	        $email.focus();
-	    } else if ($phoneNumber.val() == '') {
-	        alert('전화번호를 입력해주세요');
-	        $phoneNumber.focus();
-	    } else if ($accountNumber.val() == '') {
-	        alert('계좌번호를 입력해주세요');
-	        $accountNumber.focus();
-	    } else if ($bank.val() == '') {
-	        alert('은행을 선택해주세요');
-	        $bank.focus();
-	    }  else {
-	        // 전화번호가 숫자만 포함하는지 확인
-	        var accountNumberValue = $accountNumber.val();
-	        var regExp = /^[0-9]+$/;
-	        if (!regExp.test(accountNumberValue)) {
-	            alert('계좌번호는 숫자만 입력해 주세요!');
-	            $accountNumber.val('');
-	            $accountNumber.focus();
-	            return false;
-	        }
 
-	        // 폼을 직접 제출
-	        $('form').submit();
-	    }
-	}
-	
 
+
+$('#logo').click(function main(){
+	   location.href = '/main';
+	});
+   
+
+
+$('#userName').click(function slide() {
+	var display = $('#slide').css('display');
+    if (display == 'none') {
+        $('#slide').css('display', 'block');
+    }
+    if (display == 'block') {
+        $('#slide').css('display', 'none');
+    }
+});
+	
 </script>
 </html>

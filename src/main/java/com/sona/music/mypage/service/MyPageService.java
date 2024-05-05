@@ -63,7 +63,7 @@ public class MyPageService {
 
 	    // DAO를 통해 업데이트 수행
 	    int row = myPageDAO.updateUserInfo(map);
-	    
+	    logger.info("row 값: "+ row);
 	    // 업데이트된 행 수 반환
 	    //조건3. 이후 dto에서 저장된 키 값을 받아온다.
 	    String loginId = (String) session.getAttribute("loginId");
@@ -76,6 +76,7 @@ public class MyPageService {
 
 
 	    if (row > 0 && photos != null) {
+	    	logger.info("filesave");
 	        fileSave(loginId, photoCategory, username, photos); // 파일 저장
 	    }
 

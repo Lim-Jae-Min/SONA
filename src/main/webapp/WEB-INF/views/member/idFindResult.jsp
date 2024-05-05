@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SONA 아이디 찾기 결과</title>
 <script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-    <title>아이디 찾기 결과</title>
 <style>
 	/* 결과 페이지 스타일 */
 	#resultPage {

@@ -323,6 +323,26 @@ public class MemberController {
     	return "redirect:/";
     }
     
+    @RequestMapping(value="/favorite.ajax")
+    @ResponseBody
+    public Map<String, Object> favorite (String loginId, String teacher_id) {
+    	Map<String, Object> map = memberService.favorite(loginId, teacher_id);
+    	return map;
+    }
+    
+    @RequestMapping(value="/unFavorite.ajax")
+    @ResponseBody
+    public Map<String, Object> unFavorite (String loginId, String teacher_id) {
+    	Map<String, Object> map = memberService.unFavorite(loginId, teacher_id);
+    	return map;
+    }
+    
+    @RequestMapping(value="/block.ajax")
+    @ResponseBody
+    public Map<String, Object> block (String loginId, String teacher_id) {
+    	Map<String, Object> map = memberService.block(loginId, teacher_id);
+    	return map;
+    }
     
     
 }

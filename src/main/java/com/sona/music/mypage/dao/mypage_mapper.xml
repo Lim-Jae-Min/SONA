@@ -180,6 +180,19 @@
 	        co.user_id = #{user_id}
 	</select>
 	
+	
+	<select id="tLessonAllCountFilter" resultType="Integer" parameterType="map">
+    	SELECT COUNT(*) AS allCount 
+    	FROM CLASS_OPEN WHERE user_id = #{user_id} AND CLASS_DISABLE = #{state}
+	</select>
+	
+	<select id="tLessonAllCount" resultType="Integer" parameterType="map">
+    	SELECT COUNT(*) AS allCount 
+    	FROM CLASS_OPEN WHERE user_id = #{user_id}
+	</select>
+	
+	
+	
 	<select id="teacherPointAllCount" resultType="Integer" parameterType="map">
 	   	SELECT 
 			CEIL(COUNT(*)/#{cnt}) AS pages

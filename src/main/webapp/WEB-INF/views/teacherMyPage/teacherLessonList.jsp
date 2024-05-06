@@ -282,10 +282,11 @@ function listCall(page, filterValue){
           'page':page,
           'cnt':10,
           'state': filterValue // 필터링 값을 서버에 전달
+
        },
        dataType:'json',
        success:function(data){
-          drawList(data.list);
+          drawList(data.list, data.allCount, page);
           console.log(data);
           //플러그인 추가
           var startPage = data.currPage > data.totalPages? data.totalPages : data.currPage;
@@ -312,31 +313,34 @@ function listCall(page, filterValue){
 }
 
 
-function drawList(list){
+function drawList(list, allCount, showPage){
+    showPage--;
+    
+    showPage = parseInt(showPage);
+    allCount = parseInt(allCount);
+    console.log("allCount: " + allCount);
+    console.log("showPage: "+showPage);
     var content = '';
-    var lastIndex = list.length; // 마지막 인덱스
-    for(item of list){
-       console.log(item);
-       content += '<tr class = "list-item">';
-       // 인덱스를 역순으로 부여
-       var index = lastIndex--;
-       content += '<td>'+ index +'</td>';
+    for(var i = 0; i<list.length; i++){
+       content += '<tr class = "list-item">';     
+       content += '<td>'+ (allCount - i - (showPage*10)) +'</td>';
        content += '<td>' +
-      		 '<a href="lessonDetail.go?class_idx=' + item.class_idx + '">' + item.class_name + '</a>' +
-    		  '</td>';
-       content += '<td>'+ item.count+'명' + '</td>';
-       content += '<td><span style="color: #FED000;">★</span>' + item.score +'</td>';
+           '<a href="lessonDetail.go?class_idx=' + list[i].class_idx + '">' + list[i].class_name + '</a>' +
+           '</td>';
+       content += '<td>'+ list[i].count+'명' + '</td>';
+       // item.score 값이 null이면 '0'으로 처리
+       var score = list[i].score !== null ? list[i].score : '0';
+       content += '<td><span style="color: #FED000;">★</span>' + score +'</td>';
        // state 값에 따라 '활성' 또는 '비활성' 출력
-       var stateText = item.state === 1 ? '비활성' : '활성';
+       var stateText = list[i].class_disable == 1 ? '비활성' : '활성';
        content += '<td>' + stateText +'</td>';
-       var date = new Date(item.class_reg_date);
+       var date = new Date(list[i].class_reg_date);
        var dateStr = date.toLocaleDateString("ko-KR");
        content += '<td>' + dateStr + '</td>';
        content += '</tr>';
     }
     $('#list').html(content);
 }
-
 
 
 

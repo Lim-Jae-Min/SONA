@@ -112,10 +112,10 @@
             	<hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
                 <tr> 
                     <td id="profile_s">
-                        <c:if test="${userInfo.profile != null}">
-                            <img src="/photo/${userInfo.profile}" class="profile">
+                        <c:if test="${userInfo.new_filename != null}">
+                            <img src="/photo/${userInfo.new_filename}" class="profile">
                         </c:if>
-                        <c:if test="${userInfo.profile == null}">
+                        <c:if test="${userInfo.new_filename == null}">
                             <img src="resources/img/basic_user.png" class="profile">
                         </c:if>
                     </td>

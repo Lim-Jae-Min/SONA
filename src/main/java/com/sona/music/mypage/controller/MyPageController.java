@@ -207,13 +207,15 @@ public class MyPageController {
 	/*강의 리스트 아작스 요청*/
 	@RequestMapping(value="/lessonlist.ajax")
 	@ResponseBody
-	public Map<String , Object> listCall(String page, int cnt, Integer state, String user_id, HttpSession session ){
+	public Map<String , Object> listCall(String page, int cnt, Integer state,  HttpSession session ){
 		
 		logger.info("teacher lesson list 요청");
-		logger.info("받아온 유저 user_id: "+ user_id);
 		logger.info("페이지당 보여줄 갯수:"+cnt);
 		logger.info("요청 페이지: "+page); 
 		logger.info("진행 상태: "+ state );
+		
+		String user_id = (String) session.getAttribute("loginId");
+		logger.info("받아온 유저 user_id: "+ user_id);
 		
 		int currPage = Integer.parseInt(page);
 		Map<String, Object>map = myPageService.lessonlist(user_id, cnt,currPage, state);

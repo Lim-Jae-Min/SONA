@@ -377,7 +377,9 @@ function listCall(page, classIdx){
 	        }
 	        content += '<a href="#" class="question-link" data-question-idx="' + item.question_idx + '" data-anonymous="' + item.anonymous_status + '">' + item.q_title + '</a>';
 	        content += '</td>';
-	        content += '<td>' + item.user_id + '</td>';
+	        content += '<td>';
+	        content +=  '<a href="userDetail.go?user_id=' + item.user_id + '">' + item.user_id + '</a>';
+	        content += '</td>';
 	        var replyCheck = item.reply_check ? "Y" : "N";
 	        content += '<td>' + replyCheck +'</td>';
 	        content += '<td>' + item.q_hit +'</td>';

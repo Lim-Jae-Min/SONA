@@ -301,7 +301,7 @@ body {
 		<img src="resources/img/review.png" id="review"> 강의 리뷰 상세보기
 		<div class="review-title">${review.review_title}</div>
 		<div class="author-info">
-			작성자: ${review.rater_id} 작성일자: ${review.review_reg_date} <span
+			작성자: <a href="userDetail.go?user_id=${review.rater_id}">${review.rater_id}</a> 작성일자: ${review.review_reg_date} <span
 				class="satisfaction">★${review.score}</span>
 		</div>
 		<div class="content">${review.review_content}</div>

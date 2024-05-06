@@ -302,7 +302,7 @@
 						<td>질문 내용: ${question.q_content}</td>
 					</tr>
 					<tr>
-						<td>질문 작성자: ${question.user_id} 질문 작성일: ${question.q_reg_date}</td>
+						<td>질문 작성자: <a href="userDetail.go?user_id=${question.user_id}">${question.user_id}</a> 질문 작성일: ${question.q_reg_date}</td>
 					</tr>
 				</table>
 				<div style="font-size: 12px; text-align: right;">

@@ -338,7 +338,9 @@ function listCall(page, classIdx){
 	        content += '<td>' + item.review_idx + '</td>';
 	        content += '<td><span style="color: #FED000;">★</span>' + item.score + '</td>';
 	        content += '<td><a href="#" class="review-link" data-review-idx="' + item.review_idx + '">' + item.review_title + '</a></td>';
-	        content += '<td>' + item.rater_id + '</td>';
+	        content += '<td>';
+	        content +=  '<a href="userDetail.go?user_id=' + item.rater_id + '">' + item.rater_id + '</a>';
+	        content += '</td>';
 	        content += '<td>' + item.study_date +'</td>';
 	        content += '<td>';
 	        var img = item.img_cnt > 0 ?'image.png' : 'no_image.png';

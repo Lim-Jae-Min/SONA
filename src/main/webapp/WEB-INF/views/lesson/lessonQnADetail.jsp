@@ -315,7 +315,7 @@ body {
 			<div>
 				Q&A 제목: ${question.q_title} <br />
 			</div>
-			<div class="author-info">작성자: ${question.user_id} 작성일:
+			<div class="author-info">작성자: <a href="userDetail.go?user_id=${question.user_id}">${question.user_id}</a> 작성일:
 				${question.q_reg_date} 조회수: ${question.q_hit}</div>
 			<div class="content"><pre>${question.q_content}</pre></div>
 			<c:if test="${not empty answer}">
@@ -345,7 +345,7 @@ body {
 			<!-- 답변이 작성 됐을 경우 -->
 			<c:if test="${not empty answer}">
 				<div class="answer-box">
-					<div class="author-info">답변자: ${answer.user_id} 답변일:
+					<div class="author-info">답변자: <a href="userDetail.go?user_id=${answer.user_id}">${answer.user_id}</a> 답변일:
 						${answer.a_reg_date}</div>
 					<div class="content">${answer.a_content}</div>
 					<div style="text-align: right;">

@@ -295,7 +295,7 @@ function drawList(list){
 	        content += '<div class="video-container">';
 	        content += '<iframe width="300" height="200" src="' + item.video_url + '" frameborder="0" allowfullscreen></iframe>';
 	        content += '<br />';
-	        content += '<br />' + item.teacher_id + ' 선생님 <br />';
+	        content += '<br /> <a href="userDetail.go?user_id=' + item.teacher_id + '">' + item.teacher_id + ' 선생님 <br />';
 	        content += '<br /><span class="heart">♥</span>' + item.manner_score + ' <input type="hidden" name="class_idx" value="' + item.class_idx + '" />';
 	        content += '</div>';
 	        content += '</div>';

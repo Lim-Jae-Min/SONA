@@ -296,7 +296,10 @@ function join(){
 	}else if($phone.val()==''){
 		alert('전화번호를 입력 해 주세요!');
 		$phone.focus();
-	}else if($accountnumber.val()==''){
+	}else if ($phone.val().length !== 11) {
+        alert('전화번호는 11자리여야 합니다.');
+        $phone.focus();
+    }else if($accountnumber.val()==''){
 		alert('계좌 번호를 입력 해 주세요!');
 		$accountnumber.focus();
 	}else if($usertype.length === 0){

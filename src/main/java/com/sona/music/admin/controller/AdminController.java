@@ -189,7 +189,7 @@ public class AdminController {
 		return "adminPage/adminNoticeWrite";
 	}
 	
-	@RequestMapping(value = "adminFaqList.go")
+	@RequestMapping(value = "faqManagement.go")
 	public String faqManagementGo() {
 		logger.info("faq관리 페이지 이동");
 		return "adminPage/adminFaqList";

@@ -234,12 +234,12 @@
 				<p>
 					보유 포인트: <span id="currentPoints">${havePoint} P</span>
 				</p>
-				<p>
+<!-- 				<p>
 					출금 포인트: <span id="withdrawingPoints">0</span>
 				</p>
 				<p>
 					출금 후 포인트: <span id="afterPoints">0</span>
-				</p>
+				</p> -->
 			</div>
 			<hr>
 			<div class="buttonDiv">

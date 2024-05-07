@@ -4,9 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.7.1.min.js"> </script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
@@ -145,46 +144,65 @@
 </style>
 </head>
 <body>
-	<header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                   <c:if test="${sessionScope.loginId eq null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="login.go">추천 강의</a>                   
+<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
                       </c:if>
-                   </c:if>
-                   <c:if test="${sessionScope.loginId ne null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="recommendList.go">추천 강의</a>                   
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
                       </c:if>
-                   </c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
-        </table>
-    </header>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
     <div id="wrapper">
             <div id="sidemenu">
                 <h3>내가 작성한 Q&A</h3>
@@ -281,14 +299,21 @@
 </body>
 <script>
 
+var searchRemain = false;
+
+
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});
 
 
-	$('#logo').click(function main(){
-		   location.href = '/main';
-		});
+$('#logo').click(function main(){
+	   if ('${sessionScope.user_type}' == '관리자') {
+	      location.href = 'adminMain.go';
+	   }else {
+	      location.href = '/main';   
+	   }
+});
 	
 	$('#userName').click(function slide() {
 		var display = $('#slide').css('display');
@@ -308,7 +333,7 @@ $('#condition').change(function() {
 });
 
 
-
+var selectedClass = "전체";
 var showPage =1;
 
 $(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
@@ -332,11 +357,12 @@ function listCall(page, selectedClass){
         success:function(data){
            drawList(data.list);
            console.log(data);
-           //플러그인 추가
-           var startPage = data.currPage > data.totalPages? data.totalPages : data.currPage;
+	       var startPage = 1;
+	       console.log(startPage);
+ 
            
            $('#pagination').twbsPagination({
-         	  startPage:startPage, //시작페이지
+         	  startPage:data.currPage, //시작페이지
          	  totalPages:data.totalPages, //총 페이지 갯수
          	  visiblePages:5, //보여줄 페이지 수 [1][2][3][4][5]
           	  onPageClick:function(evt, pg){//페이지 클릭시 실행 함수

@@ -110,21 +110,65 @@
 </style>
 </head>
 <body>
-<header id="adminmain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu"></th>
-                <th class="menu"></th>
-                <th class="menu"></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-           <tr>
-              <td><a href="adminLogout.do">로그아웃</a></td>
-           </tr>
-        </table>
-    </header>
+<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
     
     <div id = "divvv">
     <div id="wrapper1">
@@ -134,12 +178,13 @@
                 <a href="adminMain.go">관리자 페이지</a>
                 <a href="adminUserList.go">회원 관리</a>
                 <a href="adminLessonList.go">강의 관리</a>
-                <a href="noticeManagement.go">공지사항 관리</a>
-                <a href="faqManagement.go">FAQ 관리</a>
-                <a href="adminSuggestionsLIst.go">건의사항 관리</a>
+                <a href="adminNoticeList.go">공지사항 관리</a>
+                <a href="adminFaqList.go">FAQ 관리</a>
+                <a href="adminSuggestionsList.go">건의사항 관리</a>
                 <a href="adminReviewList.go">리뷰 관리</a>
                 <a href="adminReportManagement.go">신고 관리</a>
                 <a href="userSuspensionHistory.go">회원 정지 이력</a>
+
             </div>
         </div>
         
@@ -169,9 +214,7 @@
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
            		           		
 				작성일자 : ${reportDetail.report_date} &nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -219,7 +262,7 @@
 window.onload = function() {
     // 반려 상태인 경우 버튼 비활성화
     var action_result = "${reportDetail.action_result}";
-    if (action_result === "반려") {
+    if (action_result === "반려" || action_result === "조치 완료") {
         disableButtons("반려");
     }
 };
@@ -246,10 +289,13 @@ function reject() {
 }
 	
 	function disableButtons(action_result) {
-	    if (action_result === "반려") {
+	    if (action_result === "반려" || action_result === "조치 완료") {
 	        var rejectButton = document.getElementById("reject");
-	        if (rejectButton) {
+	        var actionWriteButton = document.getElementById("actionWrite");
+
+	        if (rejectButton || actionWriteButton) {
 	            rejectButton.disabled = true;
+	            actionWriteButton.disabled = true;
 	        }
 	    }
 	}
@@ -268,7 +314,7 @@ function reject() {
 	    var reviewIdx = document.getElementById("review_idx").value;
 	
 	    // 새로운 URL 생성
-	    var url = "./lessonReviewDetail.go?review_idx=" + ${reportDetail.board_idx}
+	    var url = "./adminReviewDetail.go?review_idx=" + ${reportDetail.board_idx}
 	
 	    // 새로운 URL로 이동
 	    window.location.href = url;
@@ -290,7 +336,11 @@ function reject() {
 	});
 
 	$('#logo').click(function main(){
-		location.href = '/main';
+		   if ('${sessionScope.user_type}' == '관리자') {
+		      location.href = 'adminMain.go';
+		   }else {
+		      location.href = '/main';   
+		   }
 	});
 
 	$('.alarm').click(function alarmList() {

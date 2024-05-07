@@ -72,7 +72,7 @@ public interface MyPageDAO {
 	int sendAllCount(int pagePerCnt);
 
 
-	int courseAllCount(int pagePerCnt);
+	int courseAllCount(int pagePerCnt, String loginId);
 
 
 	List<MyPageDTO> qnaSelectedList(int pagePerCnt, int start, String loginId, String selectedClass);

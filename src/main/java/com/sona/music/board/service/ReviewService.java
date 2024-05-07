@@ -58,6 +58,7 @@ public class ReviewService {
 		dto.setScore(Double.parseDouble(param.get("score")));
 		dto.setReview_title(param.get("review_title"));
 		dto.setReview_content(param.get("review_content"));
+		dto.setApply_detail(param.get("apply_detail"));
 
 		PhotoDTO pdto = new PhotoDTO();
 		pdto.setPhoto_category(param.get("photo_category"));

@@ -351,7 +351,7 @@
 	});
 
 	$('#logo').click(function main(){
-		location.href = '/main';
+		location.href = 'adminMain.go';
 	});
 
 	$('.alarm').click(function alarmList() {

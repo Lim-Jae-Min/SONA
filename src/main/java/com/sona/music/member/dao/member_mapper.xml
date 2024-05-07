@@ -38,7 +38,7 @@
 				u.USER_NAME,
 				u.USER_TYPE,
 				CASE WHEN (SELECT COUNT(mh.manner_idx) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id) < 5
-			      THEN '신규 강사'
+			      THEN '신규 회원'
 			      ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 2), '')
 			      END AS manner,
 				CASE WHEN (SELECT sum(up.POINT) FROM USER_POINT up WHERE up.user_id = u.user_id) IS NULL THEN 0

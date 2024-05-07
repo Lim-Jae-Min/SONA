@@ -88,46 +88,65 @@
 </style>
 </head>
 <body>
-<header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                   <c:if test="${sessionScope.loginId eq null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="login.go">추천 강의</a>                   
+<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
                       </c:if>
-                   </c:if>
-                   <c:if test="${sessionScope.loginId ne null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="recommendList.go">추천 강의</a>                   
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
                       </c:if>
-                   </c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
-        </table>
-    </header>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
     <div id="wrapper">
             <div id="sidemenu">
                 <h3>수강생 관리</h3>
@@ -230,9 +249,12 @@ $('.alarm').click(function alarmList() {
 
 
 $('#logo').click(function main(){
-	   location.href = '/main';
-	});
-
+	   if ('${sessionScope.user_type}' == '관리자') {
+	      location.href = 'adminMain.go';
+	   }else {
+	      location.href = '/main';   
+	   }
+});
 
 
 $('#userName').click(function slide() {

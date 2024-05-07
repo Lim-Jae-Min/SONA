@@ -188,7 +188,7 @@ public class MemberController {
 	            
 	            if (releaseDate != null && currentDate.isBefore(releaseDate)) {
 	                // 정지 해제 날짜가 오늘 날짜 이전이면 로그인 제한
-	                model.addAttribute("msg", "계정이 정지되었습니다. 정지 해제 날짜까지 로그인이 제한됩니다.");
+	                model.addAttribute("msg", "계정이 정지되었습니다. " + releaseDate +"까지 로그인이 제한됩니다.");
 	                return page;
 	            }
 	        }

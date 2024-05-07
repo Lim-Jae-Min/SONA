@@ -74,6 +74,7 @@
                 <a href="adminReviewList.go">리뷰 관리</a>
                 <a href="adminReportManagement.go">신고 관리</a>
                 <a href="userSuspensionHistory.go">회원 정지 이력</a>
+
             </div>
             <div id="content">
             	<br/><br/><br/><br/>

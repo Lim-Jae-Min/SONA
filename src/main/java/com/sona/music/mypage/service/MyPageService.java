@@ -83,7 +83,8 @@ public class MyPageService {
 	    return row;
 	}
 	
-	private void fileSave(String loginId, String photoCategory, String username, MultipartFile[] photos) {
+	public void fileSave(String loginId, String photoCategory, String username, MultipartFile[] photos) {
+		logger.info("filesave 도착");
 	    for (MultipartFile photo : photos) {
 	        // 1. 업로드할 파일명이 있는가?
 	    	logger.info("loginId = " + loginId + "photoCategory = " + photoCategory + "username = " + username);

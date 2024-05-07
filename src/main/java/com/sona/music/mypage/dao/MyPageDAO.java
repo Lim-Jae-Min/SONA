@@ -27,11 +27,6 @@ public interface MyPageDAO {
 	int getTotalQnaCount();
 
 
-	List<MyPageDTO> qnaList(int pagePerCnt, int start, String loginId);
-
-
-	int qnaAllCount(int pagePerCnt);
-
 	List<String> getClassNames(String loginId);
 
 
@@ -135,6 +130,19 @@ public interface MyPageDAO {
 
 	@Mapper
 	Object teacherWrittenAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
+
+
+
+	List<MyPageDTO> qnaList(String loginId, int cnt, int start);
+
+
+	List<MyPageDTO> qnaListFilter(String loginId, int cnt, int start, String selectedClass);
+
+
+	Object qnaAllCount(int cnt, String loginId, String selectedClass);
+
+
+	Object qnaNotAllCount(int cnt, String loginId);
 
 
 

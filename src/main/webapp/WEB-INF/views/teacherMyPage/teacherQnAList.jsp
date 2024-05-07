@@ -311,8 +311,8 @@ function drawList(list){
     for(item of list){
        console.log(item);
        
-       var firstLetter = item.user_id.charAt(0); // 첫 번째 글자
-       var otherLetters = item.user_id.substring(1); // 나머지 글자
+       var firstLetter = item.user_name.charAt(0); // 첫 번째 글자
+       var otherLetters = item.user_name.substring(1); // 나머지 글자
        var maskedName = firstLetter + "O".repeat(otherLetters.length);
     	
        content += '<tr class = "list-item">';

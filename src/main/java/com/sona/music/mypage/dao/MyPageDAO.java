@@ -131,6 +131,12 @@ public interface MyPageDAO {
 	@Mapper
 	Object teacherWrittenAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
 
+	@Mapper
+	Object tLessonAllCountFilter(@Param("user_id") String user_id, @Param("state") int state);
+
+	@Mapper
+	Object tLessonAllCount(@Param("user_id") String user_id);
+
 
 
 	List<MyPageDTO> qnaList(String loginId, int cnt, int start);

@@ -97,7 +97,7 @@
 		    margin-left: 113px;
 		}
 		h3{
-		text-align: left;
+		text-align: center;
 		}
 		
 </style>

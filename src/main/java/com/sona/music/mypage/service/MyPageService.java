@@ -244,9 +244,11 @@ public class MyPageService {
 	    if (state == 0 || state == 1) {
 	        // state가 0 또는 1이면 myPageDAO.lessonlist() 호출
 	        list = myPageDAO.lessonlist(user_id, cnt, start, state);
+	        result.put("allCount", myPageDAO.tLessonAllCountFilter(user_id, state));
 	    } else {
 	        // 그 외의 경우에는 myPageDAO.lessonlistall() 호출
 	        list = myPageDAO.lessonlistall(user_id, cnt, start);
+	        result.put("allCount", myPageDAO.tLessonAllCount(user_id));
 	    }
 		
 		logger.info("list size: "+list.size());

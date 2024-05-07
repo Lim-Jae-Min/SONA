@@ -207,6 +207,10 @@ public class MemberService {
 	}
 
 	
+	public AdminDTO suspension(String id) {
+		
+		return memberDAO.suspension(id);
+	}
 
 	
 

@@ -1,6 +1,7 @@
 package com.sona.music.admin.dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class AdminDTO {
 
@@ -86,6 +87,7 @@ public class AdminDTO {
 	private int banned_idx;
 	private String action_category;
 	private Date start_date;
+	private LocalDate release_date;
 	private Date end_date;
 
 	// 건의사항 
@@ -481,12 +483,23 @@ public class AdminDTO {
 	public void setStart_date(Date start_date) {
 		this.start_date = start_date;
 	}
+	public LocalDate getRelease_date() {
+		return release_date;
+	}
+	public void setRelease_date(LocalDate release_date) {
+		this.release_date = release_date;
+	}
 	public Date getEnd_date() {
 		return end_date;
 	}
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
+	
+	
+	
+	
+	
 	public String getAction_result() {
 		return action_result;
 	}
@@ -569,5 +582,4 @@ public class AdminDTO {
 	public void setSug_answerCount(int sug_answerCount) {
 		this.sug_answerCount = sug_answerCount;
 	}
-	
 }

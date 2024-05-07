@@ -129,26 +129,31 @@ public class MyPageService {
 
 
 
-	public Map<String, Object> qnaList(int currPage, int pagePerCnt, String loginId, String selectedClass) {
-		int start = (currPage-1)*pagePerCnt;
+	public Map<String, Object> qnaList(int currPage, int cnt, String loginId, String selectedClass) {
+		
+		int start = (currPage - 1) * cnt;
+		logger.info("start페이지:" + start);
+		logger.info("받아온 cnt의 값: " +cnt);
 		logger.info(loginId);
 		Map<String, Object> result = new HashMap<String, Object>();
-		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + pagePerCnt);
+		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + cnt);
 		List<MyPageDTO> list = null;
-		 if (selectedClass != null && !selectedClass.isEmpty()) {
-			list = myPageDAO.qnaSelectedList(pagePerCnt,start,loginId,selectedClass);
-		 }else {
-			list = myPageDAO.qnaList(pagePerCnt,start,loginId); 
-		 }
+		if (selectedClass.equals("전체") && selectedClass != null) {
+	        list = myPageDAO.qnaList(loginId, cnt, start);
+	        // 전체를 선택했을 때는 전체 강의의 갯수를 가져옴
+	        result.put("totalPages", myPageDAO.qnaNotAllCount(cnt, loginId));
+	    } else {
+	        list = myPageDAO.qnaListFilter(loginId, cnt, start, selectedClass);
+	        // 전체가 아닌 특정 강의를 선택했을 때는 해당 강의의 갯수를 가져옴
+	        result.put("totalPages", myPageDAO.qnaAllCount(cnt, loginId, selectedClass));
+	    }
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.qnaAllCount(pagePerCnt));
-		
-		
 		
 		return result;
 	}
+
 
 
 	public List<String> getClassNames(String loginId) {

@@ -10,6 +10,11 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 <script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 <style>
+
+		.multiclickresult{
+		   display: none;
+		}
+		
 		#searchButton{
 		    width: 20px;
 		    height: 20px;		
@@ -36,6 +41,7 @@
 		    max-width: 70px;
 		    max-height: 70px;
 		}
+		
 
 		#logo {
 		    width: 70px;
@@ -81,7 +87,61 @@
 		    color: black;
 		    text-decoration: none;
 		}
+				
+		.pagination {
+		    display: inline-block;
+		    padding-left: 0;
+		    margin: 20px 0;
+		    border-radius: 4px;
+		    margin-left: -259px;
+		}
 		
+		#nav__bar{
+		 text-align:center;
+		 margin-left:251px;
+		}
+		
+		
+			
+		#list-container {
+		    margin-top: 30px;
+		}
+				
+		#tab {
+		    display: inline-block;
+		    border: 2px solid #BEE6FF;
+		    border-radius: 15px;
+		    padding: 10px;
+		    margin-bottom: 10px;
+		    margin-left: 98px;
+		    width: 93%;
+		}
+		
+		#tab th,
+	    #tab td {
+	        padding: 8px; /* 각 셀의 패딩 조절 */
+	        width:auto;
+	        max-width: 200px; /* 각 셀의 최대 너비 설정 */
+	        overflow: hidden; /* 텍스트 넘침 처리 */
+	        text-overflow: ellipsis; /* 텍스트 넘침 시 생략 부호(...) 표시 */
+	        white-space: nowrap; /* 텍스트가 너무 길어도 줄바꿈 없이 한 줄에 표시 */
+	        text-align: center;
+	    }
+
+		#tab th {
+	        border-bottom: 3px solid #BEE6FF;
+	        padding: 8px;
+	        font-size: 18px;
+		}
+		#list tr.list-item td {
+		    border-top: 1px solid #BEE6FF; /* 바디의 각 행에 위쪽에 1픽셀 두께의 회색 선 추가 */
+		}
+		
+		#list tr.list-item:first-child td {
+		    border-top: none; /* 첫 번째 바디 행에는 위쪽 선을 없앱니다. */
+		}
+	
+	
 </style>
 </head>
 <body>
@@ -145,11 +205,11 @@
 					    <br/><br/>
 							<span id="searchbox" style="margin-right: 50px; margin-bottom: 130px; height: 50px; position: relative;">
 							    <label for="condition" style="margin-left: 60px; margin-bottom: 30px;">강의명 :</label>
-									<select name="condition" id="condition" style="margin-left: 50px; width: 850px;">
-									    <option style="margin-left: 50px; width: 700px" value="">전체</option>
+							      <select name="condition" id="condition" style="margin-left:7px; width: 850px;">
+									    <option style="margin-left: 50px; width: 700px" value="전체" >전체</option>
 									    <c:forEach items="${classNames}" var="class_name">
-									        <option value="${class_name}" <c:if test="${selectedClass eq class_name}">selected</c:if>>${class_name}</option>
-									    </c:forEach>
+											<option value="${class_name}" <c:if test="${selectedClass eq class_name}">selected</c:if>>${class_name}</option>
+										</c:forEach>
 									</select>
 							    <button id="searchButton" style="position: absolute; top: 0; right: 0; padding: 5px;">
 							        <img src="resources/img/search.png" id = "search" alt="Search" style="width: 20px;height: 20px;margin-bottom : 20px; position : relative; margin-right:5px;">
@@ -173,11 +233,16 @@
                     <tbody id="list">
                         <!-- 여기에 목록이 자동으로 삽입됩니다 -->
                     </tbody>
-                </table>
-                <div class="container">
-                    <nav aria-label="Page navigation" style="text-align:center">
-                        <ul class="pagination" id="pagination"></ul>
-                    </nav>
+                	<tr>
+                		<td colspan="6">
+                			<div class="container">
+	                        	<nav aria-label="Page navigation"  id = "nav__bar">
+                        			<ul class="pagination" id="pagination"></ul>
+                    				</nav>
+                    		</div>
+                    	</td>
+                   </tr>
+                    </table>
                 </div>
         </div>
     </div>
@@ -220,90 +285,98 @@ $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
 	});
 
-var selectedClass = "";
 
-$('#logo').click(function main(){
-	   location.href = '/main';
+	$('#logo').click(function main(){
+		   location.href = '/main';
+		});
+	
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	if (display == 'none') {
+	  $('#slide').css('display', 'block');
+	}
+	if (display == 'block') {
+	  $('#slide').css('display', 'none');
+	}
 	});
 
-$('#userName').click(function slide() {
-	var display = $('#slide').css('display');
-if (display == 'none') {
-  $('#slide').css('display', 'block');
-}
-if (display == 'block') {
-  $('#slide').css('display', 'none');
-}
+
+$('#condition').change(function() {
+	$('#pagination').twbsPagination('destroy');
+    var selectedClass = $(this).val(); // 선택한 강의 제목
+    listCall(showPage, selectedClass); // 선택한 강의 제목으로 데이터 필터링
 });
+
 
 
 var showPage =1;
 
-$(document).ready(function(){ 
-    var loginId = "${sessionScope.loginId}"; 
-    qnaListCall(1, null, loginId); 
+$(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
+	// select 요소의 첫 번째 옵션을 선택하여 클릭 이벤트를 발생시킴
+    $('#condition option[value="전체"]').prop('selected', true).click();
     
-    // 검색 버튼 클릭 시
-    $('#search').click(function() {
-        var selectedClass = $('#condition').val(); // 이 부분 수정
-        qnaListCall(1, selectedClass, loginId); 
-    });
+	listCall(showPage, $('#condition').val());
 });
 
-function qnaListCall(page, selectedClass, loginId) {
-    $.ajax({
-        type: 'get',
-        url: './qnaList.ajax',
-        data: {
-            'page': page,
-            'cnt': 10,
-            'selectedClass': selectedClass, // 선택된 강의명을 전달하여 필터링
-            'loginId': loginId // 로그인 아이디 전달
-        },
-        dataType: 'json',
-        success: function(data) {
-            drawList(data.list);
-            console.log(data);
-            // 플러그인 추가
-            var startPage = data.currPage > data.totalPages ? data.totalPages : data.currPage;
 
-            $('#pagination').twbsPagination({
-                startPage: startPage, // 시작페이지
-                totalPages: data.totalPages, // 총 페이지 갯수
-                visiblePages: 5, // 보여줄 페이지 수 [1][2][3][4][5]
-                onPageClick: function(evt, pg) { // 페이지 클릭시 실행 함수
-                    console.log(evt); // 이벤트 객체
-                    console.log(pg); // 클릭한 페이지 번호
-                    qnaListCall(pg, selectedClass, loginId); // 페이지 번호와 선택된 강의명, 로그인 아이디 전달
-                }
-            });
+function listCall(page, selectedClass){
+    $.ajax({
+       type:'get',
+       url:'./qnaList.ajax',
+       data:{
+           'page':page,
+           'cnt':10,
+           'selectedClass': selectedClass
         },
-        error: function(request, status, error) {
-            alert('서버와의 통신 중 문제가 발생했습니다. 다시 시도해주세요.');
-            console.log("code: " + request.status)
+        dataType:'json',
+        success:function(data){
+           drawList(data.list);
+           console.log(data);
+           //플러그인 추가
+           var startPage = data.currPage > data.totalPages? data.totalPages : data.currPage;
+           
+           $('#pagination').twbsPagination({
+         	  startPage:startPage, //시작페이지
+         	  totalPages:data.totalPages, //총 페이지 갯수
+         	  visiblePages:5, //보여줄 페이지 수 [1][2][3][4][5]
+          	  onPageClick:function(evt, pg){//페이지 클릭시 실행 함수
+         		  console.log(evt); // 이벤트 객체
+         		  console.log(pg); //클릭한 페이지 번호
+         		  showPage = pg;
+         		  listCall(pg, selectedClass);
+         	  }
+         	  
+           });
+           
+        },
+        error:function(request, status, error){
+     	   console.log("code: " + request.status)
             console.log("message: " + request.responseText)
             console.log("error: " + error);
         }
-    });
+     });
+ }
+
+
+
+
+function drawList(list) {
+    var content = '';
+    for (var i = 0; i < list.length; i++) {
+        var qna = list[i];
+        var lockIcon = qna.anonymous_status ? "resources/img/locked.png" : "resources/img/unlocked.png"; // 이미지 경로 설정
+
+        content += '<tr style="border-bottom: 1px solid #ddd;">'; // 각 항목에 경계선 추가
+        content += '<td style="text-align: center;"><img src="' + lockIcon + '" class="locked-img" width="38" height="38"></td>'; // locked 이미지에 클래스 추가 및 중앙 정렬
+        content += '<td style="text-align: center;">' +
+        '<a href="./lessonQnADetail.go?question_idx=' + qna.question_idx + '">' + qna.q_title + '</a>' +
+        '</td>'; // 질문 제목
+        content += '<td style="text-align: center;">' + qna.answer_status + '</td>'; // 답변 여부
+        content += '<td style="text-align: center;">' + qna.q_reg_date + '</td>'; // 날짜
+        content += '</tr>';
+    }
+    $('#list').html(content); // 리스트를 테이블에 추가
 }
-
-	function drawList(list) {
-	    var content = '';
-	    for (var i = 0; i < list.length; i++) {
-	        var qna = list[i];
-	        var lockIcon = qna.anonymous_status ? "resources/img/locked.png" : "resources/img/unlocked.png"; // 이미지 경로 설정
-
-	        content += '<tr style="border-bottom: 1px solid #ddd;">'; // 각 항목에 경계선 추가
-	        content += '<td style="text-align: center;"><img src="' + lockIcon + '" class="locked-img" width="38" height="38"></td>'; // locked 이미지에 클래스 추가 및 중앙 정렬
-	        content += '<td style="text-align: center;">' +
-	        '<a href="./lessonQnADetail.go?question_idx=' + qna.question_idx + '">' + qna.q_title + '</a>' +
-	        '</td>'; // 질문 제목
-	        content += '<td style="text-align: center;">' + qna.answer_status + '</td>'; // 답변 여부
-	        content += '<td style="text-align: center;">' + qna.q_reg_date + '</td>'; // 날짜
-	        content += '</tr>';
-	    }
-	    $('#list').html(content); // 리스트를 테이블에 추가
-	}
 
 
 </script>

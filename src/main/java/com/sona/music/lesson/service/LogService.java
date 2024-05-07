@@ -101,6 +101,10 @@ public class LogService {
 		
 		int row = logDAO.lessonAbsent(dto);
 		
+		if (accumulateTimes == totalTimes) {
+			lessonStop(apply_idx);
+		}
+		
 		return row;
 	}
 

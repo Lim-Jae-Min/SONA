@@ -229,11 +229,11 @@ $('.alarm').click(function alarmList() {
 	});
 	
 $('#logo').click(function main(){
-	   if ('${sessionScope.user_type}' == '관리자') {
-	      location.href = 'adminMain.go';
-	   }else {
-	      location.href = '/main';   
-	   }
+	if ('${sessionScope.user_type}' == '관리자') {
+		location.href = 'adminMain.go';
+	}else {
+		location.href = '/';	
+	}
 });
 
 var showPage =1;

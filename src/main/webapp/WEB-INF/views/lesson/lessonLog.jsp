@@ -318,7 +318,7 @@ $('#logo').click(function main(){
 	if ('${sessionScope.user_type}' == '관리자') {
 		location.href = 'adminMain.go';
 	}else {
-		location.href = '/main';	
+		location.href = '/';	
 	}
 });
 $('.alarm').click(function alarmList() {
@@ -438,16 +438,28 @@ if ('${sessionScope.user_type}' == '강사') {
 	
 }
 
+var review_idx = '${review_idx}';
+var logCheck = '${logCheck}';
+var check1234 = '${check}';
+
+console.log(check1234);
+console.log(review_idx);
+console.log(logCheck);
+
 if ('${check}' != '') {
 	
-	if ('${review_idx}' != '' && '${logCheck}' > 0) {
+	if ('${review_idx}' == '' && '${logCheck}' > 0) {
 		$('.reviewWrite').css('display', 'inline-block');
 	} else {
 		$('.reviewWrite').css('display', 'none');
 	}
-	$('.reviewWrite').css('display', 'inline-block');
 	$('.stop').css('display', 'none');
 	$('.inputNotice').css('display', 'none');
+	$('.save').css('display', 'none');
+	$('.absent').css('display', 'none');
+	$('.edit').css('display', 'none');
+	$('.contentBox').css('display', 'none');
+	$('.date').css('display', 'none');
 }
 
 
@@ -522,13 +534,6 @@ $('.reviewWrite').click(function (){
 	
 });
 
-if ('${check}' != '') {
-	$('.save').css('display', 'none');
-	$('.absent').css('display', 'none');
-	$('.edit').css('display', 'none');
-	$('.contentBox').css('display', 'none');
-	$('.date').css('display', 'none');
-}
 
 
 </script>

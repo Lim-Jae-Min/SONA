@@ -413,7 +413,7 @@ public class MyPageController {
 
 	
 
-	 @RequestMapping(value="/qnaList.ajax", method = RequestMethod.GET)
+	 @RequestMapping(value="/qnaList.ajax")
 	 @ResponseBody
 	 public Map<String , Object> qnaListCall(String page, int cnt, String selectedClass, HttpSession session) {
 		    logger.info("listCall 요청");
@@ -423,10 +423,11 @@ public class MyPageController {
 		    String loginId = (String) session.getAttribute("loginId");
 
 		    int currPage = Integer.parseInt(page);
-		    logger.info("dd"+currPage);
+		    logger.info("dd"+page);
 		    logger.info(loginId);
-		    Map<String, Object> map = myPageService.qnaList(currPage,cnt, loginId, selectedClass);
-		     
+		    Map<String, Object> map = myPageService.qnaList(loginId,cnt, selectedClass, currPage);
+			logger.info("map : {}",map);
+
 		    return map;
 		} 
 	 

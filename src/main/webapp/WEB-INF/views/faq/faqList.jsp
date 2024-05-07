@@ -10,6 +10,27 @@
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>    
 	<script src="resources/js/jquery.twbsPagination.js" type="text/javascript"></script>
 	<style>
+	
+	.faq-item {
+	   position: relative; /* 부모 요소에 대한 상대적인 위치 설정 */
+	}
+	
+	.answer-row,
+	.hr-row {
+	    overflow: hidden; /* 내용이 넘치는 경우를 대비하여 overflow 설정 */
+	    position: relative; /* 자식 요소에 대한 상대적인 위치 설정 */
+	    z-index: 1; /* 겹치는 요소 간의 우선 순위 설정 */
+	}
+	
+	.ntitle {
+	    cursor: pointer; /* 클릭 가능한 요소 표시 */
+	}
+	
+	/* 애니메이션 효과를 추가할 요소들에 대한 설정 */
+	.answer-row,
+	.hr-row {
+	    transition: all 0.3s ease; /* 모든 속성에 대한 변화를 0.3초 동안 부드럽게 적용 */
+	}
 	#serviceSideMenu {
 	    color: black;
 	    padding: 10px;
@@ -116,46 +137,65 @@
 </head>
 <body>
 <body>
-    <header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                	<c:if test="${sessionScope.loginId eq null}">
-                		<c:if test="${sessionScope.user_type ne '강사'}">
-		                	<a href="login.go">추천 강의</a>                	
-	                	</c:if>
-                	</c:if>
-                	<c:if test="${sessionScope.loginId ne null}">
-                		<c:if test="${sessionScope.user_type ne '강사'}">
-		                	<a href="recommendList.go">추천 강의</a>                	
-	                	</c:if>
-                	</c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
-        </table>
-    </header>
+<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
     <div id="wrapper">
 	    <div id="serviceSideMenu">
 	        <h3 class="blueFont">고객센터</h3>
@@ -242,9 +282,12 @@ $('.alarm').click(function alarmList() {
 	});
 	
 $('#logo').click(function main(){
-	   location.href = '/main';
-	});
-
+	   if ('${sessionScope.user_type}' == '관리자') {
+	      location.href = 'adminMain.go';
+	   }else {
+	      location.href = '/main';   
+	   }
+});
 
 
 	var category = 1;
@@ -323,7 +366,7 @@ $('#logo').click(function main(){
 	        content += '<td class="nbhit"><img src="resources/img/answer.jpg" class="faq-icon">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + item.faq_answer + '</td>';
 	        content += '</tr>';
 	        content += '<tr class="hr-row hidden">';
-	        content += '<td><br><br><hr></td>';
+	        content += '<td><br><hr></td>';
 	        content += '</tr>';
 	    }
 	    $('#list').html(content);
@@ -337,12 +380,19 @@ $('#logo').click(function main(){
 	        var $this = $(this);
 	        var $answerRow = $this.parent().next().next('.answer-row');
 	        var $hrRows = $this.parent().nextAll('.hr-row').slice(0, 2);
-	        // 클릭한 faq_title과 관련된 faq_answer와 구분선 토글
-	        $answerRow.slideToggle();
-	        $hrRows.slideToggle();
-	        // 다른 faq_answer와 구분선 숨기기
-	        $('.answer-row').not($answerRow).slideUp();
-	        $('.hr-row').not($hrRows).slideUp();
+
+	        // 클릭한 faq_title과 관련된 faq_answer와 구분선 토글, 애니메이션 속도 200(ms)
+	        $answerRow.slideToggle(700);
+	        
+	        
+	        // 해당 구분선 토글, 애니메이션 속도 200(ms)
+	        $hrRows.each(function() {
+	            $(this).slideToggle(700);
+	        });
+
+	        // 다른 faq_answer와 구분선 숨기기, 애니메이션 속도 200(ms)
+	        $('.answer-row').not($answerRow).slideUp(700);
+	        $('.hr-row').not($hrRows).slideUp(700);
 	    });
 	}
 

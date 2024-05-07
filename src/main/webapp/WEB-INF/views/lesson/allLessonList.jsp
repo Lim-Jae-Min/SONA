@@ -270,7 +270,7 @@ $('#logo').click(function main(){
 	if ('${sessionScope.user_type}' == '관리자') {
 		location.href = 'adminMain.go';
 	}else {
-		location.href = '/main';	
+		location.href = '/';	
 	}
 });
 $('.alarm').click(function alarmList() {

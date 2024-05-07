@@ -340,11 +340,11 @@ var overChk = false;
 
 
 $('#logo').click(function main(){
-	   if ('${sessionScope.user_type}' == '관리자') {
-	      location.href = 'adminMain.go';
-	   }else {
-	      location.href = '/main';   
-	   }
+	if ('${sessionScope.user_type}' == '관리자') {
+		location.href = 'adminMain.go';
+	}else {
+		location.href = '/';	
+	}
 });
     
 	var category1 = ['클래식 피아노', '재즈 피아노', '피아노 반주'];

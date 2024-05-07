@@ -482,12 +482,12 @@ function redirectToList(classIdx) {
 }
 
 $('#logo').click(function main(){
-	   if ('${sessionScope.user_type}' == '관리자') {
-	      location.href = 'adminMain.go';
-	   }else {
-	      location.href = '/main';   
-	   }
-	});
+	if ('${sessionScope.user_type}' == '관리자') {
+		location.href = 'adminMain.go';
+	}else {
+		location.href = '/';	
+	}
+});
 
 $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';

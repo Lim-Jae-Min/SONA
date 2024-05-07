@@ -427,7 +427,7 @@ function redirectToList(classIdx) {
 }
 
 $('#logo').click(function main(){
-	location.href = '/main';
+	location.href = 'adminMain.go';
 });
 $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';

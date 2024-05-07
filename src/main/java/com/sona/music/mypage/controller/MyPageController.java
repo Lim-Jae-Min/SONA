@@ -383,7 +383,7 @@ public class MyPageController {
 	    	 logger.info("회원 수정하기~ ", map);
 	         map.put("loginId", loginId);
 	         myPageService.updateUserInfo(photos, new HashMap<>(map), session); // 로그인 ID를 전달
-	         page = "teacherMyPage/teacherPageEdit";
+	         page = "redirect:/teacherPage.go";
 	     }
 	     return page;
 	 }

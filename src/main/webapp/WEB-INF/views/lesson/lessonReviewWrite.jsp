@@ -231,7 +231,7 @@
 					<tr>
 						<td>
 							<span class="red">
-								${lesson.manner === 0.0 ? '♥신규 회원' : `♥ ${lesson.manner}`}
+								${lesson.manner eq 0.0 ? '♥신규 회원' : '♥ ' + lesson.manner}
 							</span>
 						</td>
 					</tr>

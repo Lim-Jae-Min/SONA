@@ -246,17 +246,17 @@ public class MyPageService {
 	    if (state == 0 || state == 1) {
 	        // state가 0 또는 1이면 myPageDAO.lessonlist() 호출
 	        list = myPageDAO.lessonlist(user_id, cnt, start, state);
-	        result.put("allCount", myPageDAO.tLessonAllCountFilter(user_id, state));
+	        result.put("allCount", myPageDAO.tLessonAllCountFilter(user_id, state)); // 인덱스 번호 부여를 위한 올카운트
 	    } else {
 	        // 그 외의 경우에는 myPageDAO.lessonlistall() 호출
 	        list = myPageDAO.lessonlistall(user_id, cnt, start);
-	        result.put("allCount", myPageDAO.tLessonAllCount(user_id));
+	        result.put("allCount", myPageDAO.tLessonAllCount(user_id));  // 인덱스 번호 부여를 위한 올카운트
 	    }
 		
+	    result.put("totalPages", myPageDAO.lessonAllCount(cnt, user_id));
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.lessonAllCount(cnt, user_id));
 
 		for (MemberDTO r : list) {
 			logger.info(r.getClass_idx()+"");
@@ -333,16 +333,17 @@ public class MyPageService {
 		 if (selectedClass.equals("전체") && selectedClass != null) {
 		        // 선택된 강의 제목이 '전체'인 경우, 필터를 제거한 전체 리스트를 가져옴
 		        list = myPageDAO.teacherStudentList(user_id, cnt, start);
+		        result.put("totalPages", myPageDAO.teacherStudentAllCount(cnt, user_id));
 		 } else {
 		        // 그 외의 경우, 선택된 강의 제목을 기반으로 필터링하여 리스트를 가져옴
 		        list = myPageDAO.teacherStudentListFilter(user_id, cnt, start, selectedClass);
+		        result.put("totalPages", myPageDAO.tStudentAllCountFilter(cnt, user_id, selectedClass));
 		 }
 		
 		
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.teacherStudentAllCount(cnt, user_id));
 		
 		for (MyPageDTO r : list) {
 			logger.info(r.getClass_name()+"");

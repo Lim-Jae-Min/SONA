@@ -93,7 +93,7 @@ public class PointController {
 		String chargePointLoginId = (String) session.getAttribute("loginId");
 		if(chargePointLoginId != null) {
 			MemberDTO userInfo = pointService.getUserInfo(chargePointLoginId);
-			int userAccount = userInfo.getUser_accountnumber();
+			long userAccount = userInfo.getUser_accountnumber();
 			String userPhone = userInfo.getUser_phone();
 			logger.info("출금포인트 가져오기 : p a : " + userPhone + userAccount);
 			String photoNewFileName = pointService.pointGetPhotoName(chargePointLoginId);

@@ -185,7 +185,19 @@
 			WHERE ah.APPLY_IDX IN (
 			    SELECT MAX(apply_idx)
 			    FROM APPLY_HISTORY
-			    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = 'user2')
+			    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{user_id})
+			    GROUP BY APPLY_DETAIL
+			)
+	</select>
+	
+	
+	<select id="tStudentAllCountFilter" resultType="Integer" parameterType="map">
+    	SELECT CEIL(COUNT(*)/#{cnt}) AS pages
+			FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx 
+			WHERE ah.APPLY_IDX IN (
+			    SELECT MAX(apply_idx)
+			    FROM APPLY_HISTORY
+			    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{user_id} AND co.class_name = #{selectedClass})
 			    GROUP BY APPLY_DETAIL
 			)
 	</select>
@@ -349,10 +361,9 @@
 	    SELECT MAX(apply_idx)
 	    FROM APPLY_HISTORY
 	    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{param1})
-	    GROUP BY APPLY_DETAIL
-)
-ORDER BY ah.APPLY_IDX DESC
-LIMIT #{param2} OFFSET #{param3}
+	    GROUP BY APPLY_DETAIL)
+		ORDER BY ah.APPLY_IDX DESC
+		LIMIT #{param2} OFFSET #{param3}
 	</select>
 	
 	
@@ -377,11 +388,10 @@ LIMIT #{param2} OFFSET #{param3}
 	    SELECT MAX(apply_idx)
 	    FROM APPLY_HISTORY
 	    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{param1})
-	    GROUP BY APPLY_DETAIL
-)
-AND co.class_name = #{param4}
-ORDER BY ah.APPLY_IDX DESC
-LIMIT #{param2} OFFSET #{param3}
+	    GROUP BY APPLY_DETAIL)
+		AND co.class_name = #{param4}
+		ORDER BY ah.APPLY_IDX DESC
+		LIMIT #{param2} OFFSET #{param3}
 	</select>
 	
 	<select id="teacherQnaList" resultType="com.sona.music.mypage.dto.MyPageDTO">

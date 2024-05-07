@@ -51,6 +51,13 @@ public class LogService {
 			
 		}
 		
+		String review_idx = logDAO.reviewCheck(apply_detail);
+		logger.info("리뷰 있는지 : " + review_idx);
+		model.addAttribute("review_idx", review_idx);
+		
+		int logCheck = logList.size();
+		model.addAttribute("logCheck", logCheck);
+		
 	}
 
 	public int lessonLogWrite(Map<String, String> map) {
@@ -71,7 +78,7 @@ public class LogService {
 		int row = logDAO.lessonLogWrite(dto);
 		
 		if (accumulateTimes == totalTimes) {
-			logDAO.lessonStop(dto);
+			lessonStop(apply_idx);
 		}
 		
 		return row;
@@ -128,11 +135,36 @@ public class LogService {
 		
 	}
 
-	public int lessonStop(Map<String, String> map) {
-		int apply_idx = Integer.parseInt(map.get("apply_idx"));
+	public int lessonStop(int apply_idx) {
 		LogDTO dto = logDAO.lessonInfo(apply_idx);
 		
 		int row = logDAO.lessonStop(dto);
+		
+		int total_times = dto.getTotal_times();
+		int accumulate_times = dto.getAccumulate_times();
+		
+		logger.info("total_times = " + total_times);
+		logger.info("accumulate_times = " + accumulate_times);
+		
+		List<LogDTO> profileList = logDAO.logProfile(apply_idx);
+		LogDTO teacherProfile = profileList.get(0);
+		LogDTO studentProfile = profileList.get(1);
+		
+		dto.setStudent_id(studentProfile.getUser_id());
+		dto.setTeacher_id(teacherProfile.getUser_id());
+		
+		if (accumulate_times > 0 && accumulate_times < total_times) {
+			logDAO.studentPayback(dto);
+			logDAO.studentCalculate(dto);
+			logDAO.teacherPayment(dto);
+			logDAO.teacherCalculate(dto);
+		} else if (total_times == accumulate_times) {
+			logDAO.teacherPayment(dto);
+			logDAO.teacherCalculate(dto);
+		} else if (accumulate_times == 0) {
+			logDAO.studentPayback(dto);
+			logDAO.studentCalculate(dto);
+		}
 		
 		return row;
 	}

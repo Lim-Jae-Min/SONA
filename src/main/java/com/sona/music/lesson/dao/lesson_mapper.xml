@@ -187,7 +187,7 @@
 	</select>
 	
 	<select id="applyCheck" resultType="com.sona.music.lesson.dto.LessonDTO">
-		SELECT ah.apply_idx, ah.apply_state FROM APPLY_HISTORY ah WHERE ah.class_idx = #{param1} AND ah.user_id = #{param2} ORDER BY ah.class_idx DESC LIMIT 1
+		SELECT ah.apply_idx, ah.apply_state FROM APPLY_HISTORY ah WHERE ah.class_idx = #{param1} AND ah.user_id = #{param2} ORDER BY ah.apply_idx DESC LIMIT 1
 	</select>
 	
 	<insert id="leesonApply">

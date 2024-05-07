@@ -176,7 +176,7 @@
 	
 
 	<select id="lessonAllCount" resultType="Integer" parameterType="map">
-    	SELECT CEIL(COUNT(*) / #{cnt}) AS pages FROM CLASS_OPEN WHERE USER_ID ='user2'
+    	SELECT CEIL(COUNT(*) / #{cnt}) AS pages FROM CLASS_OPEN WHERE USER_ID =#{user_id}
 	</select>
 	
 	<select id="teacherStudentAllCount" resultType="Integer" parameterType="map">

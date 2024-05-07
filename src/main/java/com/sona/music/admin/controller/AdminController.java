@@ -149,7 +149,7 @@ public class AdminController {
 	
 	
 	@RequestMapping(value = "/adminNoticeList.go")
-	public String noticeManagementGo() {
+	public String adminNoticeListGo() {
 
 		return "adminPage/adminNoticeList";
 	}
@@ -190,7 +190,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "adminFaqList.go")
-	public String faqManagementGo() {
+	public String adminFaqListGo() {
 		logger.info("faq관리 페이지 이동");
 		return "adminPage/adminFaqList";
 	}
@@ -234,7 +234,7 @@ public class AdminController {
 		logger.info("공지사항에서 받은 제목 : " + param.get("title"));
 		logger.info("공지사항에서 받은 내용 : " + param.get("content"));
 
-		return "adminPage/adminNoticeList";
+		return "redirect:/adminNoticeList.go";
 	}
 	
 	@RequestMapping(value = "/noticeEditAdmin.do")
@@ -256,7 +256,7 @@ public class AdminController {
 		logger.info("공지사항에서 받은 제목 : " + param.get("title"));
 		logger.info("공지사항에서 받은 내용 : " + param.get("content"));
 
-		return "adminPage/adminNoticeList";
+		return "redirect:/adminNoticeList.go";
 	}
 	
 	@RequestMapping(value = "noticePhotoDel.ajax", method = RequestMethod.POST)
@@ -297,7 +297,7 @@ public class AdminController {
 		int row = adminService.adminFaqWriteDo(faqTitle,faqAnswer,faqType);
 			
 		
-		return "adminPage/adminFaqList";
+		return "redirect:/adminFaqList.go";
 	}
 	
 	@RequestMapping(value = "adminFaqEdit.do", method = RequestMethod.POST)
@@ -317,7 +317,7 @@ public class AdminController {
 		int row = adminService.adminFaqEditDo(param);
 			
 		
-		return "adminPage/adminFaqList";
+		return "redirect:/adminFaqList.go";
 	}
 	
 	@RequestMapping(value = "/faqDel.ajax", method = RequestMethod.POST)
@@ -331,10 +331,10 @@ public class AdminController {
 
 	}
 	
-	@RequestMapping(value = "adminSuggestionsLIst.go")
-	public String adminSuggestionsLIstGo() {
+	@RequestMapping(value = "adminSuggestionsList.go")
+	public String adminSuggestionsListGo() {
 		logger.info("건의사항 페이지 이동");
-		return "adminPage/adminSuggestionsLIst";
+		return "adminPage/adminSuggestionsList";
 	}
 	
 
@@ -346,16 +346,17 @@ public class AdminController {
 	
 	@RequestMapping(value = "adminReviewList.ajax")
 	@ResponseBody
-	public Map<String, Object> adminReviewList(int page , int searchType, String serachText, int categoryNum) {
-		logger.info("noticeManagementlist 요청");
+	public Map<String, Object> adminReviewList(int page , int searchType, String serachText, int categoryNum ,int delType) {
+		logger.info("리뷰 페이지 요청");
 		logger.info("요청페이지 : " + page);
-		logger.info("faq 검색에서 가져온 text : "+serachText);
-		logger.info("faq 검색에서 가져온 type : "+searchType);
-		logger.info("faq 검색에서 가져온 category num : " + categoryNum);
+		logger.info("리뷰 검색에서 가져온 text : "+serachText);
+		logger.info("리뷰 검색에서 가져온 type : "+searchType);
+		logger.info("리뷰 검색에서 가져온 category num : " + categoryNum);
+		logger.info("리뷰 검색에서 가져온 category num : " + delType);
 		Map<String, Object> map = null;
 		int currPage = page;
 			
-		map = adminService.showListSearchReview(currPage,searchType,serachText,categoryNum);	
+		map = adminService.showListSearchReview(currPage,searchType,serachText,categoryNum,delType);	
 		return map;
 	}
 	
@@ -381,21 +382,114 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(value = "adminSuggestionsLIst.ajax")
+	@RequestMapping(value = "adminSuggestionsList.ajax")
 	@ResponseBody
-	public Map<String, Object> adminSuggestionsLIst(int page , int searchType, String serachText, int categoryNum) {
-		logger.info("adminSuggestionsLIst 요청");
+	public Map<String, Object> adminSuggestionsList(int page , int searchType, String serachText, int categoryNum, int delType) {
+		logger.info("adminSuggestionsList 요청");
 		logger.info("요청페이지 : " + page);
 		logger.info("faq 검색에서 가져온 text : "+serachText);
 		logger.info("faq 검색에서 가져온 type : "+searchType);
 		logger.info("faq 검색에서 가져온 category num : " + categoryNum);
+		logger.info("faq 검색에서 가져온 category num : " + delType);
 		Map<String, Object> map = null;
 		int currPage = page;
 			
-		map = adminService.showListSearchSuggestion(currPage,searchType,serachText,categoryNum);	
+		map = adminService.showListSearchSuggestion(currPage,searchType,serachText,categoryNum,delType);	
 		
 		
 		return map;
+	}
+	
+	
+	@RequestMapping(value="/adminSuggestionsAnswerWrite.do")
+	public String adminanswerWrite (String sug_idx, @RequestParam Map<String, String> param, HttpSession session) {
+		String adminId = (String) session.getAttribute("loginId");
+		String user_type = (String) session.getAttribute("user_type");
+		String sug_answer = param.get("sug_answer");
+		
+		int row = suggestionService.answerWrite(sug_idx, adminId, sug_answer);
+		logger.info("입력한 row 수 = " + row);
+		String page = "redirect:/adminSuggestionsDetail.go?sug_idx=" + sug_idx;
+
+		
+		return page;
+	}
+	
+	@RequestMapping(value="/adminSuggestionsDelete.do")
+	public String adminSuggestionsDelete (String sug_idx, HttpSession session) {
+		String page = "redirect:/adminSuggestionsList.go";
+		
+		
+		int row = suggestionService.suggestionsDelete(sug_idx);
+			
+		
+		return page;
+	}
+	
+	@RequestMapping(value="/adminAnswerDelete.do")
+	public String adminAnswerDelete (String sug_idx, HttpSession session) {
+		String page = "redirect:/adminSuggestionsDetail.go?sug_idx=" + sug_idx;
+		String user_type = (String) session.getAttribute("user_type");
+		
+		
+
+		int row = suggestionService.answerDelete(sug_idx);
+		logger.info("삭제한 row 수 = " + row);
+		page = "redirect:/adminSuggestionsDetail.go?sug_idx=" + sug_idx;
+
+		
+		return page;
+	}
+	
+	@RequestMapping(value="/adminAnswerEdit.go")
+	public String admimAnswerEditGo (String sug_idx, HttpSession session, Model model) {
+		String page = "adminPage/adminSuggestionsAnswerEdit";
+				
+		suggestionService.answerEditGo(sug_idx, model);
+		
+		return page;
+		
+	}
+	
+	@RequestMapping(value="/adminSuggestionsEdit.go")
+	public String adminSuggestionsEditGo (String sug_idx, HttpSession session, Model model) {
+		String page = "adminPage/adminSuggestionsEdit";
+		
+		
+			
+		suggestionService.suggestionsEditGo(sug_idx, model);
+		
+		return page;
+		
+	}
+	
+	@RequestMapping(value="/adminSuggestionsEdit.do", method = RequestMethod.POST)
+	public String suggestionsEditDo (MultipartFile[] sug_photos, @RequestParam Map<String, String> param, String sug_idx, HttpSession session) {
+		String page = "member/login";
+		String loginId = (String) session.getAttribute("loginId");
+			
+		page = "redirect:/adminSuggestionsDetail.go?sug_idx=" + sug_idx;
+		int row = suggestionService.suggestionsEdit(sug_photos, param, loginId, sug_idx);
+		logger.info("수정한 게시글 수 = " + row);
+		
+		return page;
+	}
+	
+	@RequestMapping(value="/adminSuggestionsAnswerEdit.do", method = RequestMethod.POST)
+	public String adminAnswerWrite (@RequestParam Map<String, String> param, String sug_idx, HttpSession session) {
+		String page = "redirect:/adminSuggestionsDetail.go?sug_idx=" + sug_idx;
+		String adminId = (String) session.getAttribute("loginId");
+		String user_type = (String) session.getAttribute("user_type");
+		String sug_answer = param.get("sug_answer");
+		int sug_answer_idx = Integer.parseInt(param.get("sug_answer_idx"));
+		
+		
+		int row = suggestionService.answerEdit(sug_answer_idx, adminId, sug_answer);
+		logger.info("수정한 row 수 = " + row);
+			
+		
+		
+		return page;
 	}
 	
 	/*---------------------------------------------------------------------------------------- 정민호*/
@@ -511,6 +605,7 @@ public class AdminController {
         return "Success";
     }
 
+    
     
     
 

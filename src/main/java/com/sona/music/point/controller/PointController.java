@@ -113,13 +113,13 @@ public class PointController {
 	
 	@RequestMapping(value = "/withdrawPoint.ajax" , method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> withdrawPointDO(HttpSession session ,@RequestParam Map<String, String> param) {
+	public Map<String, Object> withdrawPointDO(HttpSession session ,@RequestParam Map<String, String> param, Model model) {
 		int amount = Integer.parseInt(param.get("amount"));
 		
 		logger.info("출금 페이지에서 가져온 map amount : "+ amount);
 		String id = (String) session.getAttribute("loginId");
 		String page = "member/login";
-		String msg = "결제중 문제가 발생 했습니다.";
+		String msg = "출금중 문제가 발생 했습니다.";
 		amount = -amount;
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(id != null) {
@@ -139,11 +139,14 @@ public class PointController {
 				int havePoint = pointService.getHavePoint(chargePointLoginId);
 				session.setAttribute("point", havePoint);
 				map.put("success", row);
+				msg = "포인트가 정상적으로 출금 되었습니다.";
 			}else {
 				logger.info("포인트 출금에 포인트가 부족할때 뜨는 값 ");
 				page = "\"mypoint/withdrawPont\"";
+				msg = "보유포인트보다 축금포인트가 많습니다.";
 			}
 		}
+		map.put("msg", msg);
 		return map;
 	}
 	

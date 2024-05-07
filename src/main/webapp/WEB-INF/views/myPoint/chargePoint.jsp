@@ -151,7 +151,7 @@
 			</c:if>
 								
 			<br> <span id="userId">
-				<h2>${sessionScope.loginId}</h2>
+				<h2><a href = "userDetail.go?user_id=${sessionScope.loginId}">${sessionScope.loginId}</a></h2>
 				<div>님이 보유중인 포인트 ${havePoint} P</div>
 			</span>
 		</div>

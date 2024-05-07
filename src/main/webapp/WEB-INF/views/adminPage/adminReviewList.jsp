@@ -98,14 +98,14 @@
     <div id = "divvv">
     <div id="wrapper1">
             <div id="adminside">
-                <h3>관리자 페이지</h3>
+                <h3>리뷰 관리</h3>
                 <hr/>
                 <a href="adminMain.go">관리자 페이지</a>
                 <a href="adminUserList.go">회원 관리</a>
                 <a href="adminLessonList.go">강의 관리</a>
-                <a href="noticeManagement.go">공지사항 관리</a>
-                <a href="faqManagement.go">FAQ 관리</a>
-                <a href="adminSuggestionsLIst.go">건의사항 관리</a>
+                <a href="adminNoticeList.go">공지사항 관리</a>
+                <a href="adminFaqList.go">FAQ 관리</a>
+                <a href="adminSuggestionsList.go">건의사항 관리</a>
                 <a href="adminReviewList.go">리뷰 관리</a>
                 <a href="adminReportManagement.go">신고 관리</a>
                 <a href="userSuspensionHistory.go">회원 정지 이력</a>
@@ -129,6 +129,7 @@
 	     	<!-- <button type="button" id="search">검색하기</button> -->
 	     	<img src="resources/img/search.png" id="search" height="20px"
 					width="20px" onclick="search()" class="searchIcon">
+	     	<button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button>
 	     	<!-- 검색기능 끝 -->
 		   <table id ="showlist">
 		   	<thead>
@@ -170,6 +171,7 @@
 	var category = 1;
 	var showPage =1;
 	var searchRemain = false;
+	var delType = 0;
 	
 	$(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 		listCall(showPage);
@@ -209,7 +211,8 @@
 	    	    'page':page,
 	    		'searchType':searchType,
 	    		'serachText':serachText,
-	    		'categoryNum' : category
+	    		'categoryNum' : category,
+	    		'delType' : delType
 	       },
 	       dataType:'json',
 	       success:function(data){
@@ -246,7 +249,8 @@
 		    content += '<td class="nidx">' + item.review_idx + '</td>';
 		    /* content += '<td class="ntitle"><a href="lessonReviewDetail.go?idx=' + item.reivew_idx + '">' + item.review_title + '</a></td>' */ 
 		    content += '<td><a href="#" class="review-link" data-review-idx="' + item.review_idx + '">' + item.review_title + '</a></td>';
-		    content += '<td class="nid">' + item.rater_id + '</td>';
+		    /* content += '<td class="nid">' + item.rater_id + '</td>'; */
+		    content += '<td class="nid"><a id="titleId" href="userDetail.go?user_id=' + item.rater_id + '">' + item.rater_id + '</a></td>'
 		    content += '<td class="nid">' + item.user_type + '</td>';
 		    
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
@@ -333,6 +337,19 @@
 	        $('#slide').css('display', 'none');
 	    }
 	});
+	
+	function callDelList(){
+		if(delType==0){
+			delType = 1;
+			document.getElementById("callDelList").innerText="정상게시글보기";
+		}else{
+			delType = 0;
+			document.getElementById("callDelList").innerText="삭제게시글보기";
+		}
+		$('#pagination').twbsPagination('destroy');
+		showPage =1;
+		listCall(showPage);
+	}
 
 	$('#logo').click(function main(){
 		location.href = '/main';

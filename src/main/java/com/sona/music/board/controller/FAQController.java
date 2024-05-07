@@ -31,16 +31,17 @@ public class FAQController {
 	
 	@RequestMapping(value = "faqManagementlist.ajax")
 	@ResponseBody
-	public Map<String, Object> faqManagementlist(int page , int searchType, String serachText, int categoryNum) {
+	public Map<String, Object> faqManagementlist(int page , int searchType, String serachText, int categoryNum ,int delType) {
 		logger.info("noticeManagementlist 요청");
 		logger.info("요청페이지 : " + page);
 		logger.info("faq 검색에서 가져온 text : "+serachText);
 		logger.info("faq 검색에서 가져온 type : "+searchType);
 		logger.info("faq 검색에서 가져온 category num : " + categoryNum);
+		logger.info("faq 검색에서 가져온 category num : " + delType);
 		Map<String, Object> map = null;
 		int currPage = page;
 			
-		map = faqService.showListSearch(currPage,searchType,serachText,categoryNum);	
+		map = faqService.showListSearch(currPage,searchType,serachText,categoryNum,delType);	
 		
 		
 		return map;

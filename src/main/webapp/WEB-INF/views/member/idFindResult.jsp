@@ -117,12 +117,15 @@
 	<div id="resultPage">
 		<div class="result-msg"><h2> ID 찾기</h2></div>
 		<div class="result-id">
-			<c:forEach items="${findId}" var="ids">
-				<ul class="idFindResultBox">
-					<li class="isFindId">존재하는 아이디가 있습니다.</li><br>
-					<li><span class="idid">아이디 : </span> ${findId}</li>
-				</ul>
-			</c:forEach>
+			<c:if test="${findId ne null}">
+				<li class="isFindId">존재하는 아이디가 있습니다.</li>
+				<c:forEach items="${findId}" var="ids">
+					<ul class="idFindResultBox">
+						<br>
+						<li><span class="idid">아이디 : </span> ${ids}</li>
+					</ul>
+				</c:forEach>
+			</c:if>
 		</div>
 		<br> <br>
 		<a href="login.go" class="btn">로그인 하기</a> 

@@ -175,7 +175,7 @@
 			</c:if>
 
 			<br> <span id="userId">
-				<h2>${sessionScope.loginId}</h2>
+				<h2><a href = "userDetail.go?user_id=${sessionScope.loginId}">${sessionScope.loginId}</a></h2>
 				<div>님이 보유중인 포인트 ${havePoint} P</div>
 			</span>
 		</div>
@@ -335,11 +335,15 @@
 				},
 				success : function(response) {
 					if (response.success == 1) {
-						alert("포인트 출금이 완료되었습니다.");
+						
+						var msg = response.msg;
+						alert(msg);
 						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
-						window.location.href = "login.go";
+						window.location.href = "myPage.go";
 					} else {
-						alert("포인트 출금을 실패하였습니다.");
+						
+						var msg = response.msg;
+						alert(msg);
 					}
 				},
 				error : function(xhr, status, error) {

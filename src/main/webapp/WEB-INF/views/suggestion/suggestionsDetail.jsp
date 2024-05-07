@@ -145,7 +145,7 @@ button {
 	        		</tr>
 	        		<tr>
 	        			<td>
-	        				<span><b>${dto.user_name}</b>(${dto.user_id})&nbsp;&nbsp;&nbsp;&nbsp;${dto.sug_reg_date}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	        				<span><a href="userDetail.go?user_id=${dto.user_id}"><b>${dto.user_name}</b>(${dto.user_id})</a>&nbsp;&nbsp;&nbsp;&nbsp;${dto.sug_reg_date}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 	        				<span><img src="resources/img/eyes.png" class="eyes"/>&nbsp;&nbsp;${dto.sug_views}</span>
 	        			</td>
 	        		</tr>

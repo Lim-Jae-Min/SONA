@@ -54,12 +54,13 @@ public class ReviewController {
 	}
 
 	@RequestMapping(value="/lessonReviewWrite.go")
-	public String reviewWrite(Integer class_idx, String user_id, Model model, HttpSession session) {
+	public String reviewWrite(Integer class_idx, String user_id, String apply_detail, Model model, HttpSession session) {
 		logger.info("리뷰 작성 요청");
 
 		String page = "lesson/lessonReviewWrite";
 		model.addAttribute("classIdx", class_idx);
 		model.addAttribute("ratee_id", user_id);
+		model.addAttribute("apply_detail", apply_detail);
 
 		reviewService.lessonHeaderClass(class_idx, model);
 

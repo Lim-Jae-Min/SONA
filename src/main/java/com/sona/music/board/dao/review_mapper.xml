@@ -11,7 +11,7 @@
     	r.REVIEW_TITLE, 
     	r.RATER_ID, 
    		 CONCAT(MIN(CH_DATE), ' ~ ', MAX(CH_DATE)) AS STUDY_DATE,
-   		(SELECT COUNT(NEW_FILENAME) FROM PHOTO_BOARD p WHERE p.POST_IDX = r.REVIEW_IDX) AS img_cnt,
+   		(SELECT COUNT(NEW_FILENAME) FROM PHOTO_BOARD p WHERE p.POST_IDX = r.REVIEW_IDX AND p.PHOTO_CATEGORY = 'Review') AS img_cnt,
     	r.REVIEW_REG_DATE 
 		FROM REVIEW r 
 		JOIN CLASS_HISTORY ch ON r.CLASS_IDX = ch.CLASS_IDX
@@ -35,8 +35,8 @@
 	keyProperty="REVIEW_IDX"
 	parameterType="com.sona.music.board.dto.ReviewDTO"
 	>
-	INSERT INTO REVIEW(CLASS_IDX,RATER_ID,RATEE_ID,SCORE,REVIEW_TITLE,REVIEW_CONTENT)
-			VALUES(#{class_idx},#{rater_id},#{ratee_id},#{score},#{review_title},#{review_content})
+	INSERT INTO REVIEW(CLASS_IDX,RATER_ID,RATEE_ID,SCORE,REVIEW_TITLE,REVIEW_CONTENT,APPLY_DETAIL)
+			VALUES(#{class_idx},#{rater_id},#{ratee_id},#{score},#{review_title},#{review_content},#{apply_detail})
 	
 	</insert>
 	

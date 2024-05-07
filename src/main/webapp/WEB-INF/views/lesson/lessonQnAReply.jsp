@@ -205,44 +205,66 @@
 }
 </style>
 <body>
-	<header id="usermain">
-		<table id="mainmenu">
-			<tr>
-				<th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-				<th class="menu"><c:if test="${sessionScope.loginId eq null}">
-						<c:if test="${sessionScope.user_type ne '강사'}">
-							<a href="login.go">추천 강의</a>
-						</c:if>
-					</c:if> <c:if test="${sessionScope.loginId ne null}">
-						<c:if test="${sessionScope.user_type ne '강사'}">
-							<a href="recommendList.go">추천 강의</a>
-						</c:if>
-					</c:if></th>
-				<th class="menu"><a href="allList.go">전체 강의</a></th>
-				<th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-			</tr>
-		</table>
-		<table id="mymenu">
-			<c:if test="${sessionScope.loginId ne null}">
-				<tr>
-					<c:if test="${sessionScope.alarm_count > 0}">
-						<th><img src="resources/img/alarm_on.png"
-							class="miniimg alarm"></th>
-					</c:if>
-					<c:if test="${sessionScope.alarm_count == 0}">
-						<th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-					</c:if>
-					<th><img src="resources/img/basic_user.png" class="miniimg"></th>
-					<th><div id="userName">${sessionScope.user_name}</div></th>
-				</tr>
-			</c:if>
-			<c:if test="${sessionScope.loginId eq null}">
-				<tr>
-					<th><a href="login.go">로그인</a></th>
-				</tr>
-			</c:if>
-		</table>
-	</header>
+	<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
+	
 
 	<div id="content">
 		<div id="top">
@@ -376,10 +398,21 @@ var currentDate = new Date().toLocaleDateString('ko-KR');
 currentDateElement.innerText = currentDate;
 
 function confirmWrite() {
-    var result = confirm("답변 작성을 하시겠습니까?");
+    // 제목과 내용 입력 필드의 값 가져오기
+    var content = document.querySelector('textarea[name="a_content"]').value.trim();
+
+    // 제목이나 내용이 비어 있는지 확인
+    if (content === '') {
+        // 비어 있는 필드가 있을 경우
+        alert("답변을 입력해주세요.");
+        return false; // 작성 중지
+    }
+
+    // 리뷰 작성 여부 확인
+    var result = confirm("답변 등록을 하시겠습니까?");
     if (result) {
         // 사용자가 "예"를 선택한 경우
-        alert("답변 작성이 완료되었습니다.");
+        alert("답변 등록이 완료되었습니다.");
         // 여기에 작성 완료 후의 동작 추가 가능
     }
     return result; // 사용자가 "아니오"를 선택한 경우도 처리
@@ -399,9 +432,15 @@ $('#userName').click(function slide() {
     }
 });
 
+
 $('#logo').click(function main(){
-	location.href = '/main';
+   if ('${sessionScope.user_type}' == '관리자') {
+      location.href = 'adminMain.go';
+   }else {
+      location.href = '/main';   
+   }
 });
+
 $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';
 });

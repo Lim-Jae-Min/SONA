@@ -226,45 +226,66 @@ body {
 </style>
 </head>
 <body>
-	<header id="usermain">
-		<table id="mainmenu">
-			<tr>
-				<th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-				<th class="menu"><c:if test="${sessionScope.loginId eq null}">
-						<c:if test="${sessionScope.user_type ne '강사'}">
-							<a href="login.go">추천 강의</a>
-						</c:if>
-					</c:if> <c:if test="${sessionScope.loginId ne null}">
-						<c:if test="${sessionScope.user_type ne '강사'}">
-							<a href="recommendList.go">추천 강의</a>
-						</c:if>
-					</c:if></th>
-				<th class="menu"><a href="allList.go">전체 강의</a></th>
-				<th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-			</tr>
-		</table>
-		<table id="mymenu">
-			<c:if test="${sessionScope.loginId ne null}">
-				<tr>
-					<c:if test="${sessionScope.alarm_count > 0}">
-						<th><img src="resources/img/alarm_on.png"
-							class="miniimg alarm"></th>
-					</c:if>
-					<c:if test="${sessionScope.alarm_count == 0}">
-						<th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-					</c:if>
-					<th><img src="resources/img/basic_user.png" class="miniimg"></th>
-					<th><div id="userName">${sessionScope.user_name}</div></th>
-				</tr>
-			</c:if>
-			<c:if test="${sessionScope.loginId eq null}">
-				<tr>
-					<th><a href="login.go">로그인</a></th>
-				</tr>
-			</c:if>
-		</table>
-	</header>
-<body>
+	<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
+	
 	<div id="content">
 		<div id="top">
 			<div id="left">
@@ -302,24 +323,25 @@ body {
 		<div
 			style="display: inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
 			<form action="reviewEdit.do" method="post"
-				enctype="multipart/form-data" onsubmit="return confirmWrite(event);">
-				<table>
+				enctype="multipart/form-data" onsubmit="return confirmWrite();">
+				<table >
 					<tr>
 						<th><input type="hidden" name="class_idx"
 							value="${review.class_idx}" /></th>
 					</tr>
 					<tr>
-						<td><input type="hidden" name="review_idx"
-							value="${review.review_idx}" /></td>
-						<th style="font-size: 14px; text-align: left;">리뷰 제목 <input
-							type="text" name="review_title"
-							style="width: 300px; font-size: 16px;"
-							value="${review.review_title}" /></th>
-						<th style="font-size: 12px;">작성자 : ${review.rater_id}<input
-							type="hidden" name="rater_id" value="${review.rater_id}" /></th>
-						<th style="font-size: 12px;">작성일 : ${review.review_reg_date}</th>
+						<input type="hidden" name="review_idx" value="${review.review_idx}" />
 					</tr>
 					<tr>
+						<td><input type="hidden" name="rater_id" value="${review.rater_id}" /></td>
+						<th style="font-size: 12px; text-align: right;">작성자 : ${review.rater_id}</th>
+						<th style="font-size: 12px; text-align: right;">작성일 : ${review.review_reg_date}</th>
+					</tr>
+					<tr>
+					<th style="font-size: 15px; ">리뷰 제목</th> <td><input
+							type="text" name="review_title"
+							style="width: 250px; font-size: 14px;"
+							value="${review.review_title}" /></td>
 						<td colspan="4"
 							style="color: #FED000; font-size: 22px; text-align: right;">★${review.score}</td>
 					</tr>
@@ -329,13 +351,13 @@ body {
 							만족도는 수정이 불가합니다.</td>
 					</tr>
 					<tr>
-						<th>리뷰 내용</th>
+						<th style="width: 300px; font-size: 15px;">리뷰 내용</th>
 						<td colspan="2"><textarea name="review_content"
 								style="width: 882px; height: 311px; resize: none;"> ${review.review_content}</textarea></td>
 					</tr>
 					<tr>
 						<input type="hidden" name="photo_category" value="Review">
-						<th>리뷰 사진</th>
+						<th style="font-size: 15px;">리뷰 사진</th>
 						<td><c:if test="${photos.size() > 0}">
 								<c:forEach items="${photos}" var="photo">
 									<div class="photo-container">
@@ -347,7 +369,7 @@ body {
 								</c:forEach>
 							</c:if>
 							<div id="fileList"></div> <input type="file" name="photos"
-							accept="image/*" onchange="checkFileCountAndExistingPhoto(this)"
+							accept="image/*" onchange="checkFileCountAndExtension(this)"
 							style="width: 100%;" /> <small style="color: #999;">(한
 								장의 사진만 첨부 가능합니다)</small></td>
 					</tr>
@@ -426,35 +448,54 @@ function deletePhoto(postIdx, photoCategory, event) {
     }
 }
 
-function checkFileCountAndExistingPhoto(input) {
+function checkFileCountAndExtension(input) {
     // 현재 첨부된 파일 개수 확인
     var fileCount = input.files.length;
     
-    // 기존에 사진이 있는지 확인
-    var existingPhotoCount = $('.photo-container').length;
-
-    // 첨부 파일이 1장을 초과하거나, 기존에 사진이 있는 경우
-    if (fileCount > 1 || existingPhotoCount > 0) {
+    // 첨부 파일이 1장을 초과하는 경우
+    if (fileCount > 1) {
         // 경고창 표시
-        alert("기존 사진이 있거나, 첨부파일은 1장만 첨부할 수 있습니다.");
+        alert("첨부파일은 1장만 첨부할 수 있습니다.");
         // 파일 선택 취소
         input.value = '';
+        return;
+    }
+
+    // 파일 확장자 체크
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    for (var i = 0; i < fileCount; i++) {
+        var fileName = input.files[i].name;
+        if (!allowedExtensions.exec(fileName)) {
+            // 허용되지 않는 확장자를 가진 파일이 첨부되었을 때
+            alert('jpg, jpeg, png, gif 형식의 파일만 첨부 가능합니다.');
+            // 파일 선택 취소
+            input.value = '';
+            return;
+        }
     }
 }
 
 
-function confirmWrite(event) {
-    // 수정 버튼을 클릭한 경우에만 알림 창을 띄우고 폼을 제출합니다.
-    var buttonClicked = $(event.target).find('button[type="submit"]').is(':focus');
-    if (buttonClicked) {
-        var result = confirm("수정을 하시겠습니까?");
-        if (result) {
-            alert("수정이 완료되었습니다.");
-        }
-        return result;
-    } else {
-        return true; // 수정 버튼이 아닌 경우에는 그냥 제출을 허용합니다.
+function confirmWrite() {
+    // 제목과 내용 입력 필드의 값 가져오기
+    var title = document.querySelector('input[name="review_title"]').value.trim();
+    var content = document.querySelector('textarea[name="review_content"]').value.trim();
+
+    // 제목이나 내용이 비어 있는지 확인
+    if (title === '' || content === '') {
+        // 비어 있는 필드가 있을 경우
+        alert("제목과 내용을 모두 입력해주세요.");
+        return false; // 작성 중지
     }
+
+    // 리뷰 작성 여부 확인
+    var result = confirm("리뷰 수정을 하시겠습니까?");
+    if (result) {
+        // 사용자가 "예"를 선택한 경우
+        alert("리뷰 수정이 완료되었습니다.");
+        // 여기에 작성 완료 후의 동작 추가 가능
+    }
+    return result; // 사용자가 "아니오"를 선택한 경우도 처리
 }
 
 function redirectToList(classIdx) {
@@ -471,9 +512,15 @@ $('#userName').click(function slide() {
     }
 });
 
+
 $('#logo').click(function main(){
-	location.href = '/main';
+   if ('${sessionScope.user_type}' == '관리자') {
+      location.href = 'adminMain.go';
+   }else {
+      location.href = '/main';   
+   }
 });
+
 $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';
 });

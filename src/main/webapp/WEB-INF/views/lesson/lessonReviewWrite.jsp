@@ -144,44 +144,66 @@
 </head>
 <body>
 <body>
-	<header id="usermain">
-		<table id="mainmenu">
-			<tr>
-				<th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-				<th class="menu"><c:if test="${sessionScope.loginId eq null}">
-						<c:if test="${sessionScope.user_type ne '강사'}">
-							<a href="login.go">추천 강의</a>
-						</c:if>
-					</c:if> <c:if test="${sessionScope.loginId ne null}">
-						<c:if test="${sessionScope.user_type ne '강사'}">
-							<a href="recommendList.go">추천 강의</a>
-						</c:if>
-					</c:if></th>
-				<th class="menu"><a href="allList.go">전체 강의</a></th>
-				<th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-			</tr>
-		</table>
-		<table id="mymenu">
-			<c:if test="${sessionScope.loginId ne null}">
-				<tr>
-					<c:if test="${sessionScope.alarm_count > 0}">
-						<th><img src="resources/img/alarm_on.png"
-							class="miniimg alarm"></th>
-					</c:if>
-					<c:if test="${sessionScope.alarm_count == 0}">
-						<th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-					</c:if>
-					<th><img src="resources/img/basic_user.png" class="miniimg"></th>
-					<th><div id="userName">${sessionScope.user_name}</div></th>
-				</tr>
-			</c:if>
-			<c:if test="${sessionScope.loginId eq null}">
-				<tr>
-					<th><a href="login.go">로그인</a></th>
-				</tr>
-			</c:if>
-		</table>
-	</header>
+	<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
+                      </c:if>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
+	
 
 	<div id="content">
 		<div id="top">
@@ -229,9 +251,10 @@
 				enctype="multipart/form-data" onsubmit="return confirmWrite();">
 				<table>
 					<tr>
-						<th>평가 강의명 : ${class_idx}<input type="hidden"
-							name="class_idx" value="${class_idx}" /> 피평가자: ${ratee_id}<input
-							type="hidden" name="ratee_id" value="${ratee_id}" /></th>
+						<th>평가 강의명 : ${classIdx}<input type="hidden"
+							name="class_idx" value="${classIdx}" />  / 피평가자: ${ratee_id}<input
+							type="hidden" name="ratee_id" value="${ratee_id}" />
+							<input type="hidden" name="apply_detail" value="${apply_detail}" /></th>
 					</tr>
 					<tr>
 						<th style="font-size: 14px;">리뷰 제목</th>
@@ -263,7 +286,7 @@
 						<td colspan="4">
 							<div id="fileList"></div> <input type="file" name="photos"
 							accept="image/*" multiple="multiple" style="width: 100%;"
-							onchange="checkFileCount(this)" /> <small style="color: #999;">
+							onchange="checkFileCountAndExtension(this)" /> <small style="color: #999;">
 								(한장의 사진만 첨부 가능합니다)</small>
 						</td>
 					</tr>
@@ -324,6 +347,18 @@ var currentDate = new Date().toLocaleDateString('ko-KR');
 currentDateElement.innerText = currentDate;
 
 function confirmWrite() {
+    // 제목과 내용 입력 필드의 값 가져오기
+    var title = document.querySelector('input[name="review_title"]').value.trim();
+    var content = document.querySelector('textarea[name="review_content"]').value.trim();
+
+    // 제목이나 내용이 비어 있는지 확인
+    if (title === '' || content === '') {
+        // 비어 있는 필드가 있을 경우
+        alert("제목과 내용을 모두 입력해주세요.");
+        return false; // 작성 중지
+    }
+
+    // 리뷰 작성 여부 확인
     var result = confirm("리뷰 작성을 하시겠습니까?");
     if (result) {
         // 사용자가 "예"를 선택한 경우
@@ -333,7 +368,7 @@ function confirmWrite() {
     return result; // 사용자가 "아니오"를 선택한 경우도 처리
 }
 
-function checkFileCount(input) {
+function checkFileCountAndExtension(input) {
     // 현재 첨부된 파일 개수 확인
     var fileCount = input.files.length;
     
@@ -343,6 +378,20 @@ function checkFileCount(input) {
         alert("첨부파일은 1장만 첨부할 수 있습니다.");
         // 파일 선택 취소
         input.value = '';
+        return;
+    }
+
+    // 파일 확장자 체크
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    for (var i = 0; i < fileCount; i++) {
+        var fileName = input.files[i].name;
+        if (!allowedExtensions.exec(fileName)) {
+            // 허용되지 않는 확장자를 가진 파일이 첨부되었을 때
+            alert('jpg, jpeg, png, gif 형식의 파일만 첨부 가능합니다.');
+            // 파일 선택 취소
+            input.value = '';
+            return;
+        }
     }
 }
 
@@ -360,9 +409,15 @@ $('#userName').click(function slide() {
     }
 });
 
+
 $('#logo').click(function main(){
-	location.href = '/main';
+   if ('${sessionScope.user_type}' == '관리자') {
+      location.href = 'adminMain.go';
+   }else {
+      location.href = '/main';   
+   }
 });
+
 $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';
 });

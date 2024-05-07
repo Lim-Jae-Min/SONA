@@ -18,46 +18,65 @@
 </style>
 </head>
 <body>
-<header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                   <c:if test="${sessionScope.loginId eq null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="login.go">추천 강의</a>                   
+<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
                       </c:if>
-                   </c:if>
-                   <c:if test="${sessionScope.loginId ne null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="recommendList.go">추천 강의</a>                   
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
                       </c:if>
-                   </c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
-        </table>
-    </header>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
     <div id="wrapper">
             <div id="sidemenu">
                 <h3>개인 정보 수정</h3>
@@ -320,9 +339,13 @@ function goToStudentPageEdit() {
 var overChk = false;
 
 
-	$('#logo').click(function main(){
-		   location.href = '/main';
-		});
+$('#logo').click(function main(){
+	   if ('${sessionScope.user_type}' == '관리자') {
+	      location.href = 'adminMain.go';
+	   }else {
+	      location.href = '/main';   
+	   }
+});
     
 	var category1 = ['클래식 피아노', '재즈 피아노', '피아노 반주'];
 	var category2 = ['어쿠스틱 기타', '일렉 기타', '베이스 기타'];
@@ -436,7 +459,7 @@ var overChk = false;
 	}
 	
 	function applyEdit() {
-	    var $instCategory = $('select[name="inst_category_idx"]'); // 수정된 부분
+	    var $instCategory = $('select[name="inst_category_idx"]');
 	    var $inst = $('select[name="applyform_inst"]');
 	    var $location = $('select[name="applyform_location"]');
 	    var $haveinst = $('select[name="have_inst"]');
@@ -462,6 +485,10 @@ var overChk = false;
 	    } else if ($location.val() == '') {
 	        alert('희망지역을 선택해주세요');
 	        $location.focus();
+	    } else if (selectedStyles.length === 0) { // 선택된 스타일이 없는 경우
+	        alert('적어도 하나의 스타일을 선택해주세요');
+	        // 스타일 선택 영역으로 포커스 이동
+	        $('input[name="styleCheckbox"]').first().focus();
 	    } else {
 	        // 전화번호가 숫자만 포함하는지 확인
 	        if ($haveinst.val() == '') {
@@ -471,7 +498,7 @@ var overChk = false;
 	        }
 
 	        // 폼을 직접 제출
-	        if (confirm('클릭할 때 수정하시겠습니까?')) {
+	        if (confirm('수정하시겠습니까?')) {
 	            $('form').submit();
 	        }
 	    }

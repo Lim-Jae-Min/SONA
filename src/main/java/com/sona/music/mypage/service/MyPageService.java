@@ -130,15 +130,16 @@ public class MyPageService {
 
 
 
-	public Map<String, Object> qnaList(int currPage, int cnt, String loginId, String selectedClass) {
-		
+	public Map<String, Object> qnaList(String loginId, int cnt, String selectedClass,int currPage) {
+		logger.info("받아온 현재 페이지 값 : " + currPage);
 		int start = (currPage - 1) * cnt;
 		logger.info("start페이지:" + start);
 		logger.info("받아온 cnt의 값: " +cnt);
+		logger.info("선택한 강의 제목: "+ selectedClass);
 		logger.info(loginId);
 		Map<String, Object> result = new HashMap<String, Object>();
 		logger.info("list 갯수 : " + loginId + "currPage 갯수 : " + currPage + "totalPages 갯수 : " + cnt);
-		List<MyPageDTO> list = null;
+		List<MyPageDTO> list;
 		if (selectedClass.equals("전체") && selectedClass != null) {
 	        list = myPageDAO.qnaList(loginId, cnt, start);
 	        // 전체를 선택했을 때는 전체 강의의 갯수를 가져옴
@@ -227,7 +228,7 @@ public class MyPageService {
 		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.courseAllCount(pagePerCnt));				
+		result.put("totalPages", myPageDAO.courseAllCount(pagePerCnt,loginId));				
 		
 		return result;
 	}

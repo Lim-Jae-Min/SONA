@@ -22,46 +22,65 @@
 </style>
 </head>
 <body>
-<header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                   <c:if test="${sessionScope.loginId eq null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="login.go">추천 강의</a>                   
+<c:if test="${sessionScope.user_type eq '관리자'}">
+      <header id="adminmain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+                   <th class="menu"></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+              <tr>
+                 <td><a href="adminLogout.do">로그아웃</a></td>
+              </tr>
+           </table>
+       </header>
+   </c:if>
+   <c:if test="${sessionScope.user_type ne '관리자'}">
+      <header id="usermain">
+           <table id="mainmenu">
+               <tr>
+                   <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+                   <th class="menu">
+                      <c:if test="${sessionScope.loginId eq null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="login.go">추천 강의</a>                   
+                         </c:if>
                       </c:if>
-                   </c:if>
-                   <c:if test="${sessionScope.loginId ne null}">
-                      <c:if test="${sessionScope.user_type ne '강사'}">
-                         <a href="recommendList.go">추천 강의</a>                   
+                      <c:if test="${sessionScope.loginId ne null}">
+                         <c:if test="${sessionScope.user_type ne '강사'}">
+                            <a href="recommendList.go">추천 강의</a>                   
+                         </c:if>
                       </c:if>
-                   </c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
-        </table>
-    </header>
+                   </th>
+                   <th class="menu"><a href="allList.go">전체 강의</a></th>
+                   <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+               </tr>
+           </table>
+           <table id="mymenu">
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
+           </table>
+       </header>
+   </c:if>
     <div id="wrapper">
             <div id="sidemenu">
                 <h3>개인 정보 수정</h3>
@@ -85,13 +104,20 @@
                     </tr>
                     <tr>
 						<input type="hidden" name="photo_category" value="userInfo">
-	        		<td colspan="1" id="imgRow" style="width:15%;, height :20%; margin-right : 50px;">
-	        			<c:if test="${photos.size() < 1}">
-	        				등록된 사진이 없습니다.
-	        			</c:if>
-	        			<c:forEach items="${photos}" var="photo">
-	        				<img class="myPageImg" style="width: 200px; height:200px; margin-left : 30px;" src="/photo/${photo.new_filename}">
-	        			</c:forEach>
+					    <c:choose>
+					        <c:when test="${empty userInfo.new_filename}">
+					            <td colspan="1" id="imgRow" style="width: 15%; height: 20%; margin-right: 50px;">
+					                등록된 사진이 없습니다.
+					            </td>
+					        </c:when>
+					        <c:otherwise>
+					            <td colspan="1" id="imgRow" style="width: 15%; height: 20%; margin-right: 50px;">
+					                <img class="myPageImg" style="width: 200px; height: 200px;" src="/photo/${userInfo.new_filename}">
+					            </td>
+					        </c:otherwise>
+					    </c:choose>
+	        			
+	        			
  	        			<td colspan="1">
 	        				<input type="file" name="photos" id="imgUpload"/>
 	        			</td>  	        			
@@ -103,10 +129,14 @@
                         <td colspan="2" style="height: 20px;"></td> <!-- 줄바꿈을 위한 빈 셀 추가 -->
                     </tr>
 	        		<tr>
-	        		<td>
-                      <input type="text" name="user_name" value="${userInfo.user_name}" style="margin-left: 30px; display: block; width: 550px; height: 45px; font-size:20px">
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${userInfo.user_id}</span>   
+
+                        <td class="main" colspan="2" style="width: 100%; text-align: left;">
+                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 이름
+                           <span class="contents" style="margin-left: 61px; width: 200px; display: inline-block;">
+
+                      <input type="text" name="user_name" value="${userInfo.user_name}"  style="margin-left: 86px; display: block; width: 550px; height: 45px; font-size:20px">
                    </td>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -117,7 +147,7 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;새 비밀번호 
                             <span class="contents" style="margin-left: 61px; width: 200px; display: inline-block;">
-                            <input type="password" value="" id="newPassword" style="margin-left: 26px; display: block; width: 550px; height: 45px; font-size:20px">
+                            <input type="password" value="${userInfo.user_pass}" id="newPassword" style="margin-left: 26px; display: block; width: 550px; height: 45px; font-size:20px">
                             </span>
                         </td>
                     </tr>
@@ -128,7 +158,7 @@
                         <td class="main" colspan="2" style="width: 100%; text-align: left;">
                             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 확인 
                             <span class="contents" style="margin-left: 42px; width: 200px; display: inline-block;">
-                            <input type="password" value="" id="user_pass" name="user_pass" style="margin-left: 26px; display: block; width: 550px; height: 45px; font-size:20px">
+                            <input type="password" value="${userInfo.user_pass}" id="user_pass" name="user_pass" style="margin-left: 26px; display: block; width: 550px; height: 45px; font-size:20px">
                             </span>
 							<button type = "button" id="confirmation" onclick="confirmPw()" style="margin-left: 390px; width : 50px; height : 35px;">확인</button>
                         </td>
@@ -196,7 +226,7 @@
                     </tr>
                     <tr>   
                        <td style="text-align : right; margin-right : 400px;">
-							<button style="text-align : right; background-color:skyblue; margin-right : 400px;"" type="button" onclick="studentEdit()">정보 수정</button>
+							<button style=" width : 80px; text-align : center; background-color:skyblue; margin-right : 400px;" type="button" onclick="studentEdit()">정보 수정</button>
                        </td>
                     </tr>
                     
@@ -298,9 +328,13 @@ var overChk = false;
 
 
 	$('#logo').click(function main(){
-		   location.href = '/main';
-		});
-    
+			   if ('${sessionScope.user_type}' == '관리자') {
+			      location.href = 'adminMain.go';
+			   }else {
+			      location.href = '/main';   
+			   }
+	});
+   
 
 	
 	$('#userName').click(function slide() {

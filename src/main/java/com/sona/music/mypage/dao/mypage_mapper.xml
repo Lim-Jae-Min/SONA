@@ -6,6 +6,7 @@
 
 	<select id="getUserInfo" parameterType="String" resultType="com.sona.music.mypage.dto.MyPageDTO">
 	    SELECT 
+	    	u.user_pass,
 	        u.user_name,
 	        u.user_type,
 	        u.user_id,
@@ -96,7 +97,7 @@
 		FROM 
 		    CLASS_QUESTION cq
 		WHERE
-		    cq.user_id = 'user1'
+		    cq.user_id = #{param1}
 		ORDER BY
 		    cq.question_idx DESC
 				LIMIT #{param2} OFFSET #{param3}
@@ -122,7 +123,7 @@
 			    cq.q_reg_date
 			FROM 
 			    CLASS_QUESTION cq
-			JOIN  CLASS_OPEN co on co.CLASS_IDX = cq.CLASS_IDX
+			JOIN  CLASS_OPEN co on co.class_idx = cq.class_idx
 			WHERE
 			    cq.user_id = #{param1} AND co.class_name = #{param4}
 			ORDER BY
@@ -138,7 +139,7 @@
 	    JOIN 
 	        CLASS_OPEN co ON cq.class_idx = co.class_idx
 	    WHERE
-	       	 co.user_id = #{param2}
+	       	 cq.user_id = #{param2}
 	</select>
 	
 	<select id="qnaAllCount" resultType="Integer" parameterType="map">
@@ -148,7 +149,7 @@
 	    JOIN 
 	        CLASS_OPEN co ON cq.class_idx = co.class_idx
 	    WHERE
-	        co.user_id = #{param2} AND  co.class_name = #{param3}
+	        cq.user_id = #{param2} AND  co.class_name = #{param3}
 	</select>
 	
 	<select id="pointAllCount" resultType="Integer" parameterType="Integer">
@@ -163,8 +164,12 @@
 	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM REVIEW
 	</select>
 	
-	<select id="courseAllCount" resultType="Integer" parameterType="Integer">
-	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM APPLY_HISTORY
+	<select id="courseAllCount" resultType="Integer" parameterType="java.util.Map">
+	    SELECT CEIL(COUNT(*) / #{param1}) AS pages 
+	    FROM APPLY_HISTORY ah
+	    JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx
+	    WHERE ah.user_id = #{param2} 
+	      AND ah.apply_state IN ('신청 완료', '결제 대기', '결제 완료','강의 종료')
 	</select>
 	
 
@@ -423,6 +428,7 @@ LIMIT #{param2} OFFSET #{param3}
 	
 <select id="receiveList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
     SELECT 
+    	r.ratee_id,
         r.review_idx, 
         r.review_reg_date, 
         r.review_title, 
@@ -445,6 +451,7 @@ LIMIT #{param2} OFFSET #{param3}
 	   
 	<select id="sendList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 	    SELECT 
+	    	r.rater_id,
 	        r.review_idx, 
 	        r.review_reg_date, 
 	        r.review_title, 

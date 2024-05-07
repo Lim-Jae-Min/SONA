@@ -63,6 +63,7 @@ public class FAQService {
 	public Map<String, Object> faqList(int currPage, int categoryNum) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
+		logger.info("start" + start);
 		int deleteStatus = 0;
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<FAQDTO> resultList = null;

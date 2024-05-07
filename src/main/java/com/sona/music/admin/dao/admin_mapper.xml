@@ -393,13 +393,14 @@
     </update>
     
     
-	<insert id="adminActionWriteDo">
-		INSERT INTO ACTION_HISTORY (report_idx,admin_id,action_content,action_result)
-			VALUES(#{param1},#{param2},#{param3},#{param4})
-	</insert>
+	<update id="adminActionWriteDo">
+	    UPDATE ACTION_HISTORY
+	    SET action_content = #{param3}, action_result = #{param4}
+	    WHERE report_idx = #{param1}
+	</update>
 	
 	<select id="showSuspensionSearch" resultType="com.sona.music.admin.dto.AdminDTO">
-		SELECT bu.banned_idx, bu.action_category, u.user_name, bu.start_date, bu.end_date FROM BANNED_USER bu
+		SELECT bu.banned_idx, bu.action_category, u.user_name, bu.start_date, bu.end_date, bu.user_id FROM BANNED_USER bu
 			 join USERS u on bu.user_id = u.user_id 
 				 Where
 				<if test='param4 != null'>

@@ -5,74 +5,74 @@
 <mapper namespace="com.sona.music.lesson.dao.LessonDAO">
 	
 	<select id="recommendListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
-		<![CDATA[
-			SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = 'lesson') AS new_filename
-				, co.class_idx
-				, co.class_name
-				, co.user_id
-				, u.user_name
+		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = 'lesson') AS new_filename
+			, co.class_idx
+			, co.class_name
+			, co.user_id
+			, u.user_name
+			<![CDATA[
 				, CASE WHEN (SELECT COUNT(mh.manner_idx) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id) < 5
 				      THEN '신규 회원'
 				      ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 2), '')
 				      END AS manner
-				, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
-					THEN 0
-					ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
-					END AS accumulate_student
-				, co.class_location
-			FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
-			WHERE class_inst = #{param5} AND class_delete = 0 AND class_disable = 0
-			<if test="param4 != null">
-				AND ${param3} LIKE CONCAT('%', #{param4}, '%')
-			</if>
-			ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
-		]]>
+			]]>
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
+				THEN 0
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
+				END AS accumulate_student
+			, co.class_location
+		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
+		WHERE class_inst = #{param5} AND class_delete = 0 AND class_disable = 0
+		<if test="param4 != ''">
+			AND ${param3} LIKE CONCAT('%', #{param4}, '%')
+		</if>
+		ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<select id="allListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
-		<![CDATA[
-			SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = 'lesson') AS new_filename
-				, co.class_idx
-				, co.class_name
-				, co.user_id
-				, u.user_name
+		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = CONVERT(co.CLASS_IDX, char) AND pb.photo_category = 'lesson') AS new_filename
+			, co.class_idx
+			, co.class_name
+			, co.user_id
+			, u.user_name
+			<![CDATA[
 				, CASE WHEN (SELECT COUNT(mh.manner_idx) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id) < 5
 					      THEN '신규 회원'
 					      ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 2), '')
 					      END AS manner
-				, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
-					THEN 0
-					ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
-					END AS accumulate_student
-				, co.class_location
-			FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
-			WHERE class_delete = 0 AND class_disable = 0
-			<if test="param4 != '' || param5 != '지역 전체' || param6 != '' || param7 != ''">
-				AND
-				<if test="param4 != ''">
-					${param3} LIKE CONCAT('%', #{param4}, '%')
-					<if test="param5 != '지역 전체' || param6 != '' || param7 != ''">
-						AND
-					</if>
-				</if>
-				<if test="param5 != '지역 전체'">
-					class_location = #{param5}
-					<if test="param6 != '' || param7 != ''">
-						AND
-					</if>
-				</if>
-				<if test="param6 != ''">
-					inst_category_idx = #{param6}
-					<if test="param7 != ''">
-						AND
-					</if>
-				</if>
-				<if test="param7 != ''">
-					class_inst = #{param7}
+			]]>
+			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
+				THEN 0
+				ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
+				END AS accumulate_student
+			, co.class_location
+		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
+		WHERE class_delete = 0 AND class_disable = 0
+		<if test="param4 != '' || param5 != '지역 전체' || param6 != '' || param7 != ''">
+			AND
+			<if test="param4 != ''">
+				${param3} LIKE CONCAT('%', #{param4}, '%')
+				<if test="param5 != '지역 전체' || param6 != '' || param7 != ''">
+					AND
 				</if>
 			</if>
-			ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
-		]]>
+			<if test="param5 != '지역 전체'">
+				class_location = #{param5}
+				<if test="param6 != '' || param7 != ''">
+					AND
+				</if>
+			</if>
+			<if test="param6 != ''">
+				inst_category_idx = #{param6}
+				<if test="param7 != ''">
+					AND
+				</if>
+			</if>
+			<if test="param7 != ''">
+				class_inst = #{param7}
+			</if>
+		</if>
+		ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 
 	<select id="recommendListCount" resultType="Integer">

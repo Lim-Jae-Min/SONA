@@ -415,20 +415,20 @@ public class MyPageController {
 
 	 @RequestMapping(value="/qnaList.ajax", method = RequestMethod.GET)
 	 @ResponseBody
-	 public Map<String , Object> qnaListCall(String page, String cnt, String selectedClass, HttpSession session) {
-	     logger.info("listCall 요청");
-	     logger.info("페이지당 보여줄 갯수:" + cnt);
-	     logger.info("요청 페이지: " + page);
-	     logger.info("선택된 강의명: " + selectedClass);
-	     String loginId = (String) session.getAttribute("loginId");
+	 public Map<String , Object> qnaListCall(String page, int cnt, String selectedClass, HttpSession session) {
+		    logger.info("listCall 요청");
+		    logger.info("페이지당 보여줄 갯수:" + cnt);
+		    logger.info("요청 페이지: " + page);
+		    logger.info("선택된 강의명: " + selectedClass);
+		    String loginId = (String) session.getAttribute("loginId");
 
-	     int currPage = Integer.parseInt(page);
-	     int pagePerCnt = 10;
-	     logger.info(loginId);
-	     Map<String, Object> map = myPageService.qnaList(currPage, pagePerCnt, loginId, selectedClass);
-	     
-	     return map;
-	 }
+		    int currPage = Integer.parseInt(page);
+		    logger.info("dd"+currPage);
+		    logger.info(loginId);
+		    Map<String, Object> map = myPageService.qnaList(currPage,cnt, loginId, selectedClass);
+		     
+		    return map;
+		} 
 	 
 	 @RequestMapping(value = "/studentPointList.go")
 	 public String myPoint(HttpSession session, Model model) {

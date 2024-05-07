@@ -257,7 +257,7 @@
 
 	
 	function disableButtons(report_state) {
-	    if (report_state === "조치 완료" || report_state === "반려하기") {
+	    if (report_state === "조치 완료" || report_state === "반려") {
 	        document.getElementById("reject").disabled = true;
 	        document.getElementById("actionWrite").disabled = true;
 	    }

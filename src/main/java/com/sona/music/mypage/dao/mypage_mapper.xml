@@ -75,51 +75,80 @@
 		</select>
 	    
 		
-	<select id="qnaList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
-	    SELECT 
-	    	cq.question_idx,
-	        cq.anonymous_status,
-	        cq.q_title,
-	        CASE WHEN cq.question_idx = ca.answer_idx THEN 'Y' ELSE 'N' END AS answer_status,
-	        cq.q_reg_date,
-	        co.class_name
-	    FROM 
-	        CLASS_QUESTION cq
-	    LEFT JOIN 
-	        CLASS_ANSWER ca ON cq.question_idx = ca.answer_idx
-	    JOIN 
-	        CLASS_OPEN co ON cq.class_idx = co.class_idx
-	    WHERE
-	        cq.user_id = #{param3}
-	    ORDER BY
-	        cq.question_idx DESC
-	    LIMIT #{param2},#{param1}
+	<select id="qnaList" resultType="com.sona.music.mypage.dto.MyPageDTO">
+		SELECT 
+		    cq.question_idx,
+		    cq.q_title,
+		    cq.user_id,
+		    (SELECT u.user_name FROM USERS u WHERE u.user_id = cq.user_id) AS user_name,
+		    (
+		        SELECT 
+		            CASE WHEN EXISTS (
+		                SELECT 1 
+		                FROM CLASS_ANSWER ca 
+		                WHERE ca.question_idx = cq.question_idx
+		            ) 
+		            THEN 'Y' 
+		            ELSE 'N' 
+		        END
+		    ) AS answer_status,
+		    cq.q_reg_date
+		FROM 
+		    CLASS_QUESTION cq
+		WHERE
+		    cq.user_id = 'user1'
+		ORDER BY
+		    cq.question_idx DESC
+				LIMIT #{param2} OFFSET #{param3}
 	</select>
 	
-		<select id="qnaSelectedList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
-	    SELECT 
-	    	cq.question_idx,
-	        cq.anonymous_status,
-	        cq.q_title,
-	        CASE WHEN cq.question_idx = ca.answer_idx THEN 'Y' ELSE 'N' END AS answer_status,
-	        cq.q_reg_date,
-	        co.class_name
-	    FROM 
-	        CLASS_QUESTION cq
-	    LEFT JOIN 
-	        CLASS_ANSWER ca ON cq.question_idx = ca.answer_idx
-	    JOIN 
-	        CLASS_OPEN co ON cq.class_idx = co.class_idx
-	    WHERE
-	        cq.user_id = #{param3} AND co.class_name = #{param4}
-	    ORDER BY
-	        cq.question_idx DESC
-	    LIMIT #{param2},#{param1}
+		<select id="qnaListFilter" resultType="com.sona.music.mypage.dto.MyPageDTO">
+			SELECT 
+			    cq.question_idx,
+			    cq.q_title,
+			    cq.user_id,
+			    (SELECT u.user_name FROM USERS u WHERE u.user_id = cq.user_id) AS user_name,
+			    (
+			        SELECT 
+			            CASE WHEN EXISTS (
+			                SELECT 1 
+			                FROM CLASS_ANSWER ca 
+			                WHERE ca.question_idx = cq.question_idx
+			            ) 
+			            THEN 'Y' 
+			            ELSE 'N' 
+			        END
+			    ) AS answer_status,
+			    cq.q_reg_date
+			FROM 
+			    CLASS_QUESTION cq
+			JOIN  CLASS_OPEN co on co.CLASS_IDX = cq.CLASS_IDX
+			WHERE
+			    cq.user_id = #{param1} AND co.class_name = #{param4}
+			ORDER BY
+			    cq.question_idx DESC
+				LIMIT #{param2} OFFSET #{param3}
 	</select>
 		
 		
-	<select id="qnaAllCount" resultType="Integer" parameterType="Integer">
-	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM CLASS_QUESTION
+	<select id="qnaNotAllCount" resultType="Integer" parameterType="map">
+    	SELECT 	CEIL(COUNT(*) /#{param1}) AS pages
+	    FROM 
+	        CLASS_QUESTION cq
+	    JOIN 
+	        CLASS_OPEN co ON cq.class_idx = co.class_idx
+	    WHERE
+	       	 co.user_id = #{param2}
+	</select>
+	
+	<select id="qnaAllCount" resultType="Integer" parameterType="map">
+    	SELECT 	CEIL(COUNT(*) /#{param1}) AS pages
+	    FROM 
+	        CLASS_QUESTION cq
+	    JOIN 
+	        CLASS_OPEN co ON cq.class_idx = co.class_idx
+	    WHERE
+	        co.user_id = #{param2} AND  co.class_name = #{param3}
 	</select>
 	
 	<select id="pointAllCount" resultType="Integer" parameterType="Integer">

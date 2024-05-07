@@ -249,10 +249,10 @@
 				 Where
 				<if test='param4 != null'>
 					 
-					 <if test='param4 == 2'>
+					 <if test='param4 == 1'>
 					 	bu.action_category LIKE '%${param3}%' 
 					 </if>
-					<if test='param4 == 1'>
+					<if test='param4 == 2'>
 						 u.user_name LIKE '%${param3}%' 	
 					</if> 
 				</if>		
@@ -263,10 +263,10 @@
 		SELECT CEIL (COUNT(banned_idx)/#{param1}) AS pages FROM BANNED_USER bu
 			join USERS u on bu.user_id = u.user_id  Where
 				<if test='param3 != null'>					 
-					 <if test='param3 == 2'>
+					 <if test='param3 == 1'>
 					 	bu.action_category LIKE '%${param2}%' 
 					 </if>
-					<if test='param3 == 1'>
+					<if test='param3 == 2'>
 						 u.user_name LIKE '%${param2}%' 	
 					</if> 
 				</if>	

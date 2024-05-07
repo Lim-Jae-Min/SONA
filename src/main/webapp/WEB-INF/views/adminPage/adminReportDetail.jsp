@@ -175,7 +175,7 @@
            		           		
 				작성일자 : ${reportDetail.report_date} &nbsp;&nbsp;
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-           		조치 상태 : ${reportDetail.action_result}</span>
+			<span id="action_result">조치 상태 : ${reportDetail.action_result}</span>
            		</td>
 			</tr>           	        
             <hr class = "contenthr">
@@ -192,7 +192,7 @@
             <tr>
 			<td>
 				<button class = "footBtn" id="returnList" onclick="backList()">돌아가기</button>
-				<button class = "footBtn" id="reject" onclick="reject()">반려하기</button>
+				<button type = "button" class = "footBtn" id="reject" onclick="reject()">반려하기</button>
 				<input type="hidden" id="report_idx" value="${reportDetail.report_idx}">
 				<button class = "footBtn" id="actionWrite" onclick="writeAction()">조치내용 작성</button>
 			</tr>
@@ -216,31 +216,43 @@
 
 </body>
 <script>
-	function reject() {
-	    // 확인창 표시
-	    if (confirm("반려하시겠습니까?")) {
-	        var xhr = new XMLHttpRequest();
-	        var url = "./updateReportState";
-	        var params = "report_idx=${reportDetail.report_idx}&new_state=반려";
-	        xhr.open("POST", url, true);
-	        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	        xhr.onload = function() {
-	            if (xhr.status == 200) {
-	                document.getElementById("action_result").innerText = "반려";
-	                // 반려 상태일 경우 버튼 비활성화
-	                document.getElementById("reject").disabled = true;
-	            }
-	        };
-	        xhr.send(params);
-	    }
-	}
+window.onload = function() {
+    // 반려 상태인 경우 버튼 비활성화
+    var action_result = "${reportDetail.action_result}";
+    if (action_result === "반려") {
+        disableButtons("반려");
+    }
+};
+
+
+
+function reject() {
+    // 확인창 표시
+    if (confirm("반려하시겠습니까?")) {
+        var xhr = new XMLHttpRequest();
+        var url = "./updateReportState";
+        var params = "report_idx=${reportDetail.report_idx}&new_state=반려";
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+            if (xhr.status == 200) {
+                document.getElementById("action_result").innerText = "반려";
+                // 반려 상태일 경우 버튼 비활성화
+                disableButtons("반려"); // disableButtons 함수 호출
+            }
+        };
+        xhr.send(params);
+    }
+}
 	
 	function disableButtons(action_result) {
-	    if (action_result === "조치 완료" || action_result === "반려") {
-	        document.getElementById("reject").disabled = true;
+	    if (action_result === "반려") {
+	        var rejectButton = document.getElementById("reject");
+	        if (rejectButton) {
+	            rejectButton.disabled = true;
+	        }
 	    }
 	}
-	
 	function writeAction() {
 	    // 알림창 표시
 	    if (confirm("작성하시겠습니까?")) {

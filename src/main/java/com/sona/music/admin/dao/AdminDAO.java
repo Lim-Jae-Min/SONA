@@ -1,15 +1,10 @@
 package com.sona.music.admin.dao;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 import com.sona.music.admin.dto.AdminDTO;
-
-import com.sona.music.board.dto.FAQDTO;
-
-import com.sona.music.board.dto.NoticeDTO;
-import com.sona.music.board.dto.SuggestionDTO;
+import com.sona.music.board.dto.PhotoDTO;
+import com.sona.music.board.dto.ReviewDTO;
 
 
 public interface AdminDAO {
@@ -87,5 +82,22 @@ public interface AdminDAO {
 
 	int adminLessonListCount(int pagePerCnt, String condition, String searchContent);
 
+	List<AdminDTO> adminNoticeShowListSearch(int start, int pagePerCnt, int deleteStatus, String serachText,
+			int searchType);
+
+	int adminNoticeAllCount(int pagePerCnt, int deleteStatus, String serachText, int searchType);
+
+	List<AdminDTO> adminFaqList(int start, int pagePerCnt, int deleteStatus, String serachText, int searchType,
+			int categoryNum);
+
+	int adminFaqAllCount(int pagePerCnt, int deleteStatus, String serachText, int searchType, int categoryNum);
+
+	ReviewDTO adminReviewLessonHeader(Integer review_idx);
+
+	String adminReviewlessonLogoLoad(Integer review_idx);
+	
+	ReviewDTO adminReviewDetail(int review_idx);
+
+	List<PhotoDTO> adminReviewphotos(int post_idx, String photo_category);
 
 }

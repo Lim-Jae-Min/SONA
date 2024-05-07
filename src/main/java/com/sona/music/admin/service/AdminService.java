@@ -24,6 +24,7 @@ import com.sona.music.admin.dto.PhotoDTO;
 import com.sona.music.board.dto.FAQDTO;
 
 import com.sona.music.board.dto.NoticeDTO;
+import com.sona.music.board.dto.ReviewDTO;
 import com.sona.music.board.dto.SuggestionDTO;
 
 	
@@ -50,7 +51,26 @@ public class AdminService {
 		
 		return adminDAO.adminCheck(id);
 	}
+	
+	public Map<String, Object> adminNoticeShowListSearch(int currPage, int searchType, String serachText ,int delType) {
+		int pagePerCnt = 10;
+		int start = (currPage-1)*pagePerCnt;
+		int deleteStatus = delType;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> resultList = null;
+		
+		
+		resultList = adminDAO.adminNoticeShowListSearch(start,pagePerCnt,deleteStatus,serachText,searchType);
+		logger.info(serachText);
 
+
+	
+		result.put("list", resultList);
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.adminNoticeAllCount(pagePerCnt,deleteStatus,serachText,searchType));
+		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.adminNoticeAllCount(pagePerCnt,deleteStatus,serachText,searchType));
+	return result;
+}
 	
 	
 	public int noticeWrite(MultipartFile[] photos, Map<String, String> param) {
@@ -150,6 +170,28 @@ public class AdminService {
 			logger.info("경로에 있는 파일 삭제됨");
 		}
 	}
+	
+	public Map<String, Object> adminFaqList(int currPage, int searchType, String serachText, int categoryNum , int delType) {
+		int pagePerCnt = 10;
+		int start = (currPage-1)*pagePerCnt;
+		int deleteStatus = delType;
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<AdminDTO> resultList = null;
+//		if(categoryNum == )
+		
+		resultList = adminDAO.adminFaqList(start,pagePerCnt,deleteStatus,serachText,searchType,categoryNum);
+		logger.info(serachText + "텍스트");
+
+		for (AdminDTO admindto : resultList) {
+			logger.info(admindto.getFaq_title());
+		}
+	
+		result.put("list", resultList);
+		result.put("currPage", currPage);
+		result.put("totalPages", adminDAO.adminFaqAllCount(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.adminFaqAllCount(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		return result;
+	}
 
 	public int adminFaqWriteDo(String faqTitle, String faqAnswer, String faqType) {
 		String adminId = "admin";
@@ -244,6 +286,26 @@ public class AdminService {
 		return result;
 		}
 	
+	public void adminLessonHeader(Integer review_idx, Model model) {
+		logger.info("lessonheader - 서비스");
+		ReviewDTO dto = adminDAO.adminReviewLessonHeader(review_idx);
+		model.addAttribute("lesson",dto);
+		
+		String lessonLogo = adminDAO.adminReviewlessonLogoLoad(review_idx);
+		logger.info("lessonLogo : " +lessonLogo);
+		model.addAttribute("lessonLogo",lessonLogo);
+		
+		
+		
+	}
+	
+	public void adminReviewDetail(int review_idx,int post_idx, String photo_category, Model model) {
+		ReviewDTO dto = adminDAO.adminReviewDetail(review_idx);
+		model.addAttribute("review", dto);
+
+		List<com.sona.music.board.dto.PhotoDTO> list = adminDAO.adminReviewphotos(post_idx, photo_category);
+		model.addAttribute("photos", list);
+	}
 
 		
 	public Map<String, Object> showReportSearch(int currPage, int searchType, String searchText) {

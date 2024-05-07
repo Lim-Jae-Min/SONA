@@ -171,7 +171,7 @@ p.editOption{
     <!-- 헤더영역 -->
     
     <!-- 게시판 영역 -->
-    <form action="adminFaqEdit.do" method="post">
+    <form action="adminFaqEdit.do" method="post" onsubmit="return confirmWrite();">
 	    <div class="container">
 	        <h1>FAQ 수정하기</h1>
 
@@ -245,6 +245,28 @@ p.editOption{
 		
 		location.href = 'adminFaqList.go';
 	}
+	function confirmWrite() {
+		console.log("버튼 클릭됨");
+	    // 제목과 내용 입력 필드의 값 가져오기
+	    var title = document.querySelector('textarea[name="title"]').value.trim();
+	    var content = document.querySelector('textarea[name="answer"]').value.trim();
 
+	    // 제목이나 내용이 비어 있는지 확인
+	    if (title === '' || content === '') {
+	        // 비어 있는 필드가 있을 경우
+	        alert("제목과 내용을 모두 입력해주세요.");
+	        return false; // 작성 중지
+	    }
+
+	    // 리뷰 작성 여부 확인
+	    var result = confirm("FAQ를 수정 하시겠습니까?");
+	    if (result) {
+	        // 사용자가 "예"를 선택한 경우
+	        alert("FAQ 수정이 완료 되었습니다.");
+	        // 여기에 작성 완료 후의 동작 추가 가능
+	    }
+	    return result; // 사용자가 "아니오"를 선택한 경우도 처리
+	};
+	
 </script>
 </html>

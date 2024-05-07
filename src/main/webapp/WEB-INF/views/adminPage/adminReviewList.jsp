@@ -129,7 +129,7 @@
 	     	<!-- <button type="button" id="search">검색하기</button> -->
 	     	<img src="resources/img/search.png" id="search" height="20px"
 					width="20px" onclick="search()" class="searchIcon">
-	     	<button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button>
+	     	<!-- <button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button> -->
 	     	<!-- 검색기능 끝 -->
 		   <table id ="showlist">
 		   	<thead>

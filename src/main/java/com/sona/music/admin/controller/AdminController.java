@@ -153,6 +153,23 @@ public class AdminController {
 
 		return "adminPage/adminNoticeList";
 	}
+	
+	@RequestMapping(value = "adminNoticeList.ajax")
+	@ResponseBody
+	public Map<String, Object> adminNoticeList(int page , int searchType, String serachText, int delType) {
+		logger.info("noticeManagementlist 요청");
+		logger.info("요청페이지 : " + page);
+		logger.info("공지사항 검색에서 가져온 text : "+serachText);
+		logger.info("공지사항 검색에서 가져온 type : "+searchType);
+		logger.info("공지사항 검색에서 가져온 delType : "+delType);
+		Map<String, Object> map = null;
+		int currPage = page;
+			
+			map = adminService.adminNoticeShowListSearch(currPage,searchType,serachText,delType);	
+		
+		
+		return map;
+	}
 
 	@RequestMapping(value = "/noticeDetailAdmin.go")
 	public String noticeDetailAdminGo(int idx, Model model) {
@@ -195,6 +212,25 @@ public class AdminController {
 		logger.info("faq관리 페이지 이동");
 		return "adminPage/adminFaqList";
 	}
+	
+	@RequestMapping(value = "adminFaqList.ajax")
+	@ResponseBody
+	public Map<String, Object> adminFaqList(int page , int searchType, String serachText, int categoryNum ,int delType) {
+		logger.info("noticeManagementlist 요청");
+		logger.info("요청페이지 : " + page);
+		logger.info("faq 검색에서 가져온 text : "+serachText);
+		logger.info("faq 검색에서 가져온 type : "+searchType);
+		logger.info("faq 검색에서 가져온 category num : " + categoryNum);
+		logger.info("faq 검색에서 가져온 category num : " + delType);
+		Map<String, Object> map = null;
+		int currPage = page;
+			
+		map = adminService.adminFaqList(currPage,searchType,serachText,categoryNum,delType);	
+		
+		
+		return map;
+	}
+	
 	
 	@RequestMapping(value="/adminSuggestionsDetail.go")
 	public String suggestionsDetailGo(String sug_idx, Model model) {
@@ -364,7 +400,8 @@ public class AdminController {
 	@RequestMapping(value="/adminReviewDetail.go")
 	public String adminReviewDetailGo(Integer review_idx, HttpSession session, Model model) {
 		logger.info("idx="+review_idx+"리뷰 디테일 요청");
-
+		
+		adminService.adminLessonHeader(review_idx, model);
 
 		if(review_idx != null) {
 
@@ -374,7 +411,7 @@ public class AdminController {
 			logger.info("detail post idx = " + post_idx);
 			logger.info("detail photo category = " + photo_category);
 
-			reviewService.detail(review_idx, post_idx, photo_category, model);
+			adminService.adminReviewDetail(review_idx, post_idx, photo_category, model);
 
 			return "adminPage/adminReviewDetail"; 
 		} else {

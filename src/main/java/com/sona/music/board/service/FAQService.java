@@ -42,8 +42,8 @@ public class FAQService {
 		result.put("currPage", currPage);
 		result.put("totalPages", faqDAO.allCount(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
 		logger.info("공지사항관리에서 받아온 allCount"+faqDAO.allCount(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
-	return result;
-}
+		return result;
+	}
 
 
 	public void faqDetailAdmin(int idx, Model model) {

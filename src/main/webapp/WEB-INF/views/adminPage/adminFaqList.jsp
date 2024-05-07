@@ -140,7 +140,7 @@
 				<!--<button type="button" id="search">검색하기</button>  -->
 				<img src="resources/img/search.png" id="search" height="20px"
 				width="20px" onclick="search()" class="searchIcon">
-			<button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button>
+			<!-- <button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button> -->
 			</div>
 			</section>
 			<button id="faqWriteButton" onclick="faqWriteGo()">글작성</button>
@@ -219,7 +219,7 @@
 			console.log(serachText);
 	    $.ajax({
 	       type:'get',
-	       url:'faqManagementlist.ajax',
+	       url:'adminFaqList.ajax',
 	       data:{
 	    	    'page':page,
 	    		'searchType':searchType,

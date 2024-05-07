@@ -21,6 +21,16 @@ public interface LogDAO {
 
 	int lessonStop(LogDTO dto);
 
+	String reviewCheck(String apply_detail);
+
+	void studentPayback(LogDTO dto);
+
+	void studentCalculate(LogDTO dto);
+
+	void teacherPayment(LogDTO dto);
+
+	void teacherCalculate(LogDTO dto);
+
 	
 
 	

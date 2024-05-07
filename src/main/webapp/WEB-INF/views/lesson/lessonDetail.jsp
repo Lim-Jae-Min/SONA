@@ -194,46 +194,65 @@ button {
 </style>
 </head>
 <body>
-    <header id="usermain">
-        <table id="mainmenu">
-            <tr>
-                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
-                <th class="menu">
-                	<c:if test="${sessionScope.loginId eq null}">
-                		<c:if test="${sessionScope.user_type ne '강사'}">
-		                	<a href="login.go">추천 강의</a>                	
+	<c:if test="${sessionScope.user_type eq '관리자'}">
+		<header id="adminmain">
+	        <table id="mainmenu">
+	            <tr>
+	                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+	                <th class="menu"></th>
+	                <th class="menu"></th>
+	                <th class="menu"></th>
+	            </tr>
+	        </table>
+	        <table id="mymenu">
+	        	<tr>
+	        		<td><a href="adminLogout.do">로그아웃</a></td>
+	        	</tr>
+	        </table>
+	    </header>
+	</c:if>
+	<c:if test="${sessionScope.user_type ne '관리자'}">
+		<header id="usermain">
+	        <table id="mainmenu">
+	            <tr>
+	                <th class="menu"><img src="resources/img/logo.png" id="logo"></th>
+	                <th class="menu">
+	                	<c:if test="${sessionScope.loginId eq null}">
+	                		<c:if test="${sessionScope.user_type ne '강사'}">
+			                	<a href="login.go">추천 강의</a>                	
+		                	</c:if>
 	                	</c:if>
-                	</c:if>
-                	<c:if test="${sessionScope.loginId ne null}">
-                		<c:if test="${sessionScope.user_type ne '강사'}">
-		                	<a href="recommendList.go">추천 강의</a>                	
+	                	<c:if test="${sessionScope.loginId ne null}">
+	                		<c:if test="${sessionScope.user_type ne '강사'}">
+			                	<a href="recommendList.go">추천 강의</a>                	
+		                	</c:if>
 	                	</c:if>
-                	</c:if>
-                </th>
-                <th class="menu"><a href="allList.go">전체 강의</a></th>
-                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
-            </tr>
-        </table>
-        <table id="mymenu">
-            <c:if test="${sessionScope.loginId ne null}">
-                <tr>
-                    <c:if test="${sessionScope.alarm_count > 0}">
-                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <c:if test="${sessionScope.alarm_count == 0}">
-                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
-                    </c:if>
-                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
-                    <th><div id="userName">${sessionScope.user_name}</div></th>
-                </tr>
-            </c:if>
-            <c:if test="${sessionScope.loginId eq null}">
-                <tr>
-                    <th><a href="login.go">로그인</a></th>
-                </tr>
-            </c:if>
-        </table>
-    </header>
+	                </th>
+	                <th class="menu"><a href="allList.go">전체 강의</a></th>
+	                <th class="menu"><a href="serviceCenter.go">고객센터</a></th>
+	            </tr>
+	        </table>
+	        <table id="mymenu">
+	            <c:if test="${sessionScope.loginId ne null}">
+	                <tr>
+	                    <c:if test="${sessionScope.alarm_count > 0}">
+	                        <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+	                    </c:if>
+	                    <c:if test="${sessionScope.alarm_count == 0}">
+	                        <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+	                    </c:if>
+	                    <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+	                    <th><div id="userName">${sessionScope.user_name}</div></th>
+	                </tr>
+	            </c:if>
+	            <c:if test="${sessionScope.loginId eq null}">
+	                <tr>
+	                    <th><a href="login.go">로그인</a></th>
+	                </tr>
+	            </c:if>
+	        </table>
+	    </header>
+	</c:if>
     <div id="content">
         <div id="top">
         	<div id="left">
@@ -469,14 +488,11 @@ button {
 	        	<tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr>
 	        	<tr>
 	        		<th class="BigInterval" colspan="2">
-	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state ne '신청 완료' and applyCheck.apply_state ne '수락 완료' and applyCheck.apply_state ne '결제 완료'}">
+	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state ne '신청 완료' and applyCheck.apply_state ne '결제 완료'}">
 		  	      			<button id="lessonApplyButton">수강신청</button>
 	        			</c:if>
 	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '신청 완료'}">
-		  	      			수강 신청이 완료되었습니다!
-	        			</c:if>
-	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '수락 완료'}">
-		  	      			수강 신청이 수락되었습니다. 결제를 진행해주세요!
+		  	      			수강 신청이 완료되었습니다. 결제를 진행해주세요!
 		  	      			<br/><br/>
 		  	      			<button id="paymentGoButton">바로가기</button>
 	        			</c:if>
@@ -553,7 +569,11 @@ $('#userName').click(function slide() {
 });
 
 $('#logo').click(function main(){
-	location.href = '/main';
+	if ('${sessionScope.user_type}' == '관리자') {
+		location.href = 'adminMain.go';
+	}else {
+		location.href = '/main';	
+	}
 });
 $('.alarm').click(function alarmList() {
 	location.href = 'alarmList.go';
@@ -654,7 +674,7 @@ $('#lessonApplyButton').click(function (){
     }
 });
 $('#paymentGoButton').click(function (){
-	location.href = 'lessonPayment?class_idx=${lesson.class_idx}';
+	location.href = 'lessonPayment.go?class_idx=${lesson.class_idx}';
 });
 $('#blindButton').click(function (){
 	var result = confirm("강의 블라인드 하시겠습니까?");

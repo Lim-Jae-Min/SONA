@@ -8,6 +8,7 @@
 		SELECT co.class_name
 			, ah.reg_date AS start_date
 			, co.class_idx
+			, co.class_price
 			, co.class_times AS total_times
 			, (SELECT COUNT(ch.ch_idx) FROM CLASS_HISTORY ch WHERE ch.apply_detail = ah.apply_detail) AS accumulate_times
 			, ah.apply_idx
@@ -78,5 +79,42 @@
 			(SELECT ah.apply_detail FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{apply_idx}))
 	</insert>
 
+	<select id="reviewCheck" resultType="String">
+		SELECT 
+			r.review_idx
+		FROM REVIEW r WHERE r.apply_detail = #{param1}
+	</select>
+	
+	<insert id="studentPayback"
+		useGeneratedKeys="true"
+		keyColumn="point_idx"
+		keyProperty="point_idx"
+		parameterType="com.sona.music.lesson.dto.LogDTO">
+		INSERT INTO USER_POINT(user_id, point_type, point)
+			VALUES(#{student_id}, '강의 정산', (#{class_price} / #{total_times} * (#{total_times} - #{accumulate_times}) * 0.95))
+	</insert>
+	
+	<insert id="studentCalculate" parameterType="com.sona.music.lesson.dto.LogDTO">
+		INSERT INTO POINT_CALCULATION(point_idx, class_idx, user_id, p_cal_amount, attendance_rate, p_actual_amount, apply_detail)
+			VALUES(#{point_idx}, #{class_idx}, #{student_id}, (#{class_price} / #{total_times} * (#{total_times} - #{accumulate_times}))
+			, (#{accumulate_times} / #{total_times}), (#{class_price} / #{total_times} * (#{total_times} - #{accumulate_times}) * 0.95)
+			, #{apply_detail})
+	</insert>
+	
+	<insert id="teacherPayment"
+		useGeneratedKeys="true"
+		keyColumn="point_idx"
+		keyProperty="point_idx"
+		parameterType="com.sona.music.lesson.dto.LogDTO">
+		INSERT INTO USER_POINT(user_id, point_type, point)
+			VALUES(#{teacher_id}, '강의 정산', (#{class_price} / #{total_times} * #{accumulate_times} * 0.95))
+	</insert>
+	
+	<insert id="teacherCalculate" parameterType="com.sona.music.lesson.dto.LogDTO">
+		INSERT INTO POINT_CALCULATION(point_idx, class_idx, user_id, p_cal_amount, attendance_rate, p_actual_amount, apply_detail)
+			VALUES(#{point_idx}, #{class_idx}, #{teacher_id}, (#{class_price} / #{total_times} * #{accumulate_times})
+			, (#{accumulate_times} / #{total_times}), (#{class_price} / #{total_times} * #{accumulate_times} * 0.95)
+			, #{apply_detail})
+	</insert>
 
 </mapper>

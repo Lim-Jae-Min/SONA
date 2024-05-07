@@ -366,7 +366,7 @@ public class MyPageController {
 	         logger.info("회원 수정하기~ ", map);
 	         map.put("loginId", loginId);
 	         myPageService.updateUserInfo(photos, new HashMap<>(map), session); // 로그인 ID를 전달
-	         page = "studentMyPage/studentPageEdit";
+	         page = "redirect:/studentPage.go?loginId="+loginId;
 	     }
 	     return page;
 	 }
@@ -399,7 +399,7 @@ public class MyPageController {
 	        logger.info("회원 수정하기~ ", map);
 	        map.put("loginId", loginId);
 	        myPageService.updateApplyForm(new HashMap<> (map)); // 로그인 ID를 전달
-	        page = "studentMyPage/studentPageApplyEdit";
+	        page = "redirect:/studentPage.go?loginId="+loginId;
 	    }
 	    return page;
 	}

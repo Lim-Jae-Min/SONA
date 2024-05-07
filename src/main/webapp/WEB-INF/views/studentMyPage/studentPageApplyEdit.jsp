@@ -471,10 +471,7 @@ $('#logo').click(function main(){
 	    });
 	    
 	    // 체크된 스타일 가져오기
-	    var selectedStyles = [];
-	    $('input[name="styleCheckbox"]:checked').each(function() {
-	        selectedStyles.push($(this).val());
-	    });
+	    var selectedStyles = applyform_style;
 
 	    if ($instCategory.val() == '') {
 	        alert('희망악기 카테고리를 선택해주세요');
@@ -488,7 +485,7 @@ $('#logo').click(function main(){
 	    } else if (selectedStyles.length === 0) { // 선택된 스타일이 없는 경우
 	        alert('적어도 하나의 스타일을 선택해주세요');
 	        // 스타일 선택 영역으로 포커스 이동
-	        $('input[name="styleCheckbox"]').first().focus();
+	        $('button[id$="Btn"]').first().focus();
 	    } else {
 	        // 전화번호가 숫자만 포함하는지 확인
 	        if ($haveinst.val() == '') {
@@ -499,7 +496,9 @@ $('#logo').click(function main(){
 
 	        // 폼을 직접 제출
 	        if (confirm('수정하시겠습니까?')) {
-	            $('form').submit();
+	        	$('form').submit();
+	            $('form').attr('action', './studentPage.go');
+	            
 	        }
 	    }
 	}

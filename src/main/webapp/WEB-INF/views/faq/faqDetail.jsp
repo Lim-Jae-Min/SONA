@@ -244,11 +244,7 @@
 			
 	           
              </div>
-        <div id="boardDetail">
 
-
-            
-        </div>
     </div>
 	<div id="footer">
 		<li>상호명 : SONA</li>

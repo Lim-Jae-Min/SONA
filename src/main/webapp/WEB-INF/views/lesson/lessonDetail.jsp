@@ -246,7 +246,7 @@ button {
         	<div id="right">
         		<table>
         			<tr>
-        				<td>${lesson.user_name}</td>
+        				<td><a href="userDetail.go?user_id=${lesson.user_id}">${lesson.user_name}</a></td>
         				<c:if test="${lessonLogo != null}">
         					<td rowspan="3"><img src="/photo/${lessonLogo}" class="lessonLogo"></td>
         				</c:if>
@@ -432,7 +432,7 @@ button {
 			        							비공개 Q&A 입니다. <img src="resources/img/locked.png" class="locked">
 			        						</c:if>
 			        						<c:if test="${!QnA.anonymous_status}">
-				        						<span><a href="lessonQnADetail.go?Question_idx=${QnA.question_idx}">${QnA.q_title}</a></span>
+				        						<span><a href="lessonQnADetail.go?question_idx=${QnA.question_idx}">${QnA.q_title}</a></span>
 			        						</c:if>
 			        					</td>
 		        					</tr>

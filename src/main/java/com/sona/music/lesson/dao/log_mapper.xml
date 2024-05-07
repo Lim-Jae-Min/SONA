@@ -23,7 +23,8 @@
 			, u.user_name
 			, u.user_email
 			, u.user_phone
-			, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = u.user_id AND pb.photo_category = 'Profile') AS new_filename
+			, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = u.user_id AND pb.photo_category = 'Profile' 
+				ORDER BY photo_idx DESC LIMIT 1) AS new_filename
 		FROM USERS u join CLASS_OPEN co ON u.user_id = co.user_id
 		WHERE co.class_idx = (SELECT ah.class_idx FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
 			UNION ALL
@@ -32,7 +33,8 @@
 			, u2.user_name
 			, u2.user_email
 			, u2.user_phone
-			, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = u2.user_id AND pb.photo_category = 'Profile') AS new_filename
+			, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = u2.user_id AND pb.photo_category = 'Profile' 
+				ORDER BY photo_idx DESC LIMIT 1) AS new_filename
 		FROM USERS u2 
 		WHERE u2.user_id = (SELECT ah.user_id FROM APPLY_HISTORY ah WHERE ah.apply_idx = #{param1})
 	</select>

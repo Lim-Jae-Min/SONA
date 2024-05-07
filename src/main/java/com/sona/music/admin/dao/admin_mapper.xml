@@ -77,18 +77,125 @@
 
 	</select> 
 	
-
+	<select id="adminFaqList" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT * FROM FAQ_BOARD 
+			<choose>
+				<when test="param6 == 1">
+					<if test='param5 != null'>
+					 WHERE
+						 <if test="param5 == 2">
+						 	faq_answer LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 2">
+					WHERE faq_target = "수강생"
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	faq_answer LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 == 3">
+					WHERE faq_target = "강사"
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	faq_answer LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param6 ==4">
+					WHERE faq_target = "서비스"
+					<if test='param5 != null'>
+					 AND
+						 <if test="param5 == 2">
+						 	faq_answer LIKE '%${param4}%' 
+						 </if>
+						<if test="param5 == 1">
+							 faq_title LIKE '%${param4}%' 	
+						</if> 
+					</if>	
+				</when>
+			</choose>	
+			ORDER BY faq_idx DESC LIMIT #{param1},#{param2};
+	</select>
+	
+	
+	<select id="adminFaqAllCount" resultType="int">
+		SELECT CEIL (COUNT(faq_idx)/#{param1}) AS pages FROM FAQ_BOARD
+			
+			<choose>
+				<when test="param5 == 1">
+					<if test='param4 != null'>
+					 WHERE
+						 <if test="param4 == 2">
+						 	faq_answer LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 == 2">
+					WHERE faq_target = "수강생"
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	faq_answer LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 == 3">
+					WHERE faq_target = "강사"
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	faq_answer LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+				<when test="param5 ==4">
+					WHERE faq_target = "서비스"
+					<if test='param4 != null'>
+					 AND
+						 <if test="param4 == 2">
+						 	faq_answer LIKE '%${param3}%' 
+						 </if>
+						<if test="param4 == 1">
+							 faq_title LIKE '%${param3}%' 	
+						</if> 
+					</if>	
+				</when>
+			</choose>	
+	</select> 
 
 	
 	
 	<!-- admin Review List -->
 	<select id="showListSearchReview" resultType="com.sona.music.admin.dto.AdminDTO">
 		SELECT R.*,U.user_type FROM REVIEW R left join USERS U ON R.rater_id  = U.user_id 
-			WHERE review_delete = #{param3}
+			
 			<choose>
 				<when test="param6 == 1">
 					<if test='param5 != null'>
-					 AND
+					 WHERE
 						 <if test="param5 == 2">
 						 	R.review_content LIKE '%${param4}%' 
 						 </if>
@@ -101,7 +208,7 @@
 					</if>	
 				</when>
 				<when test="param6 == 2">
-					AND U.user_type = "수강생"
+					WHERE U.user_type = "수강생"
 					<if test='param5 != null'>
 					 AND
 						 <if test="param5 == 2">
@@ -116,7 +223,7 @@
 					</if>	
 				</when>
 				<when test="param6 == 3">
-					AND U.user_type = "강사"
+					WHERE U.user_type = "강사"
 					<if test='param5 != null'>
 					 AND
 						 <if test="param5 == 2">
@@ -136,11 +243,11 @@
 	
 	<select id="allCountReview" resultType="int">
 		SELECT CEIL (COUNT(R.review_idx)/#{param1}) AS pages FROM REVIEW R left join USERS U ON R.rater_id  = U.user_id 
-			WHERE R.review_delete = #{param2}
+			
 			<choose>
 				<when test="param5 == 1">
 					<if test='param4 != null'>
-					 AND
+					 WHERE
 						 <if test="param4 == 2">
 						 	R.review_content LIKE '%${param3}%' 
 						 </if>
@@ -153,7 +260,7 @@
 					</if>	
 				</when>
 				<when test="param5 == 2">
-					AND U.user_type = "수강생"
+					WHERE U.user_type = "수강생"
 					<if test='param4 != null'>
 					 AND
 						 <if test="param4 == 2">
@@ -168,7 +275,7 @@
 					</if>	
 				</when>
 				<when test="param5 == 3">
-					AND  U.user_type = "수강생"
+					WHERE  U.user_type = "강사"
 					<if test='param4 != null'>
 					 AND
 						 <if test="param4 == 2">
@@ -183,6 +290,54 @@
 					</if>	
 				</when>			
 			</choose>	
+	</select>
+	
+	<select id="adminReviewDetail" resultType="com.sona.music.board.dto.ReviewDTO">
+		select * from REVIEW where REVIEW_IDX = #{param1}
+	</select>
+	
+	<select id="adminReviewphotos" resultType="com.sona.music.board.dto.PhotoDTO">
+		SELECT ORI_FILENAME, NEW_FILENAME, POST_IDX,PHOTO_CATEGORY
+		FROM PHOTO_BOARD WHERE POST_IDX = #{param1} AND PHOTO_CATEGORY = #{param2}
+	</select>
+	
+	<select id="adminReviewlessonLogoLoad" resultType="String">
+		SELECT
+		pb.NEW_FILENAME
+		FROM
+		REVIEW r
+		JOIN
+		CLASS_OPEN co ON r.CLASS_IDX = co.CLASS_IDX
+		JOIN
+		PHOTO_BOARD pb ON co.CLASS_IDX = pb.POST_IDX
+		WHERE
+		r.REVIEW_IDX = #{param1}
+		AND pb.PHOTO_CATEGORY = 'Lesson'
+	</select>
+	
+	<select id="adminReviewLessonHeader" resultType="com.sona.music.board.dto.ReviewDTO">
+		SELECT 
+	    r.CLASS_IDX,
+	    co.CLASS_NAME,
+	    co.CLASS_INST,
+	    co.CLASS_LOCATION,
+	    co.USER_ID,
+	    u.USER_NAME,
+	    FORMAT((SELECT (SUM(mh.MANNER_VARIANCE) + 36.5)
+	    FROM MANNER_HISTORY mh
+	    WHERE mh.USER_ID = co.USER_ID), 2) AS MANNER,
+	    FORMAT((SELECT AVG(r2.SCORE) 
+	    FROM REVIEW r2 
+	    WHERE r2.CLASS_IDX = r.CLASS_IDX), 2) AS CLASS_SCORE
+		FROM 
+	    REVIEW r
+		JOIN 
+	    CLASS_OPEN co ON r.CLASS_IDX = co.CLASS_IDX
+		JOIN 
+	    USERS u ON co.USER_ID = u.USER_ID
+		WHERE 
+	    r.REVIEW_IDX = #{param1}
+	
 	</select>
 	
 
@@ -391,11 +546,11 @@
 		SELECT SB.*, COUNT(SA.sug_answer_idx) AS sug_answerCount
 		FROM SUG_BOARD SB
 		LEFT JOIN SUG_ANSWER SA ON SB.sug_idx = SA.sug_idx
-		GROUP BY SB.sug_idx HAVING SB.sug_delete = #{param3}
+		GROUP BY SB.sug_idx 
 		<choose>
 				<when test="param6 == 1">
 				<![CDATA[
-					AND COUNT(SA.sug_answer_idx) >= '0' 
+					HAVING COUNT(SA.sug_answer_idx) >= '0' 
 					]]>
 					<if test='param5 != null'>
 					 AND
@@ -409,7 +564,7 @@
 				</when>
 				<when test="param6 == 2">
 				<![CDATA[
-					AND COUNT(SA.sug_answer_idx) = 0 
+					HAVING COUNT(SA.sug_answer_idx) = 0 
 					]]>
 					<if test='param5 != null'>
 					 AND
@@ -423,7 +578,7 @@
 				</when>
 				<when test="param6 == 3">
 				<![CDATA[
-					AND COUNT(SA.sug_answer_idx) > 0 
+					HAVING COUNT(SA.sug_answer_idx) > 0 
 					]]>
 					<if test='param5 != null'>
 					 AND
@@ -444,9 +599,9 @@
 	<choose>
 		<when test='param5 == 1'>
 			SELECT CEIL(COUNT(SUG_IDX) / 10) AS pages
-				FROM SUG_BOARD WHERE sug_delete = #{param2}
+				FROM SUG_BOARD 
 			<if test='param4 != null'>
-			 AND
+			 WHERE
 				 <if test="param4 == 2">
 				 	user_id LIKE '%${param3}%' 
 				 </if>
@@ -460,7 +615,7 @@
 			SELECT  CEIL(COUNT(SB.sug_idx)/10) AS pages
 				FROM SUG_BOARD SB
 				LEFT JOIN SUG_ANSWER SA ON SB.sug_idx = SA.sug_idx
-				WHERE SA.sug_idx IS NULL AND SB.sug_delete = #{param2}
+				WHERE SA.sug_idx IS NULL 
 			<if test='param4 != null'>
 			 AND
 				 <if test="param4 == 2">
@@ -476,17 +631,45 @@
 			FROM SUG_ANSWER SA
 			LEFT JOIN SUG_BOARD SB ON SB.SUG_IDX = SA.SUG_IDX
 				<if test='param4 != null'>
-					WHERE SB.sug_delete = #{param2}
+					
 					 <if test="param4 == 2">
-					 	AND SB.user_id LIKE '%${param3}%' 
+					 	WHERE SB.user_id LIKE '%${param3}%' 
 					 </if>
 					<if test="param4 == 1">
-						AND SB.sug_title LIKE '%${param3}%' 	
+						WHERE SB.sug_title LIKE '%${param3}%' 	
 					</if> 
 				</if>
 		</when>
 	</choose>
 	</select>  
+	
+	<select id="adminNoticeShowListSearch" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT * FROM NOTICE_BOARD 
+		<if test='param5 != null'>
+			WHERE
+			 <if test='param5 == 2'>
+			 	notice_content LIKE '%${param4}%' 
+			 </if>
+			<if test='param5 == 1'>
+				 notice_title LIKE '%${param4}%' 	
+			</if> 
+		</if>		
+			ORDER BY notice_idx DESC LIMIT #{param1},#{param2};
+	</select>
+	
+	<select id="adminNoticeAllCount" resultType="int">
+		SELECT CEIL (COUNT(notice_idx)/#{param1}) AS pages FROM NOTICE_BOARD			
+		<if test='param4 != null'>
+			 WHERE
+			 <if test='param4 == 2'>
+			 	notice_content LIKE '%${param3}%' 
+			 </if>
+			<if test='param4 == 1'>
+				 notice_title LIKE '%${param3}%' 	
+			</if> 
+		</if>	
+	</select> 
+	
 
 
 	

@@ -140,7 +140,7 @@
 				<!-- <button type="button" id="search">검색하기</button>  -->
 				<img src="resources/img/search.png" id="search" height="20px"
 					width="20px" onclick="search()" class="searchIcon">
-			<button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button>
+			<!-- <button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button> -->
 			</section>
 			<button type="button" id="noticeWrite" onclick="noticeWrite()">글작성</button>
 			<!-- 검색기능 끝 -->
@@ -211,7 +211,7 @@
 			console.log(serachText);
 	    $.ajax({
 	       type:'get',
-	       url:'noticeManagementlist.ajax',
+	       url:'adminNoticeList.ajax',
 	       data:{
 	    	    'page':page,
 	    		'searchType':searchType,

@@ -166,7 +166,7 @@ p.editOption{
     <!-- 헤더영역 -->
     
     <!-- 게시판 영역 -->
-    <form action="noticeEditAdmin.do" method="post" enctype="multipart/form-data">
+    <form action="noticeEditAdmin.do" method="post" enctype="multipart/form-data" onsubmit="return confirmWrite();">
     	<input type="hidden" value="${noticeDetail.notice_content}">
 	    <div class="container">
 	        <h1>공지사항 수정</h1>
@@ -269,9 +269,32 @@ p.editOption{
 	    }
 	}
 	
-function returnList(){
-		
-		location.href = 'adminNoticeList.go';
+	function returnList(){
+			
+			location.href = 'adminNoticeList.go';
+		}
+	
+	
+	function confirmWrite() {
+	    // 제목과 내용 입력 필드의 값 가져오기
+	    var title = document.querySelector('input[name="title"]').value.trim();
+	    var content = document.querySelector('textarea[name="content"]').value.trim();
+	
+	    // 제목이나 내용이 비어 있는지 확인
+	    if (title === '' || content === '') {
+	        // 비어 있는 필드가 있을 경우
+	        alert("제목과 내용을 모두 입력해주세요.");
+	        return false; // 작성 중지
+	    }
+	
+	    // 리뷰 작성 여부 확인
+	    var result = confirm("공지사항을 수정 하시겠습니까?");
+	    if (result) {
+	        // 사용자가 "예"를 선택한 경우
+	        alert("공지사항 수정이 완료 되었습니다.");
+	        // 여기에 작성 완료 후의 동작 추가 가능
+	    }
+	    return result; // 사용자가 "아니오"를 선택한 경우도 처리
 	}
 
 </script>

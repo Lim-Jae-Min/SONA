@@ -229,7 +229,7 @@ public class PointController {
 				logger.info("강의결제 실패");
 			}
 			if(row == 1) {
-				String applyState = "결제완료";
+				String applyState = "결제 완료";
 				int appResult = pointService.lessonPayApyHistory(classIdx,id,applyState);
 				logger.info("수강 신청 이력에 나오는 값 : "+appResult);
 			}

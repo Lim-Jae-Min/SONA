@@ -131,7 +131,7 @@
 			<!-- <button type="button" id="search">검색하기</button> -->
 			<img src="resources/img/search.png" id="search" height="20px"
 				width="20px" onclick="search()" class="searchIcon">
-			<button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button>	
+			<!-- <button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button>	 -->
 			<!-- 검색기능 끝 -->
 			<table id="showlist">
 				<thead>
@@ -250,7 +250,7 @@
 		    content += '<tr>';
 		    
 		    content += '<td class="nidx">' + item.sug_idx + '</td>';
-		    content += '<td class="ntitle"><a id="titleId" href="adminSuggestionsDetail.go?sug_idx=' + item.sug_idx + '">' + item.sug_title + '</a></td>'
+		    content += '<td class="ntitle"><a id="titleId" href="suggestionsDetail.go?sug_idx=' + item.sug_idx + '">' + item.sug_title + '</a></td>'
 		    /* content += '<td class="nid">' + item.user_id + '</td>'; */
 		    content += '<td class="nid"><a id="titleId" href="userDetail.go?user_id=' + item.user_id + '">' + item.user_id + '</a></td>'
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.

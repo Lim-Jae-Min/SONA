@@ -32,7 +32,7 @@ public class ReviewDTO {
 	private String class_location;
 	private double manner;
 	private String lessonLogo;
-	
+	private String apply_detail;
 	
 	
 	public int getReview_idx() {
@@ -179,7 +179,12 @@ public class ReviewDTO {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
-	
+	public String getApply_detail() {
+		return apply_detail;
+	}
+	public void setApply_detail(String apply_detail) {
+		this.apply_detail = apply_detail;
+	}
 	
 	
 	

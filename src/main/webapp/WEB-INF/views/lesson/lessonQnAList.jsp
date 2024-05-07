@@ -226,7 +226,11 @@
 						<td>${lesson.class_location}</td>
 					</tr>
 					<tr>
-						<td><span class="red">♥ ${lesson.manner}</span></td>
+						<td>
+							<span class="red">
+								${lesson.manner === 0.0 ? '♥신규 회원' : `♥ ${lesson.manner}`}
+							</span>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -249,8 +253,7 @@
 			</div>
 			<div style="float: right;">
 				<!-- Q&A 작성 버튼을 오른쪽으로 옮김 -->
-				<button class="button write"
-					onclick="location.href='./lessonQnAWrite.go'"
+				<button class="button write" onclick="redirectToWriteQnA(${classIdx})"
 					style="background-color: #BEE6FF; color: black; border: none; padding: 8px 20px; border-radius: 10px;">Q&A
 					작성</button>
 				<!-- 테두리 없애고 padding 조절 -->
@@ -461,19 +464,9 @@ function listCall(page, classIdx){
 
 	});
 	
-	$(document).ready(function() {
-	    // Q&A 작성 버튼 클릭 이벤트 처리
-	    $(".write").click(function() {
-	        // hidden 필드로부터 CLASS_IDX 값 가져오기
-	        var classIdx = $('input[name="class_idx"]').val();
-
-	        // Q&A 작성 페이지로 이동할 URL
-	        var url = './lessonQnAWrite.go?class_idx=' + classIdx;
-
-	        // 해당 URL로 이동
-	        window.location.href = url;
-	    });
-	});
+	function redirectToWriteQnA(classIdx){
+		window.location.href = './lessonQnAWrite.go?class_idx=' + classIdx;
+	}
 	
 	
 	$('.alarm').click(function alarmList() {

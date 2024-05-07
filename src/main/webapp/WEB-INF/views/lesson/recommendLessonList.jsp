@@ -256,7 +256,7 @@ function drawList(list){
 		 content += '</tr>';
 		 content += '<tr class="smallFont">';
 		 for (var i = 0; i < list.length; i++) {
-			content += '<th>' + list[i].user_name + ' 강사님</th>';
+			 content += '<th><a href="userDetail.go?user_id=' + list[i].user_id + '">' + list[i].user_name + ' 강사님</a></th>';
 		}
 	 	content += '</tr>';
 	 	content += '<tr class="manner smallFont">';
@@ -294,7 +294,7 @@ function drawList(list){
 	 	content += '</tr>';
 	 	content += '<tr class="smallFont">';
 	 	for (var i = 0; i < 5; i++) {
-	 		content += '<th>' + list[i].user_name + ' 강사님</th>';
+	 		content += '<th><a href="userDetail.go?user_id=' + list[i].user_id + '">' + list[i].user_name + ' 강사님</a></th>';
 		}
 	 	content += '</tr>';
 	 	content += '<tr class="manner smallFont">';
@@ -329,7 +329,7 @@ function drawList(list){
 	 	content += '</tr>';
 	 	content += '<tr class="smallFont">';
 	 	for (var i = 5; i < list.length; i++) {
-	 		content += '<th>' + list[i].user_name + ' 강사님</th>';
+	 		content += '<th><a href="userDetail.go?user_id=' + list[i].user_id + '">' + list[i].user_name + ' 강사님</a></th>';
 		}
 	 	content += '</tr>';
 	 	content += '<tr class="manner smallFont">';

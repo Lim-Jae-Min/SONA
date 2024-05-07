@@ -305,7 +305,7 @@ function drawList(list){
 			content += '<td class="fourth-col">N</td>';
 		}
 		
-		content += '<td class="fifth-col">' + data.user_name + '</td>';
+		content += '<td class="fifth-col"><a href="userDetail.go?user_id=' + data.user_id + '">' + data.user_name + '</a></td>';
 		
 		var date = new Date(data.sug_reg_date);
 		var dateStr = date.toLocaleDateString("ko-KR");//en-US		

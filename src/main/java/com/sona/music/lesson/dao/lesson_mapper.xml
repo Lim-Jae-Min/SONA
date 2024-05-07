@@ -8,6 +8,7 @@
 		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = 'lesson') AS new_filename
 			, co.class_idx
 			, co.class_name
+			, co.user_id
 			, u.user_name
 			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
 			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
@@ -27,6 +28,7 @@
 		SELECT (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.POST_IDX = co.CLASS_IDX AND pb.photo_category = 'lesson') AS new_filename
 			, co.class_idx
 			, co.class_name
+			, co.user_id
 			, u.user_name
 			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
 			, CASE WHEN (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx) IS NULL
@@ -180,7 +182,7 @@
 			, cq.anonymous_status
 			, cq.question_idx
 		FROM CLASS_QUESTION cq
-		WHERE cq.class_idx = #{param1}
+		WHERE cq.class_idx = #{param1} AND cq.q_delete = 0
 		ORDER BY cq.question_idx DESC LIMIT 4
 	</select>
 	

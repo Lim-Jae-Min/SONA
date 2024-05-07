@@ -181,7 +181,7 @@ button {
         			</c:if>
         		</th>
         		<td class="top-second-col right-border">
-        			${studentProfile.user_name} 수강생
+        			<a href="userDetail.go?user_id=${studentProfile.user_id}">${studentProfile.user_name} 수강생</a>
         			<br/><br/>
         			<small class="gray">${studentProfile.user_id}</small>
         		</td>
@@ -194,7 +194,7 @@ button {
         			</c:if>
         		</th>
         		<td class="top-second-col">
-        			${teacherProfile.user_name} 강사
+        			<a href="userDetail.go?user_id=${teacherProfile.user_id}">${teacherProfile.user_name} 강사</a>
         			<br/><br/>
         			<small class="gray">${teacherProfile.user_id}</small>
         		</td>

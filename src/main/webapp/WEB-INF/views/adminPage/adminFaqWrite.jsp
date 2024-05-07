@@ -196,7 +196,7 @@ p.editOption{
 	        	<input type="hidden" name="writer" value="${sessionScope.loginId}">
 	        </div>       
 	     	<button class="buttonA" type="submit">작성</button>
-	    	<button class="buttonA">취소</button>
+	    	<button class="buttonA" type="button" onclick="returnList()">취소</button>
     	</div>
     </form>
     <!-- 게시판 영역 -->
@@ -240,7 +240,10 @@ p.editOption{
     
 </body>
 <script>
-
+	function returnList(){
+		
+		location.href = 'adminFaqList.go';
+	}
 
 </script>
 </html>

@@ -77,6 +77,8 @@
 	#titleId{
 		
 	}
+	#callDelList {
+	}
 </style>
 </head>
 <body>
@@ -100,18 +102,18 @@
 	<div id="divvv">
 		<div id="wrapper1">
 			<div id="adminside">
-				<h3>관리자 페이지</h3>
-				<hr />
-				<a href="adminMain.go">관리자 페이지</a>
+                <h3>건의사항 관리</h3>
+                <hr/>
+                <a href="adminMain.go">관리자 페이지</a>
                 <a href="adminUserList.go">회원 관리</a>
                 <a href="adminLessonList.go">강의 관리</a>
-                <a href="noticeManagement.go">공지사항 관리</a>
-                <a href="faqManagement.go">FAQ 관리</a>
-                <a href="adminSuggestionsLIst.go">건의사항 관리</a>
+                <a href="adminNoticeList.go">공지사항 관리</a>
+                <a href="adminFaqList.go">FAQ 관리</a>
+                <a href="adminSuggestionsList.go">건의사항 관리</a>
                 <a href="adminReviewList.go">리뷰 관리</a>
                 <a href="adminReportManagement.go">신고 관리</a>
                 <a href="userSuspensionHistory.go">회원 정지 이력</a>
-			</div>
+            </div>
 		</div>
 
 		<div id="paaaa">
@@ -129,6 +131,7 @@
 			<!-- <button type="button" id="search">검색하기</button> -->
 			<img src="resources/img/search.png" id="search" height="20px"
 				width="20px" onclick="search()" class="searchIcon">
+			<button type="button" id="callDelList" onclick="callDelList()">삭제게시글보기</button>	
 			<!-- 검색기능 끝 -->
 			<table id="showlist">
 				<thead>
@@ -170,6 +173,7 @@
 	var category = 1;
 	var showPage =1;
 	var searchRemain = false;
+	var delType = 0;
 	
 	$(document).ready(function(){ // html 문서가 모두 읽히면 되면(준비되면) 다음 내용을 실행 해라
 		listCall(showPage);
@@ -204,12 +208,13 @@
 			console.log(serachText);
 	    $.ajax({
 	       type:'get',
-	       url:'adminSuggestionsLIst.ajax',
+	       url:'adminSuggestionsList.ajax',
 	       data:{
 	    	    'page':page,
 	    		'searchType':searchType,
 	    		'serachText':serachText,
-	    		'categoryNum' : category
+	    		'categoryNum' : category,
+	    		'delType' : delType
 	       },
 	       dataType:'json',
 	       success:function(data){
@@ -246,7 +251,8 @@
 		    
 		    content += '<td class="nidx">' + item.sug_idx + '</td>';
 		    content += '<td class="ntitle"><a id="titleId" href="adminSuggestionsDetail.go?sug_idx=' + item.sug_idx + '">' + item.sug_title + '</a></td>'
-		    content += '<td class="nid">' + item.user_id + '</td>';
+		    /* content += '<td class="nid">' + item.user_id + '</td>'; */
+		    content += '<td class="nid"><a id="titleId" href="userDetail.go?user_id=' + item.user_id + '">' + item.user_id + '</a></td>'
 		    //java.sql.Date 는 javascript에서는 밀리세컨드로 변환하여 표시한다.
 		    //방법 1. Back-end : DTO의 반환 날짜 타입을 문자열로 변경 (서버를 껐다 켜야하니 웬만하면 프론트에서 해야햄)
 		    //content += '<td>' + item.reg_date + '</td>';
@@ -311,6 +317,19 @@
 		
 	});
 	
+	function callDelList(){
+		if(delType==0){
+			delType = 1;
+			document.getElementById("callDelList").innerText="정상게시글보기";
+		}else{
+			delType = 0;
+			document.getElementById("callDelList").innerText="삭제게시글보기";
+		}
+		$('#pagination').twbsPagination('destroy');
+		showPage =1;
+		listCall(showPage);
+	}
+	
 	
 	function redirectToReplyPage() {
 	    window.location.href = './videoList.go';
@@ -334,9 +353,5 @@
 		location.href = 'alarmList.go';
 	});
 	
-	function faqWriteGo(){
-		location.href = "adminFaqWrite.go";
-		
-	}
 </script>
 </html>

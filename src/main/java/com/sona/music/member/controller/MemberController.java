@@ -121,7 +121,7 @@ public class MemberController {
 //    	model.addAttribute("msg",msg);
 //    	model.addAttribute("changePwNeedId", changePwNeedId);
 
-        return "member/changePw";
+        return "member/login";
     }
 	
 	@RequestMapping(value="/joinform.go")

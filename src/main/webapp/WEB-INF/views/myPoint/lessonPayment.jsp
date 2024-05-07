@@ -150,7 +150,7 @@
 						<input type="hidden" name="TuserId" value="${T_USER_ID}">
 						<!-- 강사 아이디  -->
 						<input type="hidden" name="classIdx" value="${Class_idx}">
-						<span id="teacherId"> ${USER_NAME} 강사님 </span>
+						<span id="teacherId"> <a href="user_detail?user_id=?${T_USER_ID}">${USER_NAME} 강사님</a> </span>
 						<br> 
 						<span>강의제목: ${Class_name}</span>
 						<br> <span>강의 횟수: ${Class_times}</span>

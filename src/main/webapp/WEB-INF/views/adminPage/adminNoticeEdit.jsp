@@ -194,7 +194,7 @@ p.editOption{
 				</c:if>
 	        </div>       
 	     	<button class="buttonA" type="submit">작성</button>
-	    	<button class="buttonA">취소</button>
+	    	<button class="buttonA" type="button" onclick="returnList()">취소</button>
     	</div>
     </form>
     <!-- 게시판 영역 -->
@@ -238,36 +238,41 @@ p.editOption{
     
 </body>
 <script>
-function deletePhoto(postIdx, photoCategory,photoName,event) {
-    event.preventDefault(); // 폼의 기본 동작 중지
-    // 사용자에게 삭제 여부를 묻는 확인 메시지 표시
-    var result = confirm('삭제 하시겠습니까?');
-    
-    // 확인 메시지에서 '확인'을 선택한 경우에만 삭제 요청을 보냄
-    if (result) {
-    	$.ajax({
-            url: './noticePhotoDel.ajax',
-            method: 'POST',
-            data: { postIdx: postIdx, 
-            	photoCategory: photoCategory,
-            	photoName : photoName	
-            },
-            complete: function(data) {
-                // 요청이 완료된 후에 실행되는 콜백에서 미리보기 삭제
-                	console.log(data.success);
-                if(data.success==1){
-                $(event.target).parent().remove();
-                	
-                $('#fileList').empty();
-                alert('사진이 성공적으로 삭제되었습니다.');
-                }
-                else{
-                	alert('사진삭제를 실패 하였습니다.');
-                }
-            }
-        });
-    }
-}
+	function deletePhoto(postIdx, photoCategory,photoName,event) {
+	    event.preventDefault(); // 폼의 기본 동작 중지
+	    // 사용자에게 삭제 여부를 묻는 확인 메시지 표시
+	    var result = confirm('삭제 하시겠습니까?');
+	    
+	    // 확인 메시지에서 '확인'을 선택한 경우에만 삭제 요청을 보냄
+	    if (result) {
+	    	$.ajax({
+	            url: './noticePhotoDel.ajax',
+	            method: 'POST',
+	            data: { postIdx: postIdx, 
+	            	photoCategory: photoCategory,
+	            	photoName : photoName	
+	            },
+	            complete: function(data) {
+	                // 요청이 완료된 후에 실행되는 콜백에서 미리보기 삭제
+	                	console.log(data.success);
+	                if(data.success==1){
+	                $(event.target).parent().remove();
+	                	
+	                $('#fileList').empty();
+	                alert('사진이 성공적으로 삭제되었습니다.');
+	                }
+	                else{
+	                	alert('사진삭제를 실패 하였습니다.');
+	                }
+	            }
+	        });
+	    }
+	}
+	
+function returnList(){
+		
+		location.href = 'adminNoticeList.go';
+	}
 
 </script>
 </html>

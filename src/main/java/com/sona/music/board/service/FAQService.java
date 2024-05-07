@@ -23,10 +23,10 @@ public class FAQService {
 	@Autowired FAQDAO faqDAO;
 	
 	
-	public Map<String, Object> showListSearch(int currPage, int searchType, String serachText, int categoryNum) {
+	public Map<String, Object> showListSearch(int currPage, int searchType, String serachText, int categoryNum , int delType) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
-		int deleteStatus = 0;
+		int deleteStatus = delType;
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<FAQDTO> resultList = null;
 //		if(categoryNum == )

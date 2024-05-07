@@ -209,7 +209,8 @@ body {
 		<img src="resources/img/review.png" id="review"> 강의 리뷰 상세보기
 		<div class="review-title">${review.review_title}</div>
 		<div class="author-info">
-			작성자: ${review.rater_id} 작성일자: ${review.review_reg_date} <span
+		
+			<a href="userDetail.go?user_id=${review.rater_id}">작성자: ${review.rater_id}</a> 작성일자: ${review.review_reg_date} <span
 				class="satisfaction">★${review.score}</span>
 		</div>
 		<div class="content">${review.review_content}</div>
@@ -238,7 +239,7 @@ body {
 				onclick="confirmDelete(${review.review_idx})">삭제</button>
 		</div>
 		<div class="button-container return-btn">
-			<button class="button" onclick="redirectToList(${review.class_idx})">리스트로
+			<button class="button" onclick="returnReviewList()">리스트로
 				돌아가기</button>
 		</div>
 	</div>
@@ -297,7 +298,7 @@ function confirmBlind(reviewIdx) {
             data: { reviewIdx: reviewIdx },
             success: function(response) {
             	alert("블라인드 되었습니다.");
-            	location.href = './lessonReviewList.go?class_idx=' + classIdx;
+            	location.href = 'adminReviewList.go';
             },
             error: function(error) {
                 console.log(error);
@@ -308,12 +309,10 @@ function confirmBlind(reviewIdx) {
 
 
 
-function confirmReport() {
-    var confirmation = confirm("신고 하시겠습니까?");
-    if (confirmation) {
-        alert("신고 처리 되었습니다.");
-        location.href = './lessonReviewList.go?class_idx=' + classIdx;
-    }
+
+function returnReviewList(){
+	
+	location.href = "adminReviewList.go";
 }
 
 function confirmDelete(reviewIdx) {
@@ -324,7 +323,7 @@ function confirmDelete(reviewIdx) {
             data: { reviewIdx: reviewIdx },
             success: function(response) {
             	alert("삭제되었습니다.");
-            	location.href = './lessonReviewList.go?class_idx=' + classIdx;
+            	location.href = 'adminReviewList.go';
             },
             error: function(error) {
                 console.log(error);

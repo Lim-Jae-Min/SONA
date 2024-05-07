@@ -186,10 +186,10 @@ public class AdminService {
 		return row;
 	}
 	
-	public Map<String, Object> showListSearchSuggestion(int currPage, int searchType, String serachText, int categoryNum) {
+	public Map<String, Object> showListSearchSuggestion(int currPage, int searchType, String serachText, int categoryNum,int delType) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
-		int deleteStatus = 0;
+		int deleteStatus = delType;
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<AdminDTO> resultList = null;
 //		if(categoryNum == )
@@ -221,10 +221,10 @@ public class AdminService {
 
 	
 
-	public Map<String, Object> showListSearchReview(int currPage, int searchType, String serachText, int categoryNum) {
+	public Map<String, Object> showListSearchReview(int currPage, int searchType, String serachText, int categoryNum, int delType) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
-		int deleteStatus = 0;
+		int deleteStatus = delType;
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<AdminDTO> resultList = null;
 

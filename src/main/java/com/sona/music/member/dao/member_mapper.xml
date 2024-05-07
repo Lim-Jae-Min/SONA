@@ -5,7 +5,7 @@
 <mapper namespace="com.sona.music.member.dao.MemberDAO">
 
 	<select id="findIdEmail" resultType="String">
-		SELECT USER_EMAIL FROM USERS WHERE USER_EMAIL = #{param1}
+		SELECT USER_EMAIL FROM USERS WHERE USER_EMAIL = #{param1} LIMIT 1
 	</select>
 	
 

@@ -37,15 +37,16 @@ public class NoticeController {
 	
 	@RequestMapping(value = "noticeManagementlist.ajax")
 	@ResponseBody
-	public Map<String, Object> noticeManagementlist(int page , int searchType, String serachText) {
+	public Map<String, Object> noticeManagementlist(int page , int searchType, String serachText, int delType) {
 		logger.info("noticeManagementlist 요청");
 		logger.info("요청페이지 : " + page);
 		logger.info("공지사항 검색에서 가져온 text : "+serachText);
 		logger.info("공지사항 검색에서 가져온 type : "+searchType);
+		logger.info("공지사항 검색에서 가져온 delType : "+delType);
 		Map<String, Object> map = null;
 		int currPage = page;
 			
-			map = noticeService.showListSearch(currPage,searchType,serachText);	
+			map = noticeService.showListSearch(currPage,searchType,serachText,delType);	
 		
 		
 		return map;

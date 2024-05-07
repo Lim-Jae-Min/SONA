@@ -343,7 +343,7 @@ function drawList(list) {
 			if (course.apply_state =="수락 완료"){
 		        course.apply_state ="결제 대기";
 		    }else if(course.apply_state =="신청 완료"){
-		        course.apply_state = "수락 대기";
+		        course.apply_state = "결제 대기";
 		    }
             course.end_check = course.apply_state;
         }
@@ -360,7 +360,9 @@ function drawList(list) {
 	             '<a href="lessonPayment.go?class_idx=' + course.class_idx + '">' + course.class_name + '</a>' +
 	             '</td>'; // 제목을 클릭하면 해당 강의의 결제 페이지로 이동
 	     }
-        content += '<td style="text-align: center;">' + course.teacher_name + '</td>'; // 선생님 이름
+	     content += '<td style="text-align: center;">' +
+	        '<a href="./userDetail.go?user_id=' + course.user_id + '">' + course.teacher_name + '</a>' +
+	        '</td>'; // 선생님 이름
         content += '<td style="text-align: center;">' + course.class_price + '</td>'; // 가격
         // 진행률 게이지 바 추가
 		content += '<td style="text-align: center;">';

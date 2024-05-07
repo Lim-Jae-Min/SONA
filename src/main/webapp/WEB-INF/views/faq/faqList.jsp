@@ -148,9 +148,23 @@
                </tr>
            </table>
            <table id="mymenu">
-              <tr>
-                 <td><a href="adminLogout.do">로그아웃</a></td>
-              </tr>
+               <c:if test="${sessionScope.loginId ne null}">
+                   <tr>
+                       <c:if test="${sessionScope.alarm_count > 0}">
+                           <th><img src="resources/img/alarm_on.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <c:if test="${sessionScope.alarm_count == 0}">
+                           <th><img src="resources/img/alarm.png" class="miniimg alarm"></th>
+                       </c:if>
+                       <th><img src="resources/img/basic_user.png" class="miniimg"></th>
+                       <th><div id="userName">${sessionScope.user_name}</div></th>
+                   </tr>
+               </c:if>
+               <c:if test="${sessionScope.loginId eq null}">
+                   <tr>
+                       <th><a href="login.go">로그인</a></th>
+                   </tr>
+               </c:if>
            </table>
        </header>
    </c:if>
@@ -267,15 +281,17 @@
 
 </body>
 <script>
-$('#userName').click(function slide() {
-	var display = $('#slide').css('display');
-    if (display == 'none') {
-        $('#slide').css('display', 'block');
-    }
-    if (display == 'block') {
-        $('#slide').css('display', 'none');
-    }
-});
+
+
+	$('#userName').click(function slide() {
+		var display = $('#slide').css('display');
+	    if (display == 'none') {
+	        $('#slide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#slide').css('display', 'none');
+	    }
+	});
 
 $('.alarm').click(function alarmList() {
 	   location.href = 'alarmList.go';
@@ -402,23 +418,7 @@ $('#logo').click(function main(){
 	    window.location.href = './videoList.go';
 	}
 
-	$('#userName').click(function slide() {
-		var display = $('#slide').css('display');
-	    if (display == 'none') {
-	        $('#slide').css('display', 'block');
-	    }
-	    if (display == 'block') {
-	        $('#slide').css('display', 'none');
-	    }
-	});
 
-	$('#logo').click(function main(){
-		location.href = '/main';
-	});
-
-	$('.alarm').click(function alarmList() {
-		location.href = 'alarmList.go';
-	});
 	
 	function faqWriteGo(){
 		location.href = "adminFaqWrite.go";

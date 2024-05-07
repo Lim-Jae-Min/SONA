@@ -49,16 +49,17 @@
 			ORDER BY pb.photo_idx desc limit 1
 	</select>
 	
-	<update id="updateApplyForm" parameterType="java.util.Map">
-	    UPDATE APPLICATION_FORM
-	    SET 
-	        inst_category_idx = #{inst_category_idx},
-	        applyform_inst = #{applyform_inst},
-	        applyform_location = #{applyform_location},
-	        applyform_days = #{applyform_days},
-	        applyform_style = #{applyform_style}
-	    WHERE user_id = #{loginId}
-	</update>
+	<insert id="updateApplyForm" parameterType="java.util.Map">
+	    INSERT INTO APPLICATION_FORM (inst_category_idx, applyform_inst, applyform_location, applyform_days, applyform_style, have_inst, user_id)
+	    VALUES (#{inst_category_idx}, #{applyform_inst}, #{applyform_location}, #{applyform_days}, #{applyform_style}, #{have_inst}, #{loginId})
+	    ON DUPLICATE KEY UPDATE
+	    inst_category_idx = VALUES(inst_category_idx),
+	    applyform_inst = VALUES(applyform_inst),
+	    applyform_location = VALUES(applyform_location),
+	    applyform_days = VALUES(applyform_days),
+	    applyform_style = VALUES(applyform_style),
+	    have_inst = VALUES(have_inst)
+	</insert>
 	
     
 	<select id="getClassNames" parameterType="String" resultType="String">
@@ -81,6 +82,7 @@
 		    cq.question_idx,
 		    cq.q_title,
 		    cq.user_id,
+		    cq.anonymous_status,
 		    (SELECT u.user_name FROM USERS u WHERE u.user_id = cq.user_id) AS user_name,
 		    (
 		        SELECT 
@@ -472,6 +474,7 @@ LIMIT #{param2} OFFSET #{param3}
 	   
 	<select id="courseList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
 	SELECT distinct
+		u.user_id,
 	    co.class_idx,
 	    ah.apply_idx,
 	    co.class_name,

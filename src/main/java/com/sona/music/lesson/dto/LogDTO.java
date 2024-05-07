@@ -17,12 +17,31 @@ public class LogDTO {
 	private int total_times;
 	private int accumulate_times;
 	private String apply_detail;
+	private int class_price;
 	
 	private String ch_date;
 	private String ch_write_date;
 	private String ch_content;
 	private String ch_result;
 	private int ch_idx;
+	
+	private String review_idx;
+	private String student_id;
+	private int point_idx;
+	
+	public String getStudent_id() {
+		return student_id;
+	}
+	public void setStudent_id(String student_id) {
+		this.student_id = student_id;
+	}
+	public String getTeacher_id() {
+		return teacher_id;
+	}
+	public void setTeacher_id(String teacher_id) {
+		this.teacher_id = teacher_id;
+	}
+	private String teacher_id;
 	
 	public String getUser_id() {
 		return user_id;
@@ -125,6 +144,24 @@ public class LogDTO {
 	}
 	public void setApply_detail(String apply_detail) {
 		this.apply_detail = apply_detail;
+	}
+	public String getReview_idx() {
+		return review_idx;
+	}
+	public void setReview_idx(String review_idx) {
+		this.review_idx = review_idx;
+	}
+	public int getClass_price() {
+		return class_price;
+	}
+	public void setClass_price(int class_price) {
+		this.class_price = class_price;
+	}
+	public int getPoint_idx() {
+		return point_idx;
+	}
+	public void setPoint_idx(int point_idx) {
+		this.point_idx = point_idx;
 	}
 	
 	

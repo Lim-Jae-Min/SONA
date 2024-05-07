@@ -109,9 +109,9 @@
                 <a href="adminMain.go">관리자 페이지</a>
                 <a href="adminUserList.go">회원 관리</a>
                 <a href="adminLessonList.go">강의 관리</a>
-                <a href="noticeManagement.go">공지사항 관리</a>
-                <a href="faqManagement.go">FAQ 관리</a>
-                <a href="adminSuggestionsLIst.go">건의사항 관리</a>
+                <a href="adminNoticeList.go">공지사항 관리</a>
+                <a href="adminFaqList.go">FAQ 관리</a>
+                <a href="adminSuggestionsList.go">건의사항 관리</a>
                 <a href="adminReviewList.go">리뷰 관리</a>
                 <a href="adminReportManagement.go">신고 관리</a>
                 <a href="userSuspensionHistory.go">회원 정지 이력</a>

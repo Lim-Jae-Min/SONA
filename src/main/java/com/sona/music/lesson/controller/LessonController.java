@@ -95,7 +95,7 @@ public class LessonController {
 	
 	@RequestMapping(value="/lessonApply.do")
 	public String lessonApplyDo(int class_idx, HttpSession session) {
-		String page = "redirect:/lessonDetail.go?class_idx=" + class_idx;
+		String page = "redirect:/lessonPayment.go?class_idx=" + class_idx;
 		String loginId = (String) session.getAttribute("loginId");
 		logger.info("class_idx = " + class_idx);
 		

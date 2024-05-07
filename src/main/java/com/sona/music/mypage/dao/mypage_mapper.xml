@@ -306,7 +306,7 @@
 		    ,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
 		    ,co.class_reg_date
 		    ,co.class_disable
-		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2' AND co.CLASS_DISABLE = #{param4}
+		FROM CLASS_OPEN co WHERE co.USER_ID = #{param1} AND co.CLASS_DISABLE = #{param4}
 		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>
@@ -323,7 +323,7 @@
 		   	,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
 		  	,co.class_reg_date
 		   	,co.class_disable
-		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2'
+		FROM CLASS_OPEN co WHERE co.USER_ID = #{param1}
 		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>

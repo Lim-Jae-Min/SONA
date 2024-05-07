@@ -257,5 +257,8 @@ function confirmWrite() {
     }
     return result; // 사용자가 "아니오"를 선택한 경우도 처리
 }
+$('#logo').click(function main(){
+	location.href = 'adminMain.go';
+});
 </script>
 </html>

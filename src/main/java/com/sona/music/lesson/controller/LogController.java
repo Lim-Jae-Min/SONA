@@ -92,7 +92,7 @@ public class LogController {
 		
 		if (session.getAttribute("loginId") != null) {
 			page = "redirect:/lessonLog.go?apply_idx=" + apply_idx;
-			int row = logService.lessonStop(map);
+			int row = logService.lessonStop(apply_idx);
 			logger.info("입력된 row 수 = " + row);
 		}
 		

@@ -161,6 +161,10 @@
 		DELETE FROM MY_TEACHER WHERE user_id = #{param1} AND teacher_id = #{param2} AND category = 'block'
 	</delete>
 	
+	<select id="suspension" resultType="com.sona.music.admin.dto.AdminDTO">
+		SELECT USER_ID , START_DATE , END_DATE as release_date, ACTION_CATEGORY 
+		FROM BANNED_USER WHERE USER_ID = #{param1};
+	</select>
 	
 	
 </mapper>	

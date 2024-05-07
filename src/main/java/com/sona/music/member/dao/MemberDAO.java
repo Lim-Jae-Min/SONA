@@ -56,4 +56,6 @@ public interface MemberDAO {
 
 	Object userLessonAllCount(String user_id);
 
+	AdminDTO suspension(String id);
+
 }

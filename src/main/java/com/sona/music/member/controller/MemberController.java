@@ -1,5 +1,6 @@
 package com.sona.music.member.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -163,48 +164,54 @@ public class MemberController {
 		return "member/userDetail";
 	}
 	
-	/*로그인*/
+	/* 로그인 */
 	@RequestMapping(value="/login.do")
 	public String login(String id, String pw, Model model, HttpSession session) {
-		String page = "member/login";
-		logger.info("id : {} | pw : {}", id, pw);
-		
-		AdminDTO adminInfo = memberService.adminLogin(id, pw);
-		MemberDTO info = memberService.userLogin(id, pw);
-		if (adminInfo != null) {
-			session.setAttribute("loginId", adminInfo.getAdmin_id());
-			session.setAttribute("user_type", "관리자");
-			
-			page = "redirect:/adminMain.go";
-		} else if(info != null && adminInfo == null) {
-//			page = "/main/main";
-			session.setAttribute("loginId", info.getUser_id());	
-			session.setAttribute("user_type", info.getUser_type());	
-			session.setAttribute("user_name", info.getUser_name());
-			session.setAttribute("manner_variance", info.getManner());
-			session.setAttribute("point", info.getPoint());
-			session.setAttribute("alarm_count", info.getAlarm_count());
-			
-			String test = (String) session.getAttribute("loginId");
-			String test1 = String.valueOf(session.getAttribute("point")) ;
-			
-			logger.info("test : " + test);
-			logger.info("test1 : " + test1);
-			 // 수강생인 경우
-	        if ("수강생".equals(info.getUser_type())) {
-	            page = "redirect:/"; // 수강생 메인 페이지로 리다이렉트
-	        }
-	        // 강사인 경우
-	        else if ("강사".equals(info.getUser_type())) {
-	            page = "redirect:/"; // 강사 메인 페이지로 리다이렉트
+	    String page = "member/login";
+	    logger.info("id : {} | pw : {}", id, pw);
+	    
+	    AdminDTO adminInfo = memberService.adminLogin(id, pw);
+	    MemberDTO info = memberService.userLogin(id, pw);
+	    
+	    if (adminInfo != null) {
+	        session.setAttribute("loginId", adminInfo.getAdmin_id());
+	        session.setAttribute("user_type", "관리자");
+	        
+	        page = "redirect:/adminMain.go";
+	    } else if (info != null) {
+	        // 정지된 유저 정보 가져오기
+	        AdminDTO suspension = memberService.suspension(id);
+	        
+	        if (suspension != null) {
+	            LocalDate releaseDate = suspension.getRelease_date();
+	            LocalDate currentDate = LocalDate.now();
+	            
+	            if (releaseDate != null && currentDate.isBefore(releaseDate)) {
+	                // 정지 해제 날짜가 오늘 날짜 이전이면 로그인 제한
+	                model.addAttribute("msg", "계정이 정지되었습니다. 정지 해제 날짜까지 로그인이 제한됩니다.");
+	                return page;
+	            }
 	        }
 	        
-		}else {
-			model.addAttribute("msg","아이디 또는 비밀번호 확인해주세요");
-		}
-				
-		return page;
-	
+	        // 로그인 허용
+	        session.setAttribute("loginId", info.getUser_id());   
+	        session.setAttribute("user_type", info.getUser_type());   
+	        session.setAttribute("user_name", info.getUser_name());
+	        session.setAttribute("manner_variance", info.getManner());
+	        session.setAttribute("point", info.getPoint());
+	        session.setAttribute("alarm_count", info.getAlarm_count());
+	        
+	        // 수강생 또는 강사인 경우 각각의 페이지로 리다이렉트
+	        if ("수강생".equals(info.getUser_type())) {
+	            page = "redirect:/"; // 수강생 메인 페이지로 리다이렉트
+	        } else if ("강사".equals(info.getUser_type())) {
+	            page = "redirect:/"; // 강사 메인 페이지로 리다이렉트
+	        }
+	    } else {
+	        model.addAttribute("msg", "아이디 또는 비밀번호 확인해주세요");
+	    }
+	            
+	    return page;
 	}
 	
 	/*중복 체크*/

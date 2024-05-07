@@ -189,6 +189,7 @@ public class AdminController {
 		return "adminPage/adminNoticeWrite";
 	}
 	
+
 	@RequestMapping(value = "adminFaqList.go")
 	public String adminFaqListGo() {
 		logger.info("faq관리 페이지 이동");

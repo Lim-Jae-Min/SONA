@@ -288,7 +288,8 @@ function drawList(list, allCount, showPage){
 	
 	showPage = parseInt(showPage);
 	allCount = parseInt(allCount);
-	
+	console.log(allCount);
+	console.log(showPage);
 	var content = '';
     for(var i = 0; i < list.length; i++){
        content += '<tr class = "list-item">';

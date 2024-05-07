@@ -346,7 +346,7 @@
                             <option value="농협은행">농협은행</option>
                             <option value="카카오뱅크">카카오뱅크</option>
                         </select>
-                        <button type="button" onclick="teacherEdit()" class="save-button">정보 수정</button>
+                        <button type="button" onclick="teacherEditConfirmation()" class="save-button">정보 수정</button>
                     </td>
                 </tr>
             </tbody>
@@ -463,6 +463,18 @@ function confirmPw() {
 }
 
 
+
+function teacherEditConfirmation() {
+    // 확인 창 표시
+    var confirmation = confirm("정말로 수정하시겠습니까?");
+    if (confirmation) {
+        // 사용자가 확인을 선택한 경우
+        teacherEdit(); // 정보 수정 함수 호출
+    } else {
+        // 사용자가 취소를 선택한 경우
+        // 아무 동작도 수행하지 않음
+    }
+}
 
 
 function teacherEdit() {

@@ -366,7 +366,7 @@
 				<iframe width='300' height='200' src="${list.video_url}"
 					frameborder='0' allowfullscreen></iframe>
 				<br />
-				<br /> <a href="userDetail.go?user_id=${list.teacher_id}"> ${list.teacher_id} 선생님 </a><br />
+				<br /> <a href="userDetail.go?user_id=${list.user_id}"> ${list.teacher_id} 선생님 </a><br />
 				<br /> <span class="heart">♥</span>
 				${list.manner_score == 0.0 ? '신규 회원' : list.manner_score}
 				 <input type="hidden" name="class_idx" value="${list.class_idx}" />

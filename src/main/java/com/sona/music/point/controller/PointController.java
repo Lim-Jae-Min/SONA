@@ -199,6 +199,8 @@ public class PointController {
 		logger.info(classIdx+"강의결제에서 받아온 값");
 		
 		String chargePointLoginId =(String) session.getAttribute("loginId");
+		
+		
 //		int havePoint = pointService.getHavePoint(chargePointLoginId);
 		int havePoint = (int) session.getAttribute("point");
 		String pointType = "강의 결제";
@@ -231,6 +233,8 @@ public class PointController {
 			if(row == 1) {
 				String applyState = "결제 완료";
 				int appResult = pointService.lessonPayApyHistory(classIdx,id,applyState);
+				int applyIdx = pointService.getApplyIdx(classIdx,chargePointLoginId);
+				map.put("appIdx", applyIdx);
 				logger.info("수강 신청 이력에 나오는 값 : "+appResult);
 			}
 		}

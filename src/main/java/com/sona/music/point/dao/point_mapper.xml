@@ -45,4 +45,9 @@
 		SELECT new_filename FROM PHOTO_BOARD WHERE user_id = #{param1} AND photo_category = #{param2}
 			ORDER BY photo_idx DESC LIMIT 1
 	</select>
+	
+	<select id="getApplyIdx" resultType="int">
+		SELECT APPLY_IDX FROM APPLY_HISTORY AH 
+		where CLASS_IDX = #{param1} AND USER_ID = #{param2} order by  apply_idx DESC limit 1
+	</select>
 </mapper>

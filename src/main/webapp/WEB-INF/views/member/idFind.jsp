@@ -248,7 +248,7 @@
 		// 입력된 이메일과 인증번호 가져오기
 		var cfNumber = $('input[name="CertificationNumber"]').val();
 		console.log(cfNumber);
-		al
+		
 		// 여기에서 서버로 인증번호 확인 요청을 보내고,
 		// 서버에서는 해당 인증번호가 맞는지 확인한 후 응답을 보냅니다.
 		// 여기서는 간단히 인증번호가 "123456"이라고 가정합니다.

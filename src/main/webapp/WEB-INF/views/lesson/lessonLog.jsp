@@ -448,7 +448,7 @@ console.log(logCheck);
 
 if ('${check}' != '') {
 	
-	if ('${review_idx}' == '' && '${logCheck}' > 0) {
+	if ('${review_idx}' == '' && '${logCheck}' > 1) {
 		$('.reviewWrite').css('display', 'inline-block');
 	} else {
 		$('.reviewWrite').css('display', 'none');

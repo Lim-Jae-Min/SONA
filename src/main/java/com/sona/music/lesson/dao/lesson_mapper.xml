@@ -182,7 +182,7 @@
 	<select id="lessonReviewList" resultType="com.sona.music.board.dto.ReviewDTO">
 		SELECT
 			(SELECT pb.new_filename FROM PHOTO_BOARD pb 
-			WHERE pb.user_id = r.rater_id AND pb.photo_category = 'Profile' ORDER BY pb.photo_idx LIMIT 1) AS profile_photoname
+			WHERE pb.user_id = r.rater_id AND pb.photo_category = 'userInfo' ORDER BY pb.photo_idx LIMIT 1) AS profile_photoname
 			, (SELECT u.user_name FROM USERS u WHERE u.user_id = r.rater_id) AS rater_name
 			, r.score
 			, r.review_title

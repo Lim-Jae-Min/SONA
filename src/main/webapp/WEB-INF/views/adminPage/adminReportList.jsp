@@ -20,6 +20,8 @@
 	    border: 1px solid #dddddd; /* 셀 테두리 색상 설정 */
 	    padding: 8px; /* 셀 내부 여백 설정 */
 	    text-align: left; /* 텍스트를 왼쪽 정렬 */
+	    border-right : none;
+	    border-left : none;
 	}
 	
 	#showList tr:nth-child(even) {

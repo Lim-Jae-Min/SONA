@@ -9,7 +9,7 @@ public class MyPageDTO {
 	private String user_name;
 	private String user_email;
 	private String user_phone;
-	private int user_accountnumber;
+	private String user_accountnumber;
 	private String user_bank;
 	private String user_type;
 	private boolean user_delete;
@@ -94,6 +94,12 @@ public class MyPageDTO {
 	}
 	public void setUser_phone(String user_phone) {
 		this.user_phone = user_phone;
+	}
+	public void setUser_accountnumber(String user_accountnumber) {
+		this.user_accountnumber = user_accountnumber;
+	}
+	public String getUser_accountnumber() {
+		return user_accountnumber;
 	}
 	public String getUser_bank() {
 		return user_bank;
@@ -390,16 +396,6 @@ public class MyPageDTO {
 	}
 	public void setManner_variance(String manner_variance) {
 		this.manner_variance = manner_variance;
-	}
-	public int getUser_accountnumber() {
-		return user_accountnumber;
-	}
-	public void setUser_accountnumber(int user_accountnumber) {
-		this.user_accountnumber = user_accountnumber;
-	}
-	public void setUser_accountnumber(String string) {
-		// TODO Auto-generated method stub
-		
 	}
 	public String getEtc() {
 		return etc;

@@ -70,7 +70,7 @@ p {
 }
 
 #apply_button{
-	position: absolute;
+	position: relative;
    	background-color: #BEE6FF;
     border-radius: 6px;
     font-size: 100%;

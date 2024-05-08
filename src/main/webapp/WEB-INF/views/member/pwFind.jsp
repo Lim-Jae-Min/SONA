@@ -235,6 +235,7 @@ var certificationNumber = null;
 					alert(chkEmail + '로 인증번호를 보냈습니다.');
 					cfEmail = chkEmail;
 					certificationNumber =data.certificationNumber;
+					alert("인증번호 : "+certificationNumber);
 					console.log(certificationNumber);
 				}
 			},

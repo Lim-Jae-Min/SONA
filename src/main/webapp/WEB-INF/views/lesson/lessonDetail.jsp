@@ -587,8 +587,11 @@ var styles = '${lesson.class_style}';
 
 var styleArr = styles.split(',');
 var content = '';
-for (var style of styleArr) {
-	content += '<div class="classStyles">' + style + '</div>&nbsp;&nbsp;&nbsp;';
+for (var i = 0; i < styleArr.length; i++) {
+	content += '<div class="classStyles">' + styleArr[i] + '</div>&nbsp;&nbsp;&nbsp;';
+	if (i == 5) {
+		content += '</br></br>';
+	}
 }
 $('#classStyle').html(content);
 

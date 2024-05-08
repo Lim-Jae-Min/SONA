@@ -182,7 +182,7 @@ p.editOption{
 	        <div>
 	        	<input type="hidden" name="writer" value="${sessionScope.loginId}">
 	        	<input type="hidden" name="noticeIdx" value="${noticeDetail.notice_idx}">
-	        	<input type="file" name = "photos" multiple="multiple" placeholder="사진" value="">
+	        	<!-- <input type="file" name = "photos" multiple="multiple" placeholder="사진" value=""> -->
 	        	<c:if test="${photos.size() > 0}">
 								<c:forEach items="${photos}" var="photo">
 									<div class="photo-container">

@@ -46,13 +46,13 @@
 		width: 15%;
 	}
 	.nbhit{
-		width: 16.6%;
+		width: 12.6%;
 	}
 	.ndate{
 		width: 10%;
 	}
 	.ntitle{
-		width: 30%;	
+		width: 25%;	
 	}
 	.nchb{
 		width: 10%;
@@ -75,6 +75,9 @@
 	}
 	#adminside{
 	height : 800px;
+	}
+	.isdel{
+		width: 10%;
 	}
 </style>
 </head>
@@ -140,6 +143,7 @@
 		          <th class="nid">회원유형</th>
 		         <th class="ndate">날짜</th>
 		         <th class="nbhit">리뷰점수</th>
+		         <th class="isdel">블라인드</th>
 		        
 		      </tr>
 		     </thead>
@@ -262,7 +266,13 @@
 		    content += '<td class="ndate">' + dateStr + '</td>';
 		    
 		    content += '<td class="nbhit">' + item.score +'</td>';
-
+			
+		    if (item.review_delete ==1) {
+		    	content += '<td class="fa">'+'O'+'</td>';
+			}else{
+				content += '<td class="fa">'+'X'+'</td>';
+			}
+		    
 		    content += '</tr>';
 		    
 

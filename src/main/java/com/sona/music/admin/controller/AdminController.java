@@ -251,6 +251,17 @@ public class AdminController {
 		return map;
 
 	}
+	
+	@RequestMapping(value = "/noticeRestore.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> noticeRestore(int noticeIdx) {
+		logger.info("공지사항 복원 받은 idx : " + noticeIdx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		int row = adminService.noticeRestore(noticeIdx);
+		map.put("success", row);
+		return map;
+
+	}
 
 	@RequestMapping(value = "/noticeWrite.do")
 	public String noticeWriteDo(MultipartFile[] photos, HttpSession session, @RequestParam Map<String, String> param) {
@@ -368,6 +379,17 @@ public class AdminController {
 
 	}
 	
+	@RequestMapping(value = "/faqRestore.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> faqRestore(int faqIdx) {
+		logger.info("FAQ 복원 받은 idx : " + faqIdx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		int row = adminService.faqRestore(faqIdx);
+		map.put("success", row);
+		return map;
+
+	}
+	
 	@RequestMapping(value = "adminSuggestionsList.go")
 	public String adminSuggestionsListGo() {
 		logger.info("건의사항 페이지 이동");
@@ -418,6 +440,28 @@ public class AdminController {
 
 			return "adminPage/adminReviewList"; 
 		}
+	}
+	
+	@RequestMapping(value = "/reviewBlind.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> reviewBlind(int reviewIdx) {
+		logger.info("리뷰 블라인드 받은 idx : " + reviewIdx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		int row = adminService.reviewBlind(reviewIdx);
+		map.put("success", row);
+		return map;
+
+	}
+	
+	@RequestMapping(value = "/restoreReview.ajax", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> restoreReview(int reviewIdx) {
+		logger.info("리뷰 블라인드해제 받은 idx : " + reviewIdx);
+		Map<String, Object> map = new HashMap<String, Object>();
+		int row = adminService.restoreReview(reviewIdx);
+		map.put("success", row);
+		return map;
+
 	}
 	
 	@RequestMapping(value = "adminSuggestionsList.ajax")

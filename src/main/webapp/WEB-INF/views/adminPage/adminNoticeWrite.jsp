@@ -183,7 +183,7 @@
 	        </div>
 	        <div>
 	        	<input type="hidden" name="writer" value="${sessionScope.loginId}">
-	        	<input type="file" name = "photos" multiple="multiple" placeholder="사진">
+	        	<!-- <input type="file" name = "photos" multiple="multiple" placeholder="사진"> -->
 	        </div>       
 	     	<button class="buttonA" type="submit">작성</button>
 	    	<button class="buttonA" type="button" onclick="returnList()">취소</button>

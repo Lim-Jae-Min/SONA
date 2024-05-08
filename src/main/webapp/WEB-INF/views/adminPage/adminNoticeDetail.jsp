@@ -183,8 +183,15 @@ p.editOption{
            	<div id = "editButton">
            		<button id="editButton">⋮</button>
 	            <div id = "editslide">
-	             	<p class="editOption" id="" onclick="noticeDel()">삭제</p>
+	            	<c:if test="${noticeDetail.notice_delete == 0 }">
+	             		<p class="editOption" id="" onclick="noticeDel()">삭제</p>
+	             	</c:if>
+	             	<c:if test="${noticeDetail.notice_delete == 1 }">
+	             		<p class="editOption" id="" onclick="restore()">복원</p>
+	             	</c:if>
+	             	
 	             	<p class="editOption" id="" onclick="actionWrite()">수정</p>
+	             	
 	            </div>
              </div>
         <div id="boardDetail">
@@ -263,31 +270,67 @@ function noticeDel() {
 	}
 }
 
+	function restore() {
+	
+	
+	
+		var confirmationMessageRestore = "정말로 공지사항를 복원 하시겠습니까?";
+	
+		if (confirm(confirmationMessageRestore)) {
+			$.ajax({
+				url : "noticeRestore.ajax", 
+				method : "POST",
+				data : {
+					noticeIdx : ${noticeDetail.notice_idx}
+					
+				},
+				success : function(response) {
+					if (response.success == 1) {
+						alert("복원를 성공 했습니다.");
+						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
+						window.location.href = "adminNoticeList.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
+					} else {
+						alert("복원를 실패 했습니다.");
+	/* 						var form = document.createElement('form'); // 폼객체 생성
+						form.setAttribute('method', 'post'); //get,post 가능
+						form.setAttribute('action', "chargePoint.go"); //보내는 url
+						document.body.appendChild(form);
+						form.submit(); */
+	
+					}
+				},
+				error : function(xhr, status, error) {
+					alert("서버 오류로 인해 공지사항 복원를 실퍃하였습니다..");
+				}
+			});
+		} else {
+			alert("공지사항 복원를 취소 했습니다.");
+		}
+	}
 
 
 
-
-function redirectToReplyPage() {
-    window.location.href = './videoList.go';
-}
-
-$('#editButton').click(function slide() {
-	var display = $('#editslide').css('display');
-    if (display == 'none') {
-        $('#editslide').css('display', 'block');
-    }
-    if (display == 'block') {
-        $('#editslide').css('display', 'none');
-    }
-});
-
-$('#logo').click(function main(){
-	location.href = 'adminMain.go';
-});
-
-$('.alarm').click(function alarmList() {
-	location.href = 'alarmList.go';
-});
+	function redirectToReplyPage() {
+	    window.location.href = './videoList.go';
+	}
+	
+	$('#editButton').click(function slide() {
+		var display = $('#editslide').css('display');
+	    if (display == 'none') {
+	        $('#editslide').css('display', 'block');
+	    }
+	    if (display == 'block') {
+	        $('#editslide').css('display', 'none');
+	    }
+	});
+	
+	$('#logo').click(function main(){
+		location.href = 'adminMain.go';
+	});
+	
+	$('.alarm').click(function alarmList() {
+		location.href = 'alarmList.go';
+	});
 	
 	
 

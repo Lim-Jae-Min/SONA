@@ -45,7 +45,7 @@
 		width: 15%;
 	}
 	.nbhit{
-		width: 16.6%;
+		width: 6.6%;
 	}
 	.ndate{
 		width: 10%;
@@ -152,7 +152,7 @@
 						<th class="nid">작성자</th>
 						<th class="ndate">날짜</th>
 						<th class="nbhit">조회수</th>
-
+						<th class="nidx">공개여부</th>
 					</tr>
 				</thead>
 				<tbody id="list" class="listhead"></tbody>
@@ -263,7 +263,12 @@
 		    content += '<td class="fa">' + dateStr + '</td>';
 		    
 		    content += '<td class="fa">' + item.notice_views +'</td>';
-
+		   /*  content += '<td class="fa">' + item.notice_delete +'</td>'; */
+		    if (item.notice_delete ==1) {
+		    	content += '<td class="fa">'+'비공개'+'</td>';
+			}else{
+				content += '<td class="fa">'+'공개'+'</td>';
+			}
 		    content += '</tr>';
 
 	 	}

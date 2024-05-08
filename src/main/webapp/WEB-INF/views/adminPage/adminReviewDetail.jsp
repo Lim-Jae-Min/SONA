@@ -290,12 +290,18 @@ body {
 				<br />
 			</c:forEach>
 		</div>
+		
 		<div>
-
-				<button class="button blind"
-					onclick="confirmBlind(${review.review_idx})">블라인드</button>
+						
+				<c:if test="${review.review_delete == false }">
+             		<button class="button blind" onclick="blindReview(${review.review_idx})">블라인드</button>
+             	</c:if>
+             	<c:if test="${review.review_delete == true }">
+             		<button class="button blind" onclick="restoreReview(${review.review_idx})">블라인드해제</button>
+             	</c:if>
 
 		</div>
+			
 		<div class="button-container">
 			<c:if test="${loginId eq review.ratee_id}">
 				<button class="button report"
@@ -358,24 +364,82 @@ body {
 var classIdx = ${review.class_idx};
 
 
-function confirmBlind(reviewIdx) {
-    if (confirm("블라인드 하시겠습니까?")) {
-        $.ajax({
-            type: "POST",
-            url: "./deleteReview.ajax",
-            data: { reviewIdx: reviewIdx },
-            success: function(response) {
-            	alert("블라인드 되었습니다.");
-            	location.href = 'adminReviewList.go';
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
+function blindReview(reviewIdx) {
+	
+	
+	
+	var confirmationMessageRestore = "정말로 리뷰를 블라인드 하시겠습니까?";
+
+	if (confirm(confirmationMessageRestore)) {
+		$.ajax({
+			url : "reviewBlind.ajax", 
+			method : "POST",
+			data : {
+				reviewIdx : reviewIdx
+				
+			},
+			success : function(response) {
+				if (response.success == 1) {
+					alert("리뷰를 블라인드 했습니다.");
+					// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
+					window.location.href = "adminReviewList.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
+				} else {
+					alert("블라인드를 실패 했습니다.");
+/* 						var form = document.createElement('form'); // 폼객체 생성
+					form.setAttribute('method', 'post'); //get,post 가능
+					form.setAttribute('action', "chargePoint.go"); //보내는 url
+					document.body.appendChild(form);
+					form.submit(); */
+
+				}
+			},
+			error : function(xhr, status, error) {
+				alert("서버 오류로 인해 리뷰 블라인드 실패하였습니다..");
+			}
+		});
+	} else {
+		alert("리뷰 블라인드를 취소 했습니다.");
+	}
 }
 
 
+function restoreReview(reviewIdx) {
+	
+	
+	
+	var confirmationMessageRestore = "정말로 리뷰를 블라인드해제 하시겠습니까?";
+
+	if (confirm(confirmationMessageRestore)) {
+		$.ajax({
+			url : "restoreReview.ajax", 
+			method : "POST",
+			data : {
+				reviewIdx : reviewIdx
+				
+			},
+			success : function(response) {
+				if (response.success == 1) {
+					alert("리뷰를 블라인드해제 했습니다.");
+					// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
+					window.location.href = "adminReviewList.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
+				} else {
+					alert("블라인드해제를 실패 했습니다.");
+/* 						var form = document.createElement('form'); // 폼객체 생성
+					form.setAttribute('method', 'post'); //get,post 가능
+					form.setAttribute('action', "chargePoint.go"); //보내는 url
+					document.body.appendChild(form);
+					form.submit(); */
+
+				}
+			},
+			error : function(xhr, status, error) {
+				alert("서버 오류로 인해 리뷰 블라인드해제에 실패하였습니다..");
+			}
+		});
+	} else {
+		alert("리뷰 블라인드해제를 취소 했습니다.");
+	}
+}
 
 
 function returnReviewList(){

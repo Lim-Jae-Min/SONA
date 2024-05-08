@@ -26,7 +26,7 @@
 		<if test="param4 != ''">
 			AND ${param3} LIKE CONCAT('%', #{param4}, '%')
 		</if>
-		ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
+		ORDER BY manner DESC, co.class_idx DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<select id="allListCall" resultType="com.sona.music.lesson.dto.LessonDTO">
@@ -72,7 +72,7 @@
 				class_inst = #{param7}
 			</if>
 		</if>
-		ORDER BY manner DESC LIMIT #{param1} OFFSET #{param2}
+		ORDER BY manner DESC, co.class_idx DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 
 	<select id="recommendListCount" resultType="Integer">
@@ -142,7 +142,12 @@
 				END AS class_score
 			, co.user_id
 			, co.class_location
-			, CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '') AS manner
+			<![CDATA[
+				, CASE WHEN (SELECT COUNT(mh.manner_idx) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id) < 5
+					      THEN '신규 회원'
+					      ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 2), '')
+					      END AS manner
+			]]>
 			, co.class_reg_date
 			, co.career_years
 			, co.career_contents
@@ -197,13 +202,20 @@
 	</select>
 	
 	<select id="applyCheck" resultType="com.sona.music.lesson.dto.LessonDTO">
-		SELECT ah.apply_idx, ah.apply_state FROM APPLY_HISTORY ah WHERE ah.class_idx = #{param1} AND ah.user_id = #{param2} ORDER BY ah.apply_idx DESC LIMIT 1
+		SELECT 
+			ah.apply_idx
+			, ah.apply_state
+			, CASE WHEN (SELECT (COUNT(ch.ch_idx) - 1) FROM CLASS_HISTORY ch WHERE ch.apply_detail = ah.apply_detail) IS NULL THEN 0
+				ELSE (SELECT (COUNT(ch.ch_idx) - 1) FROM CLASS_HISTORY ch WHERE ch.apply_detail = ah.apply_detail)
+				END AS accumulate_times
+		FROM APPLY_HISTORY ah WHERE ah.class_idx = #{param1} AND ah.user_id = #{param2} 
+		ORDER BY ah.apply_idx DESC LIMIT 1
 	</select>
 	
 	<insert id="leesonApply">
 		INSERT INTO APPLY_HISTORY(class_idx, user_id, apply_state, apply_detail)
 			VALUES(#{param1}, #{param2}, '신청 완료', (concat(substr(cast(curdate() as char), 1, 8), right(concat("00000" , 
-				(SELECT COUNT(ah.apply_idx) FROM APPLY_HISTORY ah WHERE YEAR(ah.REG_DATE) = YEAR(CURDATE()) 
+				(SELECT (COUNT(ah.apply_idx) + 1) FROM APPLY_HISTORY ah WHERE YEAR(ah.REG_DATE) = YEAR(CURDATE()) 
 				AND MONTH(ah.REG_DATE) = MONTH(CURDATE()) AND ah.apply_state = '신청 완료')), 6))))
 	</insert>
 	

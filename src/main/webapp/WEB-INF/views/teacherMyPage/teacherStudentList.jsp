@@ -359,17 +359,6 @@ function drawList(list){
     var lastIndex = list.length; // 마지막 인덱스
     
  	
-    /*
-    
-    if (main.end_check == null){
-		if (main.apply_state ==""){
-	        main.apply_state ="결제 대기";
-	    }else if(course.apply_state =="신청 완료"){
-	        course.apply_state = "수락 대기";
-	    }
-        course.end_check = course.apply_state;
-    }
-    */
 
     
     
@@ -388,6 +377,14 @@ function drawList(list){
         }
         
         
+        if (item.end_check == null) {
+            if (item.apply_state == "신청 완료") {
+                item.end_check = "결제 대기";
+            } else {
+                item.end_check = "진행중";
+            }
+        }
+        
         
        content += '<tr class = "list-item">';
        // 인덱스를 역순으로 부여
@@ -399,7 +396,7 @@ function drawList(list){
       			 '</td>'; // 제목을 클릭하면 해당 강의일지의 세부 정보 페이지로 이동
        
        content += '<td>';
-       if (item.apply_state == '결제 완료' || item.apply_state == '신청 완료') {
+       if (item.apply_state == '결제 완료' ) {
 		    content += '<progress max="100" value="' + convertToPercentage(item) + '" id = "progress";"></progress><br>' +
 	        convertToPercentage(item) + '%';
 		}

@@ -55,7 +55,7 @@ public interface MyPageDAO {
 	int blockListCount(int pagePerCnt, String loginId);
 
 
-	List<MemberDTO> lessonlistall(String user_id, int pagePerCnt, int start);
+	List<MemberDTO> lessonlistall(String user_id, int cnt, int start);
 
 	@Mapper
 	Object lessonAllCount(@Param("cnt") int cnt, @Param("user_id") String user_id);
@@ -63,13 +63,13 @@ public interface MyPageDAO {
 	int updateApplyForm(Map<String, String> map);
 
 
-	int pointAllCount(int pagePerCnt);
+	int pointAllCount(int pagePerCnt, String loginId);
 
 
-	int receiveAllCount(int pagePerCnt);
+	int receiveAllCount(int pagePerCnt, String loginId);
 
 
-	int sendAllCount(int pagePerCnt);
+	int sendAllCount(int pagePerCnt, String loginId);
 
 
 	int courseAllCount(int pagePerCnt, String loginId);
@@ -149,6 +149,10 @@ public interface MyPageDAO {
 
 
 	Object qnaNotAllCount(int cnt, String loginId);
+
+	@Mapper
+	Object tStudentAllCountFilter(@Param("cnt") int cnt, @Param("user_id") String user_id, @Param("selectedClass") String selectedClass);
+	
 
 
 

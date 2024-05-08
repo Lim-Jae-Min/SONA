@@ -91,7 +91,7 @@ public class MemberService {
 		dto.setUser_id(id);
 		dto.setUser_pass(pw);
 		dto.setUser_bank(bank);		
-		dto.setUser_accountnumber(Integer.parseInt(accountnumber));
+		dto.setUser_accountnumber(accountnumber);
 		dto.setUser_type(usertype);
 		dto.setUser_name(name);
 		

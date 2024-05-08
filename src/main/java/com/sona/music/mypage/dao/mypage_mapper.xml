@@ -154,16 +154,22 @@
 	        cq.user_id = #{param2} AND  co.class_name = #{param3}
 	</select>
 	
-	<select id="pointAllCount" resultType="Integer" parameterType="Integer">
-	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM USER_POINT
+	<select id="pointAllCount" resultType="Integer">
+	   	SELECT CEIL(COUNT(*) / #{param1}) AS pages FROM USER_POINT p
+	   		Join USERS u on u.user_id = p.user_id
+	   			where u.user_id = #{param2}
 	</select>	
 	
-	<select id="receiveAllCount" resultType="Integer" parameterType="Integer">
-	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM REVIEW
+	<select id="receiveAllCount" resultType="Integer">
+	   	SELECT CEIL(COUNT(*) / #{param1}) AS pages FROM REVIEW r
+	   		Join USERS u on u.user_id = r.rater_id
+	   			where u.user_id = #{param2}
 	</select>
 
-	<select id="sendAllCount" resultType="Integer" parameterType="Integer">
-	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM REVIEW
+	<select id="sendAllCount" resultType="Integer">
+	   	SELECT CEIL(COUNT(*) / #{param1}) AS pages FROM REVIEW r
+	   		Join USERS u on u.user_id = r.ratee_id
+	   			where u.user_id = #{param2}
 	</select>
 	
 	<select id="courseAllCount" resultType="Integer" parameterType="java.util.Map">
@@ -185,7 +191,19 @@
 			WHERE ah.APPLY_IDX IN (
 			    SELECT MAX(apply_idx)
 			    FROM APPLY_HISTORY
-			    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = 'user2')
+			    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{user_id})
+			    GROUP BY APPLY_DETAIL
+			)
+	</select>
+	
+	
+	<select id="tStudentAllCountFilter" resultType="Integer" parameterType="map">
+    	SELECT CEIL(COUNT(*)/#{cnt}) AS pages
+			FROM APPLY_HISTORY ah JOIN CLASS_OPEN co ON ah.class_idx = co.class_idx 
+			WHERE ah.APPLY_IDX IN (
+			    SELECT MAX(apply_idx)
+			    FROM APPLY_HISTORY
+			    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{user_id} AND co.class_name = #{selectedClass})
 			    GROUP BY APPLY_DETAIL
 			)
 	</select>
@@ -306,7 +324,7 @@
 		    ,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
 		    ,co.class_reg_date
 		    ,co.class_disable
-		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2' AND co.CLASS_DISABLE = #{param4}
+		FROM CLASS_OPEN co WHERE co.USER_ID = #{param1} AND co.CLASS_DISABLE = #{param4}
 		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>
@@ -323,7 +341,7 @@
 		   	,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
 		  	,co.class_reg_date
 		   	,co.class_disable
-		FROM CLASS_OPEN co WHERE co.USER_ID = 'user2'
+		FROM CLASS_OPEN co WHERE co.USER_ID = #{param1}
 		ORDER BY co.CLASS_IDX desc
 		LIMIT #{param2} OFFSET #{param3}
 	</select>
@@ -349,10 +367,9 @@
 	    SELECT MAX(apply_idx)
 	    FROM APPLY_HISTORY
 	    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{param1})
-	    GROUP BY APPLY_DETAIL
-)
-ORDER BY ah.APPLY_IDX DESC
-LIMIT #{param2} OFFSET #{param3}
+	    GROUP BY APPLY_DETAIL)
+		ORDER BY ah.APPLY_IDX DESC
+		LIMIT #{param2} OFFSET #{param3}
 	</select>
 	
 	
@@ -377,11 +394,10 @@ LIMIT #{param2} OFFSET #{param3}
 	    SELECT MAX(apply_idx)
 	    FROM APPLY_HISTORY
 	    WHERE class_idx IN (SELECT co.class_idx from CLASS_OPEN co WHERE co.user_id = #{param1})
-	    GROUP BY APPLY_DETAIL
-)
-AND co.class_name = #{param4}
-ORDER BY ah.APPLY_IDX DESC
-LIMIT #{param2} OFFSET #{param3}
+	    GROUP BY APPLY_DETAIL)
+		AND co.class_name = #{param4}
+		ORDER BY ah.APPLY_IDX DESC
+		LIMIT #{param2} OFFSET #{param3}
 	</select>
 	
 	<select id="teacherQnaList" resultType="com.sona.music.mypage.dto.MyPageDTO">

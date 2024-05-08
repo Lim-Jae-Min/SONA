@@ -276,18 +276,26 @@
 	</select>	
 	
 	<select id="teacherPointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
-	SELECT 
-	    up.point_date,
-	    up.point_type,
-	    up.point,
-	    (SUM(point) OVER (ORDER BY up.point_idx)) AS balance
-	FROM 
-	    USER_POINT up 
-	WHERE 
-	    up.user_id = #{param3}
-	ORDER BY 
-	    up.point_idx desc
-	LIMIT #{param2},#{param1}
+	<![CDATA[
+       SELECT 
+           up.point_date,
+           up.point_type,
+           up.point,
+           (SUM(point) OVER (ORDER BY up.point_idx)) AS balance,
+           CASE 
+               WHEN (SELECT COUNT(*) FROM POINT_CALCULATION pc WHERE pc.point_idx = up.point_idx AND (pc.ATTENDANCE_RATE = 1 OR pc.ATTENDANCE_RATE IS NULL)) > 0 THEN ''
+               WHEN (SELECT COUNT(*) FROM POINT_CALCULATION pc WHERE pc.point_idx = up.point_idx AND pc.ATTENDANCE_RATE < 1 AND CAST(pc.ATTENDANCE_RATE AS DECIMAL) >= 0) > 0 THEN '환불'
+               ELSE ''
+           END AS etc
+       FROM 
+           USER_POINT up 
+       WHERE 
+           up.user_id = #{param3}
+       ORDER BY 
+           up.point_idx DESC
+       LIMIT #{param1} OFFSET #{param2}
+       ]]>
+
 	</select>
 	
 	<select id="QnaAllCountFilter" resultType="Integer" parameterType="map">

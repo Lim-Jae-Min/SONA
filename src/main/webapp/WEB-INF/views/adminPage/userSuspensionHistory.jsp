@@ -16,11 +16,15 @@
 	    width: 100%; /* 테이블 셀 경계를 병합하여 구분선이 하나만 나타나도록 설정 */
 	}
 	
+	
 	#showList th, #showList td {
 	    border: 1px solid #dddddd; /* 셀 테두리 색상 설정 */
 	    padding: 8px; /* 셀 내부 여백 설정 */
 	    text-align: left; /* 텍스트를 왼쪽 정렬 */
+	    border-right : none;
+	    border-left : none;
 	}
+	
 	
 	#showList tr:nth-child(even) {
 	    background-color: #f2f2f2; /* 짝수 행 배경색 설정 */

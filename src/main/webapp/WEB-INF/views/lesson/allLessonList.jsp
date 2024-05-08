@@ -194,9 +194,9 @@
 				<select name="inst" id="inst" class="inst"></select>
 				<br/>
                 <select name="condition" id="condition">
-                    <option value="class_name">강의명</option>
-                    <option value="user_name">강사명</option>
-                    <option value="class_location">지역</option>
+                    <option value="co.class_name">강의명</option>
+                    <option value="u.user_name">강사명</option>
+                    <option value="co.class_location">지역</option>
                 </select>
                 <input type="text" id="searchContent">
                 <input type="button" id="search" value="검색">

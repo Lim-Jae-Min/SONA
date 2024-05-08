@@ -328,7 +328,7 @@ body {
 		<div class="review-title">${review.review_title}</div>
 		<div class="author-info">
 			작성자: <a href="userDetail.go?user_id=${review.rater_id}">${review.rater_id}</a> 작성일자: ${review.review_reg_date} <span
-				class="satisfaction">★${review.score}</span>
+				class="satisfaction">★${review.score}</span> 대상자:${review.ratee_id}
 		</div>
 		<div class="content">${review.review_content}</div>
 		<div>리뷰 사진</div>

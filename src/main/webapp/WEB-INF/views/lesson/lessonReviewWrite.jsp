@@ -286,7 +286,7 @@
 								style="width: 882px; height: 311px; resize: none;"></textarea></td>
 					</tr>
 					<tr>
-						<input type="hidden" name="photo_category" value="Review">
+						<input type="hidden" name="photo_category" value="Review"/>
 						<th>리뷰 사진</th>
 						<td colspan="4">
 							<div id="fileList"></div> <input type="file" name="photos"

@@ -39,7 +39,7 @@ public class ReviewService {
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", reviewDAO.allCount(pagePerCnt));
+		result.put("totalPages", reviewDAO.allCount(pagePerCnt,classIdx));
 
 		logger.info("리뷰 리스트 페이지 이동");
 
@@ -69,7 +69,7 @@ public class ReviewService {
 		
 		//조건3. 이후 dto에서 저장된 키 값을 받아온다.
 		
-
+		
 		if(row>0) {
 			int idx = dto.getReview_idx();
 			String username = dto.getRater_id();

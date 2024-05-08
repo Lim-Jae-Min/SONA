@@ -29,7 +29,7 @@ public class QnAService {
 		logger.info("list size: "+list.size());
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", qnaDAO.allCount(pagePerCnt));
+		result.put("totalPages", qnaDAO.allCount(pagePerCnt,classIdx));
 
 		logger.info("QnA 리스트 페이지 이동");
 

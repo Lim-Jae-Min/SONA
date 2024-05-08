@@ -7,17 +7,11 @@ import com.sona.music.board.dto.QnADTO;
 
 public interface QnADAO {
 
-	int allCount(int pagePerCnt);
+	int allCount(int pagePerCnt, Integer classIdx);
 
 	int qwrite(QnADTO dto);
 
 	List<QnADTO> list(int pagePerCnt, int start, Integer classIdx);
-
-
-
-
-
-
 
 	int reply(QnADTO dto);
 

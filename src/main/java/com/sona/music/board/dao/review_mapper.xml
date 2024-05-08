@@ -26,13 +26,14 @@
 	<select id="allCount" resultType="Integer">
 		SELECT CEIL(COUNT(REVIEW_IDX)/#{param1}) AS pages 
 		FROM REVIEW
-		WHERE REVIEW_DELETE = 0;
+		WHERE REVIEW_DELETE = 0
+		AND CLASS_IDX = #{param2}
 	</select>
 	
 	<insert id="write"
 	useGeneratedKeys="true"
-	keyColumn = "REVIEW_IDX"
-	keyProperty="REVIEW_IDX"
+	keyColumn = "review_idx"
+	keyProperty="review_idx"
 	parameterType="com.sona.music.board.dto.ReviewDTO"
 	>
 	INSERT INTO REVIEW(CLASS_IDX,RATER_ID,RATEE_ID,SCORE,REVIEW_TITLE,REVIEW_CONTENT,APPLY_DETAIL)
@@ -74,8 +75,8 @@
 	
 	<insert id="manner"
 	useGeneratedKeys="true"
-	keyColumn = "MANNER_IDX"
-	keyProperty="MANNER_IDX"
+	keyColumn = "manner_idx"
+	keyProperty="manner_idx"
 	parameterType="com.sona.music.board.dto.ReviewDTO"
 	>
 	INSERT INTO MANNER_HISTORY(USER_ID,MANNER_TYPE,MANNER_VARIANCE)

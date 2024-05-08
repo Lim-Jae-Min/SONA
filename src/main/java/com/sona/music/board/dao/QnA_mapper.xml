@@ -36,12 +36,13 @@
 		SELECT CEIL(COUNT(QUESTION_IDX)
 		/ #{param1}) AS pages
 		FROM CLASS_QUESTION
-		WHERE Q_DELETE = 0;
+		WHERE Q_DELETE = 0
+		AND CLASS_IDX = #{param2}
 	</select>
 
 
 	<insert id="qwrite" useGeneratedKeys="true"
-		keyColumn="QUESTION_IDX" keyProperty="QUESTION_IDX"
+		keyColumn="question_idx" keyProperty="question_idx"
 		parameterType="com.sona.music.board.dto.QnADTO">
 		INSERT INTO
 		CLASS_QUESTION(CLASS_IDX,USER_ID,Q_TITLE,Q_CONTENT,ANONYMOUS_STATUS)
@@ -71,7 +72,7 @@
 	</update>
 
 	<insert id="reply" useGeneratedKeys="true"
-		keyColumn="ANSWER_IDX" keyProperty="ANSWER_IDX"
+		keyColumn="answer_idx" keyProperty="answer_idx"
 		parameterType="com.sona.music.board.dto.QnADTO">
 		INSERT INTO CLASS_ANSWER(QUESTION_IDX,USER_ID,A_CONTENT)
 		VALUES(#{question_idx},#{user_id},#{a_content})

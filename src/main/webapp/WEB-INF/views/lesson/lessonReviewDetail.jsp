@@ -478,7 +478,13 @@ function redirectToEditPage(reviewIdx) {
 }
 
 function redirectToList(classIdx) {
-    window.location.href = './lessonReviewList.go?class_idx=' + classIdx;
+	
+	if ('${sessionScope.user_type}' == '강사') {
+		window.location.href = './teacherWrittenList.go';
+	} else {
+		window.location.href = './lessonReviewList.go?class_idx=' + classIdx;
+	}
+    
 }
 
 $('#logo').click(function main(){

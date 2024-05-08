@@ -10,7 +10,7 @@ import com.sona.music.board.dto.ReviewDTO;
 
 public interface ReviewDAO {
 	
-	int allCount(int pagePerCnt);
+	int allCount(int pagePerCnt, Integer classIdx);
 
 	List<ReviewDTO> list(int pagePerCnt, int start, Integer classIdx);
 

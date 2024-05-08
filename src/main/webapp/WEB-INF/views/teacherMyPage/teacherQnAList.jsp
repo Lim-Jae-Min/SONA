@@ -333,16 +333,17 @@ function drawList(list){
  	
     for(item of list){
        console.log(item);
-       
+       /*
        var firstLetter = item.user_name.charAt(0); // 첫 번째 글자
        var otherLetters = item.user_name.substring(1); // 나머지 글자
-       var maskedName = firstLetter + "O".repeat(otherLetters.length);
+       var maskedName = firstLetter + "O".repeat(otherLetters.length);       
+       */
     	
        content += '<tr class = "list-item">';
        content += '<td>'+ 
       		 '<a href="lessonQnADetail.go?question_idx=' + item.question_idx + '">' + item.q_title + '</a>' +
       			 '</td>'; // 제목을 클릭하면 해당 강의일지의 세부 정보 페이지로 이동
-       content += '<td>' + maskedName + '</td>';
+       content += '<td>' + item.user_name + '</td>';
        content += '<td>' + item.answer_status + '</td>';
        
        function formatDate(dateString) {

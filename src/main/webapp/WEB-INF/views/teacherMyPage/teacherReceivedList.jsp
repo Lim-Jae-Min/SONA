@@ -341,10 +341,11 @@ function listCall(page, selectedClass){
 function drawList(list) {
     var content = ''; // 테이블에 추가할 전체 문자열
     for (item of list) {
-        
+        /* 익명 시스템(마스킹) 구현 안함
         var firstLetter = item.rater_id.charAt(0); // 첫 번째 글자
         var otherLetters = item.rater_id.substring(1); // 나머지 글자
-        var maskedName = firstLetter + "O".repeat(otherLetters.length);
+        var maskedName = firstLetter + "O".repeat(otherLetters.length);        
+        */
         
         function formatDate(dateString) {
             var date = new Date(dateString);
@@ -361,7 +362,7 @@ function drawList(list) {
         content += '<td>'+ 
                     '<a href="lessonReviewDetail.go?review_idx=' + item.review_idx + '">' + item.review_title + '</a>' +
                    '</td>'; // 제목을 클릭하면 해당 리뷰의 세부 정보 페이지로 이동
-        content += '<td>' + maskedName + '</td>';
+        content += '<td>' + item.rater_id + '</td>';
         content += '<td><span style="color: #FED000;">★</span>' + parseFloat(item.score).toFixed(1) + '</td>'; // score를 소숫점 한 자리까지 표시
         content += '<td>' + parseFloat(item.manner_variance).toFixed(2) + '</td>'; // manner_variance를 소숫점 둘째 자리까지 표시
         content += '</tr>';

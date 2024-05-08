@@ -90,6 +90,7 @@ public class MyPageController {
 	    logger.info("point : "+ point);
 		if (loginId != null) {
 			MyPageDTO userInfo = myPageService.getUserInfo(loginId, model);
+			logger.info("계좌번호: " + userInfo.getUser_accountnumber());
 			model.addAttribute("userInfo",userInfo);
 			logger.info("강사 회원 정보 페이지 이동 성공 !");
 			page = "teacherMyPage/teacherPage";

@@ -352,7 +352,7 @@ function drawList(list){
        	content += '<td>'+ item.point_type + '</td>'; 
        content += '<td>' + item.point + '</td>';
        content += '<td>' + item.balance+ '</td>';
-       content += '<td>' + ' - '+ '</td>';
+       content += '<td>' + item.etc+ '</td>';
       	content += '</tr>';
     }
     $('#list').html(content);

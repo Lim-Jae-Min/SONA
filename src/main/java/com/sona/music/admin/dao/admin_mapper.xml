@@ -59,7 +59,11 @@
 			WHERE faq_idx = #{faq_idx}
 	</update>
 	
-		<update id="faqDel" >
+	<update id="faqRestore" >
+		UPDATE FAQ_BOARD set faq_delete = 0 WHERE faq_idx = #{param1}
+	</update>
+	
+	<update id="faqDel" >
 		UPDATE FAQ_BOARD set faq_delete = 1 WHERE faq_idx = #{param1}
 	</update>
 		
@@ -732,7 +736,18 @@
 		</if>
 	</select>
 
-
+	
+	<update id="noticeRestore" >
+		UPDATE NOTICE_BOARD set notice_delete = 0 WHERE notice_idx = #{param1}
+	</update>
+	
+	<update id="reviewBlind" >
+		UPDATE REVIEW set review_delete = 1 WHERE review_idx = #{param1}
+	</update>
+	
+	<update id="restoreReview" >
+		UPDATE REVIEW set review_delete = 0 WHERE review_idx = #{param1}
+	</update>
 	
 	
 

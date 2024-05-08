@@ -44,7 +44,7 @@
 		width: 4%;
 	}
 	.nid{
-		width: 15%;
+		width: 10%;
 	}
 	.nbhit{
 		width: 16.6%;
@@ -53,7 +53,7 @@
 		width: 10%;
 	}
 	.ntitle{
-		width: 30%;	
+		width: 23%;	
 	}
 	.nanswer{
 		width: 10%;
@@ -78,6 +78,9 @@
 		
 	}
 	#callDelList {
+	}
+	.isdel{
+		width: 10%;
 	}
 </style>
 </head>
@@ -141,6 +144,7 @@
 						<th class="nid">작성자</th>
 						<th class="ndate">날짜</th>
 						<th class="nanswer">답변여부</th>
+						<th class="isdel">삭제여부</th>
 
 
 					</tr>
@@ -267,7 +271,11 @@
 		    content += '<td class="nanswer">' + 'N' + '</td>';				
 			};
 		    //content += '<td class="nid">' + item.sug_answerCount + '</td>';
-		    
+		     if (item.sug_delete ==1) {
+		    	content += '<td class="fa">'+'삭제O'+'</td>';
+			}else{
+				content += '<td class="fa">'+'삭제X'+'</td>';
+			}
 
 		    content += '</tr>';
 

@@ -29,6 +29,8 @@ public interface AdminDAO {
 
 	int faqDel(int faqIdx);
 	
+	int faqRestore(int faqIdx);
+	
 	List<AdminDTO> showListSearchSuggestion(int start, int pagePerCnt, int deleteStatus, String serachText, int searchType,
 			int categoryNum);
 
@@ -100,4 +102,9 @@ public interface AdminDAO {
 
 	List<PhotoDTO> adminReviewphotos(int post_idx, String photo_category);
 
+	int noticeRestore(int noticeIdx);
+	
+	int reviewBlind(int reviewIdx);
+
+	int restoreReview(int reviewIdx);
 }

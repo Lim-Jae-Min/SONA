@@ -75,7 +75,7 @@ public class AdminService {
 	
 	public int noticeWrite(MultipartFile[] photos, Map<String, String> param) {
 		
-		logger.info("공지사항 작성자 : "+param.get("writer"));
+		logger.info("공지사항 작성성 페이지에서 받은 공지사항 작성자 : "+param.get("writer"));
 		
 		AdminDTO noticeWriteDto = new AdminDTO();
 		noticeWriteDto.setAdmin_id("admin");
@@ -228,6 +228,13 @@ public class AdminService {
 		return row;
 	}
 	
+	public int faqRestore(int faqIdx) {
+		
+		int row = adminDAO.faqRestore(faqIdx);
+		logger.info("faq 복원 대한 값 : 1이면 삭제 완료" + row);
+		return row;
+	}
+	
 	public Map<String, Object> showListSearchSuggestion(int currPage, int searchType, String serachText, int categoryNum,int delType) {
 		int pagePerCnt = 10;
 		int start = (currPage-1)*pagePerCnt;
@@ -253,7 +260,7 @@ public class AdminService {
 		result.put("list", resultList);
 		result.put("currPage", currPage);
 		result.put("totalPages", adminDAO.allCountSuggestion(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
-		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.allCountSuggestion(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		logger.info("건의사항 받아온 allCount"+adminDAO.allCountSuggestion(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
 		
 		return result;
 	}
@@ -282,7 +289,7 @@ public class AdminService {
 		result.put("list", resultList);
 		result.put("currPage", currPage);
 		result.put("totalPages", adminDAO.allCountReview(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
-		logger.info("공지사항관리에서 받아온 allCount"+adminDAO.allCountReview(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
+		logger.info("리뷰 받아온 allCount"+adminDAO.allCountReview(pagePerCnt,deleteStatus,serachText,searchType,categoryNum));
 		return result;
 		}
 	
@@ -305,6 +312,20 @@ public class AdminService {
 
 		List<com.sona.music.board.dto.PhotoDTO> list = adminDAO.adminReviewphotos(post_idx, photo_category);
 		model.addAttribute("photos", list);
+	}
+	
+	public int reviewBlind(int reviewIdx) {
+		
+		int row = adminDAO.reviewBlind(reviewIdx);
+		logger.info("리뮤 블라인드에 대한 값 : 1이면 삭제 완료" + row);
+		return row;
+	}
+	
+	public int restoreReview(int reviewIdx) {
+		
+		int row = adminDAO.restoreReview(reviewIdx);
+		logger.info("리뮤 블라인드에 대한 값 : 1이면 삭제 완료" + row);
+		return row;
 	}
 
 		
@@ -485,6 +506,13 @@ public class AdminService {
 		result.put("totalPages", adminDAO.adminLessonListCount(pagePerCnt, condition, searchContent));
 		
 		return result;
+	}
+
+	public int noticeRestore(int noticeIdx) {
+		
+		int row = adminDAO.noticeRestore(noticeIdx);
+		logger.info("공지사항 삭제에 대한 값 : 1이면 삭제 완료" + row);
+		return row;
 	}
 	
 }

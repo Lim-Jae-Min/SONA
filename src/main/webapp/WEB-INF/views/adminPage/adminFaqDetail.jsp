@@ -221,8 +221,13 @@ p.editOption{
 			<hr>
 		<div class="faqButton">
 			<button id="returnList" onclick="backList()">목록</button>
-			<button class="editOption" id="faqEdit" onclick="faqEdit()">수정</button>
-			<button class="editOption" id="faqDel" onclick="faqDel()">삭제</button>
+			<button class="editOption" id="faqEdit" onclick="faqEdit()">수정</button>			
+			<c:if test="${faqDetail.faq_delete == 0 }">
+           		<button class="editOption" id="faqDel" onclick="faqDel()">삭제</button>
+           	</c:if>
+           	<c:if test="${faqDetail.faq_delete == 1 }">
+           		<button class="editOption" id="faqDel" onclick="restore()">복원</button>
+           	</c:if>
 		</div>
 		</div>
 	</div>
@@ -334,7 +339,7 @@ $('.alarm').click(function alarmList() {
 					if (response.success == 1) {
 						alert("삭제를 성공 했습니다.");
 						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
-						window.location.href = "faqManagement.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
+						window.location.href = "adminFaqList.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
 					} else {
 						alert("삭제를 실패 했습니다.");
 /* 						var form = document.createElement('form'); // 폼객체 생성
@@ -354,9 +359,47 @@ $('.alarm').click(function alarmList() {
 		}
 	}
     
+    function restore() {
+    	
+    	
+    	
+		var confirmationMessageRestore = "정말로 faq 복원 하시겠습니까?";
+	
+		if (confirm(confirmationMessageRestore)) {
+			$.ajax({
+				url : "faqRestore.ajax", 
+				method : "POST",
+				data : {
+					faqIdx : ${faqDetail.faq_idx}
+					
+				},
+				success : function(response) {
+					if (response.success == 1) {
+						alert("복원를 성공 했습니다.");
+						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
+						window.location.href = "adminFaqList.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
+					} else {
+						alert("복원를 실패 했습니다.");
+	/* 						var form = document.createElement('form'); // 폼객체 생성
+						form.setAttribute('method', 'post'); //get,post 가능
+						form.setAttribute('action', "chargePoint.go"); //보내는 url
+						document.body.appendChild(form);
+						form.submit(); */
+	
+					}
+				},
+				error : function(xhr, status, error) {
+					alert("서버 오류로 인해 faq 복원를 실퍃하였습니다..");
+				}
+			});
+		} else {
+			alert("faq 복원를 취소 했습니다.");
+		}
+	}
+    
     /* 목록으로 가기 */
 	 function backList(){
-	    	location.href = "faqManagement.go";
+	    	location.href = "adminFaqList.go";
 	    	
 	    }
     function faqEdit(){

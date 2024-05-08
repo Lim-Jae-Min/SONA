@@ -63,13 +63,13 @@ public interface MyPageDAO {
 	int updateApplyForm(Map<String, String> map);
 
 
-	int pointAllCount(int pagePerCnt);
+	int pointAllCount(int pagePerCnt, String loginId);
 
 
-	int receiveAllCount(int pagePerCnt);
+	int receiveAllCount(int pagePerCnt, String loginId);
 
 
-	int sendAllCount(int pagePerCnt);
+	int sendAllCount(int pagePerCnt, String loginId);
 
 
 	int courseAllCount(int pagePerCnt, String loginId);

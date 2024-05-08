@@ -177,7 +177,7 @@ public class MyPageService {
 		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.pointAllCount(pagePerCnt));				
+		result.put("totalPages", myPageDAO.pointAllCount(pagePerCnt,loginId));				
 		
 		return result;
 	}
@@ -194,7 +194,7 @@ public class MyPageService {
 		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.receiveAllCount(pagePerCnt));				
+		result.put("totalPages", myPageDAO.receiveAllCount(pagePerCnt, loginId));				
 		
 		return result;
 	}
@@ -211,7 +211,7 @@ public class MyPageService {
 		
 		result.put("list", list);
 		result.put("currPage",currPage);
-		result.put("totalPages", myPageDAO.sendAllCount(pagePerCnt));				
+		result.put("totalPages", myPageDAO.sendAllCount(pagePerCnt, loginId));				
 		
 		return result;
 	}

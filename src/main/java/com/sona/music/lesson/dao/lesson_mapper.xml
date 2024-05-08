@@ -221,8 +221,11 @@
 			, CASE WHEN (SELECT (COUNT(ch.ch_idx) - 1) FROM CLASS_HISTORY ch WHERE ch.apply_detail = ah.apply_detail) IS NULL THEN 0
 				ELSE (SELECT (COUNT(ch.ch_idx) - 1) FROM CLASS_HISTORY ch WHERE ch.apply_detail = ah.apply_detail)
 				END AS accumulate_times
-		FROM APPLY_HISTORY ah WHERE ah.class_idx = #{param1} AND ah.user_id = #{param2} 
-		ORDER BY ah.apply_idx DESC LIMIT 1
+			, (SELECT ch2.ch_result FROM CLASS_HISTORY ch2 WHERE ch2.apply_detail = ah.APPLY_DETAIL
+				ORDER BY ch2.ch_idx DESC LIMIT 1) AS ch_result
+		FROM APPLY_HISTORY ah
+		WHERE ah.class_idx = #{param1} AND ah.user_id = #{param2} 
+		ORDER BY ah.apply_idx DESC LIMIT 1;
 	</select>
 	
 	<insert id="leesonApply">

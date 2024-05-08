@@ -28,6 +28,7 @@ public class LogDTO {
 	private String review_idx;
 	private String student_id;
 	private int point_idx;
+	private int point;
 	
 	public String getStudent_id() {
 		return student_id;
@@ -162,6 +163,12 @@ public class LogDTO {
 	}
 	public void setPoint_idx(int point_idx) {
 		this.point_idx = point_idx;
+	}
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
 	}
 	
 	

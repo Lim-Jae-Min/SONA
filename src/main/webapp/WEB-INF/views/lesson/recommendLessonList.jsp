@@ -131,9 +131,9 @@
             <b class="highlight">${sessionScope.user_name}</b>님이 선호하는 악기 <b class="highlight">${inst}</b> 추천 강의입니다.
             <span id="searchbox">
                 <select name="condition" id="condition">
-                    <option value="class_name">강의명</option>
-                    <option value="user_name">강사명</option>
-                    <option value="class_location">지역</option>
+                    <option value="co.class_name">강의명</option>
+                    <option value="u.user_name">강사명</option>
+                    <option value="co.class_location">지역</option>
                 </select>
                 <input type="text" id="searchContent">
                 <input type="button" value="검색">

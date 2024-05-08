@@ -218,9 +218,6 @@ public class LessonService {
 		LessonDTO applyCheck = lessonDAO.applyCheck(idx, loginId);
 		model.addAttribute("applyCheck", applyCheck);
 		
-		String result = applyCheck.getCh_result();
-		
-		logger.info("result = " + result);
 	}
 
 	public void lessonApplyDo(int class_idx, String loginId) {

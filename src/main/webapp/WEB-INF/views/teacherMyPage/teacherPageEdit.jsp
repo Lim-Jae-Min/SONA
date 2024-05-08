@@ -294,7 +294,7 @@
                         <br>
                         새 비밀번호 
                         <span class="input-container">
-                            <input type="password" value="" id="newPassword" class="password-input">
+                            <input type="password" value="${userInfo.user_pass}" id="newPassword" class="password-input">
                         </span>
                     </td>
                 </tr>
@@ -306,7 +306,7 @@
 				        <br>
 				        비밀번호 확인 
 				        <div class="input-container">
-				            <input type="password" value="" id="user_pass" name="user_pass" class="password-input">
+				            <input type="password" value="${userInfo.user_pass}" id="user_pass" name="user_pass" class="password-input">
 				            <button type="button" id="confirmation" onclick="confirmPw()" class="confirm-button">확인</button>
 				        </div>
 				    </td>

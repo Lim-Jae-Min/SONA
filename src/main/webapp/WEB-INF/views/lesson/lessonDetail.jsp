@@ -493,7 +493,7 @@ button {
 	        	<tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr>
 	        	<tr>
 	        		<th class="BigInterval" colspan="2">
-	        			<c:if test="${applyCheck.accumulate_times eq lesson.class_times}">
+	        			<c:if test="${applyCheck.accumulate_times eq lesson.class_times or applyCheck.ch_result eq '강의 종료'}">
 	        				<button id="lessonApplyButton">수강신청</button>
 	        			</c:if>
 	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state ne '신청 완료' and applyCheck.apply_state ne '결제 완료'}">
@@ -504,7 +504,7 @@ button {
 		  	      			<br/><br/>
 		  	      			<button id="paymentGoButton">바로가기</button>
 	        			</c:if>
-	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '결제 완료' and applyCheck.accumulate_times ne lesson.class_times}">
+	        			<c:if test="${sessionScope.user_type eq '수강생' and applyCheck.apply_state eq '결제 완료' and applyCheck.accumulate_times ne lesson.class_times and applyCheck.ch_result ne '강의 종료'}">
 		  	      			수강 진행중입니다.
 	        			</c:if>
 	  	      			<c:if test="${sessionScope.user_type eq '관리자' and lesson.class_delete eq 0}">

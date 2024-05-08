@@ -116,5 +116,13 @@
 			, (#{accumulate_times} / #{total_times}), (#{class_price} / #{total_times} * #{accumulate_times} * 0.95)
 			, #{apply_detail})
 	</insert>
+	
+	<select id="pointLoad" resultType="Integer">
+		SELECT 
+			CASE WHEN sum(up.POINT) IS NULL THEN 0
+			ELSE sum(up.POINT)
+			END AS point 
+		FROM USER_POINT up WHERE up.user_id = #{param1}
+	</select>
 
 </mapper>

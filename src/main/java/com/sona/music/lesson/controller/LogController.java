@@ -44,7 +44,7 @@ public class LogController {
 		
 		if (session.getAttribute("loginId") != null) {
 			page = "redirect:/lessonLog.go?apply_idx=" + apply_idx;
-			int row = logService.lessonLogWrite(map);
+			int row = logService.lessonLogWrite(map, session);
 			logger.info("입력된 row 수 = " + row);
 		}
 		
@@ -76,7 +76,7 @@ public class LogController {
 		
 		if (session.getAttribute("loginId") != null) {
 			page = "redirect:/lessonLog.go?apply_idx=" + apply_idx;
-			int row = logService.lessonAbsent(map);
+			int row = logService.lessonAbsent(map, session);
 			logger.info("입력된 row 수 = " + row);
 		}
 		
@@ -92,7 +92,7 @@ public class LogController {
 		
 		if (session.getAttribute("loginId") != null) {
 			page = "redirect:/lessonLog.go?apply_idx=" + apply_idx;
-			int row = logService.lessonStop(apply_idx);
+			int row = logService.lessonStop(apply_idx, session);
 			logger.info("입력된 row 수 = " + row);
 		}
 		

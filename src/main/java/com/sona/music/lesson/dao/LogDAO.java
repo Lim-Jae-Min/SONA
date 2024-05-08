@@ -31,6 +31,8 @@ public interface LogDAO {
 
 	void teacherCalculate(LogDTO dto);
 
+	int pointLoad(String loginId);
+
 	
 
 	

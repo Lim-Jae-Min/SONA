@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,7 @@ public class LogService {
 		
 	}
 
-	public int lessonLogWrite(Map<String, String> map) {
+	public int lessonLogWrite(Map<String, String> map, HttpSession session) {
 		
 		int apply_idx = Integer.parseInt(map.get("apply_idx"));
 		
@@ -78,13 +80,13 @@ public class LogService {
 		int row = logDAO.lessonLogWrite(dto);
 		
 		if (accumulateTimes == totalTimes) {
-			lessonStop(apply_idx);
+			lessonStop(apply_idx, session);
 		}
 		
 		return row;
 	}
 
-	public int lessonAbsent(Map<String, String> map) {
+	public int lessonAbsent(Map<String, String> map, HttpSession session) {
 		logger.info("서비스 도착");
 		int apply_idx = Integer.parseInt(map.get("apply_idx"));
 		logger.info("apply_idx = " + apply_idx);
@@ -102,7 +104,7 @@ public class LogService {
 		int row = logDAO.lessonAbsent(dto);
 		
 		if (accumulateTimes == totalTimes) {
-			lessonStop(apply_idx);
+			lessonStop(apply_idx, session);
 		}
 		
 		return row;
@@ -139,7 +141,7 @@ public class LogService {
 		
 	}
 
-	public int lessonStop(int apply_idx) {
+	public int lessonStop(int apply_idx, HttpSession session) {
 		LogDTO dto = logDAO.lessonInfo(apply_idx);
 		
 		int row = logDAO.lessonStop(dto);
@@ -169,6 +171,12 @@ public class LogService {
 			logDAO.studentPayback(dto);
 			logDAO.studentCalculate(dto);
 		}
+		
+		String loginId = (String) session.getAttribute("loginId");
+		
+		int point = logDAO.pointLoad(loginId);
+		
+		session.setAttribute("point", point);
 		
 		return row;
 	}

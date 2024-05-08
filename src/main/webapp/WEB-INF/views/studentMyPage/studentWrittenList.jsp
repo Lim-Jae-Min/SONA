@@ -153,6 +153,14 @@
                 <table style="width: 100%;">
                     <!-- 검색 부분은 그대로 유지 -->
                 </table>
+                
+                <tr>
+                	<td id = "title1">내가 작성한 리뷰</td>
+                </tr>
+                <br><br>
+                <hr>
+                <br><br>
+                
                 <table style="border-collapse: collapse; width: 100%;">
                <thead style="background-color: #f2f2f2;">
 					    <tr>

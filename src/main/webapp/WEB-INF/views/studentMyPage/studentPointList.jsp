@@ -295,6 +295,7 @@ function pointListCall(page, loginId) {
 	        content += '<td style="text-align: center; height: 30px;">' + point.point_type + '</td>'; // 구분
 	        content += '<td style="text-align: center; height: 30px;">' + point.point + '</td>'; // 금액 증감
 	        content += '<td style="text-align: center; height: 30px;">' + point.balance + '</td>'; // 잔액
+	        content += '<td style="text-align: center; height: 30px;">' + point.etc + '</td>'; // 비고
 	        content += '</tr>';
 	    }
 	    $('#list').html(content); // 리스트를 테이블에 추가

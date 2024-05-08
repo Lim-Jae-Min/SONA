@@ -24,10 +24,11 @@
 	</select>
 	
 	<select id="allCount" resultType="Integer">
-		SELECT CEIL(COUNT(REVIEW_IDX)/#{param1}) AS pages 
-		FROM REVIEW
-		WHERE REVIEW_DELETE = 0
-		AND CLASS_IDX = #{param2}
+		SELECT CEIL(COUNT(r.REVIEW_IDX)/#{param1}) AS pages 
+		FROM REVIEW r
+		WHERE r.REVIEW_DELETE = 0
+		AND r.CLASS_IDX = #{param2}
+		AND r.rater_id != (SELECT co.user_id FROM CLASS_OPEN co WHERE co.class_idx = #{param2})
 	</select>
 	
 	<insert id="write"

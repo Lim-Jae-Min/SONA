@@ -77,10 +77,17 @@ public class ReviewController {
 
 
 		String page = "redirect:/lessonReviewList.go?class_idx="+ class_idx;
-		if (session.getAttribute("loginId")!=null) {
+		if (session.getAttribute("loginId")!=null&& session.getAttribute("user_type").equals("수강생")) {
 			int row = reviewService.write(photos, param);
 			reviewService.manner(ratee_id, score);
-
+			if(row<1) {
+				page = "redirect:/lessonReviewWrite.go?class_idx="+ class_idx;
+			}
+		}else if (session.getAttribute("user_type").equals("강사")) {
+			int row = reviewService.write(photos, param);
+			reviewService.manner(ratee_id, score);
+			page = "redirect:/teacherWrittenList.go";
+			
 			if(row<1) {
 				page = "redirect:/lessonReviewWrite.go?class_idx="+ class_idx;
 			}

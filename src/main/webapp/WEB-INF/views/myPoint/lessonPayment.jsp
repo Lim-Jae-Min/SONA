@@ -282,7 +282,9 @@
 					if (response.success == 1) {
 						alert("강의 구매가 완료되었습니다.");
 						// 여기에 추가적으로 처리할 내용을 작성할 수 있습니다.
-						window.location.href = "myPage.go"; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
+						console.log("appIdx값 : " + response.appIdx);
+						
+						window.location.href = "lessonLog.go?apply_idx="+response.appIdx; // 강의 구매 완료 후 이동할 페이지를 지정합니다.
 					} else {
 						alert("결제 포인트가 부족합니다 . 포인트 충전 페이지로 이동합니다.");
 						var form = document.createElement('form'); // 폼객체 생성

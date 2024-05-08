@@ -20,6 +20,8 @@ public interface PointDAO {
 
 	String pointGetPhotoName(String chargePointLoginId, String photoCategory);
 
+	int getApplyIdx(int classIdx, String chargePointLoginId);
+
 //	String getPhotoName(String user_id);
 
 }

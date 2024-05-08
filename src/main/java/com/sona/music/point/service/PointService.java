@@ -79,6 +79,12 @@ public class PointService {
 		return photoNewFileName;
 	}
 
+	public int getApplyIdx(int classIdx, String chargePointLoginId) {
+		int appIdx = pointDAO.getApplyIdx(classIdx,chargePointLoginId);
+		logger.info("강의 결제에서 받아온 app idx : " + appIdx);
+		return appIdx;
+	}
+
 //	public String getPhotoName(String user_id) {
 //		// TODO Auto-generated method stub
 //		return pointDAO.getPhotoName(user_id);

@@ -154,16 +154,22 @@
 	        cq.user_id = #{param2} AND  co.class_name = #{param3}
 	</select>
 	
-	<select id="pointAllCount" resultType="Integer" parameterType="Integer">
-	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM USER_POINT
+	<select id="pointAllCount" resultType="Integer">
+	   	SELECT CEIL(COUNT(*) / #{param1}) AS pages FROM USER_POINT p
+	   		Join USERS u on u.user_id = p.user_id
+	   			where u.user_id = #{param2}
 	</select>	
 	
-	<select id="receiveAllCount" resultType="Integer" parameterType="Integer">
-	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM REVIEW
+	<select id="receiveAllCount" resultType="Integer">
+	   	SELECT CEIL(COUNT(*) / #{param1}) AS pages FROM REVIEW r
+	   		Join USERS u on u.user_id = r.rater_id
+	   			where u.user_id = #{param2}
 	</select>
 
-	<select id="sendAllCount" resultType="Integer" parameterType="Integer">
-	   	SELECT CEIL(COUNT(*) / #{pagePerCnt}) AS pages FROM REVIEW
+	<select id="sendAllCount" resultType="Integer">
+	   	SELECT CEIL(COUNT(*) / #{param1}) AS pages FROM REVIEW r
+	   		Join USERS u on u.user_id = r.ratee_id
+	   			where u.user_id = #{param2}
 	</select>
 	
 	<select id="courseAllCount" resultType="Integer" parameterType="java.util.Map">

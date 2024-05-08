@@ -372,7 +372,7 @@
 		    rb.board_category,
 		    rb.report_date,
 		    u.user_name,
-		    a.ADMIN_ID
+		    a.admin_id
 		fROM
 		    REPORT_BOARD rb
 		    JOIN ACTION_HISTORY ah ON rb.report_idx = ah.report_idx
@@ -381,7 +381,7 @@
 		LEFT JOIN
 		    CLASS_OPEN co ON rb.board_idx = co.class_idx
 		JOIN
-		    USERS u ON u.USER_ID = co.USER_ID
+		    USERS u ON u.user_id = co.user_id
 		   join ADMIN a
 		    	  where rb.report_idx = #{param1}
 	</select>

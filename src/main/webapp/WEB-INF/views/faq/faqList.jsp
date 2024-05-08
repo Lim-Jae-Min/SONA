@@ -372,6 +372,10 @@ $('#logo').click(function main(){
 	    var content = '';
 	    for (var i = 0; i < Math.min(10, list.length); i++) {
 	        var item = list[i];
+	        // Check if faq_delete is 1, if yes, skip this FAQ item
+	        if (item.faq_delete == 1) {
+	            continue;
+	        }
 	        content += '<tr>';
 	        content += '<td class="ntitle"><a href="faqDetail.go?idx=' + item.faq_idx + '"><img src="resources/img/question.png" class="faq-icon"></a>&nbsp;&nbsp;' + item.faq_title + '</td>';
 	        content += '</tr>';
@@ -399,7 +403,6 @@ $('#logo').click(function main(){
 
 	        // 클릭한 faq_title과 관련된 faq_answer와 구분선 토글, 애니메이션 속도 200(ms)
 	        $answerRow.slideToggle(700);
-	        
 	        
 	        // 해당 구분선 토글, 애니메이션 속도 200(ms)
 	        $hrRows.each(function() {

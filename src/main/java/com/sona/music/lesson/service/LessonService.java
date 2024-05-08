@@ -288,7 +288,7 @@ public class LessonService {
 		
 		logger.info("class_idx = " + idx);
 		if (row > 0) {
-			if (!(ori_url.equals(""))) {
+			if (!(ori_url.equals("")) && !ori_url.contains("embed")) {
 				String new_url = "";
 				
 				if (!ori_url.contains("watch")) {

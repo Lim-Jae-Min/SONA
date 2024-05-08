@@ -405,7 +405,8 @@ button {
 	  	      			<img src="resources/img/musical-note.png" class="note">&nbsp;&nbsp;강의 리뷰
 	        		</td>
 	        		<td class="BigInterval">
-	        			<img src="resources/img/musical-note.png" class="note">&nbsp;&nbsp;강의 Q&A
+	        			<img src="resources/img/musical-note.png" class="note">&nbsp;&nbsp;강의 Q&A&nbsp;&nbsp;&nbsp;&nbsp;
+	        			<button type="button" id="QnAWrite">Q&A 작성</button>
 	        		</td>
 	        	</tr>
 	        	<tr>
@@ -414,28 +415,30 @@ button {
 		        			<c:if test="${reviewList.size() < 1}">
 		        				등록된 리뷰가 없습니다.
 		        			</c:if>
-		        			<table class="smallList">
-		        				<c:forEach items="${reviewList}" var="review">
-		        					<tr>
-			        					<th class="smallInterval reviewLeft">
-			        						<c:if test="${review.profile_photoname eq null}">
-			        							<img src="resources/img/basic_user.png" class="reviewProfile">
-			        						</c:if>
-			        						<c:if test="${review.profile_photoname ne null}">
-			        							<img src="/photo/${review.profile_photoname}" class="reviewProfile">
-			        						</c:if>
-			        					</th>
-			        					<td class="smallInterval">
-			        						<span class="smallFontSize">${review.rater_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallFontSize yellow">★ ${review.score}</span>
-			        						<br/>
-			        						<span><a href="lessonReviewDetail.go?review_idx=${review.review_idx}">${review.review_title}</a></span>
-			        					</td>
-		        					</tr>
-		        				</c:forEach>
-		        				<tr>
-		        					<th colspan="2"><button id="moreReview">더보기</button></th>
-		        				</tr>
-		        			</table>
+		        			<c:if test="${reviewList.size() >= 1}">
+		        				<table class="smallList">
+			        				<c:forEach items="${reviewList}" var="review">
+			        					<tr>
+				        					<th class="smallInterval reviewLeft">
+				        						<c:if test="${review.profile_photoname eq null}">
+				        							<img src="resources/img/basic_user.png" class="reviewProfile">
+				        						</c:if>
+				        						<c:if test="${review.profile_photoname ne null}">
+				        							<img src="/photo/${review.profile_photoname}" class="reviewProfile">
+				        						</c:if>
+				        					</th>
+				        					<td class="smallInterval">
+				        						<span class="smallFontSize">${review.rater_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="smallFontSize yellow">★ ${review.score}</span>
+				        						<br/>
+				        						<span><a href="lessonReviewDetail.go?review_idx=${review.review_idx}">${review.review_title}</a></span>
+				        					</td>
+			        					</tr>
+			        				</c:forEach>
+			        				<tr>
+			        					<th colspan="2"><button id="moreReview">더보기</button></th>
+			        				</tr>
+			        			</table>
+		        			</c:if>
 	        			</div>
 	        		</td>
 	        		<td>
@@ -443,23 +446,25 @@ button {
 		        			<c:if test="${QnAList.size() < 1}">
 		        				등록된 Q&A가 없습니다.
 		        			</c:if>
-		        			<table class="smallList">
-		        				<c:forEach items="${QnAList}" var="QnA">
-		        					<tr>
-			        					<td class="smallInterval">
-			        						<c:if test="${QnA.anonymous_status}">
-			        							비공개 Q&A 입니다. <img src="resources/img/locked.png" class="locked">
-			        						</c:if>
-			        						<c:if test="${!QnA.anonymous_status}">
-				        						<span><a href="lessonQnADetail.go?question_idx=${QnA.question_idx}">${QnA.q_title}</a></span>
-			        						</c:if>
-			        					</td>
-		        					</tr>
-		        				</c:forEach>
-		        				<tr>
-		        					<th colspan="2"><button id="moreQnA">더보기</button></th>
-		        				</tr>
-		        			</table>
+		        			<c:if test="${QnAList.size() >= 1}">
+		        				<table class="smallList">
+			        				<c:forEach items="${QnAList}" var="QnA">
+			        					<tr>
+				        					<td class="smallInterval">
+				        						<c:if test="${QnA.anonymous_status}">
+				        							비공개 Q&A 입니다. <img src="resources/img/locked.png" class="locked">
+				        						</c:if>
+				        						<c:if test="${!QnA.anonymous_status}">
+					        						<span><a href="lessonQnADetail.go?question_idx=${QnA.question_idx}">${QnA.q_title}</a></span>
+				        						</c:if>
+				        					</td>
+			        					</tr>
+			        				</c:forEach>
+			        				<tr>
+			        					<th colspan="2"><button id="moreQnA">더보기</button></th>
+			        				</tr>
+			        			</table>
+		        			</c:if>
 	        			</div>
 	        		</td>
 	        	</tr>
@@ -720,6 +725,10 @@ $('#unDisableButton').click(function (){
 });
 $('#editButton').click(function (){
 	location.href = 'lessonEdit.go?class_idx=${lesson.class_idx}';
+});
+
+$('#QnAWrite').click(function (){
+	location.href = 'lessonQnAWrite.go?class_idx=${lesson.class_idx}';
 });
 
 </script>

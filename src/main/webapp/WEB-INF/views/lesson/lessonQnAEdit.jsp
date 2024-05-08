@@ -203,7 +203,7 @@
 	<div id="content">
         <div id="top">
         	<div id="left">
-        		<b>${lesson.class_name}</b>
+        		<b><a href="userDetail.go?user_id=${lesson.user_id}">${lesson.class_name}</a></b>
         		<br/>
         		<span class="gray">${lesson.class_inst}</span>
         		<br/><br/><br/>

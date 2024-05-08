@@ -213,7 +213,7 @@
 			<div id="right">
 				<table>
 					<tr>
-						<td>${lesson.user_name}</td>
+						<td><a href="userDetail.go?user_id=${lesson.user_id}">${lesson.user_name}</a></td>
 						<c:if test="${lessonLogo != null}">
 							<td rowspan="3"><img src="/photo/${lessonLogo}"
 								class="lessonLogo"></td>

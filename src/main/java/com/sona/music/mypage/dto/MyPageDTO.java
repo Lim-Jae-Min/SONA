@@ -60,6 +60,7 @@ public class MyPageDTO {
 	private int accumulate_lesson;
 	private String manner_variance;
 	private String etc;
+	private String attendance_rate;
 	
 	
 	
@@ -401,6 +402,12 @@ public class MyPageDTO {
 	}
 	public void setEtc(String etc) {
 		this.etc = etc;
+	}
+	public String getAttendance_rate() {
+		return attendance_rate;
+	}
+	public void setAttendance_rate(String attendance_rate) {
+		this.attendance_rate = attendance_rate;
 	}
 
 

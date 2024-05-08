@@ -267,8 +267,8 @@
 					<td style="width :100%; margin-left:50px; font-size:17px;">&nbsp;&nbsp;개인악기 유무 : 
 				        <select name="have_inst" id="have_inst" style="width: 40%; height:30px; font-size : 15px;">
 				        	<option value=""></option>				        
-							<option value="1">무</option>
-							<option value="0">유</option>
+							<option value="0">무</option>
+							<option value="1">유</option>
 						</select>
 					</td>
 				</tr>

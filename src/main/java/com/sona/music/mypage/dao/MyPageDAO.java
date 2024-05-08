@@ -152,6 +152,18 @@ public interface MyPageDAO {
 
 	@Mapper
 	Object tStudentAllCountFilter(@Param("cnt") int cnt, @Param("user_id") String user_id, @Param("selectedClass") String selectedClass);
+
+
+	 String getid(String loginId);
+
+
+	int insert(Map<String, String> map);
+
+
+	int update(Map<String, String> map);
+	
+
+
 	
 
 

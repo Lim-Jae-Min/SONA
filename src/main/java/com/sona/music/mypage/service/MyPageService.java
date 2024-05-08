@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Insert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,13 +116,24 @@ public class MyPageService {
 	    }
 	}
 
-	public int updateApplyForm(Map<String, String> map) {
+	public int updateApplyForm(Map<String, String> map, HttpSession session) {
 	    // 전달된 데이터를 맵에 추가합니다.
     	logger.info("회원 수정하기~ ", map);
 	    logger.info("전달된 데이터: {}", map);
-
+	    String loginId = (String) session.getAttribute("loginId");
+	    MyPageDTO dto;
+	    String getid = myPageDAO.getid(loginId);
+	    int row ;
+	    String test = map.get("inst_category_idx");
+	    map.put("loginId",loginId);
+	    logger.info("test = " + test);
+	    if(getid == null) {
+	    	row = myPageDAO.insert(map);
+	    }else{
+	    	row = myPageDAO.update(map);
+	    }
+	    
 	    // DAO를 통해 업데이트 수행
-	    int row = myPageDAO.updateApplyForm(map);
 	    
 	    // 업데이트된 행 수 반환
 	    return row;

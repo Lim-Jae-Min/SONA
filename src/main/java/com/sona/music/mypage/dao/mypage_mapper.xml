@@ -49,18 +49,29 @@
 			ORDER BY pb.photo_idx desc limit 1
 	</select>
 	
-	<insert id="updateApplyForm" parameterType="java.util.Map">
-	    INSERT INTO APPLICATION_FORM (inst_category_idx, applyform_inst, applyform_location, applyform_days, applyform_style, have_inst, user_id)
+	<select id = "getid" parameterType="String" resultType="String">
+	select user_id from APPLICATION_FORM WHERE user_id = #{param1}
+	</select>
+	
+	<insert id = "insert">
+		INSERT INTO APPLICATION_FORM (inst_category_idx, applyform_inst, applyform_location, applyform_days, applyform_style, have_inst, user_id)
 	    VALUES (#{inst_category_idx}, #{applyform_inst}, #{applyform_location}, #{applyform_days}, #{applyform_style}, #{have_inst}, #{loginId})
-	    ON DUPLICATE KEY UPDATE
-	    inst_category_idx = VALUES(inst_category_idx),
-	    applyform_inst = VALUES(applyform_inst),
-	    applyform_location = VALUES(applyform_location),
-	    applyform_days = VALUES(applyform_days),
-	    applyform_style = VALUES(applyform_style),
-	    have_inst = VALUES(have_inst)
+	
+
 	</insert>
 	
+	<update id="update" parameterType="java.util.Map">
+		    UPDATE APPLICATION_FORM
+		    SET
+		        inst_category_idx = #{inst_category_idx},
+		        applyform_inst = #{applyform_inst},
+		        applyform_location = #{applyform_location},
+		        applyform_days = #{applyform_days},
+		        applyform_style = #{applyform_style},
+		        have_inst = #{have_inst}
+		    WHERE
+		        user_id = #{loginId}
+	</update>
     
 	<select id="getClassNames" parameterType="String" resultType="String">
 	    SELECT DISTINCT co.class_name
@@ -300,18 +311,25 @@
 	</select>
 
 	<select id="pointList" resultType="com.sona.music.mypage.dto.MyPageDTO" parameterType="java.util.Map">
-	SELECT 
-	    up.point_date,
-	    up.point_type,
-	    up.point,
-	    (SUM(point) OVER (ORDER BY up.point_idx)) AS balance
-	FROM 
-	    USER_POINT up 
-	WHERE 
-	    up.user_id = #{param3}
-	ORDER BY 
-	    up.point_idx desc
-	LIMIT #{param2},#{param1}
+	    <![CDATA[
+	    SELECT 
+	        up.point_date,
+	        up.point_type,
+	        up.point,
+	        (SUM(point) OVER (ORDER BY up.point_idx)) AS balance,
+	        CASE 
+	            WHEN (SELECT COUNT(*) FROM POINT_CALCULATION pc WHERE pc.point_idx = up.point_idx AND (pc.ATTENDANCE_RATE = 1 OR pc.ATTENDANCE_RATE IS NULL)) > 0 THEN ''
+	            WHEN (SELECT COUNT(*) FROM POINT_CALCULATION pc WHERE pc.point_idx = up.point_idx AND pc.ATTENDANCE_RATE < 1 AND CAST(pc.ATTENDANCE_RATE AS DECIMAL) >= 0) > 0 THEN '환불'
+	            ELSE ''
+	        END AS etc
+	    FROM 
+	        USER_POINT up 
+	    WHERE 
+	        up.user_id = #{param3}
+	    ORDER BY 
+	        up.point_idx DESC
+	    LIMIT #{param2},#{param1}
+	    ]]>
 	</select>
 	   
 	<select id="getPointAmount" parameterType="String" resultType="com.sona.music.mypage.dto.MyPageDTO">

@@ -336,13 +336,15 @@ public class AdminController {
 		String faqType = param.get("faqType");
 		String faqTitle = param.get("title");
 		String faqAnswer = param.get("answer");
+		String faqAdminId = param.get("writer");
 		logger.info("FAQ 작성에서 받은값 : "+faqType);
 		logger.info("FAQ 작성에서 받은값 : "+faqTitle);
 		logger.info("FAQ 작성에서 받은값 : "+faqAnswer);
+		logger.info("FAQ 작성에서 받은값 : "+faqAdminId);
 		
 		
 		
-		int row = adminService.adminFaqWriteDo(faqTitle,faqAnswer,faqType);
+		int row = adminService.adminFaqWriteDo(faqTitle,faqAnswer,faqType,faqAdminId);
 			
 		
 		return "redirect:/adminFaqList.go";

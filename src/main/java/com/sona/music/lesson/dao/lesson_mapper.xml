@@ -22,7 +22,7 @@
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
-		WHERE class_inst = #{param5} AND class_delete = 0 AND class_disable = 0
+		WHERE co.class_inst = #{param5} AND co.class_delete = 0 AND co.class_disable = 0
 		<if test="param4 != ''">
 			AND ${param3} LIKE CONCAT('%', #{param4}, '%')
 		</if>
@@ -47,7 +47,7 @@
 				END AS accumulate_student
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
-		WHERE class_delete = 0 AND class_disable = 0
+		WHERE co.class_delete = 0 AND co.class_disable = 0
 		<if test="param4 != '' || param5 != '지역 전체' || param6 != '' || param7 != ''">
 			AND
 			<if test="param4 != ''">
@@ -57,33 +57,35 @@
 				</if>
 			</if>
 			<if test="param5 != '지역 전체'">
-				class_location = #{param5}
+				co.class_location = #{param5}
 				<if test="param6 != '' || param7 != ''">
 					AND
 				</if>
 			</if>
 			<if test="param6 != ''">
-				inst_category_idx = #{param6}
+				co.inst_category_idx = #{param6}
 				<if test="param7 != ''">
 					AND
 				</if>
 			</if>
 			<if test="param7 != ''">
-				class_inst = #{param7}
+				co.class_inst = #{param7}
 			</if>
 		</if>
 		ORDER BY manner DESC, co.class_idx DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 
 	<select id="recommendListCount" resultType="Integer">
-		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_inst = #{param4} AND class_delete = 0 AND class_disable = 0
+		SELECT CEIL(COUNT(co.class_idx)/#{param1}) FROM CLASS_OPEN co JOIN USERS u ON co.user_id = u.user_id 
+		WHERE co.class_inst = #{param4} AND co.class_delete = 0 AND co.class_disable = 0
 		<if test="param3 != null">
 			AND ${param2} LIKE CONCAT('%', #{param3}, '%')
 		</if>
 	</select>
 	
 	<select id="allListCount" resultType="Integer">
-		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN WHERE class_delete = 0 AND class_disable = 0
+		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN co JOIN USERS u ON co.user_id = u.user_id
+		WHERE co.class_delete = 0 AND co.class_disable = 0
 		<if test="param3 != '' || param4 != '지역 전체' || param5 != '' || param6 != ''">
 			AND
 			<if test="param3 != ''">
@@ -93,21 +95,20 @@
 				</if>
 			</if>
 			<if test="param4 != '지역 전체'">
-				class_location = #{param4}
+				co.class_location = #{param4}
 				<if test="param5 != '' || param6 != ''">
 					AND
 				</if>
 			</if>
 			<if test="param5 != ''">
-				inst_category_idx = #{param5}
+				co.inst_category_idx = #{param5}
 				<if test="param6 != ''">
 					AND
 				</if>
 			</if>
 			<if test="param6 != ''">
-				class_inst = #{param6}
+				co.class_inst = #{param6}
 			</if>
-			
 		</if>
 	</select>
 	
@@ -143,9 +144,9 @@
 			, co.user_id
 			, co.class_location
 			<![CDATA[
-				, CASE WHEN (SELECT COUNT(mh.manner_idx) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id) < 5
+				, CASE WHEN (SELECT COUNT(mh.manner_idx) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id) < 5
 					      THEN '신규 회원'
-					      ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = u.user_id), 2), '')
+					      ELSE CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) FROM MANNER_HISTORY mh WHERE mh.user_id = co.user_id), 2), '')
 					      END AS manner
 			]]>
 			, co.class_reg_date

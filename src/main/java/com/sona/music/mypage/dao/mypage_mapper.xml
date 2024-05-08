@@ -542,7 +542,8 @@
 			SELECT
 				mt.teacher_id AS user_id
 				, u.user_name
-				, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = mt.teacher_id AND pb.photo_category = 'userInfo') AS new_filename
+				, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = mt.teacher_id AND pb.photo_category = 'userInfo'
+					ORDER BY pb.photo_idx DESC LIMIT 1) AS new_filename
 				, CASE WHEN (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE co.user_id = mt.teacher_id) IS NULL
 					THEN 0
 					ELSE (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE co.user_id = mt.teacher_id)
@@ -570,7 +571,8 @@
 			SELECT
 				mt.teacher_id AS user_id
 				, u.user_name
-				, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = mt.teacher_id AND pb.photo_category = 'userInfo') AS new_filename
+				, (SELECT pb.new_filename FROM PHOTO_BOARD pb WHERE pb.user_id = mt.teacher_id AND pb.photo_category = 'userInfo'
+					ORDER BY pb.photo_idx DESC LIMIT 1) AS new_filename
 				, CASE WHEN (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE co.user_id = mt.teacher_id) IS NULL
 					THEN 0
 					ELSE (SELECT COUNT(co.class_idx) FROM CLASS_OPEN co WHERE co.user_id = mt.teacher_id)

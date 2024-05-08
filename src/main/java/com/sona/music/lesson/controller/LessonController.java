@@ -26,21 +26,24 @@ public class LessonController {
 	
 	@RequestMapping(value="/recommendList.ajax")
 	@ResponseBody // response 객체로 반환
-	public Map<String, Object> recommendListCall(String page, String condition, String content, String inst) {
+	public Map<String, Object> recommendListCall(String page, String condition, String content, String inst, HttpSession session) {
 		logger.info("listCall 요청");
 		logger.info("요청 페이지 : "+ page);
 		logger.info("content : " + content);
 		logger.info("condition : " + condition);
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 10;
-		Map<String, Object> map = lessonService.recommendListCall(currPage, pagePerCnt, condition, content, inst);
+		String loginId = (String) session.getAttribute("loginId");
+		
+		Map<String, Object> map = lessonService.recommendListCall(currPage, pagePerCnt, condition, content, inst, loginId);
 		
 		return map;
 	}
 	
 	@RequestMapping(value="/allList.ajax")
 	@ResponseBody // response 객체로 반환
-	public Map<String, Object> allListCall(String page, String condition, String content, String loca, String instCategory, String inst) {
+	public Map<String, Object> allListCall(String page, String condition, String content, String loca, String instCategory, String inst
+			, HttpSession session) {
 		logger.info("listCall 요청");
 		logger.info("요청 페이지 : "+ page);
 		logger.info("content : " + content);
@@ -50,7 +53,9 @@ public class LessonController {
 		logger.info("inst : " + inst);
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 10;
-		Map<String, Object> map = lessonService.allListCall(currPage, pagePerCnt, condition, content, loca, instCategory, inst);
+		String loginId = (String) session.getAttribute("loginId");
+		
+		Map<String, Object> map = lessonService.allListCall(currPage, pagePerCnt, condition, content, loca, instCategory, inst, loginId);
 		
 		return map;
 	}

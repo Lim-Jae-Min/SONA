@@ -197,6 +197,9 @@ public class LessonService {
 		LessonDTO dto = lessonDAO.lessonDetail(idx);
 		model.addAttribute("lesson", dto);
 		
+		logger.info("idx = " + idx);
+		logger.info("loginId = " + loginId);
+		
 //		List<PhotoDTO> list = dao.photos(idx);
 		String lessonLogo = lessonDAO.lessonLogoLoad(idx);
 		logger.info("lessonLogo : {}", lessonLogo);
@@ -213,7 +216,6 @@ public class LessonService {
 		
 		LessonDTO applyCheck = lessonDAO.applyCheck(idx, loginId);
 		model.addAttribute("applyCheck", applyCheck);
-		
 	}
 
 	public void lessonApplyDo(int class_idx, String loginId) {

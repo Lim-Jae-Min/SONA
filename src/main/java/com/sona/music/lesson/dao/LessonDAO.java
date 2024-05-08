@@ -9,15 +9,15 @@ import com.sona.music.lesson.dto.PhotoDTO;
 
 public interface LessonDAO {
 
-	List<LessonDTO> recommendListCall(int pagePerCnt, int start, String condition, String content, String inst);
+	List<LessonDTO> recommendListCall(int pagePerCnt, int start, String condition, String content, String inst, String loginId);
 
 	List<LessonDTO> allListCall(int pagePerCnt, int start, String condition, String content, String loca,
-			String instCategory, String inst);
+			String instCategory, String inst, String loginId);
 
-	Object recommendListCount(int pagePerCnt, String condition, String content, String inst);
+	Object recommendListCount(int pagePerCnt, String condition, String content, String inst, String loginId);
 
 	Object allListCount(int pagePerCnt, String condition, String content, String loca, String instCategory,
-			String inst);
+			String inst, String loginId);
 
 	int lessonWrite(LessonDTO dto);
 

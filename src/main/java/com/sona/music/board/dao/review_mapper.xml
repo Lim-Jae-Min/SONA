@@ -10,16 +10,17 @@
     	r.SCORE, 
     	r.REVIEW_TITLE, 
     	r.RATER_ID, 
-   		 CONCAT(MIN(CH_DATE), ' ~ ', MAX(CH_DATE)) AS STUDY_DATE,
+   		CONCAT((SELECT ah.reg_date FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.apply_detail = r.apply_detail),
+   		'~', (SELECT ch2.ch_date FROM CLASS_HISTORY ch2 WHERE ch2.ch_idx IN 
+   		((SELECT ch.ch_idx FROM CLASS_HISTORY ch WHERE ch.ch_result = '강의 종료' AND ch.apply_detail = r.apply_detail) - 1))) AS STUDY_DATE,
    		(SELECT COUNT(NEW_FILENAME) FROM PHOTO_BOARD p WHERE p.POST_IDX = r.REVIEW_IDX AND p.PHOTO_CATEGORY = 'Review') AS img_cnt,
     	r.REVIEW_REG_DATE 
 		FROM REVIEW r 
-		JOIN CLASS_HISTORY ch ON r.CLASS_IDX = ch.CLASS_IDX
 		WHERE
 		r.CLASS_IDX = #{param3} AND
     	r.REVIEW_DELETE = 0
-		GROUP BY r.REVIEW_IDX
-		ORDER BY REVIEW_IDX DESC 
+    	AND r.rater_id != (SELECT co.user_id FROM CLASS_OPEN co WHERE co.class_idx = #{param3})
+		ORDER BY REVIEW_IDX DESC
 		LIMIT #{param1} OFFSET #{param2}
 	</select>
 	

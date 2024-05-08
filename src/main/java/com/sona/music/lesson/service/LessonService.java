@@ -30,33 +30,33 @@ public class LessonService {
 	
 	public String file_root = "C:/upload/";
 
-	public Map<String, Object> recommendListCall(int currPage, int pagePerCnt, String condition, String content, String inst) {
+	public Map<String, Object> recommendListCall(int currPage, int pagePerCnt, String condition, String content, String inst, String loginId) {
 		
 		int start = (currPage-1) * pagePerCnt;
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<LessonDTO> list = lessonDAO.recommendListCall(pagePerCnt, start, condition, content, inst);
+		List<LessonDTO> list = lessonDAO.recommendListCall(pagePerCnt, start, condition, content, inst, loginId);
 		logger.info("list : {}", list);
 		logger.info("list size : "+list.size());
 		result.put("list", list);		
 		result.put("currPage", currPage);
-		result.put("totalPages", lessonDAO.recommendListCount(pagePerCnt, condition, content, inst));
+		result.put("totalPages", lessonDAO.recommendListCount(pagePerCnt, condition, content, inst, loginId));
 		
 		return result;
 	}
 
 	public Map<String, Object> allListCall(int currPage, int pagePerCnt, String condition, String content,
-			String loca, String instCategory, String inst) {
+			String loca, String instCategory, String inst, String loginId) {
 		
 		int start = (currPage-1) * pagePerCnt;
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<LessonDTO> list = lessonDAO.allListCall(pagePerCnt, start, condition, content, loca, instCategory, inst);
+		List<LessonDTO> list = lessonDAO.allListCall(pagePerCnt, start, condition, content, loca, instCategory, inst, loginId);
 		logger.info("list : {}", list);
 		logger.info("list size : "+list.size());
 		result.put("list", list);		
 		result.put("currPage", currPage);
-		result.put("totalPages", lessonDAO.allListCount(pagePerCnt, condition, content, loca, instCategory, inst));
+		result.put("totalPages", lessonDAO.allListCount(pagePerCnt, condition, content, loca, instCategory, inst, loginId));
 		
 		return result;
 	}
@@ -120,13 +120,16 @@ public class LessonService {
 	
 	public void fileSave(int idx, String user_id, MultipartFile[] photos, MultipartFile lessonLogo) {
 		logger.info("filesave 도착");
-		
+		if (lessonDAO.lessonPhotosLoad(idx) != null) {
+			lessonDAO.lessonPhotosDel(idx);
+		}
+		if (lessonDAO.lessonLogoLoad(idx) != null) {
+			lessonDAO.lessonLogoDel(idx);
+		}
 		String fileName = lessonLogo.getOriginalFilename();
 		logger.info("fileName : " + fileName);
 		if (!fileName.equals("")) { // 파일명이 있다 == 업로드 파일이 있다면
-			if (lessonDAO.lessonLogoLoad(idx) != null) {
-				lessonDAO.lessonLogoDel(idx);
-			}
+			
 			
 			// 1. 기존 파일명에서 확장자 추출 (high.gif)
 			// 1-2. subString 활용 방법
@@ -160,9 +163,7 @@ public class LessonService {
 			fileName = photo.getOriginalFilename();
 			logger.info("fileName : " + fileName);
 			if (!fileName.equals("")) { // 파일명이 있다 == 업로드 파일이 있다면
-				if (lessonDAO.lessonPhotosLoad(idx) != null) {
-					lessonDAO.lessonPhotosDel(idx);
-				}
+				
 				// 1. 기존 파일명에서 확장자 추출 (high.gif)
 				// 1-2. subString 활용 방법
 				String ext = fileName.substring(fileName.lastIndexOf("."));

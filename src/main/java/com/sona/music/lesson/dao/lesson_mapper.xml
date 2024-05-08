@@ -23,6 +23,9 @@
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
 		WHERE co.class_inst = #{param5} AND co.class_delete = 0 AND co.class_disable = 0
+		<if test="param6 != ''">
+			AND co.user_id NOT IN (SELECT mt.teacher_id FROM MY_TEACHER mt WHERE mt.category = 'block' AND mt.user_id = #{param6})
+		</if>
 		<if test="param4 != ''">
 			AND ${param3} LIKE CONCAT('%', #{param4}, '%')
 		</if>
@@ -48,6 +51,9 @@
 			, co.class_location
 		FROM CLASS_OPEN co JOIN USERS u on co.user_id = u.user_id
 		WHERE co.class_delete = 0 AND co.class_disable = 0
+		<if test="param8 != ''">
+			AND co.user_id NOT IN (SELECT mt.teacher_id FROM MY_TEACHER mt WHERE mt.category = 'block' AND mt.user_id = #{param8})
+		</if>
 		<if test="param4 != '' || param5 != '지역 전체' || param6 != '' || param7 != ''">
 			AND
 			<if test="param4 != ''">
@@ -78,7 +84,10 @@
 	<select id="recommendListCount" resultType="Integer">
 		SELECT CEIL(COUNT(co.class_idx)/#{param1}) FROM CLASS_OPEN co JOIN USERS u ON co.user_id = u.user_id 
 		WHERE co.class_inst = #{param4} AND co.class_delete = 0 AND co.class_disable = 0
-		<if test="param3 != null">
+		<if test="param5 != ''">
+			AND co.user_id NOT IN (SELECT mt.teacher_id FROM MY_TEACHER mt WHERE mt.category = 'block' AND mt.user_id = #{param5})
+		</if>
+		<if test="param3 != ''">
 			AND ${param2} LIKE CONCAT('%', #{param3}, '%')
 		</if>
 	</select>
@@ -86,6 +95,9 @@
 	<select id="allListCount" resultType="Integer">
 		SELECT CEIL(COUNT(class_idx)/#{param1}) FROM CLASS_OPEN co JOIN USERS u ON co.user_id = u.user_id
 		WHERE co.class_delete = 0 AND co.class_disable = 0
+		<if test="param7 != ''">
+			AND co.user_id NOT IN (SELECT mt.teacher_id FROM MY_TEACHER mt WHERE mt.category = 'block' AND mt.user_id = #{param7})
+		</if>
 		<if test="param3 != '' || param4 != '지역 전체' || param5 != '' || param6 != ''">
 			AND
 			<if test="param3 != ''">
@@ -187,8 +199,8 @@
 			, r.score
 			, r.review_title
 			, r.review_idx
-		FROM REVIEW r
-		WHERE r.class_idx = #{param1} AND r.REVIEW_DELETE = 0
+		FROM REVIEW r JOIN CLASS_OPEN co ON r.class_idx = co.class_idx
+		WHERE r.class_idx = #{param1} AND r.REVIEW_DELETE = 0 AND r.rater_id != co.user_id
 		ORDER BY r.review_idx DESC LIMIT 4;
 	</select>
 	

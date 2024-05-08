@@ -217,7 +217,7 @@
 	            <li><input type="password" placeholder="비밀번호" name="user_pass"></li>
 	            <li ><input id="boxcolor" type="password"  placeholder="비밀번호 확인" name="confirm"></li>
 	            <li><p>*전화번호</p></li>
-	            <li><input type="text" placeholder="전화번호 입력" name="user_phone"></li>
+	            <li><input type="text" placeholder="'-'을 제외한 숫자만 입력 해 주세요" name="user_phone"></li>
 	            <li class="ptag"><p>*계좌번호</p>
 	            <select name="user_bank">
 				        <option value="국민은행">국민은행</option>
@@ -239,6 +239,7 @@
 	           <button type="button" id=join_button onclick="join()">회원가입</button>
 <!-- 	            <button type="submit">회원가입</button> -->
 	    </section>
+	     <br><br><br><br><br>
 	</form>
     <div>
     </div>
@@ -321,8 +322,15 @@ function join(){
     }else if($accountnumber.val()==''){
 		alert('계좌 번호를 입력 해 주세요!');
 		$accountnumber.focus();
+	}else if($accountnumber.val().length > 14){
+		alert('계좌 번호는 14자 이하로 입력해 주세요.');
+		$accountnumber.focus();
 	}else if($usertype.length === 0){
 		alert('사용자 유형을 선택 해 주세요!');
+	}else if($confirm.val()!=$pw.val()){
+		alert('비밀번호를 다시 확인해 주세요!');
+		$confirm.focus();
+		$confirm.val('');
 	}else{
 		var regExp = new RegExp('[^0-9]');
 		var match = regExp.test($phone.val());
@@ -393,7 +401,7 @@ $('#boxcolor').on('keyup',function(){
 	    } else if (confirmPassword === password) {
 	        $(this).css({'background-color': 'lightgreen'});
 	    } else {
-	        $(this).css({'background-color': 'red'});
+	        $(this).css({'background-color': '#fd6d6d'});
 	    }
 	});
  

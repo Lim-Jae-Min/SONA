@@ -325,6 +325,7 @@ body {
 						<td>
 							<span class="red">
 								♥ ${lesson.manner == 0.0 ? '신규 회원' : lesson.manner}
+
 							</span>
 						</td>
 					</tr>

@@ -62,14 +62,14 @@
 	
 	<select id="detail" resultType="com.sona.music.member.dto.MemberDTO">
 		select 
-			u.USER_ID,
-			u.USER_EMAIL,
-			u.USER_NAME,
-			u.USER_TYPE,
-			CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) 
-				FROM MANNER_HISTORY mh), 2), '') AS manner,
-			(SELECT pb.NEW_FILENAME from PHOTO_BOARD pb WHERE u.USER_ID = pb.USER_ID
-				AND pb.PHOTO_CATEGORY='Profile' and pb.USER_ID='user2') as profile
+				u.USER_ID,
+				u.USER_NAME,
+				u.USER_TYPE,
+				u.USER_EMAIL,
+				CONCAT(FORMAT((SELECT (SUM(mh.manner_variance) + 36.5) 
+					FROM MANNER_HISTORY mh), 2), '') AS manner,
+				(SELECT pb.NEW_FILENAME from PHOTO_BOARD pb WHERE u.USER_ID = pb.USER_ID
+					AND pb.PHOTO_CATEGORY='userInfo' and pb.USER_ID=#{param1} ORDER BY photo_idx desc limit 1) as profile
 		FROM USERS u WHERE u.USER_ID = #{param1}
 	</select>
 	

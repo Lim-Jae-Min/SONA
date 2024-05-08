@@ -13,7 +13,7 @@
 
 h1 {
     text-align: center;
-    margin-top: 5px;
+    margin-top: 81px;
 }
 p {
     text-align: center;
@@ -272,7 +272,7 @@ p {
     </div>
     
     
-    <button type="button" id=apply_button onclick="apply()">강의 신청하기</button>
+    <button type="button" id=apply_button onclick="apply()">강의 신청하기</button><br><br><br><br><br><br><br><br><br><br>
     </form> 
 </div>
 <div id="footer">

@@ -78,7 +78,8 @@ public class AdminService {
 		logger.info("공지사항 작성성 페이지에서 받은 공지사항 작성자 : "+param.get("writer"));
 		
 		AdminDTO noticeWriteDto = new AdminDTO();
-		noticeWriteDto.setAdmin_id("admin");
+		
+		noticeWriteDto.setAdmin_id(param.get("writer"));
 		noticeWriteDto.setNotice_content(param.get("content"));
 		noticeWriteDto.setNotice_title(param.get("title"));
 		String noticeWriteId = noticeWriteDto.getAdmin_id();
@@ -101,7 +102,7 @@ public class AdminService {
 		logger.info("공지사항 작성자 : "+param.get("writer"));
 		
 		AdminDTO noticeWriteDto = new AdminDTO();
-		noticeWriteDto.setAdmin_id("admin");
+		noticeWriteDto.setAdmin_id(param.get("writer"));
 		noticeWriteDto.setNotice_content(param.get("content"));
 		noticeWriteDto.setNotice_title(param.get("title"));
 		noticeWriteDto.setNotice_idx(Integer.parseInt(param.get("noticeIdx")));
@@ -193,8 +194,8 @@ public class AdminService {
 		return result;
 	}
 
-	public int adminFaqWriteDo(String faqTitle, String faqAnswer, String faqType) {
-		String adminId = "admin";
+	public int adminFaqWriteDo(String faqTitle, String faqAnswer, String faqType, String faqAdminId) {
+		String adminId = faqAdminId;
 		int row = adminDAO.adminFaqWriteDo(adminId,faqTitle,faqAnswer,faqType);
 		return row;
 	}
@@ -204,7 +205,7 @@ public class AdminService {
 		logger.info("공지사항 작성자 : "+param.get("writer"));
 		
 		AdminDTO faqEditDto = new AdminDTO();
-		faqEditDto.setAdmin_id("admin");
+		faqEditDto.setAdmin_id(param.get("writer"));
 		faqEditDto.setFaq_answer(param.get("answer"));
 		faqEditDto.setFaq_title(param.get("title"));
 		faqEditDto.setFaq_idx(Integer.parseInt(param.get("faqIdx")));

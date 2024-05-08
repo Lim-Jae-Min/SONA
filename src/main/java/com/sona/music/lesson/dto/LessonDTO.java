@@ -34,6 +34,7 @@ public class LessonDTO {
 	private int apply_idx;
 	private String apply_state;
 	private int accumulate_times;
+	private String ch_result;
 	
 	
 	public int getClass_idx() {
@@ -203,6 +204,12 @@ public class LessonDTO {
 	}
 	public void setAccumulate_times(int accumulate_times) {
 		this.accumulate_times = accumulate_times;
+	}
+	public String getCh_result() {
+		return ch_result;
+	}
+	public void setCh_result(String ch_result) {
+		this.ch_result = ch_result;
 	}
 	
 	

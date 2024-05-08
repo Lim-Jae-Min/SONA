@@ -268,11 +268,11 @@ public class MemberController {
 	@RequestMapping(value="/userLessonList.ajax")
 	@ResponseBody
 	public Map<String , Object> listCall(String page, String cnt, String user_id){
-//		logger.info("listCall 요청");
-//		logger.info("받아온 유저 user_id: "+user_id);
-//		logger.info("페이지당 보여줄 갯수:"+cnt);
-//		logger.info("요청 페이지: "+page); 
-//		
+		logger.info("listCall 요청");
+		logger.info("받아온 유저 user_id: "+user_id);
+		logger.info("페이지당 보여줄 갯수:"+cnt);
+		logger.info("요청 페이지: "+page); 
+		
 		
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 5;
@@ -285,10 +285,10 @@ public class MemberController {
 	@RequestMapping(value="/userReviewList.ajax")
 	@ResponseBody
 	public Map<String , Object> listCall2(String page, String cnt, String user_id){
-		logger.info("listCall 요청");
-		logger.info("받아온 유저 user_id: "+user_id);
-		logger.info("페이지당 보여줄 갯수:"+cnt);
-		logger.info("요청 페이지: "+page);
+//		logger.info("listCall 요청");
+//		logger.info("받아온 유저 user_id: "+user_id);
+//		logger.info("페이지당 보여줄 갯수:"+cnt);
+//		logger.info("요청 페이지: "+page);
 		
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = 5;

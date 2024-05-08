@@ -65,16 +65,19 @@ public class ReviewService {
 
 
 		row = reviewDAO.write(dto); //글쓰기 완료 후 
-
+		
+		
 		//조건3. 이후 dto에서 저장된 키 값을 받아온다.
-		int idx = dto.getReview_idx();
-		String username = dto.getRater_id();
-		String photoCategory = pdto.getPhoto_category();
-		logger.info("idx="+idx);
-		logger.info("user="+username);
-		logger.info("photoCategory="+photoCategory);
+		
 
 		if(row>0) {
+			int idx = dto.getReview_idx();
+			String username = dto.getRater_id();
+			String photoCategory = pdto.getPhoto_category();
+			logger.info("idx="+idx);
+			logger.info("user="+username);
+			logger.info("photoCategory="+photoCategory);
+			
 			fileSave(idx, username, photoCategory, photos); // 파일 저장
 		}
 

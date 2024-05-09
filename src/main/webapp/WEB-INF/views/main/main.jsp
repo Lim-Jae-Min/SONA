@@ -347,7 +347,7 @@
     <c:choose>
     <c:when test="${sessionScope.loginId != null && sessionScope.user_type eq '수강생'}">
             <h2>
-                <span class="el-text">${sessionScope.loginId}</span> 님을 위한 
+                <span class="el-text">${sessionScope.user_name}</span> 님을 위한 
                 <span class="el-text">${list[2].applyform_inst}</span> 추천 영상입니다.
             </h2>
     </c:when>

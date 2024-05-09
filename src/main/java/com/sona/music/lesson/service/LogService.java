@@ -24,7 +24,7 @@ public class LogService {
 	
 	@Autowired LogDAO logDAO;
 
-	public void lessonLogGo(int apply_idx, Model model) {
+	public void lessonLogGo(int apply_idx, String loginId, Model model) {
 		logger.info("강의일지 페이지 이동 controller");
 		
 		LogDTO lessonInfo = logDAO.lessonInfo(apply_idx);
@@ -53,7 +53,7 @@ public class LogService {
 			
 		}
 		
-		String review_idx = logDAO.reviewCheck(apply_detail);
+		String review_idx = logDAO.reviewCheck(apply_detail, loginId);
 		logger.info("리뷰 있는지 : " + review_idx);
 		model.addAttribute("review_idx", review_idx);
 		

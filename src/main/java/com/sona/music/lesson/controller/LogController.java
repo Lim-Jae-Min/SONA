@@ -28,9 +28,11 @@ public class LogController {
 	public String lessonLogGo (int apply_idx, HttpSession session, Model model) {
 		String page = "member/login";
 		
+		String loginId = (String) session.getAttribute("loginId");
+		
 		if (session.getAttribute("loginId") != null) {
 			page = "lesson/lessonLog";
-			logService.lessonLogGo(apply_idx, model);
+			logService.lessonLogGo(apply_idx, loginId, model);
 		}
 		
 		return page;

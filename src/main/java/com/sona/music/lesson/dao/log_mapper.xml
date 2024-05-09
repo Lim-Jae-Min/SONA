@@ -82,7 +82,7 @@
 	<select id="reviewCheck" resultType="String">
 		SELECT 
 			r.review_idx
-		FROM REVIEW r WHERE r.apply_detail = #{param1}
+		FROM REVIEW r WHERE r.apply_detail = #{param1} AND r.rater_id = #{param2}
 	</select>
 	
 	<insert id="studentPayback"

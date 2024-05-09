@@ -33,7 +33,7 @@
 	WHERE
 	AF.USER_ID = #{param1}
 	ORDER BY
-	MANNER_SCORE DESC
+	MANNER_SCORE DESC, cv.video_idx DESC
 	LIMIT 3;
 	</select>
 	
@@ -98,7 +98,7 @@
 	WHERE
 	AF.USER_ID = #{param3}
 	ORDER BY
-	MANNER_SCORE DESC
+	MANNER_SCORE DESC, cv.video_idx DESC
 	LIMIT #{param1} OFFSET #{param2};
 	</select>
 	

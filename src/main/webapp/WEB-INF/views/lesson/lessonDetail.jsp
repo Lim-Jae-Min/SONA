@@ -304,7 +304,7 @@ button {
 	        	</tr>
 	        	<tr>
 	        		<td colspan="2">
-	  	      			<div class="contentBox">${lesson.career_contents}</div>
+	  	      			<div class="contentBox"><pre>${lesson.career_contents}</pre></div>
 	        		</td>
 	        	</tr>
 	        	<tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr>
@@ -315,7 +315,7 @@ button {
 	        	</tr>
 	        	<tr>
 	        		<td colspan="2">
-	  	      			<div class="contentBox">${lesson.class_content}</div>
+	  	      			<div class="contentBox"><pre>${lesson.class_content}</pre></div>
 	        		</td>
 	        	</tr>
 	        	<tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr><tr><td class="BigInterval"></td></tr>

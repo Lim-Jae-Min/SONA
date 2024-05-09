@@ -347,7 +347,7 @@
 		         THEN 0
 		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 		         END AS count
-		    ,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
+		    ,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = r.class_idx), 1) AS score
 		    ,co.class_reg_date
 		    ,co.class_disable
 		FROM CLASS_OPEN co WHERE co.USER_ID = #{param1} AND co.CLASS_DISABLE = #{param4}
@@ -364,7 +364,7 @@
 		         THEN 0
 		         ELSE (SELECT COUNT(apply_state) FROM APPLY_HISTORY ah WHERE ah.apply_state = '결제 완료' AND ah.class_idx = co.class_idx)
 		         END AS count
-		   	,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = '2'), 1) AS score
+		   	,FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE co.class_idx = r.class_idx), 1) AS score
 		  	,co.class_reg_date
 		   	,co.class_disable
 		FROM CLASS_OPEN co WHERE co.USER_ID = #{param1}

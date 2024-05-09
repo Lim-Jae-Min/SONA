@@ -135,10 +135,10 @@
             	<hr style= "width: 100%; border: none; border-bottom: 1px solid black; margin-top: 5px;">
                 <tr> 
                     <td id="profile_s">
-                        <c:if test="${userInfo.new_filename ne ''}">
+                        <c:if test="${userInfo.new_filename ne null}">
                             <img src="/photo/${userInfo.new_filename}" class="profile">
                         </c:if>
-                        <c:if test="${userInfo.new_filename eq ''}">
+                        <c:if test="${userInfo.new_filename eq null}">
                             <img src="resources/img/basic_user.png" class="profile">
                         </c:if>
                     </td>
@@ -285,12 +285,11 @@ $("#withdrawButton").click(function(){
     // loginId 값이 없을 경우에는 이동하지 않음
     if(loginId) {
         // chargePoint.go로 이동하는 URL 생성
-        var url = "./withdrawPoint.go?loginId=" + loginId;
+        var url = "./withdrawPoint.go?user_id=" + loginId;
         // 생성한 URL로 이동
         window.location.href = url;
     }
 });
-
 
 
 </script>

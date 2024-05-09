@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>SONA 건의사항 글 작성</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" href="resources/css/common.css?after" type="text/css">
 <style>
@@ -124,7 +124,7 @@ button {
 	        				<input type="file" name="sug_photos" multiple="multiple" id="photos"/>
 	        			</span>
 	        			<span class="right">
-	        				<input type="radio" name="sug_secret" value="0"/>공개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	        				<input type="radio" name="sug_secret" value="0" checked/>공개&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	        				<input type="radio" name="sug_secret" value="1"/>비공개
 	        			</span>
 	        		</td>

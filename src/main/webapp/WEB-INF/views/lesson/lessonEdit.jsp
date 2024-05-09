@@ -260,7 +260,7 @@ button {
 	        			<td colspan="3">
 	        				강의 내용<span class="red">*</span>
 		        			<br/><br/>
-		        			<textarea name="class_content" placeholder="내용을 입력해주세요." id="classContent">${lesson.class_content}</textarea>
+		        			<textarea cols="100" wrap="hard" name="class_content" placeholder="내용을 입력해주세요." id="classContent">${lesson.class_content}</textarea>
 	        			</td>
 	        		</tr>
 	        		<tr>
@@ -320,7 +320,7 @@ button {
 	        			<td colspan="3">
 	        				경력 사항<span class="red">*</span>
 		        			<br/><br/>
-		        			<textarea name="career_content" placeholder="내용을 입력해주세요.">${lesson.career_contents}</textarea>
+		        			<textarea cols="100" wrap="hard" name="career_content" placeholder="내용을 입력해주세요.">${lesson.career_contents}</textarea>
 	        			</td>
 	        		</tr>
 	        		<tr>

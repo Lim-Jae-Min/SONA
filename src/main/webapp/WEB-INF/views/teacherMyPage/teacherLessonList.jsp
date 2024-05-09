@@ -33,12 +33,6 @@
 		    width: 91%;
 		}
 		
-		#tab th {
-		    background-color: #dddddd;
-		    color: #333333;
-		}
-		
-		
 		#tab th,
 	    #tab td {
 	        padding: 8px; /* 각 셀의 패딩 조절 */
@@ -189,7 +183,7 @@
 			   <div class="click class">비활성</div>&nbsp;&nbsp;
 			   <input type="text" class="clickresult" name="class_state"/>
  		</div>
-    <div id="tab"  style="display:inline-block; border-collapse: collapse;">
+    <div id="tab"  style="display:inline-block; border: 2px solid #BEE6FF; border-radius: 15px; padding: 10px;">
         <table style="border-collapse: collapse; width: 100%;">
             <thead>
                 <tr>

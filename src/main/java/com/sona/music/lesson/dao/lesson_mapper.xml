@@ -150,8 +150,8 @@
 			, co.inst_category_idx
 			, co.class_inst
 			, (SELECT u.user_name FROM USERS u WHERE u.user_id = co.user_id) AS user_name
-			, CASE WHEN FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx), 2) IS NULL THEN 0
-				ELSE FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx), 2)
+			, CASE WHEN FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx AND r.rater_id != co.user_id), 2) IS NULL THEN 0
+				ELSE FORMAT((SELECT avg(r.score) FROM REVIEW r WHERE r.class_idx = co.class_idx AND r.rater_id != co.user_id), 2)
 				END AS class_score
 			, co.user_id
 			, co.class_location

@@ -68,7 +68,7 @@ button {
 	height: 60px;
     position: absolute;
     top: 230px;
-    right: 300px;
+    right: 500px;
     border: solid 2px black;
     background-color: white;
     padding: 10px;
@@ -78,7 +78,7 @@ button {
 	height: 60px;
     position: absolute;
     top: 20%;
-    right: 300px;
+    right: 500px;
     border: solid 2px black;
     background-color: white;
     padding: 10px;

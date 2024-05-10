@@ -151,7 +151,7 @@
 		    padding: 10px;
 		    text-align: center;
 		    width: 200px;
-		    height: 122vh;
+		    height: auto;
 		}
 		
 		.button{

@@ -61,7 +61,7 @@ a {
     padding: 10px;
     text-align: center;
     width: 200px; /* 메뉴 창 너비 */
-    height: auto;
+    height: 1000px;
 }
 #sidemenu a {
     display: block; /* 링크를 블록 레벨 요소로 표시하여 세로로 정렬 */
@@ -78,7 +78,7 @@ a {
     padding: 10px;
     text-align: center;
     width: 200px; /* 메뉴 창 너비 */
-    height: auto;
+    height: 1200px;
 }
 #adminside a {
     color: black;

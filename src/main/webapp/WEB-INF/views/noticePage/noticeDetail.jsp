@@ -294,7 +294,7 @@ p.editOption{
 			<button id="returnList" onclick="backList()">목록</button>
 		</div>
 	</div>
-
+	<br/><br/><br/><br/>
 	<!-- 게시판 영역 -->
 
 

@@ -59,14 +59,31 @@ SONA 를 통해 자신의 역량을 홍보하고, 학원에 소속된 강사만�
 |:--:|
 | 강의 스타일 선택 |
 
+<br><br>
+
+**[마이페이지]**
+* 메인 페이지 상단바에서 마이페이지로 이동
 
 
+| ![2024-08-01012945-ezgif com-optimize (1)](https://github.com/user-attachments/assets/6ad0ef2c-f83f-4dbd-b453-faa9ea466fd3)|
+|:--:|
+| 마이페이지 |
 
+<br><br>
 
+* 마이페이지 기능
+  
+| ![image](https://github.com/user-attachments/assets/ebad92c4-7f37-4c3c-82b0-cb53e4d4c096) | ![image](https://github.com/user-attachments/assets/5a2e04ca-cabb-4747-9c13-80cc8bfd6c69) |
+|:--:|:--:|
+| 강사 정보 수정 | 강의 관리 |
+| ![image](https://github.com/user-attachments/assets/7bedd7e3-8bb9-4a6a-8ec9-bd4b4faaeb60) | ![image](https://github.com/user-attachments/assets/97f586a5-ec58-42c0-875d-e1bfa8f56136) |
+| 수강생 관리 | 강의 QnA 관리 |
+| ![image](https://github.com/user-attachments/assets/b697c5a0-e5f6-4734-a527-cd4f98265205) | ![image](https://github.com/user-attachments/assets/a76a9fd4-25c4-49b2-8bd9-d7038d2aa53e) |
+| 포인트 내역 | 내가 받은 리뷰 |
 
-
-
-
+| ![image](https://github.com/user-attachments/assets/11402a3a-abf7-4c00-86d8-64a3c80e7c02) |
+|:--:|
+| 내가 작성한 리뷰 |
 
 
 
